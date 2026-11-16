@@ -14,7 +14,14 @@ test('production assets, fonts and responsive geometry', async ({ page }, info) 
   const widths = info.project.name.includes('desktop') ? [320, 360, 390, 430, 768, 1024, 1440] : [360, 390, 430, 844];
   for (const width of widths) {
     await page.setViewportSize({ width, height: width === 844 ? 390 : 844 });
-    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBeTruthy();
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1 ? [] : [{
+      width: innerWidth,
+      scroll: document.documentElement.scrollWidth,
+      overflowing: [...document.querySelectorAll('body *')].filter(element => {
+        const rect = element.getBoundingClientRect();
+        return rect.width && (rect.left < -1 || rect.right > innerWidth + 1) && getComputedStyle(element).position !== 'fixed';
+      }).slice(0, 10).map(element => ({ tag: element.tagName, class: element.className, right: element.getBoundingClientRect().right }))
+    }]), { message: `No horizontal overflow at ${width}px` }).toEqual([]);
     const clipped = await page.locator('h1,h2,.field-work-row,.field-contact,footer').evaluateAll(elements => elements.filter(element => {
       const r = element.getBoundingClientRect(); return r.width && (r.left < -1 || r.right > innerWidth + 1);
     }).map(element => element.className || element.tagName));
