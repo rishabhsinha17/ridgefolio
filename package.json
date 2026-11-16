@@ -1,0 +1,16 @@
+{
+  "name": "ridgefolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ridgefolio \u2014 independent software engineering for public agencies and delivery partners.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "check": "node --check public/assets/civic.js && node scripts/check.mjs",
+    "deploy": "wrangler deploy",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "wrangler": "4.162.0",
+    "@playwright/test": "1.65.1"
+  }
+}
