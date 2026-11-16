@@ -11,7 +11,7 @@ test('assets, fonts, canvas and responsive geometry', async ({ page }, info) => 
   await expect(page.locator('.portrait img')).toBeVisible();
   await page.locator('.portrait img').scrollIntoViewIfNeeded();
   await expect.poll(() => page.locator('.portrait img').evaluate(img => img.complete && img.naturalWidth > 0)).toBeTruthy();
-  await page.getByRole('link', { name: 'Back to top' }).click();
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   const widths = info.project.name.includes('desktop') ? [320, 360, 390, 430, 768, 1024, 1440] : [360, 390, 430, 844];
   for (const width of widths) {
     await page.setViewportSize({ width, height: width === 844 ? 390 : 844 });
@@ -20,7 +20,19 @@ test('assets, fonts, canvas and responsive geometry', async ({ page }, info) => 
       const r = e.getBoundingClientRect(); return r.width && (r.left < -1 || r.right > innerWidth + 1);
     }).map(e => e.className || e.tagName));
     expect(clipped, `Overflow at ${width}px`).toEqual([]);
-    if (width === 390 || width === 1440) await page.screenshot({ path: info.outputPath(`layout-${width}.png`), fullPage: true });
+    if (width <= 760) {
+      const spacing = await page.locator('.contact-bottom').evaluate(e => {
+        const email = e.querySelector('a').getBoundingClientRect();
+        const button = e.querySelector('button').getBoundingClientRect();
+        return button.top - email.bottom;
+      });
+      expect(spacing).toBeGreaterThanOrEqual(8);
+    }
+    if (width === 390 || width === 1440) {
+      await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo({ top: 0, behavior: 'instant' }); });
+      await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+      await page.screenshot({ path: info.outputPath(`layout-${width}.png`), fullPage: true, animations: 'disabled' });
+    }
   }
   const painted = await page.locator('#ridge-surface').evaluate(canvas => {
     const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
