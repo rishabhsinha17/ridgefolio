@@ -19,7 +19,7 @@ const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
 assert.equal(ids.length, new Set(ids).size, 'Duplicate element IDs');
 for (const [, id] of html.matchAll(/(?:href="#|aria-controls=")([^" ]+)"/g)) assert(ids.includes(id), `Missing target: ${id}`);
 assert(!html.includes('noindex'), 'Homepage must be indexable');
-assert(!html.includes('Private design review'), 'Do not publish review navigation');
+assert(!/review-dock|fieldnotes-options|design studies/i.test(html), 'Remove sample controls and metadata before publication');
 assert(html.includes('https://ridgefolio.com/'), 'Canonical domain must be configured');
 for (const [tag] of html.matchAll(/<(?:script|link)\b[^>]*>/gi)) {
   if (tag.startsWith('<script') || /rel="(?:stylesheet|preload)"/.test(tag)) assert(!/(?:src|href)="https?:/.test(tag), 'Keep runtime scripts and fonts self-hosted');

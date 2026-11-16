@@ -2,7 +2,7 @@
 
 Source for [ridgefolio.com](https://ridgefolio.com), an independent software engineering practice serving public agencies and delivery partners.
 
-A static HTML, CSS and JavaScript site with self-hosted fonts, inline SVG icons and an original interactive canvas graphic. No framework or runtime CDN is required. Contact forms prepare a message in the visitor's own mail app; they do not store or send submissions to a server.
+A static HTML, CSS and JavaScript site with self-hosted fonts, inline SVG icons and the selected Fieldnotes sculpture design. No framework or runtime CDN is required. Contact links open the visitor's own mail app; this site does not collect form submissions.
 
 ## Develop
 
@@ -21,7 +21,7 @@ npx playwright install --with-deps chromium firefox webkit
 npm test
 ```
 
-The GitHub Actions workflow runs asset checks and browser tests for desktop Chromium, Firefox and WebKit, plus iPhone-style WebKit and Android-style Chromium emulation. It checks 320–1440px layouts, landscape dialogs, fonts, image and canvas rendering, navigation, keyboard tabs, the sample workflow and reduced motion. Test reports include screenshots. Emulation does not replace checks on physical iOS and Android devices, and browser font antialiasing can differ slightly.
+The GitHub Actions workflow runs asset checks and browser tests for desktop Chromium, Firefox and WebKit, plus iPhone-style WebKit and Android-style Chromium emulation. It checks 320–1440px layouts, landscape screens, fonts, image rendering, navigation, keyboard dismissal, contact destinations, the not-found page and reduced motion. Test reports include screenshots. Emulation does not replace checks on physical iOS and Android devices, and browser font antialiasing can differ slightly.
 
 ## Deploy
 
@@ -42,4 +42,4 @@ Manual deployment, if needed, uses `npm run deploy` after authenticating with Cl
 
 ## Assets
 
-Font license notices are included under `public/assets/fonts/`. Founder contributions are presented as individual experience, separate from Ridgefolio client engagements. The site code, branding, original graphics and portrait are not granted an open-source license merely by being publicly viewable.
+Font license notices are included under `public/assets/fonts/`. The conceptual sculpture image was created with built-in image generation and is decorative, not client work. Founder contributions are presented as individual experience, separate from Ridgefolio client engagements. The site code, branding, original graphics and portrait are not granted an open-source license merely by being publicly viewable.
