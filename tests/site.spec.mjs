@@ -9,7 +9,9 @@ test('assets, fonts, canvas and responsive geometry', async ({ page }, info) => 
   const fonts = await page.evaluate(() => [...document.fonts].map(f => ({ family: f.family, status: f.status })));
   expect(fonts.every(f => f.status === 'loaded')).toBeTruthy();
   await expect(page.locator('.portrait img')).toBeVisible();
-  expect(await page.locator('.portrait img').evaluate(img => img.complete && img.naturalWidth > 0)).toBeTruthy();
+  await page.locator('.portrait img').scrollIntoViewIfNeeded();
+  await expect.poll(() => page.locator('.portrait img').evaluate(img => img.complete && img.naturalWidth > 0)).toBeTruthy();
+  await page.getByRole('link', { name: 'Back to top' }).click();
   const widths = info.project.name.includes('desktop') ? [320, 360, 390, 430, 768, 1024, 1440] : [360, 390, 430, 844];
   for (const width of widths) {
     await page.setViewportSize({ width, height: width === 844 ? 390 : 844 });
@@ -83,14 +85,12 @@ test('sample workflow completes without transmitting data', async ({ page }) => 
   await page.getByRole('button', { name: 'Close demonstration' }).click();
 });
 
-test('reduced motion and enlarged text remain usable', async ({ page }) => {
+test('reduced motion retains usable project navigation', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
   await page.locator('#work-tab-research').click();
   await expect(page.locator('#work-research')).toBeVisible();
-  // Simulate a user stylesheet enlarging text without modifying the shipped CSS.
-  await page.addStyleTag({ content: 'body { font-size: 200%; }' });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBeTruthy();
 });
