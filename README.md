@@ -27,12 +27,14 @@ The GitHub Actions workflow runs asset checks and browser tests for desktop Chro
 
 Cloudflare Worker: `ridgefolio`. Production branch: `main`.
 
-The repository is intended for Cloudflare Workers Builds with:
+The repository is connected to Cloudflare Workers Builds. Pushes to `main` automatically deploy to [ridgefolio.com](https://ridgefolio.com) with:
 
 - Root directory: `/`
 - Build command: `npm run check`
 - Deploy command: `npx wrangler deploy`
 - Production branch: `main`
+
+Preview builds are disabled. The deployment uses the account's existing Workers Builds authorization; no deployment credentials are stored in this repository. Build status appears as the `Workers Builds: ridgefolio` check on GitHub commits.
 
 The static assets are configured in `wrangler.jsonc`. Domain bindings are `ridgefolio.com` and `www.ridgefolio.com`. Cloudflare zone settings handle HTTPS and the canonical www redirect. The GitHub workflow reports browser compatibility separately from Cloudflare's deployment check.
 
