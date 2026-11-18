@@ -2,7 +2,7 @@
 
 Source for [ridgefolio.com](https://ridgefolio.com), an independent software engineering practice serving public agencies and delivery partners.
 
-A static HTML, CSS and JavaScript site with self-hosted fonts, inline SVG icons and the selected computational ridge graphic. No framework or runtime CDN is required. Contact links open the visitor's own mail app; this site does not collect form submissions.
+A static HTML, CSS and JavaScript site with self-hosted fonts, inline SVG icons and the selected computational ridge graphic. No framework or runtime CDN is required. Call-to-action links open the Ridgefolio booking page at https://cal.com/ridgefolio/intro. The email option opens the visitor's mail app addressed to rishabh@ridgefolio.com; this site does not collect form submissions.
 
 ## Develop
 

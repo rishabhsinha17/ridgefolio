@@ -54,8 +54,10 @@ test('mobile navigation, keyboard dismissal and contact destinations', async ({ 
   await menu.press('Escape');
   await expect(menu).toHaveAttribute('aria-expanded', 'false');
   await expect(menu).toBeFocused();
-  await expect(page.locator('.contact-email')).toHaveAttribute('href', 'mailto:rsinha17@terpmail.umd.edu');
-  await expect(page.locator('.field-contact > a')).toHaveAttribute('href', /^mailto:rsinha17@terpmail\.umd\.edu/);
+  await expect(page.locator('.contact-email')).toHaveAttribute('href', 'mailto:rishabh@ridgefolio.com');
+  for (const selector of ['.nav-cta', '.field-copy .field-link', '.field-contact > a']) {
+    await expect(page.locator(selector)).toHaveAttribute('href', 'https://cal.com/ridgefolio/intro');
+  }
   await expect(page.locator('.field-work-row').nth(1)).toHaveAttribute('href', 'https://github.com/IBM/vLLM-Hook/pull/41');
   await expect(page.locator('.field-work-row').nth(2)).toHaveAttribute('href', 'https://arxiv.org/abs/2610.37679');
 });
