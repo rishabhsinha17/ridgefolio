@@ -1,6 +1,10 @@
 """Case study of Rishabh Sinha's work at the University of Maryland."""
 
+import json
+from collections import Counter
 from html import escape
+from pathlib import Path
+from urllib.parse import quote
 
 TITLE = "Mapping Indonesia’s industrial parks"
 SUMMARY = "How Rishabh Sinha built a public map and a repeatable publishing process for the University of Maryland’s Center for Global Sustainability."
@@ -37,29 +41,78 @@ def contents():
 
 def atlas():
     return f"""<section class="atlas-wrap wrap" id="the-map" aria-labelledby="atlas-heading">
-    <div class="atlas-title"><div><span class="tag">Project data · May 2025</span><h2 id="atlas-heading">One archipelago, 141 parks.</h2></div><p>Explore the status recorded for each park in the handover dataset.</p></div>
-    <div class="atlas" data-atlas><div class="atlas-map"><img src="/assets/editorial/archipelago-parks.webp" width="1440" height="660" alt="Industrial park locations across Indonesia, clustered most densely on Java."><canvas aria-hidden="true"></canvas></div>
-    <div class="atlas-tools" hidden><div><label for="atlas-status">Filter by status</label><select id="atlas-status"></select></div><div><label for="atlas-park">Inspect a park</label><select id="atlas-park"></select></div>
+    <div class="atlas-title"><div><span class="tag">Industrial parks atlas · May 2025</span><h2 id="atlas-heading">Explore the archipelago.</h2></div><p>Choose a region or a park to see where the research team located it.</p></div>
+    <div class="atlas" data-atlas><div class="atlas-topline"><b>Indonesia</b><span>CGS handover dataset</span></div>
+    <div class="atlas-map"><img class="atlas-static" src="/assets/cgs-atlas/overview.webp" width="4000" height="1888" alt="Industrial parks across Indonesia, with the densest concentrations on Java and Sumatra."><div class="atlas-viewport" hidden role="region" aria-label="Interactive map of Indonesia’s industrial parks"></div></div>
+    <div class="atlas-key"><span><i class="single-key"></i> One park</span><span class="group-legend"><i class="group-key">3</i> <span class="group-text">Nearby parks</span></span><small>Relief · NASA / Natural Earth</small></div>
+    <div class="atlas-tools" hidden><div><label for="atlas-region">Explore a region</label><select id="atlas-region"></select></div><div><label for="atlas-status">Filter by status</label><select id="atlas-status"></select></div><div><label for="atlas-park">Inspect a park</label><select id="atlas-park"></select></div>
     <p class="atlas-result" role="status" aria-live="polite"></p></div></div>
-    <p class="figure-credit">Ridgefolio rendering of the {link(SNAPSHOT + "data/geojson/statusGeojsonData.geojson", "CGS status file")}. Boundaries from {link("https://www.naturalearthdata.com/", "Natural Earth")}. Nearby points overlap at this scale.</p></section>"""
+    <p class="figure-credit">Park coordinates and status come from the {link(SNAPSHOT + "data/geojson/statusGeojsonData.geojson", "CGS status file")}. Shaded relief uses {link("https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/", "NASA Blue Marble")}. Rivers, boundaries and places come from {link("https://www.naturalearthdata.com/", "Natural Earth")}. <span class="interactive-note">Select a numbered group to see its parks.</span></p></section>"""
+
+
+STATUS_COLORS = (
+    ("Operational", "operating", "Operational"),
+    ("Operational with Continued Construction", "expanding", "Operating and expanding"),
+    ("Under Construction", "building", "Under construction"),
+    ("Before Construction", "planned", "Before construction"),
+    ("Stalled", "stalled", "Stalled"),
+    ("Unclear", "unclear", "Unclear"),
+)
+POWER_SOURCES = (
+    ("grid", "PLN grid"), ("unclear", "Provider unclear"), ("gas", "Captive gas"),
+    ("solar", "Solar"), ("coal", "Captive coal"), ("bio", "Bioenergy"), ("hydro", "Hydropower"),
+)
+
+
+def chart_records():
+    source = Path(__file__).resolve().parents[1] / "public" / "assets" / "parks.json"
+    return json.loads(source.read_text())
+
+
+def region_figure():
+    records = chart_records()
+    regions = Counter(row["region"] for row in records)
+    by_status = Counter((row["region"], row["status"]) for row in records)
+    largest = max(regions.values())
+    rows, table = [], []
+    for name, total in regions.most_common():
+        segments, values = [], []
+        for status, key, _ in STATUS_COLORS:
+            count = by_status[name, status]
+            values.append(f"<td>{count}</td>")
+            if count:
+                segments.append(f'<i class="stratum-{key}" style="width:{count / total:.4%}" title="{escape(status)} · {count}"></i>')
+        rows.append(f'<li><a href="?region={quote(name)}#the-map" data-region="{escape(name)}" title="Explore {escape(name)} on the map"><span>{name}</span>'
+                    f'<span class="region-track"><span class="region-stack" style="width:{total / largest:.4%}">{"".join(segments)}</span></span><b>{total}</b></a></li>')
+        table.append(f'<tr><th scope="row">{name}</th>{"".join(values)}<td>{total}</td></tr>')
+    key = "".join(f'<span><i class="stratum-{css}"></i>{name}</span>' for _, css, name in STATUS_COLORS)
+    columns = "".join(f'<th scope="col">{short}</th>' for _, _, short in STATUS_COLORS)
+    return (
+        '<figure class="data-exhibit regional-exhibit"><figcaption><span class="exhibit-kicker">Industrial parks by region</span>'
+        f'<strong>{regions["Java"] + regions["Sumatra"]} of {len(records)} parks are in the Java and Sumatra regions.</strong></figcaption>'
+        f'<ol class="region-bars">{"".join(rows)}</ol><div class="status-legend">{key}</div>'
+        '<details class="chart-table"><summary>Read the counts by status</summary><div class="table-scroll" tabindex="0" aria-label="Park counts by region and status">'
+        f'<table><caption>Industrial parks by region and reported status</caption><thead><tr><th scope="col">Region</th>{columns}<th scope="col">Total</th></tr></thead><tbody>{"".join(table)}</tbody></table></div></details>'
+        f'<p class="chart-source">One status per park. Recalculated from the {link(SNAPSHOT + "data/master/CGS_Industrial_Parks_Sept_2024.csv", "archived master CSV")} '
+        f'using the {link(SNAPSHOT + "dashboard.html#L430-L467", "original regional chart calculation")}.</p></figure>'
+    )
 
 
 def energy_figure():
-    # Count one park for each source flag set to 1 in the linked historical CSV.
-    values = [
-        ("PLN grid", 84),
-        ("Provider unclear", 37),
-        ("Captive gas", 22),
-        ("Solar", 22),
-        ("Captive coal", 19),
-        ("Bioenergy", 10),
-        ("Hydropower", 2),
-    ]
+    records = chart_records()
+    counts = Counter(source for park in records for source in park["power"])
+    total = len(records)
     bars = "".join(
-        f'<li><span>{name}</span><span class="bar-track" aria-hidden="true"><i style="width:{count / 141:.2%}"></i></span><strong>{count}</strong></li>'
-        for name, count in values
+        f'<li><span>{label}</span><span class="energy-track" aria-hidden="true"><i style="width:{counts[key] / total:.4%}"></i></span><b>{counts[key]}</b></li>'
+        for key, label in POWER_SOURCES
     )
-    return f"""<figure class="energy-figure"><figcaption><strong>Electricity sources in the parks data</strong><span>Number of parks with each source flag</span></figcaption><ul>{bars}</ul><p>One park can appear in several rows. Recalculated from the {link(SNAPSHOT + "data/master/CGS_Industrial_Parks_Sept_2024.csv", "archived September CSV")} using the {link(SNAPSHOT + "dashboard.html#L569", "original chart calculation")}.</p></figure>"""
+    return (
+        '<figure class="data-exhibit energy-exhibit"><figcaption><span class="exhibit-kicker">Electricity sources</span>'
+        f'<strong>{counts["grid"]} parks report a connection to the PLN grid.</strong></figcaption>'
+        f'<div class="energy-axis" aria-hidden="true"><span>0</span><span>Share of {total} parks</span><span>100%</span></div>'
+        f'<ol class="energy-bars">{bars}</ol><p class="chart-source">Counts show parks reporting each source. A park can report several. '
+        f'Source flags in the {link(SNAPSHOT + "data/master/CGS_Industrial_Parks_Sept_2024.csv", "archived CSV")} follow the {link(SNAPSHOT + "dashboard.html#L569", "original calculation")}.</p></figure>'
+    )
 
 
 def case_study():

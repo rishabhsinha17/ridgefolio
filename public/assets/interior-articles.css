@@ -19,12 +19,12 @@
   #freeform-page #blog-hero h1[hidden] {display:none}
   #blog-post-page #blog-hero .blog-date {font-size:12.8px;line-height:1.8;text-transform:uppercase;margin:0 0 20px}
   #blog-post-page #blog-hero .blog-author {font-size:16px;line-height:1.8;font-weight:700;color:var(--rv-ink);margin:0 0 30px}
-  :is(#freeform-page,#blog-post-page) #blog-hero #down-arrow {height:0;position:relative;margin:0}
-  :is(#freeform-page,#blog-post-page) #blog-hero #down-arrow .down {
+  :is(#freeform-page,#blog-post-page) #blog-hero #down-arrow:not([data-scroll-control]) {height:0;position:relative;margin:0}
+  :is(#freeform-page,#blog-post-page) #blog-hero #down-arrow:not([data-scroll-control]) .down {
     display:flex;align-items:center;justify-content:flex-start;position:absolute;left:0;bottom:-30px;
     width:44px;height:44px;margin:0;color:var(--rv-ink);
   }
-  :is(#freeform-page,#blog-post-page) #blog-hero #down-arrow svg {width:20px;height:30px}
+  :is(#freeform-page,#blog-post-page) #blog-hero #down-arrow:not([data-scroll-control]) svg {width:20px;height:30px}
   :is(#freeform-page,#blog-post-page) .main-wrap>#blog-lg-img {
     position:relative;display:block;padding:0;margin:0;overflow:visible;min-height:0;background:var(--rv-tint);
   }

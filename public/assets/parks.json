@@ -3,846 +3,1606 @@
   "name": "Bantaeng Industrial Park (BIP)",
   "status": "Operational with Continued Construction",
   "lon": 120.06631,
-  "lat": -5.5767
+  "lat": -5.5767,
+  "region": "Sulawesi",
+  "province": "South Sulawesi",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Batamindo Industrial Park",
   "status": "Operational",
   "lon": 104.02584,
-  "lat": 1.06984
+  "lat": 1.06984,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "gas",
+   "solar"
+  ]
  },
  {
   "name": "Bekasi International Industrial Estate",
   "status": "Operational",
   "lon": 107.13636,
-  "lat": -6.3406
+  "lat": -6.3406,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "gas",
+   "solar",
+   "coal",
+   "bio"
+  ]
  },
  {
   "name": "Bintan Inti Industrial Estate",
   "status": "Operational",
   "lon": 104.26083,
-  "lat": 1.0073
+  "lat": 1.0073,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "gas"
+  ]
  },
  {
   "name": "Bintang Industrial Park (I)",
   "status": "Operational",
   "lon": 103.92552,
-  "lat": 1.05622
+  "lat": 1.05622,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Bintang Industrial Park II",
   "status": "Operational",
   "lon": 103.9257,
-  "lat": 1.0562
+  "lat": 1.0562,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Bintuni Bay Industrial Estate / Kawasan Industri Teluk Bintuni",
   "status": "Under Construction",
   "lon": 133.12949,
-  "lat": -2.45233
+  "lat": -2.45233,
+  "region": "Papua",
+  "province": "Southwest Papua",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "BSB Industrial Park",
   "status": "Operational",
   "lon": 110.32903,
-  "lat": -7.04251
+  "lat": -7.04251,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Cammo Industrial Park",
   "status": "Operational",
   "lon": 104.04656,
-  "lat": 1.11267
+  "lat": 1.11267,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Cibinong Center Industrial Estate",
   "status": "Operational",
   "lon": 106.90704,
-  "lat": -6.47048
+  "lat": -6.47048,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Citra Buana Industrial Park I",
   "status": "Operational",
   "lon": 104.02027,
-  "lat": 1.15302
+  "lat": 1.15302,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Citra Buana Industrial Park II",
   "status": "Operational",
   "lon": 104.01192,
-  "lat": 1.16675
+  "lat": 1.16675,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Citra Buana Industrial Park III",
   "status": "Operational",
   "lon": 104.0629,
-  "lat": 1.11067
+  "lat": 1.11067,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Delma Industrial Park",
   "status": "Unclear",
   "lon": 117.85609,
-  "lat": 2.5578
+  "lat": 2.5578,
+  "region": "Kalimantan",
+  "province": "North Kalimantan",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Dragon Industrial Park",
   "status": "Operational",
   "lon": 104.12439,
-  "lat": 1.07244
+  "lat": 1.07244,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "East Jakarta Industrial Park",
   "status": "Operational",
   "lon": 107.12235,
-  "lat": -6.32787
+  "lat": -6.32787,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "gas",
+   "solar",
+   "coal",
+   "bio"
+  ]
  },
  {
   "name": "Executive Industrial Park",
   "status": "Operational",
   "lon": 104.06028,
-  "lat": 1.11292
+  "lat": 1.11292,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Greenland International Industrial Center (GIIC)",
   "status": "Operational",
   "lon": 107.19184,
-  "lat": -6.39371
+  "lat": -6.39371,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Griya Idola Industrial Park",
   "status": "Operational",
   "lon": 106.54378,
-  "lat": -6.22397
+  "lat": -6.22397,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Hijrah Industrial Park",
   "status": "Operational",
   "lon": 104.04897,
-  "lat": 1.11551
+  "lat": 1.11551,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Horizon Industrial Park",
   "status": "Operational",
   "lon": 103.94723,
-  "lat": 1.02051
+  "lat": 1.02051,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Indah Industrial Park",
   "status": "Operational",
   "lon": 104.02277,
-  "lat": 1.13638
+  "lat": 1.13638,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Indonesia Huabao Industrial Park (IHIP)",
   "status": "Under Construction",
   "lon": 121.77111,
-  "lat": -2.2872
+  "lat": -2.2872,
+  "region": "Sulawesi",
+  "province": "Central Sulawesi",
+  "power": [
+   "grid",
+   "solar",
+   "coal",
+   "hydro"
+  ]
  },
  {
   "name": "Indonesia Konawe Industrial Park (IKIP)",
   "status": "Before Construction",
   "lon": 121.85395,
-  "lat": -3.01176
+  "lat": -3.01176,
+  "region": "Sulawesi",
+  "province": "Southeast Sulawesi",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Indonesia Morowali Industrial Park (IMIP)",
   "status": "Operational with Continued Construction",
   "lon": 122.16191,
-  "lat": -2.83038
+  "lat": -2.83038,
+  "region": "Sulawesi",
+  "province": "Central Sulawesi",
+  "power": [
+   "solar",
+   "coal"
+  ]
  },
  {
   "name": "Indonesia Weda Bay Industrial Park (IWIP)",
   "status": "Operational with Continued Construction",
   "lon": 127.98499,
-  "lat": 0.47915
+  "lat": 0.47915,
+  "region": "Maluku Islands",
+  "province": "North Maluku",
+  "power": [
+   "coal"
+  ]
  },
  {
   "name": "Jakarta Industrial Estate Pulogadung",
   "status": "Operational",
   "lon": 106.91124,
-  "lat": -6.18852
+  "lat": -6.18852,
+  "region": "Java",
+  "province": "Jakarta",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Jatengland Industrial Park Sayung / Jawa Tengah Lahan Andalan",
   "status": "Operational with Continued Construction",
   "lon": 110.54986,
-  "lat": -6.92746
+  "lat": -6.92746,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Java Integrated Industrial and Port Estate / KEK Gresik",
   "status": "Operational with Continued Construction",
   "lon": 112.60729,
-  "lat": -7.0863
+  "lat": -7.0863,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid",
+   "gas",
+   "solar"
+  ]
  },
  {
   "name": "Kabil Integrated Industrial Park",
   "status": "Operational",
   "lon": 104.11756,
-  "lat": 1.05917
+  "lat": 1.05917,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kalimantan Industrial Park Indonesia (KIPI) / Kawasan Industri Hijau Indonesia (KIHI)",
   "status": "Under Construction",
   "lon": 117.85905,
-  "lat": 2.52875
+  "lat": 2.52875,
+  "region": "Kalimantan",
+  "province": "North Kalimantan",
+  "power": [
+   "coal",
+   "hydro"
+  ]
  },
  {
   "name": "Kaltim Industrial Estate",
   "status": "Operational with Continued Construction",
   "lon": 117.49929,
-  "lat": 0.13587
+  "lat": 0.13587,
+  "region": "Kalimantan",
+  "province": "East Kalimantan",
+  "power": [
+   "gas"
+  ]
  },
  {
   "name": "Kara Industrial Park",
   "status": "Operational",
   "lon": 104.04492,
-  "lat": 1.11072
+  "lat": 1.11072,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Karawang International Industrial City",
   "status": "Operational",
   "lon": 107.27429,
-  "lat": -6.35967
+  "lat": -6.35967,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "solar"
+  ]
  },
  {
   "name": "Karawang Jabar Industrial Estate",
   "status": "Unclear",
   "lon": 107.25116,
-  "lat": -6.35944
+  "lat": -6.35944,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Karawang New Industrial City",
   "status": "Under Construction",
   "lon": 107.23762,
-  "lat": -6.40226
+  "lat": -6.40226,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Berikat Nusantara",
   "status": "Operational",
   "lon": 106.93571,
-  "lat": -6.14054
+  "lat": -6.14054,
+  "region": "Java",
+  "province": "Jakarta",
+  "power": [
+   "grid",
+   "solar"
+  ]
  },
  {
   "name": "Kawasan Industri Aceh - Ladong",
   "status": "Under Construction",
   "lon": 95.45809,
-  "lat": 5.64627
+  "lat": 5.64627,
+  "region": "Sumatra",
+  "province": "Aceh",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Antam Timur",
   "status": "Before Construction",
   "lon": 121.59926,
-  "lat": -4.19007
+  "lat": -4.19007,
+  "region": "Sulawesi",
+  "province": "Southeast Sulawesi",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Artha Industrial Hill",
   "status": "Operational with Continued Construction",
   "lon": 107.23806,
-  "lat": -6.39036
+  "lat": -6.39036,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri ATI (Anugrah Tambang Industri)",
   "status": "Under Construction",
   "lon": 122.33582,
-  "lat": -3.09198
+  "lat": -3.09198,
+  "region": "Sulawesi",
+  "province": "Central Sulawesi",
+  "power": [
+   "gas"
+  ]
  },
  {
   "name": "Kawasan Industri Batulicin / Setangga SEZ",
   "status": "Operational with Continued Construction",
   "lon": 116.06569,
-  "lat": -3.28477
+  "lat": -3.28477,
+  "region": "Kalimantan",
+  "province": "South Kalimantan",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Batuta / Batuta Chemical Industrial Park (BCIP)",
   "status": "Under Construction",
   "lon": 117.74653,
-  "lat": 0.75716
+  "lat": 0.75716,
+  "region": "Kalimantan",
+  "province": "East Kalimantan",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Buli",
   "status": "Operational with Continued Construction",
   "lon": 128.24947,
-  "lat": 0.84309
+  "lat": 0.84309,
+  "region": "Maluku Islands",
+  "province": "North Maluku",
+  "power": [
+   "grid",
+   "gas"
+  ]
  },
  {
   "name": "Kawasan Industri Candi",
   "status": "Operational",
   "lon": 110.36002,
-  "lat": -6.99253
+  "lat": -6.99253,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Cikembar",
   "status": "Under Construction",
   "lon": 106.76797,
-  "lat": -6.96063
+  "lat": -6.96063,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Cilacap",
   "status": "Before Construction",
   "lon": 109.00538,
-  "lat": -7.69269
+  "lat": -7.69269,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri dan Pergudangan Cikupamas",
   "status": "Operational",
   "lon": 106.50955,
-  "lat": -6.2071
+  "lat": -6.2071,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri dan Pergudangan Taman Tekno BSD",
   "status": "Operational",
   "lon": 106.68375,
-  "lat": -6.32382
+  "lat": -6.32382,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Dumai",
   "status": "Operational",
   "lon": 101.6376,
-  "lat": 1.6514
+  "lat": 1.6514,
+  "region": "Sumatra",
+  "province": "Riau",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri EFI",
   "status": "Under Construction",
   "lon": 128.00868,
-  "lat": 1.43564
+  "lat": 1.43564,
+  "region": "Maluku Islands",
+  "province": "North Maluku",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Gobel",
   "status": "Operational",
   "lon": 107.10118,
-  "lat": -6.2671
+  "lat": -6.2671,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Gresik",
   "status": "Operational",
   "lon": 112.63514,
-  "lat": -7.15878
+  "lat": -7.15878,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri GT Tech Park",
   "status": "Operational",
   "lon": 107.24106,
-  "lat": -6.36423
+  "lat": -6.36423,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Indotaisei (Kota Bukit Indah)",
   "status": "Operational",
   "lon": 107.42057,
-  "lat": -6.42699
+  "lat": -6.42699,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "gas"
+  ]
  },
  {
   "name": "Kawasan Industri Jababeka",
   "status": "Operational",
   "lon": 107.16845,
-  "lat": -6.29664
+  "lat": -6.29664,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "gas",
+   "solar",
+   "coal",
+   "bio"
+  ]
  },
  {
   "name": "Kawasan Industri Kariangau",
   "status": "Operational with Continued Construction",
   "lon": 116.79035,
-  "lat": -1.17762
+  "lat": -1.17762,
+  "region": "Kalimantan",
+  "province": "East Kalimantan",
+  "power": [
+   "grid",
+   "coal"
+  ]
  },
  {
   "name": "Kawasan Industri Kendal",
   "status": "Operational",
   "lon": 110.24579,
-  "lat": -6.93724
+  "lat": -6.93724,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "grid",
+   "gas"
+  ]
  },
  {
   "name": "Kawasan Industri Ketapang Bangun Sarana (KBS)",
   "status": "Operational with Continued Construction",
   "lon": 110.10696,
-  "lat": -2.243
+  "lat": -2.243,
+  "region": "Kalimantan",
+  "province": "West Kalimantan",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Kujang Cikampek",
   "status": "Operational",
   "lon": 107.44177,
-  "lat": -6.41241
+  "lat": -6.41241,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "solar"
+  ]
  },
  {
   "name": "Kawasan Industri Lampung (KAIL) / Kawasan Industri Tanjung Bintang Lampung",
   "status": "Operational",
   "lon": 105.37984,
-  "lat": -5.38603
+  "lat": -5.38603,
+  "region": "Sumatra",
+  "province": "Lampung",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Lion",
   "status": "Operational with Continued Construction",
   "lon": 107.51179,
-  "lat": -6.49758
+  "lat": -6.49758,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Lippo Cikarang",
   "status": "Operational",
   "lon": 107.12601,
-  "lat": -6.326
+  "lat": -6.326,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "gas",
+   "solar",
+   "coal",
+   "bio"
+  ]
  },
  {
   "name": "Kawasan Industri Makassar (KIMA)",
   "status": "Operational with Continued Construction",
   "lon": 119.4979,
-  "lat": -5.10464
+  "lat": -5.10464,
+  "region": "Sulawesi",
+  "province": "South Sulawesi",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Malindo Cipta Perkasa",
   "status": "Operational",
   "lon": 104.01177,
-  "lat": 1.16555
+  "lat": 1.16555,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Marunda Center",
   "status": "Operational",
   "lon": 106.97423,
-  "lat": -6.10202
+  "lat": -6.10202,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Medan (KIM)",
   "status": "Operational",
   "lon": 98.68205,
-  "lat": 3.6728
+  "lat": 3.6728,
+  "region": "Sumatra",
+  "province": "North Sumatra",
+  "power": [
+   "grid",
+   "coal"
+  ]
  },
  {
   "name": "Kawasan Industri Mitrakarawang",
   "status": "Operational",
   "lon": 107.31061,
-  "lat": -6.3817
+  "lat": -6.3817,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri MOS/Jatiluhur Industrial Smart City",
   "status": "Under Construction",
   "lon": 107.41696,
-  "lat": -6.50206
+  "lat": -6.50206,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Motui",
   "status": "Before Construction",
   "lon": 122.46205,
-  "lat": -3.80139
+  "lat": -3.80139,
+  "region": "Sulawesi",
+  "province": "Southeast Sulawesi",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Nikomas Gemilang",
   "status": "Operational",
   "lon": 106.32309,
-  "lat": -6.16089
+  "lat": -6.16089,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Palu / KEK Palu",
   "status": "Operational with Continued Construction",
   "lon": 119.87029,
-  "lat": -0.71233
+  "lat": -0.71233,
+  "region": "Sulawesi",
+  "province": "Central Sulawesi",
+  "power": [
+   "grid",
+   "solar"
+  ]
  },
  {
   "name": "Kawasan Industri Pancapuri",
   "status": "Operational with Continued Construction",
   "lon": 106.02536,
-  "lat": -5.99574
+  "lat": -5.99574,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Pasar Kemis",
   "status": "Operational",
   "lon": 106.53452,
-  "lat": -6.17197
+  "lat": -6.17197,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Piyungan Creative Economy Park",
   "status": "Operational",
   "lon": 110.45317,
-  "lat": -7.84137
+  "lat": -7.84137,
+  "region": "Java",
+  "province": "Special Region of Yogyakarta",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri PT. Stardust Estate Investment / Delong Nickel Phase III",
   "status": "Under Construction",
   "lon": 121.40679,
-  "lat": -2.01153
+  "lat": -2.01153,
+  "region": "Sulawesi",
+  "province": "Central Sulawesi",
+  "power": [
+   "coal"
+  ]
  },
  {
   "name": "Kawasan Industri Pulau Obi / Obi Island Industrial Park",
   "status": "Operational",
   "lon": 127.41774,
-  "lat": -1.53709
+  "lat": -1.53709,
+  "region": "Maluku Islands",
+  "province": "North Maluku",
+  "power": [
+   "solar",
+   "coal"
+  ]
  },
  {
   "name": "Kawasan Industri Purati Kencana Alam",
   "status": "Operational",
   "lon": 106.49202,
-  "lat": -6.20484
+  "lat": -6.20484,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Rancaekek",
   "status": "Operational",
   "lon": 107.79966,
-  "lat": -6.96202
+  "lat": -6.96202,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Sadai/ Sadai Integrated Industrial and Port Estate (SIIPE)",
   "status": "Under Construction",
   "lon": 106.7259,
-  "lat": -3.018
+  "lat": -3.018,
+  "region": "Sumatra",
+  "province": "Bangka Belitung Islands",
+  "power": [
+   "unclear",
+   "bio"
+  ]
  },
  {
   "name": "Kawasan Industri Safe N Lock",
   "status": "Operational",
   "lon": 112.73941,
-  "lat": -7.46256
+  "lat": -7.46256,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Segajung / Batang Industrial Park",
   "status": "Under Construction",
   "lon": 109.79741,
-  "lat": -6.96257
+  "lat": -6.96257,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Sei Mangkei (KEK)",
   "status": "Operational",
   "lon": 99.34053,
-  "lat": 3.13329
+  "lat": 3.13329,
+  "region": "Sumatra",
+  "province": "North Sumatra",
+  "power": [
+   "grid",
+   "solar",
+   "bio"
+  ]
  },
  {
   "name": "Kawasan Industri Sekupang Makmur Abadi / Sekupang Logistic",
   "status": "Operational",
   "lon": 103.92457,
-  "lat": 1.12928
+  "lat": 1.12928,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Sentul",
   "status": "Operational with Continued Construction",
   "lon": 106.85403,
-  "lat": -6.52589
+  "lat": -6.52589,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri SiRIE",
   "status": "Operational",
   "lon": 112.73718,
-  "lat": -7.4597
+  "lat": -7.4597,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri SKI",
   "status": "Operational",
   "lon": 107.10168,
-  "lat": -6.31556
+  "lat": -6.31556,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Suge",
   "status": "Operational",
   "lon": 107.59355,
-  "lat": -2.88577
+  "lat": -2.88577,
+  "region": "Sumatra",
+  "province": "Bangka Belitung Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Sumbawa Barat",
   "status": "Under Construction",
   "lon": 116.75568,
-  "lat": -8.90565
+  "lat": -8.90565,
+  "region": "Nusa Tenggara",
+  "province": "West Nusa Tenggara",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Sumber Rezeki",
   "status": "Under Construction",
   "lon": 106.44771,
-  "lat": -6.30958
+  "lat": -6.30958,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Surya Borneo",
   "status": "Under Construction",
   "lon": 111.75128,
-  "lat": -2.70513
+  "lat": -2.70513,
+  "region": "Kalimantan",
+  "province": "Central Kalimantan",
+  "power": [
+   "coal",
+   "bio"
+  ]
  },
  {
   "name": "Kawasan Industri Taifa",
   "status": "Under Construction",
   "lon": 107.79832,
-  "lat": -6.51397
+  "lat": -6.51397,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Tanjung Buton (KITB)",
   "status": "Before Construction",
   "lon": 102.2449,
-  "lat": 0.96028
+  "lat": 0.96028,
+  "region": "Sumatra",
+  "province": "Riau",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Tanjung Enim",
   "status": "Stalled",
   "lon": 103.80459,
-  "lat": -3.84524
+  "lat": -3.84524,
+  "region": "Sumatra",
+  "province": "South Sumatra",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Tenayan",
   "status": "Stalled",
   "lon": 101.51518,
-  "lat": 0.54339
+  "lat": 0.54339,
+  "region": "Sumatra",
+  "province": "Riau",
+  "power": [
+   "grid",
+   "gas"
+  ]
  },
  {
   "name": "Kawasan Industri Terboyo Semarang",
   "status": "Operational",
   "lon": 110.47228,
-  "lat": -6.95319
+  "lat": -6.95319,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "coal"
+  ]
  },
  {
   "name": "Kawasan Industri Terpadu Indonesia China",
   "status": "Operational",
   "lon": 107.18098,
-  "lat": -6.38023
+  "lat": -6.38023,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Terpadu Wilmar",
   "status": "Operational with Continued Construction",
   "lon": 106.08807,
-  "lat": -6.00452
+  "lat": -6.00452,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri Tuban",
   "status": "Operational",
   "lon": 111.90871,
-  "lat": -6.78662
+  "lat": -6.78662,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Kawasan Industri VDNI / Kawasan Industri Morosi / Delong Industrial Park",
   "status": "Operational",
   "lon": 122.40595,
-  "lat": -3.8751
+  "lat": -3.8751,
+  "region": "Sulawesi",
+  "province": "Southeast Sulawesi",
+  "power": [
+   "coal"
+  ]
  },
  {
   "name": "Kawasan Industri Waylaga Bizpark",
   "status": "Unclear",
   "lon": 105.32982,
-  "lat": -5.42592
+  "lat": -5.42592,
+  "region": "Sumatra",
+  "province": "Lampung",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Wijayakusuma",
   "status": "Operational",
   "lon": 110.32603,
-  "lat": -6.97395
+  "lat": -6.97395,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kawasan Industri Wiraraja",
   "status": "Operational",
   "lon": 104.12806,
-  "lat": 1.0571
+  "lat": 1.0571,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "KEK Galang Batang / Kawasan Industri Galang Batang / Nanshan Industrial Park",
   "status": "Operational with Continued Construction",
   "lon": 104.65359,
-  "lat": 0.92041
+  "lat": 0.92041,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "solar",
+   "coal"
+  ]
  },
  {
   "name": "KEK Maloy Batuta Trans Kalimantan",
   "status": "Stalled",
   "lon": 117.93037,
-  "lat": 0.8168
+  "lat": 0.8168,
+  "region": "Kalimantan",
+  "province": "East Kalimantan",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Kertajati Industrial Estate Majalengka",
   "status": "Before Construction",
   "lon": 108.16806,
-  "lat": -6.71849
+  "lat": -6.71849,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "gas"
+  ]
  },
  {
   "name": "Ketapang Ecology and Agriculture Forestry Industrial Park (Keafip)",
   "status": "Operational",
   "lon": 110.01005,
-  "lat": -1.78813
+  "lat": -1.78813,
+  "region": "Kalimantan",
+  "province": "West Kalimantan",
+  "power": [
+   "unclear",
+   "bio"
+  ]
  },
  {
   "name": "KITB / Kawasan Industri Terpadu Batang / Grand Batang City",
   "status": "Under Construction",
   "lon": 109.96429,
-  "lat": -6.93005
+  "lat": -6.93005,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "grid",
+   "gas",
+   "solar"
+  ]
  },
  {
   "name": "Kota Bukit Indah Industrial City",
   "status": "Operational",
   "lon": 107.46193,
-  "lat": -6.45029
+  "lat": -6.45029,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "gas",
+   "solar"
+  ]
  },
  {
   "name": "Krakatau Industrial Estate Cilegon",
   "status": "Operational with Continued Construction",
   "lon": 106.04321,
-  "lat": -6.00083
+  "lat": -6.00083,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "grid",
+   "gas"
+  ]
  },
  {
   "name": "Latrade Industrial Park",
   "status": "Operational",
   "lon": 103.92488,
-  "lat": 1.05039
+  "lat": 1.05039,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Lytech Industrial Park",
   "status": "Operational",
   "lon": 104.06457,
-  "lat": 1.10811
+  "lat": 1.10811,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Maspion Industrial Estate",
   "status": "Operational",
   "lon": 112.61222,
-  "lat": -7.12702
+  "lat": -7.12702,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Medanstar Industrial Estate (KIM Star Industrial Estate)",
   "status": "Operational",
   "lon": 98.81114,
-  "lat": 3.53659
+  "lat": 3.53659,
+  "region": "Sumatra",
+  "province": "North Sumatra",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Mega Cipta Industrial Park",
   "status": "Operational",
   "lon": 104.01036,
-  "lat": 1.17805
+  "lat": 1.17805,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Millennium Industrial Estate",
   "status": "Operational",
   "lon": 106.52783,
-  "lat": -6.25963
+  "lat": -6.25963,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "MM2100 Industrial Town Bekasi Fajar Industrial Estate (BFIE)",
   "status": "Operational",
   "lon": 107.07713,
-  "lat": -6.29939
+  "lat": -6.29939,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "gas",
+   "solar",
+   "coal",
+   "bio"
+  ]
  },
  {
   "name": "MM2100 Industrial Town MMID",
   "status": "Operational",
   "lon": 107.07756,
-  "lat": -6.29446
+  "lat": -6.29446,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "gas",
+   "solar",
+   "coal",
+   "bio"
+  ]
  },
  {
   "name": "Modern Cikande Industrial Estate",
   "status": "Operational",
   "lon": 106.34039,
-  "lat": -6.18548
+  "lat": -6.18548,
+  "region": "Java",
+  "province": "Banten",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Ngoro Industrial Park",
   "status": "Operational",
   "lon": 112.61817,
-  "lat": -7.55224
+  "lat": -7.55224,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Nongsa Digital Park",
   "status": "Operational with Continued Construction",
   "lon": 104.10155,
-  "lat": 1.18562
+  "lat": 1.18562,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid",
+   "gas"
+  ]
  },
  {
   "name": "Padang Industrial Park",
   "status": "Unclear",
   "lon": 100.37101,
-  "lat": -0.9435
+  "lat": -0.9435,
+  "region": "Sumatra",
+  "province": "West Sumatra",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Panbil Industrial Estate",
   "status": "Operational",
   "lon": 104.02537,
-  "lat": 1.0793
+  "lat": 1.0793,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "gas"
+  ]
  },
  {
   "name": "Pasuruan Industrial Estate Rembang / Kawasan Industri PIER",
   "status": "Operational",
   "lon": 112.81832,
-  "lat": -7.61538
+  "lat": -7.61538,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Podomoro Industrial Park",
   "status": "Stalled",
   "lon": 107.24761,
-  "lat": -6.36826
+  "lat": -6.36826,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Pulahan Seruwai Industrial Estate",
   "status": "Operational",
   "lon": 99.56507,
-  "lat": 2.82407
+  "lat": 2.82407,
+  "region": "Sumatra",
+  "province": "North Sumatra",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Puri Industrial Park 2000",
   "status": "Operational",
   "lon": 104.05686,
-  "lat": 1.11569
+  "lat": 1.11569,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Qingdao Indonesia Comprehensive Industrial Park / Hengshun Zhongsheng Industrial Park",
   "status": "Operational with Continued Construction",
   "lon": 122.26931,
-  "lat": -3.05236
+  "lat": -3.05236,
+  "region": "Sulawesi",
+  "province": "Central Sulawesi",
+  "power": [
+   "coal"
+  ]
  },
  {
   "name": "Sarana Industrial Point (SIP)",
   "status": "Operational",
   "lon": 104.07185,
-  "lat": 1.10474
+  "lat": 1.10474,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Sidoarjo Industrial Estate Berbek",
   "status": "Operational",
   "lon": 112.7583,
-  "lat": -7.3441
+  "lat": -7.3441,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Sorong Special Economic Zone",
   "status": "Stalled",
   "lon": 131.24347,
-  "lat": -1.02917
+  "lat": -1.02917,
+  "region": "Papua",
+  "province": "West Papua",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Surabaya Industrial Estate Rungkut",
   "status": "Operational",
   "lon": 112.75823,
-  "lat": -7.33096
+  "lat": -7.33096,
+  "region": "Java",
+  "province": "East Java",
+  "power": [
+   "grid",
+   "solar"
+  ]
  },
  {
   "name": "Suryacipta IE / Suryacipta City of Industry",
   "status": "Operational",
   "lon": 107.32771,
-  "lat": -6.37357
+  "lat": -6.37357,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "solar"
+  ]
  },
  {
   "name": "Suryacipta Subang Smartpolitan",
   "status": "Under Construction",
   "lon": 107.60449,
-  "lat": -6.47161
+  "lat": -6.47161,
+  "region": "Java",
+  "province": "West Java",
+  "power": [
+   "grid",
+   "solar"
+  ]
  },
  {
   "name": "Taiwan International Park",
   "status": "Operational",
   "lon": 104.12044,
-  "lat": 1.09809
+  "lat": 1.09809,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Takalar Integrated Industrial Park (TIIP)",
   "status": "Before Construction",
   "lon": 119.44852,
-  "lat": -5.57529
+  "lat": -5.57529,
+  "region": "Sulawesi",
+  "province": "South Sulawesi",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Tanjung Emas Export Processing Zone",
   "status": "Operational",
   "lon": 110.4324,
-  "lat": -6.94841
+  "lat": -6.94841,
+  "region": "Java",
+  "province": "Central Java",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "Tunas Batam Center Industrial Estate",
   "status": "Operational",
   "lon": 104.07481,
-  "lat": 1.10868
+  "lat": 1.10868,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "gas"
+  ]
  },
  {
   "name": "Tunas Industri Kabil",
   "status": "Operational",
   "lon": 104.12605,
-  "lat": 1.05894
+  "lat": 1.05894,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "unclear"
+  ]
  },
  {
   "name": "Union Industrial Park",
   "status": "Operational",
   "lon": 104.01614,
-  "lat": 1.16681
+  "lat": 1.16681,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "grid"
+  ]
  },
  {
   "name": "West Point Maritime Industrial Park",
   "status": "Stalled",
   "lon": 103.92488,
-  "lat": 1.12763
+  "lat": 1.12763,
+  "region": "Sumatra",
+  "province": "Riau Islands",
+  "power": [
+   "unclear"
+  ]
  }
 ]

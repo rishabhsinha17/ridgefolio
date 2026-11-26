@@ -143,7 +143,7 @@
 :where(.rv-home) #responsive {overflow:hidden;background:var(--rv-tint)}
 :where(.rv-home) #responsive .responsive-shots {position:relative;align-self:center;padding:0 0 9% 10%}
 :where(.rv-home) #responsive .shot1 {width:112%;max-width:none;height:auto;display:block;border:5px solid #233a2d;border-radius:8px;box-shadow:0 10px 42px #23382b26}
-:where(.rv-home) #responsive .shot2 {width:29%;position:absolute;bottom:0;left:0;height:auto;border:4px solid #233a2d;border-radius:13px;box-shadow:0 9px 26px #23382b3b}
+:where(.rv-home) #responsive .shot2 {width:29%;position:absolute;bottom:0;left:0;height:auto;filter:drop-shadow(0 8px 10px #23382b38)}
 
 :where(.rv-home) #quotes {background:#e2e9df;overflow:hidden}
 :where(.rv-home) #quotes .container>.row {align-items:stretch}
@@ -277,7 +277,7 @@
 .rv-home .owl-nav [role=button] {display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--rv-line);cursor:pointer;color:var(--rv-accent);font:400 22px/1 var(--sans)}
 .rv-home .owl-nav [role=button]:is(:hover,:focus-visible) {background:var(--rv-accent);color:var(--rv-on-accent)}
 .rv-home .testimonials [role=link] {color:var(--rv-accent);font-size:14px;font-weight:700;cursor:pointer;text-underline-offset:4px;text-decoration:underline}
-.rv-home .testimonials [role=link]::after {content:" ↗"}
+
 .rv-home .owl-dots:empty {display:none}
 @media (max-width:991px) {
   .rv-home {--space:50px}
@@ -325,7 +325,9 @@
 .rv-home .project-carousel.owl-loaded {position:relative}
 .rv-home .project-carousel .owl-nav {position:absolute;left:0;right:0;bottom:-54px}
 @media (min-width:992px) {
-  .rv-home #home-hero .caption-wrap {margin-top:max(72px,calc((100svh - 735px)/2))}
+  /* Center the lead at tall desktop sizes; keep a real gap below the
+     90px fixed navigation even on a short laptop display. */
+  .rv-home #home-hero .caption-wrap {margin-top:max(118px,calc((100svh - 574px)/2))}
 }
 @media (max-width:767px) {
   .rv-home #welcome-header h2 {font-size:clamp(18px,5.5vw,24px);line-height:1.36}
@@ -359,7 +361,7 @@
   .rv-home #quotes .testimonials {min-height:433px}
   .rv-home #quotes #about {min-height:0}
   .rv-home #quotes .client-shot {width:min(71vw,1000px);height:calc(100% + 110px);max-width:none;inset:-65px auto auto min(0px,calc((1400px - 100vw) / 2 - 100px));clip-path:inset(0 9% 0 0)}
-  .rv-home #quotes #about::after {content:"Java at night · NASA / Johnson Space Center";position:absolute;left:20px;bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
+  .rv-home #quotes #about::after {content:"Morowali Industrial Park · Ministry of Public Works of Indonesia";position:absolute;left:20px;bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
   .rv-home #blog-list .row+.row {gap:0}
 }
 @media(max-width:767px) {
@@ -388,15 +390,78 @@
 }
 
 
-.rv-home #blog-list {--dome-photo:url("/assets/home-evidence/dome-1440.webp")}
-@media (min-width:540px) and (max-width:991px) {
-  .rv-home #blog-list {--dome-photo:url("/assets/home-evidence/dome-2400.webp")}
-}
-
 @media (min-width:992px) {
   .rv-home #responsive {overflow:clip}
   .rv-home #responsive .col-md-5>.sticky-element {top:clamp(80px,calc(100svh - 650px),250px)}
   .rv-home #responsive .responsive-shots {display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
   .rv-home #responsive .responsive-shots>img {grid-area:1/1}
   .rv-home #responsive .shot2 {position:sticky;top:min(150px,16.67svh);left:auto;margin-left:-20px}
+}
+
+.rv-home #quotes .client-shot {object-position:52% 52%}
+.rv-home #quotes #about::after {max-width:90%}
+.rv-home #blog-list .cover[data-photo-credit]::after {
+  content:attr(data-photo-credit);position:absolute;inset:auto auto 10px 10px;
+  padding:4px 7px;background:#142b24e8;color:white;font:500 11px/1.4 var(--sans);
+}
+.rv-home #blog-list a[href="/resources/project-brief/"] .blog-image {background-position:43% 46%}
+@media (max-width:991px) {
+  .rv-home #blog-list a[href="/resources/project-brief/"] .blog-image {aspect-ratio:3/2}
+}
+
+/* Field photographs alternate with product evidence around three concentric
+   tracks. Every crop is local so the artwork survives restrictive clients. */
+.rv-home #apps .rotaing {background-image:none}
+.rv-home #apps .rotaing>div::before,.rv-home #apps .rotaing>div::after {
+  border-radius:50%;border:0;aspect-ratio:1;box-shadow:0 0 0 2px var(--rv-tint);
+}
+.rv-home #apps .rotaing .one::before {background-image:url("/assets/home-evidence/field-map-test-900.webp")!important;background-position:40% 44%}
+.rv-home #apps .rotaing .one::after {background-image:url("/assets/cgs-atlas/morowali-960.webp")!important;background-position:60% 57%}
+.rv-home #apps .rotaing .two::before {background-image:url("/assets/home-evidence/planning-workshop-1000.webp")!important;background-position:51% 42%}
+.rv-home #apps .rotaing .two::after {background-image:url("/assets/home-evidence/research-priorities.webp")!important;background-position:50% 40%}
+.rv-home #apps .rotaing .three::before {background-image:url("/assets/article-evidence/service-ledger-960.webp")!important;background-position:32% 40%}
+.rv-home #apps .rotaing .three::after {background-image:url("/assets/home-evidence/design-method-cards.webp")!important;background-position:52% 50%}
+@media (max-width:767px) {
+  .rv-home #apps .rotaing {height:clamp(140px,46vw,260px);overflow:hidden;margin-top:12px}
+  .rv-home #apps .rotaing>div {display:block;inset:0;border:0!important;box-shadow:none;background:none}
+  .rv-home #apps .rotaing>div::before,.rv-home #apps .rotaing>div::after {inset:auto;width:22%;transform:none}
+  .rv-home #apps .rotaing .one::before {top:28%;left:1%}
+  .rv-home #apps .rotaing .one::after {width:27%;top:46%;right:9%}
+  .rv-home #apps .rotaing .two::before {width:16%;top:5%;left:27%}
+  .rv-home #apps .rotaing .two::after {width:12%;top:52%;left:43%}
+  .rv-home #apps .rotaing .three::before {width:13%;top:79%;left:25%}
+  .rv-home #apps .rotaing .three::after {width:19%;top:0;right:4%}
+}
+
+.rv-home #featured-projects a[href="/demos/permit-desk/"] .project-image {background-position:62% 44%}
+.rv-home #featured-projects a[href="/demos/finder/"] .project-image {background-position:50% 48%}
+.rv-home #featured-projects a[href="/work/open-source/"] .project-image {background-position:38% 50%}
+.rv-home #featured-projects a[href="/work/evaluation/"] .project-image {
+  background-color:#fff;background-size:contain;background-repeat:no-repeat;background-position:50% 50%;
+}
+.rv-home #blog-list a[href="/pricing/"] .blog-image {background-position:59% 50%}
+@media (max-width:991px) {
+  .rv-home #blog-list a[href="/pricing/"] .blog-image {aspect-ratio:3/2}
+}
+
+/* Above the phone breakpoint the artboard keeps its native perspective scale.
+   At tablet widths the caption uses the first row, followed by the artwork. */
+@media (min-width:768px) {
+  .rv-home #home-hero .animatable {transform:none}
+}
+@media (min-width:992px) {
+  .rv-home #home-hero .col-sm-7 {margin-top:max(0px,calc((100svh - 501px)/2))}
+}
+@media (min-width:768px) and (max-width:991px) {
+  .rv-home #home-hero .row {display:block}
+  .rv-home #home-hero .caption-wrap {width:100%}
+  .rv-home #home-hero .col-sm-7 {width:58.333333%}
+  .rv-home #home-hero .perspective-section {top:150px}
+}
+
+.rv-home .simple-project .project-image {background-image:var(--project-image)}
+@media (min-width:1921px) and (min-resolution:1.5dppx) {
+  .rv-home #featured-projects a[href="/work/open-source/"] .project-image {
+    background-image:url("/assets/interior-art/review-changes-3840.webp");
+  }
 }

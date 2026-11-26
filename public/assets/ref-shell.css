@@ -68,8 +68,7 @@ html:not(.ref-shell-ready) [data-ref-header] .mega-drop:target {display: block}
 [data-ref-header] .mega-drop .social-col .btn {
   display: inline-flex; min-height: 44px; padding: 6px 0; background: none; color: var(--shell-secondary); font-weight: 650;
 }
-[data-ref-header] .mega-drop .social-col .btn::before,
-[data-ref-header] .link-btn .btn-link::before {content: "›"; display: inline; color: var(--shell-secondary); margin-right: 8px}
+
 [data-ref-header] .mega-drop .small {display: flex; align-items: center; gap: 7px; margin: 0 0 18px; color: var(--shell-secondary); font-size: 14px; font-weight: 650}
 [data-ref-header] .mega-drop a.h4 {
   display: block; width: fit-content; margin: 0 0 clamp(12px, 1.5vw, 24px); color: var(--shell-ink);

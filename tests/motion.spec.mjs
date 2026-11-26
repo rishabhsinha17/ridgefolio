@@ -1,0 +1,59 @@
+import { test, expect } from './browser.mjs';
+
+test('the hero arrow changes direction at its rail, stays clickable and returns keyboard focus', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  const wrapper = page.locator('#down-arrow-sticky-wrapper');
+  const origin = await wrapper.evaluate(element => element.getBoundingClientRect().top + window.scrollY);
+  const scroll = y => page.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), y);
+  const forward = wrapper.getByRole('link', { name: 'Explore the practice' });
+  await scroll(origin - 203);
+  await expect(forward).toBeVisible();
+  await forward.focus();
+  await scroll(origin - 197);
+  const back = wrapper.getByRole('link', { name: 'Back to the top' });
+  await expect(back).toBeFocused();
+  const hit = () => back.evaluate(link => {
+    const rect = link.getBoundingClientRect();
+    return rect.width >= 44 && rect.height >= 44 && rect.left >= 0 &&
+      rect.right <= document.documentElement.clientWidth &&
+      link.contains(document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2));
+  });
+  await expect.poll(hit).toBe(true);
+  await scroll(origin + page.viewportSize().height * 2);
+  await expect.poll(hit).toBe(true);
+  await back.press('Enter');
+  await expect(page).toHaveURL(/#home-hero$/);
+  await expect(forward).toBeVisible();
+  await expect(back).toHaveCount(0);
+});
+
+test('reduced motion leaves manual carousel navigation and a single vector per link', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const rail = page.locator('.project-carousel');
+  await expect(rail.locator('.rf-rotation')).toBeHidden();
+  await expect(rail.getByRole('button', { name: 'Next project' }).locator('svg')).toHaveCount(1);
+  const record = page.locator('.testimonials .owl-item:not(.cloned) [role=link]').first();
+  await expect(record.locator('svg.rf-diagonal-arrow')).toHaveCount(1);
+  expect(await record.evaluate(link => getComputedStyle(link, '::after').content)).toBe('none');
+  await expect(page.locator('[data-art-reveal="waiting"]')).toHaveCount(0);
+});
+
+test('article templates keep just one pinned arrow above the scrolled page', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const route of ['/demos/finder/', '/services/websites/']) {
+    await page.goto(route);
+    await page.locator('#blog-lg-img').evaluate(image => {
+      window.scrollTo({ top: image.getBoundingClientRect().top + scrollY - 76, behavior: 'instant' });
+    });
+    const rail = page.locator('#down-arrow');
+    await expect(rail).toHaveCSS('position', 'fixed');
+    await expect(rail.locator('.down')).toHaveCSS('opacity', '0');
+    await expect(rail.locator('.up')).toHaveCSS('opacity', '1');
+    await expect(rail.locator('.up')).toHaveAttribute('aria-hidden', 'false');
+    const position = await rail.locator('.up').boundingBox();
+    expect(position.y).toBeCloseTo(page.viewportSize().width < 768 ? page.viewportSize().height - 170 : 180, 0);
+  }
+});

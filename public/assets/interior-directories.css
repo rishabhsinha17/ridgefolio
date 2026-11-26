@@ -6,8 +6,8 @@
 :is(#apps-page, #blog-page, #contact-page) .main-wrap > section .btn {
   min-height: 50px; padding: 0 27px; margin-block: 0; font-size: 16px; font-weight: 700;
 }
-:is(#apps-page, #blog-page) #down-arrow {height: 0; margin: 0}
-:is(#apps-page, #blog-page) #down-arrow a.down {position: absolute; bottom: -30px; left: 0}
+:is(#apps-page, #blog-page) #down-arrow:not([data-scroll-control]) {height: 0; margin: 0}
+:is(#apps-page, #blog-page) #down-arrow:not([data-scroll-control]) a.down {position: absolute; bottom: -30px; left: 0}
 
 #apps-page #apps .lead {font-size: 21px; line-height: 1.6; margin: 0 0 50px}
 @media screen and (min-width: 992px) {
@@ -121,7 +121,7 @@
   #contact-page #contact-hero address {margin: 12px 0}
 }
 @media (max-width: 767px) {
-  :is(#apps-page, #blog-page) #down-arrow a.down {bottom: -10px}
+  :is(#apps-page, #blog-page) #down-arrow:not([data-scroll-control]) a.down {bottom: -10px}
   #apps-page #apps .rotaing {height: 200px}
   #apps-page #apps .rotaing > div {top: 350px}
   #blog-page .blog-list-article .row:last-child > .col-xs-6 {margin-top: 5px}

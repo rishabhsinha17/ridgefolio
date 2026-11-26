@@ -173,12 +173,39 @@ test('homepage templates retain the source hierarchy before enhancement', async 
   const liveTrees = await page.evaluate(ids => {
     const transient = new Set(['active', 'center', 'aos-init', 'aos-animate']);
     function tree(el) {
+      // The source's unused pagination slot now holds the rotation control.
+      // Its location, the two original nav controls, slide links and structure
+      // still participate in the same source fingerprint.
+      if (el.matches('.owl-dots.rf-rotation[role="button"]')) return 'div.owl-dots.disabled()';
       const classes = [...el.classList].filter(token => !transient.has(token));
-      return el.localName + '.' + classes.join('.') + '(' + [...el.children].map(tree).join('') + ')';
+      // The hero artwork now enters when visible, which can happen below the
+      // first phone viewport. Compare the structure in its settled state.
+      if (el.matches('.animatable') && !classes.includes('animated')) classes.push('animated');
+      const structural = [...el.children].filter(child => !child.matches(
+        'svg[aria-hidden="true"].rf-control-icon, svg[aria-hidden="true"].rf-diagonal-arrow'
+      ));
+      return el.localName + '.' + classes.join('.') + '(' + structural.map(tree).join('') + ')';
     }
     return ids.map(id => [id, tree(document.getElementById(id))]);
   }, Object.keys(enhanced));
   for (const [id, value] of liveTrees) {
     expect(createHash('sha256').update(value).digest('hex'), 'rendered ' + id).toBe(enhanced[id]);
   }
+});
+
+test('the landing caption clears the navigation and the handset uses a detailed screen', async ({page}) => {
+  await page.goto('/');
+  const clearance = await page.locator('#home-hero .caption-inner > span').evaluate(lead =>
+    lead.getBoundingClientRect().top - document.querySelector('header').getBoundingClientRect().bottom
+  );
+  expect(clearance).toBeGreaterThanOrEqual(24);
+  const handset = page.locator('#responsive .shot2');
+  await handset.scrollIntoViewIfNeeded();
+  await expect.poll(() => handset.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  const image = await handset.evaluate(element => ({
+    url: element.currentSrc,
+    ratio: element.naturalWidth / element.naturalHeight,
+  }));
+  expect(image.url).toMatch(/atlas-iphone-(650|1308)\.webp$/);
+  expect(image.ratio).toBeCloseTo(436 / 876, 2);
 });

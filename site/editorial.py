@@ -87,14 +87,28 @@ def estimate_link(email):
 
 def social_image(path):
     if path == "/":
-        return "/assets/showcase/hero-wide.webp", "Ridgefolio demonstrations and founder projects"
+        return "/assets/home-evidence/homepage-share.jpg", "Ridgefolio’s homepage with its public agency project gallery"
     if path == "/work/industrial-parks/":
-        return "/assets/editorial/archipelago-parks.webp", "Map of industrial parks in Indonesia"
-    if path == "/work/":
-        return (
-            "/assets/editorial/industrial-parks.webp",
-            "Map of industrial parks in Indonesia",
-        )
+        return "/assets/cgs-atlas/morowali-share.jpg", "Daylight at Morowali Industrial Park in Central Sulawesi, Indonesia"
+    photographic_previews = {
+        "/services/": ("public-terminals", "Public computer terminals at the Patterson Park library"),
+        "/services/websites/": ("public-terminals", "Public computer terminals at the Patterson Park library"),
+        "/services/workflows/": ("public-market", "Shoppers at Alexandria’s Old Town Farmers’ Market"),
+        "/demos/finder/": ("kiosk", "Information kiosk on Market Street in San Francisco"),
+        "/demos/service-ledger/": ("service-areas", "Map of Washington, D.C., library collections in 1926"),
+        "/resources/": ("library-interior", "Interior of the Allen County Public Library"),
+        "/resources/project-brief/": ("library-elevation", "Historic architectural elevation of Taunton’s Carnegie library"),
+        "/resources/launch-checklist/": ("reading-by-touch", "A woman reading braille in an archival photograph"),
+        "/pricing/": ("railway-plan", "Historic measured plan of San Francisco’s cable railway powerhouse"),
+        "/for/agencies/": ("innovation-center", "Daylight at the Route 9 Library and Innovation Center"),
+        "/for/partners/": ("review-changes", "Published changes to the kvcached worker cleanup workflow"),
+        "/work/open-source/": ("review-changes", "The reviewed changes in kvcached pull request 480"),
+    }
+    if path in photographic_previews:
+        source, description = photographic_previews[path]
+        return f"/assets/interior-art/{source}-1536.webp", description
+    if path in ("/work/", "/services/data/"):
+        return "/assets/cgs-atlas/overview-1536.webp", "Industrial park locations and regional geography of Indonesia"
     if path == "/work/evaluation/":
         return (
             "/assets/editorial/monitor-results.webp",

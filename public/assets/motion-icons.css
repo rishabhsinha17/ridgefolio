@@ -1,0 +1,107 @@
+/* The scroll rail is measured against the original anchor in the layout.
+   Its small, transparent popover has only one hit target. */
+@media screen {
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] {
+    display:block; position:relative; inset:auto; overflow:visible; z-index:8;
+    margin:0; padding:0; width:0; height:0; border:0; background:transparent;
+    pointer-events:none; color:var(--rv-ink,#19392d);
+  }
+  #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] {
+    position:fixed; inset:200px auto auto var(--origin-x);
+  }
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a:is(.up,.down) {
+    box-sizing:border-box; position:absolute; display:grid; place-items:center; justify-content:center;
+    width:44px; height:44px; margin:0; padding:0; border:0; border-radius:0;
+    left:-12px; right:auto; top:-14px; bottom:auto; transform:rotate(0);
+    pointer-events:auto; font:inherit; box-shadow:none;
+  }
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a.down {
+    color:var(--rv-ink,#19392d); background:transparent;
+  }
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a.up {
+    opacity:0; color:var(--rv-on-accent,#fff); background:var(--rv-accent,#20563d);
+  }
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a[inert] {pointer-events:none}
+  #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a {
+    left:var(--travel-x); top:-20px; width:50px; height:50px; transform:rotate(180deg);
+  }
+  #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a.up {opacity:1;z-index:1}
+  #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a.down {opacity:0}
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a svg {
+    position:static; width:20px; height:31px; fill:currentColor; transform:none;
+  }
+  #down-arrow[data-scroll-control] a:focus-visible {outline:3px solid currentColor;outline-offset:-4px}
+  html:is(.ref-menu-open,.ref-contact-open) #down-arrow-sticky-wrapper .up {visibility:hidden}
+  @media (max-width:767px) {
+    #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a:is(.up,.down) {top:-34px}
+    #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a {top:clamp(-65px,calc(100dvh - 370px),calc(100dvh - 260px))}
+  }
+}
+.rf-diagonal-arrow {display:inline-block; width:.82em; height:.82em; vertical-align:-.035em; flex:none}
+.rf-control-icon {display:block; width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.65; stroke-linecap:round; stroke-linejoin:round}
+[data-ref-header] .mega-drop .social-col .btn::before,
+[data-ref-header] .link-btn .btn-link::before {
+  content:""; display:inline-block; width:.72em; height:.72em; flex:0 0 auto; margin-right:8px;
+  background-color:currentColor;
+  -webkit-mask:var(--rf-chevron) center/contain no-repeat; mask:var(--rf-chevron) center/contain no-repeat;
+}
+:root {
+  --rf-chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m8 4 8 8-8 8' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion:no-preference) {
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a {
+    transition-property:left,top,width,height,transform,opacity;
+    transition-duration:1s; transition-timing-function:cubic-bezier(.86,0,.07,1);
+  }
+  .rv-home #home-hero .animatable:not(.animated) .card {animation:none}
+  .rv-home #apps .rotaing > div, .rv-interior #apps .rotaing > div {
+    animation: rf-orbit 67s cubic-bezier(.35,0,.35,1) infinite; animation-play-state:paused;
+  }
+  .rv-home #apps .rotaing > .two, .rv-interior #apps .rotaing > .two {animation-duration:50s}
+  .rv-home #apps .rotaing > .three, .rv-interior #apps .rotaing > .three {animation-duration:70s;--orbit-angle:-19deg}
+  .rv-home #apps .rotaing[data-orbit-running] > div,.rv-interior #apps .rotaing[data-orbit-running] > div {animation-play-state:running}
+  @keyframes rf-orbit {0%,100% {rotate:0deg} 50% {rotate:var(--orbit-angle,21deg)}}
+  .rv-home [data-art-reveal="waiting"] {clip-path:inset(0 100% 0 0)}
+  .rv-home [data-art-reveal="visible"] {animation:rf-art-reveal .8s cubic-bezier(.76,0,.24,1)}
+  @keyframes rf-art-reveal {from {clip-path:inset(0 100% 0 0)} to {clip-path:inset(0)}}
+  .ref-menu-open [data-ref-header] .mega-drop {animation:rf-menu-in .26s ease-out}
+  @keyframes rf-menu-in {from {opacity:0;clip-path:inset(0 0 18%)} to {opacity:1;clip-path:inset(0)}}
+  .ref-contact-open #contact-form {animation:rf-contact-in .26s ease-out}
+  @keyframes rf-contact-in {from {opacity:.35;translate:0 18px} to {opacity:1;translate:0 0}}
+}
+@media (prefers-reduced-motion:reduce) {
+  #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a {transition:none}
+  .rv-home #apps .rotaing > div,.rv-interior #apps .rotaing > div {animation:none}
+}
+@media print {#down-arrow-sticky-wrapper {display:none!important}}
+.rv-home .owl-carousel.owl-loaded {position:relative}
+.rv-home .owl-carousel .rf-rotation {
+  display:inline-grid; place-items:center; position:absolute; bottom:0; z-index:1;
+  width:44px; height:44px; border:1px solid var(--rv-line); cursor:pointer;
+  background:var(--rv-paper); color:var(--rv-accent);
+}
+.rv-home .project-carousel .rf-rotation {left:calc(50% + 50px)}
+.rv-home .testimonials .rf-rotation {left:96px}
+.rv-home .owl-carousel .rf-rotation:is(:hover,:focus-visible) {color:var(--rv-on-accent);background:var(--rv-accent)}
+@media (prefers-reduced-motion:reduce) {.rv-home .owl-carousel .rf-rotation {display:none}}
+
+@media (prefers-reduced-motion:no-preference) {
+  #mega-drop-toggle :is(.bar,.bar-2) {transition:top .4s, width .4s, transform .4s cubic-bezier(.86,0,.07,1)}
+  :is(#mega-close,#contact-form-close) img {transition:rotate .65s cubic-bezier(.86,0,.07,1)}
+  :is(#mega-close,#contact-form-close):is(:hover,:focus-visible) img {rotate:180deg}
+  .rv-home #home-hero .animated :is(.card3,.card5,.card10,.card12,.card14) {
+    animation:home-plane-arrival 1.2s cubic-bezier(.25,.1,.35,1) both, rf-plane-float 4s 1.3s ease-in-out infinite;
+    animation-play-state:paused;
+  }
+  .rv-home #home-hero .animated[data-fly-running] :is(.card3,.card5,.card10,.card12,.card14) {animation-play-state:running}
+  .rv-home #home-hero .animated .card10 {animation-delay:.18s,1.5s}
+  .rv-home #home-hero .animated .card14 {animation-duration:1.2s,5s;animation-delay:.28s,1.6s}
+  @keyframes rf-plane-float {0%,100% {translate:0 0} 25% {translate:0 -2px} 75% {translate:0 2px}}
+}
+.rv-source.about-page .record-rotation {
+  display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--ri-line);
+  padding:0;background:var(--ri-paper);color:var(--ri-ink);cursor:pointer;
+}
+.rv-source.about-page .record-rotation:is(:hover,:focus-visible) {color:var(--ri-paper);background:var(--ri-ink)}
+.rv-source.about-page .record-rotation[hidden] {display:none}
+@media (prefers-reduced-motion:reduce) {.rv-source.about-page .record-rotation {display:none}}

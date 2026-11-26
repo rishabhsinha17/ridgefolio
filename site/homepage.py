@@ -10,15 +10,15 @@ HERO_SCREENS = (
     (2, "article-evidence/capability-1920.webp"),
     (3, "project-evidence/monitor-confidence.svg"),
     (4, "project-evidence/paper-page.webp"),
-    (5, "editorial/civic-center-1440.webp"),
-    (6, "project-evidence/parks-editorial.svg"),
-    (7, "article-evidence/launch-checklist-960.webp"),
-    (8, "editorial/java-at-night-1920.webp"),
-    (9, "article-evidence/project-brief-1920.webp"),
+    (5, "home-evidence/field-map-test.webp"),
+    (6, "cgs-atlas/overview.webp"),
+    (7, "home-evidence/design-method-cards.webp"),
+    (8, "cgs-atlas/morowali-1920.webp"),
+    (9, "home-evidence/planning-workshop.webp"),
     (10, "project-evidence/monitor-strata.svg"),
     (11, "article-evidence/finder-1920.webp"),
     (12, "editorial/city-hall-dome-1050.webp"),
-    (14, "project-evidence/parks-atlas.svg"),
+    (14, "interior-art/kiosk-960.webp"),
     (19, "home-evidence/finder.webp"),
     (20, "article-evidence/capability-sheet.webp"),
     (22, "article-evidence/service-ledger-1920.webp"),
@@ -26,18 +26,18 @@ HERO_SCREENS = (
 
 PROJECTS = (
     ("/work/industrial-parks/", "Indonesia’s industrial parks", "University of Maryland · Founder project", "home-evidence/sulawesi.webp"),
-    ("/demos/permit-desk/", "Permit desk", "Working demonstration", "home-evidence/permit-desk.webp"),
-    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "project-evidence/paper-page.webp"),
+    ("/demos/permit-desk/", "Permit desk", "Working demonstration", "interior-art/public-market-2560.webp"),
+    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "project-evidence/monitor-confidence.svg"),
     ("/demos/service-ledger/", "Service ledger", "Working demonstration", "home-evidence/service-ledger.webp"),
-    ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", "project-evidence/worker-review.webp"),
-    ("/demos/finder/", "Service finder", "Working demonstration", "home-evidence/finder.webp"),
+    ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", "interior-art/review-changes-2560.webp"),
+    ("/demos/finder/", "Service finder", "Working demonstration", "interior-art/kiosk-2560.webp"),
 )
 
 RESOURCES = (
-    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "home-evidence/project-brief.webp"),
+    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "home-evidence/planning-workshop.webp"),
     ("/resources/launch-checklist/", "Launch checklist", "Check accessibility, redirects, handover and the tasks residents need to complete.", "home-evidence/launch-checklist.webp"),
     ("/resources/capabilities/", "Capability statement", "A one-page overview of Ridgefolio’s services, delivery arrangements and founder experience.", "article-evidence/capability-sheet.webp"),
-    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "home-evidence/dome-1440.webp"),
+    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "interior-art/railway-plan-2560.webp"),
 )
 
 ENGINEERING = (
@@ -110,7 +110,7 @@ def apps():
 def projects():
     cards = []
     for url, title, credit, asset in PROJECTS:
-        art = f'<div class="project-image" style="background-image:url(/assets/{asset})"></div>'
+        art = f'<div class="project-image" style="--project-image:url(/assets/{asset})"></div>'
         cards.append(f'''<div class="item"><div class="simple-project"><a href="{url}">
           <div class="img-wrap">{art}</div><p class="h3">{escape(title)}<small>{escape(credit)}</small></p></a></div></div>''')
     return f'''<section id="our-work-header" class="padding-t-150-b-50"><div class="container" id="work"><div class="row">
@@ -131,7 +131,7 @@ def responsive():
       </div></div>
       <div class="col-md-6 col-md-offset-1 responsive-shots">
         <img class="shot1" src="/assets/home-evidence/atlas-desktop-1300.webp" srcset="/assets/home-evidence/atlas-desktop-740.webp 740w, /assets/home-evidence/atlas-desktop-1300.webp 1300w, /assets/home-evidence/atlas-desktop-2600.webp 2600w, /assets/home-evidence/atlas-desktop-3300.webp 3300w" sizes="(max-width: 991px) calc(100vw - 60px), min(1300px, 100vw)" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="lazy">
-        <img class="shot2 sticky-element" src="/assets/home-evidence/atlas-phone-600.webp" srcset="/assets/home-evidence/atlas-phone-600.webp 600w, /assets/home-evidence/atlas-phone-1200.webp 1200w" sizes="(max-width: 991px) 200px, 400px" alt="The same map and controls on a phone" width="400" height="780" loading="lazy">
+        <img class="shot2 sticky-element" src="/assets/home-evidence/atlas-iphone-650.webp" srcset="/assets/home-evidence/atlas-iphone-650.webp 650w, /assets/home-evidence/atlas-iphone-1308.webp 1308w" sizes="(max-width: 991px) 200px, 400px" alt="The industrial parks atlas on an iPhone, filtered to the 13 parks in Sulawesi" width="436" height="876" loading="lazy">
       </div></div></div></section>'''
 
 
@@ -144,7 +144,7 @@ def evidence():
         notes.append(f'<div class="item" data-source="{escape(url, quote=True)}"><div class="h3">{record}</div><p class="text-muted">{escape(label)}</p></div>')
     return f'''<section id="quotes" aria-label="Founder and studio project records"><div class="container" id="practice"><div class="row">
       <div class="col-md-5 hidden-sm hidden-xs" id="about">
-        <img class="client-shot" src="/assets/editorial/java-at-night-1920.webp" srcset="/assets/editorial/java-at-night-960.webp 960w, /assets/editorial/java-at-night-1920.webp 1920w, /assets/editorial/java-at-night-3200.webp 3200w" sizes="(max-width: 991px) 1px, min(1200px, 100vw)" alt="City lights trace the north coast of Java in an astronaut photograph from the International Space Station" width="5011" height="3341" loading="lazy"></div>
+        <img class="client-shot" src="/assets/cgs-atlas/morowali-1920.webp" srcset="/assets/cgs-atlas/morowali-960.webp 960w, /assets/cgs-atlas/morowali-1920.webp 1920w, /assets/cgs-atlas/morowali-4000.webp 4000w" sizes="(max-width: 991px) 1px, min(1200px, 100vw)" alt="Daylight view of Indonesia Morowali Industrial Park on the Central Sulawesi coast" width="4639" height="2980" loading="lazy"></div>
       <div class="col-md-5 col-md-offset-2 padding-t-150-b-50">{placeholder("testimonial-btn")}<div class="testimonials owl-carousel owl-theme" tabindex="0" aria-label="Eleven project records">
         {''.join(notes)}</div>
       </div></div></div></section>'''
@@ -153,9 +153,12 @@ def evidence():
 def library():
     cards = []
     for href, title, desc, asset in RESOURCES:
-        image = "var(--dome-photo)" if href == "/pricing/" else f"url(/assets/{asset})"
+        credit = ' data-photo-credit="Service design workshop · 18F"' if href == "/resources/project-brief/" else ""
+        if href == "/pricing/":
+            credit = ' data-photo-credit="San Francisco Cable Car Powerhouse · HAER"'
+        image = f"url(/assets/{asset})"
         cards.append(f'''<div class="col-md-3"><div class="blog-list-item"><a href="{href}">
-          <div class="blog-lest-img relative"><div class="blog-image" style="background-image:{image}"></div><div class="cover"></div></div>
+          <div class="blog-lest-img relative"><div class="blog-image" style="background-image:{image}"></div><div class="cover"{credit}></div></div>
           <h4>{escape(title)}</h4><p>{escape(desc)}</p><span class="btn btn-link">Open resource</span></a></div></div>''')
     return f'''<section id="blog-list" class="padding-tb-150"><div class="container">
       <div class="row"><div class="col-md-8">{placeholder()}<h3 class="h1">For buyers<br><span class="text-muted">Plan your next project.</span></h3></div>

@@ -1,0 +1,20 @@
+Indonesia Morowali Industrial Park photograph
+Ministry of Public Works of Indonesia, July 21, 2023. Source photograph, 4,639 × 2,980 pixels. The Wikimedia Commons file record identifies this as a public-domain Indonesian government work. Self-hosted derivatives have been resized and converted to WebP.
+https://commons.wikimedia.org/wiki/File:Morowali_Industrial_Park.jpg
+
+Industrial park locations, status, region and electricity source flags
+University of Maryland Center for Global Sustainability and its research partners. The May 2025 website handover preserves the status GeoJSON and master CSV. The case study credits the research team for the data and Rishabh Sinha for the website.
+https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/tree/673480b96b7dbfce3990cc9f72208c87c65b54a9/data
+
+Geographic base
+NASA Blue Marble Next Generation with Topography and Bathymetry. NASA GIBS supplied the geographic imagery. The 89°E–144°E, 15°S–14°N region was rendered at 6,600 × 3,480 pixels. Ridgefolio applied a light map palette to the source relief. The local detail map uses vector geography when the display exceeds the native sampling of the geographic image.
+https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/
+https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+
+Natural Earth 1:10m version 5.1.2 coastline, land polygons, rivers, first-order internal boundaries and populated places. Public domain. The local extracts are geographically clipped and simplified for this atlas.
+https://github.com/nvkelso/natural-earth-vector/tree/v5.1.2/geojson
+https://www.naturalearthdata.com/about/terms-of-use/
+
+Map software
+Leaflet 1.9.4, BSD 2-Clause. See LEAFLET-LICENSE.txt.
+https://leafletjs.com/

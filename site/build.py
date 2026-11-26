@@ -17,7 +17,7 @@ BASE = "https://ridgefolio.com"
 BOOK = navigation.BOOK
 EMAIL = "mailto:" + navigation.EMAIL
 pages = {}
-LINK_ARROW = '<svg aria-hidden="true" focusable="false" width=".82em" height=".82em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M4 3h9v9"/></svg>'
+LINK_ARROW = '<svg class="rf-diagonal-arrow" aria-hidden="true" focusable="false" width=".82em" height=".82em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M4 3h9v9"/></svg>'
 
 
 def a(url, label, cls=""):
@@ -477,11 +477,14 @@ for path, (title, desc, body, group) in pages.items():
     out = PUBLIC / "404.html" if path == not_found else PUBLIC / path.strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     is_cgs = path == "/work/industrial-parks/"
-    case_css = '<link rel="stylesheet" href="/assets/cgs.css">' if is_cgs else ""
+    case_css = (
+        '<link rel="stylesheet" href="/assets/cgs-atlas/leaflet.css">'
+        '<link rel="stylesheet" href="/assets/cgs.css">'
+    ) if is_cgs else ""
     scripts = (
-        '<script src="/assets/ref-shell.js" defer></script><script src="/assets/site.js" defer></script>'
-        + ('<script src="/assets/atlas.js" defer></script>' if is_cgs else "")
-        + ('<script src="/assets/showcase.js" defer></script>' if path == "/" else "")
+        '<script src="/assets/ref-shell.js" defer></script><script src="/assets/motion-icons.js" defer></script><script src="/assets/site.js" defer></script>'
+        + ('<script src="/assets/cgs-atlas/leaflet.js" defer></script><script src="/assets/atlas.js" defer></script>' if is_cgs else "")
+        + ('<script src="/assets/showcase.js" defer></script>' if path == "/" or path == "/practice/" or path.startswith("/for/") else "")
         + ('<script src="/assets/ridge.js" defer></script>' if path == "/practice/" else "")
         + ('<script src="/assets/interiors.js" defer></script>' if path != "/" else "")
     )
@@ -511,6 +514,8 @@ for path, (title, desc, body, group) in pages.items():
         else:
             stylesheet = "interior-articles"
         interior_css += f'<link rel="stylesheet" href="/assets/{stylesheet}.css">'
+        if path != "/work/industrial-parks/":
+            interior_css += '<link rel="stylesheet" href="/assets/interior-art.css">'
     robots = "noindex" if path == not_found else "index,follow"
     social_image, social_alt = ed.social_image(path)
     # Keep the source template’s section ordering and link the skip control to
@@ -531,7 +536,7 @@ for path, (title, desc, body, group) in pages.items():
     )
     page_body = page_body.replace("↗", LINK_ARROW)
     out.write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/ref-shell.css">{scripts}</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/ref-shell.css"><link rel="stylesheet" href="/assets/motion-icons.css">{scripts}</head>
 <body id="{template_id}" class="rz-page {body_class}"><a class="skip" href="#{target}">Skip to content</a>{page_body}</body></html>''')
 (PUBLIC / "assets/search.json").write_text(json.dumps(index, ensure_ascii=False))
 (PUBLIC / "sitemap.xml").write_text(
