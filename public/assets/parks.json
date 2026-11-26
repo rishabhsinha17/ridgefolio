@@ -1,0 +1,848 @@
+[
+ {
+  "name": "Bantaeng Industrial Park (BIP)",
+  "status": "Operational with Continued Construction",
+  "lon": 120.06631,
+  "lat": -5.5767
+ },
+ {
+  "name": "Batamindo Industrial Park",
+  "status": "Operational",
+  "lon": 104.02584,
+  "lat": 1.06984
+ },
+ {
+  "name": "Bekasi International Industrial Estate",
+  "status": "Operational",
+  "lon": 107.13636,
+  "lat": -6.3406
+ },
+ {
+  "name": "Bintan Inti Industrial Estate",
+  "status": "Operational",
+  "lon": 104.26083,
+  "lat": 1.0073
+ },
+ {
+  "name": "Bintang Industrial Park (I)",
+  "status": "Operational",
+  "lon": 103.92552,
+  "lat": 1.05622
+ },
+ {
+  "name": "Bintang Industrial Park II",
+  "status": "Operational",
+  "lon": 103.9257,
+  "lat": 1.0562
+ },
+ {
+  "name": "Bintuni Bay Industrial Estate / Kawasan Industri Teluk Bintuni",
+  "status": "Under Construction",
+  "lon": 133.12949,
+  "lat": -2.45233
+ },
+ {
+  "name": "BSB Industrial Park",
+  "status": "Operational",
+  "lon": 110.32903,
+  "lat": -7.04251
+ },
+ {
+  "name": "Cammo Industrial Park",
+  "status": "Operational",
+  "lon": 104.04656,
+  "lat": 1.11267
+ },
+ {
+  "name": "Cibinong Center Industrial Estate",
+  "status": "Operational",
+  "lon": 106.90704,
+  "lat": -6.47048
+ },
+ {
+  "name": "Citra Buana Industrial Park I",
+  "status": "Operational",
+  "lon": 104.02027,
+  "lat": 1.15302
+ },
+ {
+  "name": "Citra Buana Industrial Park II",
+  "status": "Operational",
+  "lon": 104.01192,
+  "lat": 1.16675
+ },
+ {
+  "name": "Citra Buana Industrial Park III",
+  "status": "Operational",
+  "lon": 104.0629,
+  "lat": 1.11067
+ },
+ {
+  "name": "Delma Industrial Park",
+  "status": "Unclear",
+  "lon": 117.85609,
+  "lat": 2.5578
+ },
+ {
+  "name": "Dragon Industrial Park",
+  "status": "Operational",
+  "lon": 104.12439,
+  "lat": 1.07244
+ },
+ {
+  "name": "East Jakarta Industrial Park",
+  "status": "Operational",
+  "lon": 107.12235,
+  "lat": -6.32787
+ },
+ {
+  "name": "Executive Industrial Park",
+  "status": "Operational",
+  "lon": 104.06028,
+  "lat": 1.11292
+ },
+ {
+  "name": "Greenland International Industrial Center (GIIC)",
+  "status": "Operational",
+  "lon": 107.19184,
+  "lat": -6.39371
+ },
+ {
+  "name": "Griya Idola Industrial Park",
+  "status": "Operational",
+  "lon": 106.54378,
+  "lat": -6.22397
+ },
+ {
+  "name": "Hijrah Industrial Park",
+  "status": "Operational",
+  "lon": 104.04897,
+  "lat": 1.11551
+ },
+ {
+  "name": "Horizon Industrial Park",
+  "status": "Operational",
+  "lon": 103.94723,
+  "lat": 1.02051
+ },
+ {
+  "name": "Indah Industrial Park",
+  "status": "Operational",
+  "lon": 104.02277,
+  "lat": 1.13638
+ },
+ {
+  "name": "Indonesia Huabao Industrial Park (IHIP)",
+  "status": "Under Construction",
+  "lon": 121.77111,
+  "lat": -2.2872
+ },
+ {
+  "name": "Indonesia Konawe Industrial Park (IKIP)",
+  "status": "Before Construction",
+  "lon": 121.85395,
+  "lat": -3.01176
+ },
+ {
+  "name": "Indonesia Morowali Industrial Park (IMIP)",
+  "status": "Operational with Continued Construction",
+  "lon": 122.16191,
+  "lat": -2.83038
+ },
+ {
+  "name": "Indonesia Weda Bay Industrial Park (IWIP)",
+  "status": "Operational with Continued Construction",
+  "lon": 127.98499,
+  "lat": 0.47915
+ },
+ {
+  "name": "Jakarta Industrial Estate Pulogadung",
+  "status": "Operational",
+  "lon": 106.91124,
+  "lat": -6.18852
+ },
+ {
+  "name": "Jatengland Industrial Park Sayung / Jawa Tengah Lahan Andalan",
+  "status": "Operational with Continued Construction",
+  "lon": 110.54986,
+  "lat": -6.92746
+ },
+ {
+  "name": "Java Integrated Industrial and Port Estate / KEK Gresik",
+  "status": "Operational with Continued Construction",
+  "lon": 112.60729,
+  "lat": -7.0863
+ },
+ {
+  "name": "Kabil Integrated Industrial Park",
+  "status": "Operational",
+  "lon": 104.11756,
+  "lat": 1.05917
+ },
+ {
+  "name": "Kalimantan Industrial Park Indonesia (KIPI) / Kawasan Industri Hijau Indonesia (KIHI)",
+  "status": "Under Construction",
+  "lon": 117.85905,
+  "lat": 2.52875
+ },
+ {
+  "name": "Kaltim Industrial Estate",
+  "status": "Operational with Continued Construction",
+  "lon": 117.49929,
+  "lat": 0.13587
+ },
+ {
+  "name": "Kara Industrial Park",
+  "status": "Operational",
+  "lon": 104.04492,
+  "lat": 1.11072
+ },
+ {
+  "name": "Karawang International Industrial City",
+  "status": "Operational",
+  "lon": 107.27429,
+  "lat": -6.35967
+ },
+ {
+  "name": "Karawang Jabar Industrial Estate",
+  "status": "Unclear",
+  "lon": 107.25116,
+  "lat": -6.35944
+ },
+ {
+  "name": "Karawang New Industrial City",
+  "status": "Under Construction",
+  "lon": 107.23762,
+  "lat": -6.40226
+ },
+ {
+  "name": "Kawasan Berikat Nusantara",
+  "status": "Operational",
+  "lon": 106.93571,
+  "lat": -6.14054
+ },
+ {
+  "name": "Kawasan Industri Aceh - Ladong",
+  "status": "Under Construction",
+  "lon": 95.45809,
+  "lat": 5.64627
+ },
+ {
+  "name": "Kawasan Industri Antam Timur",
+  "status": "Before Construction",
+  "lon": 121.59926,
+  "lat": -4.19007
+ },
+ {
+  "name": "Kawasan Industri Artha Industrial Hill",
+  "status": "Operational with Continued Construction",
+  "lon": 107.23806,
+  "lat": -6.39036
+ },
+ {
+  "name": "Kawasan Industri ATI (Anugrah Tambang Industri)",
+  "status": "Under Construction",
+  "lon": 122.33582,
+  "lat": -3.09198
+ },
+ {
+  "name": "Kawasan Industri Batulicin / Setangga SEZ",
+  "status": "Operational with Continued Construction",
+  "lon": 116.06569,
+  "lat": -3.28477
+ },
+ {
+  "name": "Kawasan Industri Batuta / Batuta Chemical Industrial Park (BCIP)",
+  "status": "Under Construction",
+  "lon": 117.74653,
+  "lat": 0.75716
+ },
+ {
+  "name": "Kawasan Industri Buli",
+  "status": "Operational with Continued Construction",
+  "lon": 128.24947,
+  "lat": 0.84309
+ },
+ {
+  "name": "Kawasan Industri Candi",
+  "status": "Operational",
+  "lon": 110.36002,
+  "lat": -6.99253
+ },
+ {
+  "name": "Kawasan Industri Cikembar",
+  "status": "Under Construction",
+  "lon": 106.76797,
+  "lat": -6.96063
+ },
+ {
+  "name": "Kawasan Industri Cilacap",
+  "status": "Before Construction",
+  "lon": 109.00538,
+  "lat": -7.69269
+ },
+ {
+  "name": "Kawasan Industri dan Pergudangan Cikupamas",
+  "status": "Operational",
+  "lon": 106.50955,
+  "lat": -6.2071
+ },
+ {
+  "name": "Kawasan Industri dan Pergudangan Taman Tekno BSD",
+  "status": "Operational",
+  "lon": 106.68375,
+  "lat": -6.32382
+ },
+ {
+  "name": "Kawasan Industri Dumai",
+  "status": "Operational",
+  "lon": 101.6376,
+  "lat": 1.6514
+ },
+ {
+  "name": "Kawasan Industri EFI",
+  "status": "Under Construction",
+  "lon": 128.00868,
+  "lat": 1.43564
+ },
+ {
+  "name": "Kawasan Industri Gobel",
+  "status": "Operational",
+  "lon": 107.10118,
+  "lat": -6.2671
+ },
+ {
+  "name": "Kawasan Industri Gresik",
+  "status": "Operational",
+  "lon": 112.63514,
+  "lat": -7.15878
+ },
+ {
+  "name": "Kawasan Industri GT Tech Park",
+  "status": "Operational",
+  "lon": 107.24106,
+  "lat": -6.36423
+ },
+ {
+  "name": "Kawasan Industri Indotaisei (Kota Bukit Indah)",
+  "status": "Operational",
+  "lon": 107.42057,
+  "lat": -6.42699
+ },
+ {
+  "name": "Kawasan Industri Jababeka",
+  "status": "Operational",
+  "lon": 107.16845,
+  "lat": -6.29664
+ },
+ {
+  "name": "Kawasan Industri Kariangau",
+  "status": "Operational with Continued Construction",
+  "lon": 116.79035,
+  "lat": -1.17762
+ },
+ {
+  "name": "Kawasan Industri Kendal",
+  "status": "Operational",
+  "lon": 110.24579,
+  "lat": -6.93724
+ },
+ {
+  "name": "Kawasan Industri Ketapang Bangun Sarana (KBS)",
+  "status": "Operational with Continued Construction",
+  "lon": 110.10696,
+  "lat": -2.243
+ },
+ {
+  "name": "Kawasan Industri Kujang Cikampek",
+  "status": "Operational",
+  "lon": 107.44177,
+  "lat": -6.41241
+ },
+ {
+  "name": "Kawasan Industri Lampung (KAIL) / Kawasan Industri Tanjung Bintang Lampung",
+  "status": "Operational",
+  "lon": 105.37984,
+  "lat": -5.38603
+ },
+ {
+  "name": "Kawasan Industri Lion",
+  "status": "Operational with Continued Construction",
+  "lon": 107.51179,
+  "lat": -6.49758
+ },
+ {
+  "name": "Kawasan Industri Lippo Cikarang",
+  "status": "Operational",
+  "lon": 107.12601,
+  "lat": -6.326
+ },
+ {
+  "name": "Kawasan Industri Makassar (KIMA)",
+  "status": "Operational with Continued Construction",
+  "lon": 119.4979,
+  "lat": -5.10464
+ },
+ {
+  "name": "Kawasan Industri Malindo Cipta Perkasa",
+  "status": "Operational",
+  "lon": 104.01177,
+  "lat": 1.16555
+ },
+ {
+  "name": "Kawasan Industri Marunda Center",
+  "status": "Operational",
+  "lon": 106.97423,
+  "lat": -6.10202
+ },
+ {
+  "name": "Kawasan Industri Medan (KIM)",
+  "status": "Operational",
+  "lon": 98.68205,
+  "lat": 3.6728
+ },
+ {
+  "name": "Kawasan Industri Mitrakarawang",
+  "status": "Operational",
+  "lon": 107.31061,
+  "lat": -6.3817
+ },
+ {
+  "name": "Kawasan Industri MOS/Jatiluhur Industrial Smart City",
+  "status": "Under Construction",
+  "lon": 107.41696,
+  "lat": -6.50206
+ },
+ {
+  "name": "Kawasan Industri Motui",
+  "status": "Before Construction",
+  "lon": 122.46205,
+  "lat": -3.80139
+ },
+ {
+  "name": "Kawasan Industri Nikomas Gemilang",
+  "status": "Operational",
+  "lon": 106.32309,
+  "lat": -6.16089
+ },
+ {
+  "name": "Kawasan Industri Palu / KEK Palu",
+  "status": "Operational with Continued Construction",
+  "lon": 119.87029,
+  "lat": -0.71233
+ },
+ {
+  "name": "Kawasan Industri Pancapuri",
+  "status": "Operational with Continued Construction",
+  "lon": 106.02536,
+  "lat": -5.99574
+ },
+ {
+  "name": "Kawasan Industri Pasar Kemis",
+  "status": "Operational",
+  "lon": 106.53452,
+  "lat": -6.17197
+ },
+ {
+  "name": "Kawasan Industri Piyungan Creative Economy Park",
+  "status": "Operational",
+  "lon": 110.45317,
+  "lat": -7.84137
+ },
+ {
+  "name": "Kawasan Industri PT. Stardust Estate Investment / Delong Nickel Phase III",
+  "status": "Under Construction",
+  "lon": 121.40679,
+  "lat": -2.01153
+ },
+ {
+  "name": "Kawasan Industri Pulau Obi / Obi Island Industrial Park",
+  "status": "Operational",
+  "lon": 127.41774,
+  "lat": -1.53709
+ },
+ {
+  "name": "Kawasan Industri Purati Kencana Alam",
+  "status": "Operational",
+  "lon": 106.49202,
+  "lat": -6.20484
+ },
+ {
+  "name": "Kawasan Industri Rancaekek",
+  "status": "Operational",
+  "lon": 107.79966,
+  "lat": -6.96202
+ },
+ {
+  "name": "Kawasan Industri Sadai/ Sadai Integrated Industrial and Port Estate (SIIPE)",
+  "status": "Under Construction",
+  "lon": 106.7259,
+  "lat": -3.018
+ },
+ {
+  "name": "Kawasan Industri Safe N Lock",
+  "status": "Operational",
+  "lon": 112.73941,
+  "lat": -7.46256
+ },
+ {
+  "name": "Kawasan Industri Segajung / Batang Industrial Park",
+  "status": "Under Construction",
+  "lon": 109.79741,
+  "lat": -6.96257
+ },
+ {
+  "name": "Kawasan Industri Sei Mangkei (KEK)",
+  "status": "Operational",
+  "lon": 99.34053,
+  "lat": 3.13329
+ },
+ {
+  "name": "Kawasan Industri Sekupang Makmur Abadi / Sekupang Logistic",
+  "status": "Operational",
+  "lon": 103.92457,
+  "lat": 1.12928
+ },
+ {
+  "name": "Kawasan Industri Sentul",
+  "status": "Operational with Continued Construction",
+  "lon": 106.85403,
+  "lat": -6.52589
+ },
+ {
+  "name": "Kawasan Industri SiRIE",
+  "status": "Operational",
+  "lon": 112.73718,
+  "lat": -7.4597
+ },
+ {
+  "name": "Kawasan Industri SKI",
+  "status": "Operational",
+  "lon": 107.10168,
+  "lat": -6.31556
+ },
+ {
+  "name": "Kawasan Industri Suge",
+  "status": "Operational",
+  "lon": 107.59355,
+  "lat": -2.88577
+ },
+ {
+  "name": "Kawasan Industri Sumbawa Barat",
+  "status": "Under Construction",
+  "lon": 116.75568,
+  "lat": -8.90565
+ },
+ {
+  "name": "Kawasan Industri Sumber Rezeki",
+  "status": "Under Construction",
+  "lon": 106.44771,
+  "lat": -6.30958
+ },
+ {
+  "name": "Kawasan Industri Surya Borneo",
+  "status": "Under Construction",
+  "lon": 111.75128,
+  "lat": -2.70513
+ },
+ {
+  "name": "Kawasan Industri Taifa",
+  "status": "Under Construction",
+  "lon": 107.79832,
+  "lat": -6.51397
+ },
+ {
+  "name": "Kawasan Industri Tanjung Buton (KITB)",
+  "status": "Before Construction",
+  "lon": 102.2449,
+  "lat": 0.96028
+ },
+ {
+  "name": "Kawasan Industri Tanjung Enim",
+  "status": "Stalled",
+  "lon": 103.80459,
+  "lat": -3.84524
+ },
+ {
+  "name": "Kawasan Industri Tenayan",
+  "status": "Stalled",
+  "lon": 101.51518,
+  "lat": 0.54339
+ },
+ {
+  "name": "Kawasan Industri Terboyo Semarang",
+  "status": "Operational",
+  "lon": 110.47228,
+  "lat": -6.95319
+ },
+ {
+  "name": "Kawasan Industri Terpadu Indonesia China",
+  "status": "Operational",
+  "lon": 107.18098,
+  "lat": -6.38023
+ },
+ {
+  "name": "Kawasan Industri Terpadu Wilmar",
+  "status": "Operational with Continued Construction",
+  "lon": 106.08807,
+  "lat": -6.00452
+ },
+ {
+  "name": "Kawasan Industri Tuban",
+  "status": "Operational",
+  "lon": 111.90871,
+  "lat": -6.78662
+ },
+ {
+  "name": "Kawasan Industri VDNI / Kawasan Industri Morosi / Delong Industrial Park",
+  "status": "Operational",
+  "lon": 122.40595,
+  "lat": -3.8751
+ },
+ {
+  "name": "Kawasan Industri Waylaga Bizpark",
+  "status": "Unclear",
+  "lon": 105.32982,
+  "lat": -5.42592
+ },
+ {
+  "name": "Kawasan Industri Wijayakusuma",
+  "status": "Operational",
+  "lon": 110.32603,
+  "lat": -6.97395
+ },
+ {
+  "name": "Kawasan Industri Wiraraja",
+  "status": "Operational",
+  "lon": 104.12806,
+  "lat": 1.0571
+ },
+ {
+  "name": "KEK Galang Batang / Kawasan Industri Galang Batang / Nanshan Industrial Park",
+  "status": "Operational with Continued Construction",
+  "lon": 104.65359,
+  "lat": 0.92041
+ },
+ {
+  "name": "KEK Maloy Batuta Trans Kalimantan",
+  "status": "Stalled",
+  "lon": 117.93037,
+  "lat": 0.8168
+ },
+ {
+  "name": "Kertajati Industrial Estate Majalengka",
+  "status": "Before Construction",
+  "lon": 108.16806,
+  "lat": -6.71849
+ },
+ {
+  "name": "Ketapang Ecology and Agriculture Forestry Industrial Park (Keafip)",
+  "status": "Operational",
+  "lon": 110.01005,
+  "lat": -1.78813
+ },
+ {
+  "name": "KITB / Kawasan Industri Terpadu Batang / Grand Batang City",
+  "status": "Under Construction",
+  "lon": 109.96429,
+  "lat": -6.93005
+ },
+ {
+  "name": "Kota Bukit Indah Industrial City",
+  "status": "Operational",
+  "lon": 107.46193,
+  "lat": -6.45029
+ },
+ {
+  "name": "Krakatau Industrial Estate Cilegon",
+  "status": "Operational with Continued Construction",
+  "lon": 106.04321,
+  "lat": -6.00083
+ },
+ {
+  "name": "Latrade Industrial Park",
+  "status": "Operational",
+  "lon": 103.92488,
+  "lat": 1.05039
+ },
+ {
+  "name": "Lytech Industrial Park",
+  "status": "Operational",
+  "lon": 104.06457,
+  "lat": 1.10811
+ },
+ {
+  "name": "Maspion Industrial Estate",
+  "status": "Operational",
+  "lon": 112.61222,
+  "lat": -7.12702
+ },
+ {
+  "name": "Medanstar Industrial Estate (KIM Star Industrial Estate)",
+  "status": "Operational",
+  "lon": 98.81114,
+  "lat": 3.53659
+ },
+ {
+  "name": "Mega Cipta Industrial Park",
+  "status": "Operational",
+  "lon": 104.01036,
+  "lat": 1.17805
+ },
+ {
+  "name": "Millennium Industrial Estate",
+  "status": "Operational",
+  "lon": 106.52783,
+  "lat": -6.25963
+ },
+ {
+  "name": "MM2100 Industrial Town Bekasi Fajar Industrial Estate (BFIE)",
+  "status": "Operational",
+  "lon": 107.07713,
+  "lat": -6.29939
+ },
+ {
+  "name": "MM2100 Industrial Town MMID",
+  "status": "Operational",
+  "lon": 107.07756,
+  "lat": -6.29446
+ },
+ {
+  "name": "Modern Cikande Industrial Estate",
+  "status": "Operational",
+  "lon": 106.34039,
+  "lat": -6.18548
+ },
+ {
+  "name": "Ngoro Industrial Park",
+  "status": "Operational",
+  "lon": 112.61817,
+  "lat": -7.55224
+ },
+ {
+  "name": "Nongsa Digital Park",
+  "status": "Operational with Continued Construction",
+  "lon": 104.10155,
+  "lat": 1.18562
+ },
+ {
+  "name": "Padang Industrial Park",
+  "status": "Unclear",
+  "lon": 100.37101,
+  "lat": -0.9435
+ },
+ {
+  "name": "Panbil Industrial Estate",
+  "status": "Operational",
+  "lon": 104.02537,
+  "lat": 1.0793
+ },
+ {
+  "name": "Pasuruan Industrial Estate Rembang / Kawasan Industri PIER",
+  "status": "Operational",
+  "lon": 112.81832,
+  "lat": -7.61538
+ },
+ {
+  "name": "Podomoro Industrial Park",
+  "status": "Stalled",
+  "lon": 107.24761,
+  "lat": -6.36826
+ },
+ {
+  "name": "Pulahan Seruwai Industrial Estate",
+  "status": "Operational",
+  "lon": 99.56507,
+  "lat": 2.82407
+ },
+ {
+  "name": "Puri Industrial Park 2000",
+  "status": "Operational",
+  "lon": 104.05686,
+  "lat": 1.11569
+ },
+ {
+  "name": "Qingdao Indonesia Comprehensive Industrial Park / Hengshun Zhongsheng Industrial Park",
+  "status": "Operational with Continued Construction",
+  "lon": 122.26931,
+  "lat": -3.05236
+ },
+ {
+  "name": "Sarana Industrial Point (SIP)",
+  "status": "Operational",
+  "lon": 104.07185,
+  "lat": 1.10474
+ },
+ {
+  "name": "Sidoarjo Industrial Estate Berbek",
+  "status": "Operational",
+  "lon": 112.7583,
+  "lat": -7.3441
+ },
+ {
+  "name": "Sorong Special Economic Zone",
+  "status": "Stalled",
+  "lon": 131.24347,
+  "lat": -1.02917
+ },
+ {
+  "name": "Surabaya Industrial Estate Rungkut",
+  "status": "Operational",
+  "lon": 112.75823,
+  "lat": -7.33096
+ },
+ {
+  "name": "Suryacipta IE / Suryacipta City of Industry",
+  "status": "Operational",
+  "lon": 107.32771,
+  "lat": -6.37357
+ },
+ {
+  "name": "Suryacipta Subang Smartpolitan",
+  "status": "Under Construction",
+  "lon": 107.60449,
+  "lat": -6.47161
+ },
+ {
+  "name": "Taiwan International Park",
+  "status": "Operational",
+  "lon": 104.12044,
+  "lat": 1.09809
+ },
+ {
+  "name": "Takalar Integrated Industrial Park (TIIP)",
+  "status": "Before Construction",
+  "lon": 119.44852,
+  "lat": -5.57529
+ },
+ {
+  "name": "Tanjung Emas Export Processing Zone",
+  "status": "Operational",
+  "lon": 110.4324,
+  "lat": -6.94841
+ },
+ {
+  "name": "Tunas Batam Center Industrial Estate",
+  "status": "Operational",
+  "lon": 104.07481,
+  "lat": 1.10868
+ },
+ {
+  "name": "Tunas Industri Kabil",
+  "status": "Operational",
+  "lon": 104.12605,
+  "lat": 1.05894
+ },
+ {
+  "name": "Union Industrial Park",
+  "status": "Operational",
+  "lon": 104.01614,
+  "lat": 1.16681
+ },
+ {
+  "name": "West Point Maritime Industrial Park",
+  "status": "Stalled",
+  "lon": 103.92488,
+  "lat": 1.12763
+ }
+]

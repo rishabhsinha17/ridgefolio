@@ -83,3 +83,40 @@ test("search, prepare a brief and download a marked checklist", async ({
   await page.reload();
   await expect(page.getByRole("status")).toHaveText("0 of 6 checked");
 });
+
+test("the case study filters the historical map and identifies individual parks", async ({ page }) => {
+  await page.goto("/work/industrial-parks/");
+  const status = page.getByLabel("Filter by status");
+  const park = page.getByLabel("Inspect a park");
+  const summary = page.locator(".atlas-result");
+  await expect(summary).toHaveText("141 of 141 parks shown");
+  await status.selectOption("Operational");
+  await expect(summary).toHaveText("84 of 141 parks shown");
+  await expect(park.locator("option")).toHaveCount(85);
+  await status.selectOption("Unclear");
+  await expect(park.locator("option")).toHaveCount(5);
+  await park.selectOption({ index: 1 });
+  const selected = await park.inputValue();
+  await expect(summary).toContainText(selected);
+  await expect(summary).toContainText("Unclear");
+  await expect(summary).toContainText("°E");
+  await status.selectOption("");
+  await expect(park).toHaveValue("");
+  await expect(summary).toHaveText("141 of 141 parks shown");
+  await page.getByRole("navigation", {name:"In this case study"}).getByRole("link",{name:"Outcome"}).click();
+  await expect(page).toHaveURL(/#outcome$/);
+  await expect(page.getByRole("link", {name:/Read the website credit/})).toHaveAttribute("href",/about\.html#L170$/);
+});
+
+test("the research map retains its image and sources without JavaScript", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({javaScriptEnabled:false,baseURL});
+  try {
+    const page = await context.newPage();
+    await page.goto("/work/industrial-parks/");
+    await expect(page.locator(".atlas-map img")).toBeVisible();
+    await expect(page.getByLabel("Filter by status")).toBeHidden();
+    await expect(page.getByRole("link", { name:/CGS status file/ })).toBeVisible();
+  } finally {
+    await context.close();
+  }
+});

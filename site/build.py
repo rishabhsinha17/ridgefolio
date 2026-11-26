@@ -5,6 +5,7 @@ from html import escape
 import json
 import re
 import editorial as ed
+import cgs
 from content import SERVICES, DEMOS, RESOURCES, CASES, CHECKS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -70,10 +71,10 @@ def preview(slug, title):
 
 logo = '<svg viewBox="0 0 44 32" aria-hidden="true"><path d="M2 29 15 5l9 16 6-10 12 18M9 29l6-11 6 11M27 29l3-6 4 6"/></svg>ridgefolio<span class="brand-dot">.</span>'
 ridge = '<div class="tech-stage tech-dark" data-tech="ridge"><div class="tech-stage-top"><span>COMPUTATIONAL RIDGE</span></div><canvas class="tech-canvas" role="img" aria-label="Interactive topographic ridge rendered as a green mesh"></canvas><div class="tech-stage-bottom"><span class="tech-interaction">Explore the terrain</span><div class="tech-controls"><button data-mode="surface" aria-pressed="true">Surface</button><button data-mode="wire" aria-pressed="false">Wireframe</button></div></div></div>'
-home = f"""<section class="home-hero wrap"><div class="field-copy">{tag("Independent software engineering")}<h1>Software for<br><em>public agencies.</em></h1><p>A resident looks up a permit. A reviewer asks for a correction. A director checks the numbers. We build the websites and tools behind those tasks.</p><div class="actions">{a("/demos/permit-desk/", arrow("Try the permit desk"), "button")}{a(BOOK, arrow("Book a call"), "field-link")}</div></div>{ed.PHOTO}</section>
-<div class="audience wrap"><strong>Working with Ridgefolio</strong>{a("/for/agencies/", arrow("For public agencies"))}{a("/for/partners/", arrow("For delivery partners"))}</div>"""
+home = f"""<section class="frontispiece"><div class="wrap opening"><div class="field-copy">{tag("Independent software engineering")}<h1>Software for<br><em>public agencies.</em></h1><p>We build the websites people visit, the forms staff review and the data tools behind public decisions.</p><div class="actions">{a("/work/industrial-parks/", arrow("Read the case study"), "button")}{a(BOOK, arrow("Book a call"), "field-link")}</div></div>{ed.ARCHITECTURE}</div></section>
+<div class="audience wrap"><strong>Working with Ridgefolio</strong>{a("/for/agencies/", arrow("Public agencies"))}{a("/for/partners/", arrow("Delivery partners"))}</div>"""
 home += (
-    '<section id="work" class="block"><div class="wrap"><div class="shelf-head"><h2>Selected work</h2>'
+    '<section id="work" class="block home-work"><div class="wrap"><div class="shelf-head"><h2>Selected work</h2>'
     + a("/work/", "All project notes ↗")
     + "</div>"
     + ed.work_gallery(CASES)
@@ -123,8 +124,10 @@ add(
 )
 for s in SERVICES:
     body = (
-        intro(s["label"], s["title"], s["intro"])
-        + f'<section class="wrap service-feature"><div><h2>The starting point</h2><p class="lead">{s["need"]}</p></div>{preview(s["demo"], s["short"])}</section>'
+        f'<header class="service-mast"><div class="wrap"><div>{tag(s["label"])}<h1>{s["title"]}</h1><p>{s["intro"]}</p>{buttons(("/demos/" + s["demo"] + "/", "Open the working demo"), ("/pricing/", "Scope and pricing"))}</div><div class="service-product">{preview(s["demo"], s["short"])}</div></div></header>'
+        + section(
+            "The starting point", f'<p class="lead">{s["need"]}</p>', "editorial-band"
+        )
         + section("What the work includes", rows(s["items"]))
         + section(
             "How to evaluate it",
@@ -143,6 +146,9 @@ for s in SERVICES:
     )
     add("/services/" + s["slug"] + "/", s["title"], s["intro"], body, "Services")
 for slug, title, cat, summary, detail, why, source, label in CASES:
+    if slug == "industrial-parks":
+        add("/work/industrial-parks/", cgs.TITLE, cgs.SUMMARY, cgs.case_study(), "Work")
+        continue
     add(
         "/work/" + slug + "/",
         title,
@@ -153,11 +159,6 @@ for slug, title, cat, summary, detail, why, source, label in CASES:
             ed.EXHIBIT_COPY[slug][0],
             f'<div class="reading-copy"><p class="lead">{ed.EXHIBIT_COPY[slug][1]}</p><p>{detail}</p>'
             + buttons((source, label))
-            + (
-                '<a class="subtle-link" href="https://cgsindustrialparks.org/">Visit the CGS dashboard ↗</a>'
-                if slug == "industrial-parks"
-                else ""
-            )
             + "</div>",
         )
         + section(
@@ -386,22 +387,7 @@ add(
     + "</div>"
     + section(
         "Ways to buy the work",
-        rows(
-            [
-                (
-                    "Discovery and prototype",
-                    "Define one user journey, map the dependencies and review a working example. Use the findings to price the build.",
-                ),
-                (
-                    "Implementation",
-                    "Price the agreed deliverables by milestone. Define acceptance, migration boundaries, third-party fees and change control before work starts.",
-                ),
-                (
-                    "Ongoing support",
-                    "Specify the supported systems, coverage window, response targets and escalation contacts. Separate recurring costs from one-time delivery.",
-                ),
-            ]
-        ),
+        ed.buying_modes(),
     )
     + section(
         "What goes in the estimate",
@@ -493,8 +479,19 @@ def demo_body(slug):
 
 
 for slug, title, desc, tone in DEMOS:
+    demo_nav = (
+        '<nav class="wrap demo-switch" aria-label="Switch demonstration">'
+        + "".join(
+            f'<a href="/demos/{other}/" aria-current="page">{name}</a>'
+            if other == slug
+            else a("/demos/" + other + "/", name)
+            for other, name, *_ in DEMOS
+        )
+        + "</nav>"
+    )
     body = (
         intro("Interactive demo", title, desc)
+        + demo_nav
         + section(
             "Demo workspace",
             '<div class="workspace '
@@ -556,7 +553,13 @@ def nav(path):
     ]
     items = "".join(
         f'<a href="{u}"'
-        + (' aria-current="page"' if path == u else "")
+        + (
+            ' aria-current="page"'
+            if path == u
+            else ' aria-current="location"'
+            if path.startswith(u)
+            else ""
+        )
         + ">"
         + t
         + "</a>"
@@ -565,7 +568,7 @@ def nav(path):
     return (
         '<header class="top"><div class="wrap nav-shell">'
         + a("/", logo, "brand")
-        + '<button class="menu-button" aria-controls="site-nav" aria-expanded="false">Menu</button><nav id="site-nav" aria-label="Main navigation">'
+        + '<button class="menu-button" aria-controls="site-nav" aria-expanded="false"><span aria-hidden="true" class="menu-glyph"></span>Menu</button><nav id="site-nav" aria-label="Main navigation">'
         + items
         + a(BOOK, arrow("Book a call"), "nav-cta")
         + "</nav></div></header>"
@@ -629,6 +632,11 @@ for path, (title, desc, body, group) in pages.items():
     )
     scripts = (
         '<script src="/assets/civic.js" defer></script><script src="/assets/site.js" defer></script>'
+        + (
+            '<script src="/assets/atlas.js" defer></script>'
+            if path == "/work/industrial-parks/"
+            else ""
+        )
         + ('<script src="/assets/ridge.js" defer></script>' if path == "/" else "")
     )
     is_task = (
@@ -643,8 +651,8 @@ for path, (title, desc, body, group) in pages.items():
     )
     social_image, social_alt = ed.social_image(path)
     out.write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{scripts}</head>
-<body class="{body_class}"><a class="skip" href="#main">Skip to content</a>{nav(path)}<main id="main">{crumb}{body}{ending}</main>{foot}</body></html>''')
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css"><link rel="stylesheet" href="/assets/edition.css">{scripts}</head>
+<body class="{body_class}" data-area="{path.split("/")[1] or "home"}"><a class="skip" href="#main">Skip to content</a>{nav(path)}<main id="main">{crumb}{body}{ending}</main>{foot}</body></html>''')
 (PUBLIC / "assets/search.json").write_text(json.dumps(index, ensure_ascii=False))
 (PUBLIC / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'

@@ -22,9 +22,9 @@ Font license notices are in `public/assets/fonts/`. Founder work is attributed o
 
 ## Public work samples
 
-The homepage photograph is a 2012 view of San Francisco City Hall by Carol M. Highsmith. The Library of Congress records no known restrictions on publication. The image caption links to the collection record. [Library of Congress](https://www.loc.gov/item/2013630463/)
+The homepage pairs two Carol M. Highsmith photographs from the Library of Congress. Each catalog record lists no known restrictions on publication. [City Hall dome](https://www.loc.gov/item/2011630953/) · [Civic Center Plaza](https://www.loc.gov/item/2013630463/)
 
-The industrial parks illustration plots all 141 point features in the linked repository snapshot over Natural Earth geography. It illustrates the file version cited on the project page. [Coordinate file](https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/blob/673480b96b7dbfce3990cc9f72208c87c65b54a9/data/geojson/basicGeojsonData.geojson) · [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/)
+The case study’s map plots the May 2025 CGS snapshot over Natural Earth geography. Its local data file contains only the 141 park names, statuses and coordinates, rounded to five decimals for display. Both the static map and interactive map use the same projection. Usage counts and chart values are dated snapshots. [Status GeoJSON](https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/blob/673480b96b7dbfce3990cc9f72208c87c65b54a9/data/geojson/statusGeojsonData.geojson) · [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/)
 
 The research images reproduce details of pages 1 and 3 of Rishabh Sinha’s preprint. The release exhibit links directly to the two merged changes and their published release. [Paper](https://arxiv.org/abs/2610.37679) · [Release notes](https://github.com/ovg-project/kvcached/releases/tag/v0.1.6)
 
