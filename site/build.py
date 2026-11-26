@@ -4,6 +4,9 @@ from pathlib import Path
 from html import escape
 import json
 import re
+import homepage
+import interiors
+import navigation
 import editorial as ed
 import cgs
 from content import SERVICES, DEMOS, RESOURCES, CASES, CHECKS
@@ -11,8 +14,8 @@ from content import SERVICES, DEMOS, RESOURCES, CASES, CHECKS
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
 BASE = "https://ridgefolio.com"
-BOOK = "https://cal.com/ridgefolio/intro"
-EMAIL = "mailto:rishabh@ridgefolio.com"
+BOOK = navigation.BOOK
+EMAIL = "mailto:" + navigation.EMAIL
 pages = {}
 LINK_ARROW = '<svg aria-hidden="true" focusable="false" width=".82em" height=".82em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M4 3h9v9"/></svg>'
 
@@ -52,58 +55,24 @@ def section(title, body, extra=""):
     return f'<section class="block {extra}"><div class="wrap"><h2>{title}</h2>{body}</div></section>'
 
 
-def intro(family, title, copy):
-    return f'<header class="page-head wrap">{tag(family) if family != title else ""}<h1>{title}</h1><p>{copy}</p></header>'
+def intro(family, title, copy, actions="", offline_copy=""):
+    lead = (
+        f'<p class="rv-js-intro">{copy}</p><noscript><p>{offline_copy}</p></noscript>'
+        if offline_copy else f"<p>{copy}</p>"
+    )
+    return f'<header class="page-head wrap">{tag(family) if family != title else ""}<h1>{title}</h1>{lead}{actions}</header>'
 
 
 def add(path, title, desc, body, group):
     pages[path] = (title, desc, body, group)
 
 
-def service_list():
-    return ed.directory(
-        ("/services/" + s["slug"] + "/", s["title"], s["intro"]) for s in SERVICES
-    )
-
-
 def preview(slug, title):
     return f'<a class="demo-preview" href="/demos/{slug}/"><img src="/assets/previews/{slug}.jpg" alt="{title} demonstration interface" width="954" height="600" loading="lazy"><span>Try the software <b aria-hidden="true">↗</b></span></a>'
 
 
-logo = '<svg viewBox="0 0 44 32" aria-hidden="true"><path d="M2 29 15 5l9 16 6-10 12 18M9 29l6-11 6 11M27 29l3-6 4 6"/></svg>ridgefolio<span class="brand-dot">.</span>'
 ridge = '<div class="tech-stage tech-dark" data-tech="ridge"><div class="tech-stage-top"><span>COMPUTATIONAL RIDGE</span></div><canvas class="tech-canvas" role="img" aria-label="Interactive topographic ridge rendered as a green mesh"></canvas><div class="tech-stage-bottom"><span class="tech-interaction">Explore the terrain</span><div class="tech-controls"><button data-mode="surface" aria-pressed="true">Surface</button><button data-mode="wire" aria-pressed="false">Wireframe</button></div></div></div>'
-home = f"""<section class="home-hero wrap"><div class="field-copy">{tag("Independent software engineering")}<h1>Software for<br><em>public agencies.</em></h1><p>A resident looks up a permit. A reviewer asks for a correction. A director checks the numbers. We build the websites and tools behind those tasks.</p><div class="actions">{a("/demos/permit-desk/", arrow("Try the permit desk"), "button")}{a(BOOK, arrow("Book a call"), "field-link")}</div></div>{ed.PHOTO}</section>
-<div class="audience wrap"><strong>Working with Ridgefolio</strong>{a("/for/agencies/", arrow("For public agencies"))}{a("/for/partners/", arrow("For delivery partners"))}</div>"""
-home += (
-    '<section id="work" class="block"><div class="wrap"><div class="shelf-head"><h2>Selected work</h2>'
-    + a("/work/", "All project notes ↗")
-    + "</div>"
-    + ed.work_gallery(CASES)
-    + "</div></section>"
-)
-home += section("What we build", service_list())
-home += section(
-    "Engineering records",
-    '<div class="sources">'
-    + "".join(
-        a(u, f"<strong>{n}</strong><span>{l} ↗</span>", "field-work-row")
-        for n, l, u in [
-            ("kvcached", "Core contributor · Release notes", CASES[1][-2]),
-            (
-                "IBM vLLM Hook",
-                "Merged engineering contribution",
-                "https://github.com/IBM/vLLM-Hook/pull/41",
-            ),
-            (
-                "Agent evaluation",
-                "Research preprint",
-                "https://arxiv.org/abs/2610.37679",
-            ),
-        ]
-    )
-    + "</div>",
-)
-home += f"""<span id="about"></span><section id="practice" class="block studio"><div class="wrap studio-grid"><div class="founder-signature"><img src="/assets/editorial/founder.webp" alt="Rishabh Sinha" width="128" height="128" loading="lazy"><div>{tag("The practice")}<h2>Meet Rishabh.</h2><p>Rishabh Sinha leads Ridgefolio from California. He scopes the work, writes the software and walks your team through the handover.</p>{a("/practice/", arrow("About the practice"))}</div></div>{ridge}</div></section>"""
+home = homepage.render(BOOK, ridge)
 add(
     "/",
     "Software engineering for public agencies",
@@ -119,8 +88,9 @@ add(
         "Engineering services",
         "Engineering services",
         "Choose the part of the service that needs work. Each scope includes an example you can try and a way to test delivery.",
+        actions=interiors.catalogue_actions("Explore services"),
     )
-    + section("Service areas", service_list(), "catalogue"),
+    + interiors.showcase(demos=False),
     "Services",
 )
 for s in SERVICES:
@@ -175,8 +145,11 @@ add(
         "Project evidence",
         "Selected work",
         "Maps, infrastructure and published research from Rishabh Sinha’s work before and alongside Ridgefolio. Each project links to the original record.",
+        actions=f'<a class="rv-jump" href="#catalogue" aria-label="View projects">{interiors.DOWN_ARROW}</a>',
     )
-    + section("Project notes", ed.work_gallery(CASES), "catalogue"),
+    + '<section id="catalogue" class="block catalogue"><div class="wrap"><h2>Project notes</h2>'
+    + ed.work_gallery(CASES)
+    + "</div></section>",
     "Work",
 )
 add(
@@ -187,8 +160,9 @@ add(
         "Demonstration studio",
         "Try the software",
         "Use fictional records to explore service discovery, application review and reporting. Each example runs in your browser.",
+        actions=interiors.catalogue_actions("Explore the demos"),
     )
-    + section("Choose a demonstration", ed.demo_gallery(DEMOS), "catalogue"),
+    + interiors.showcase(demos=True),
     "Demos",
 )
 add(
@@ -446,6 +420,7 @@ add(
         "Field guide",
         "Website launch checklist",
         "Check each item as your team verifies it. Your choices stay in this browser tab. Download a copy to keep or share.",
+        offline_copy="Check the items your team has verified. Use your browser’s Print command to keep a copy of the marked checklist.",
     )
     + section(
         "Launch review",
@@ -475,6 +450,7 @@ add(
         "Planning worksheet",
         "Build a project brief.",
         "Capture the problem and the test for success. Download the brief for your records or attach it to a project inquiry. Entries stay in this tab.",
+        offline_copy="Use your browser’s Print command for a blank project worksheet, or download the completed example below.",
     )
     + section(
         "Project worksheet",
@@ -545,52 +521,6 @@ add(
 )
 
 
-def nav(path):
-    links = [
-        ("/services/", "Services"),
-        ("/demos/", "Demos"),
-        ("/work/", "Selected work"),
-        ("/resources/", "Resources"),
-        ("/pricing/", "Pricing"),
-        ("/search/", "Search"),
-    ]
-    items = "".join(
-        f'<a href="{u}"'
-        + (' aria-current="page"' if path == u else "")
-        + ">"
-        + t
-        + "</a>"
-        for u, t in links
-    )
-    return (
-        '<header class="top"><div class="wrap nav-shell">'
-        + a("/", logo, "brand")
-        + '<button class="menu-button" aria-controls="site-nav" aria-expanded="false"><span class="menu-glyph" aria-hidden="true"></span>Menu</button><nav id="site-nav" aria-label="Main navigation">'
-        + items
-        + a(BOOK, arrow("Book a call"), "nav-cta")
-        + "</nav></div></header>"
-    )
-
-
-foot = (
-    '<footer><div class="wrap"><div class="footer-top"><div>'
-    + a("/", logo, "brand")
-    + "<p>Independent software engineering<br>California</p></div><div><strong>Explore</strong>"
-    + a("/services/", "Services")
-    + a("/practice/", "The practice")
-    + a("/demos/", "Demos")
-    + a("/work/", "Selected projects")
-    + "</div><div><strong>For buyers</strong>"
-    + a("/resources/", "Resources")
-    + a(cap, "Capability statement")
-    + a("/pricing/", "Scoping and pricing")
-    + a("/for/partners/", "Delivery partners")
-    + "</div><div><strong>Connect</strong>"
-    + a("/contact/", "Contact")
-    + a(EMAIL, "rishabh@ridgefolio.com", "contact-email")
-    + a("/search/", "Search the site")
-    + '</div></div><div class="colophon">© 2026 Ridgefolio LLC</div></div></footer>'
-)
 contact = (
     '<section id="contact" class="closing"><div class="wrap field-contact"><div>'
     + tag("Contact Ridgefolio")
@@ -598,9 +528,17 @@ contact = (
     + a(BOOK, arrow("Book a call"), "button bright")
     + "</div></section>"
 )
+not_found = "/404.html"
+add(
+    not_found, "Page not found", "Return to Ridgefolio or search the site.",
+    intro("404", "This page isn’t here.", "Use the site directory to find a service, project or guide.")
+    + section("Find a page", buttons(("/", "Back to Ridgefolio"), ("/search/", "Search the site"))),
+    "",
+)
 index = []
 for path, (title, desc, body, group) in pages.items():
-    if path != "/search/":
+    body = interiors.adapt(path, body)
+    if path not in ("/search/", not_found):
         index.append(
             dict(
                 path=path,
@@ -610,11 +548,11 @@ for path, (title, desc, body, group) in pages.items():
                 keywords=" ".join(re.sub("<[^>]+>", " ", body).split()),
             )
         )
-    out = PUBLIC / path.strip("/") / "index.html"
+    out = PUBLIC / "404.html" if path == not_found else PUBLIC / path.strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     crumb = (
         ""
-        if path == "/"
+        if path in ("/", not_found)
         else '<div class="wrap breadcrumb">'
         + a("/", "Home")
         + ' <span aria-hidden="true">/</span> '
@@ -630,9 +568,9 @@ for path, (title, desc, body, group) in pages.items():
     is_cgs = path == "/work/industrial-parks/"
     case_css = '<link rel="stylesheet" href="/assets/cgs.css">' if is_cgs else ""
     scripts = (
-        '<script src="/assets/civic.js" defer></script><script src="/assets/site.js" defer></script>'
+        '<script src="/assets/navigation.js" defer></script><script src="/assets/site.js" defer></script>'
         + ('<script src="/assets/atlas.js" defer></script>' if is_cgs else "")
-        + ('<script src="/assets/ridge.js" defer></script>' if path == "/" else "")
+        + ('<script src="/assets/ridge.js" defer></script><script src="/assets/showcase.js" defer></script>' if path == "/" else "")
     )
     is_task = (
         path.startswith("/demos/")
@@ -640,20 +578,23 @@ for path, (title, desc, body, group) in pages.items():
         or path
         in ("/search/", "/resources/launch-checklist/", "/resources/project-brief/")
     )
-    ending = "" if is_task or path in ("/contact/", cap, "/pricing/") else contact
+    ending = "" if is_task or path in ("/contact/", cap, "/pricing/", not_found) else contact
     body_class = (
         "task-page" if is_task else "document-page" if path == cap else "site-page"
     )
+    body_class += " rv-home" if path == "/" else " rv-interior"
+    interior_css = '' if path == "/" else '<link rel="stylesheet" href="/assets/interiors.css">'
+    robots = "noindex" if path == not_found else "index,follow"
     social_image, social_alt = ed.social_image(path)
-    page_body = f'{nav(path)}<main id="main">{crumb}{body}{ending}</main>{foot}'
+    page_body = f'{navigation.nav(path)}<main id="main">{crumb}{body}{ending}</main>{navigation.footer()}'
     page_body = page_body.replace("↗", LINK_ARROW)
     out.write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}{scripts}</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/navigation.css">{scripts}</head>
 <body class="{body_class}"><a class="skip" href="#main">Skip to content</a>{page_body}</body></html>''')
 (PUBLIC / "assets/search.json").write_text(json.dumps(index, ensure_ascii=False))
 (PUBLIC / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-    + "".join(f"<url><loc>{BASE}{p}</loc></url>" for p in pages)
+    + "".join(f"<url><loc>{BASE}{p}</loc></url>" for p in pages if p != not_found)
     + "</urlset>"
 )
-print(f"Rendered {len(pages)} pages.")
+print(f"Rendered {len(pages) - 1} pages and the 404 page.")

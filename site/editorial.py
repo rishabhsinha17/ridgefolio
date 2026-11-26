@@ -7,13 +7,6 @@ PAPER = "https://arxiv.org/abs/2610.37679"
 PDF = "/downloads/ridgefolio-capabilities.pdf"
 RECEIPT = "/downloads/sample-permit-receipt.txt"
 EXAMPLE = "/downloads/permit-desk-project-brief.txt"
-LOC = "https://www.loc.gov/item/2013630463/"
-
-PHOTO = f'''<figure class="civic-photo"><img src="/assets/editorial/civic-center-1440.webp"
- srcset="/assets/editorial/civic-center-768.webp 768w, /assets/editorial/civic-center-1440.webp 1440w"
- sizes="(max-width: 700px) 100vw, 55vw" width="1440" height="960" fetchpriority="high"
- alt="People walking beneath a double row of trees in front of San Francisco City Hall">
- <figcaption><span>San Francisco Civic Center, 2012</span><a href="{LOC}">Carol M. Highsmith / Library of Congress</a></figcaption></figure>'''
 
 
 def release_cover():
@@ -84,17 +77,6 @@ def directory(items):
     )
 
 
-def demo_gallery(demos):
-    return (
-        '<div class="demo-gallery">'
-        + "".join(
-            f'<a href="/demos/{slug}/"><img src="/assets/previews/{slug}.jpg" loading="lazy" width="954" height="600" alt=""><div><h3>{title}</h3><p>{desc}</p><span>Open demo ↗</span></div></a>'
-            for slug, title, desc, _ in demos
-        )
-        + "</div>"
-    )
-
-
 def library():
     return f'''<div class="library"><a class="document-thumb" href="{PDF}"><img src="/assets/editorial/capability-page.webp" width="618" height="800" alt="Preview of the one-page Ridgefolio capability statement" loading="lazy"></a><div><h2>Capability statement</h2><p>A one-page overview of services, delivery arrangements and founder experience to share with a project team.</p><a class="text-action" href="{PDF}">Open the one-page PDF ↗</a><a class="subtle-link" href="/resources/capabilities/">Read the HTML version</a></div></div>'''
 
@@ -104,6 +86,8 @@ def estimate_link(email):
 
 
 def social_image(path):
+    if path == "/":
+        return "/assets/showcase/hero-wide.webp", "Ridgefolio demonstrations and founder projects"
     if path == "/work/industrial-parks/":
         return "/assets/editorial/archipelago-parks.webp", "Map of industrial parks in Indonesia"
     if path == "/work/":

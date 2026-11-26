@@ -120,3 +120,15 @@ test("the research map retains its image and sources without JavaScript", async 
     await context.close();
   }
 });
+
+test("the homepage preview opens the selected working application", async ({ page }) => {
+  await page.goto("/");
+  const selector = page.getByRole("navigation", {name: "Application previews"});
+  await selector.getByRole("link", {name: "Service ledger"}).click();
+  await expect(page.locator("#preview-finder")).toBeHidden();
+  const ledger = page.locator("#preview-service-ledger");
+  await expect(ledger).toBeVisible();
+  await ledger.getByRole("link", {name: "Filter the ledger"}).click();
+  await expect(page).toHaveURL(/\/demos\/service-ledger\/$/);
+  await expect(page.getByLabel("District", {exact: true})).toBeVisible();
+});

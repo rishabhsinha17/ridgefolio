@@ -1,0 +1,126 @@
+/* Shared color names keep the reference layout in Ridgefolio's visual identity. */
+:root {
+  --rv-paper:#faf9f5; --rv-ink:#1d332c; --rv-muted:#4d6255;
+  --rv-accent:#214638; --rv-on-accent:#fffdf4; --rv-tint:#ecede4;
+  --rv-line:#cdd1c7; --rv-dark:#19392e; --rv-on-dark:#f8f7ef;
+}
+@media screen {
+  body {background:var(--rv-paper);color:var(--rv-ink)}
+  .rv-home .rv-container {width:min(1520px,90%);margin-inline:auto}
+  .rv-home h1,.rv-home h2,.rv-home h3 {font-family:var(--serif);font-weight:400}
+  .rv-home h2 {font-size:clamp(38px,4.4vw,72px);line-height:1.03;letter-spacing:-.047em}
+  .rv-home h3 {font-size:clamp(22px,2vw,34px);line-height:1.16;letter-spacing:-.032em}
+  .rv-home .rv-action {display:inline-flex;align-items:center;justify-content:center;text-align:center;background:var(--rv-accent);color:var(--rv-on-accent);border:1px solid var(--rv-accent);border-radius:0;padding:13px 25px;min-height:50px;font:700 14px/1.3 var(--sans);text-decoration:none}
+  .rv-home .rv-action:hover {background:var(--rv-ink);color:white}
+  .rv-home .rv-secondary {color:var(--rv-ink);background:transparent;border-color:#9daea2}
+  .rv-home .rv-secondary:hover {background:var(--rv-tint);color:var(--rv-ink)}
+  .rv-actions {display:flex;align-items:stretch;flex-wrap:wrap;gap:0}
+  .rv-actions .rv-action {min-width:clamp(125px,10.7vw,175px)}
+  .rv-hero {position:relative;isolation:isolate;overflow:hidden;background:var(--rv-paper)}
+  .rv-hero-body {min-height:clamp(560px,46vw,810px);display:grid;align-items:center;position:relative;padding-block:55px 100px;pointer-events:none}
+  .rv-hero-body .field-copy {max-width:41%;padding:0;pointer-events:auto}
+  .rv-home .rv-hero h1 {font-size:clamp(56px,5.6vw,99px);line-height:1.01;letter-spacing:-.061em;margin:0}
+  .rv-hero h1 em {font-family:inherit;font-style:normal;color:#536e59}
+  .rv-hero .field-copy p {max-width:32ch;font:500 clamp(16px,1.23vw,21px)/1.6 var(--sans);margin:24px 0 31px;color:var(--rv-ink)}
+  .rv-hero-art {position:absolute;inset:0 0 0 40%;z-index:-1;display:flex;align-items:center}
+  .rv-hero-art picture {width:100%;height:100%;display:block}
+  .rv-hero-art img {display:block;width:100%;height:100%;object-fit:contain;object-position:right center}
+  .rv-scroll {position:absolute;bottom:32px;left:0;width:45px;height:45px;display:grid;place-items:center;pointer-events:auto}
+  .rv-scroll:hover {color:#50735d}
+  .rv-intro {border-top:1px solid var(--rv-line);padding-block:clamp(45px,6.5vw,100px);text-align:center;scroll-margin-top:24px}
+  .rv-home .rv-intro h2 {font-size:clamp(34px,3.75vw,60px)}
+  .rv-intro>p {margin:22px auto;max-width:62ch;font:500 clamp(17px,1.45vw,23px)/1.55 var(--sans)}
+  .rv-service-nav {display:flex;align-items:baseline;justify-content:center;gap:14px 34px;flex-wrap:wrap}
+  .rv-service-nav a,.rv-textlink {font-weight:700;font-size:14px;text-underline-offset:5px}
+  .rv-apps {background:var(--rv-dark);color:var(--rv-on-dark)}
+  .rv-app-layout,.rv-device-layout {padding-block:clamp(45px,6vw,98px);display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);gap:clamp(30px,5vw,85px);align-items:center}
+  .rv-app-copy>p,.rv-device-copy>p,.rv-practice-copy>p {max-width:47ch;margin:18px 0 24px;font:500 clamp(16px,1.24vw,20px)/1.65 var(--sans)}
+  .rv-home .rv-inverse {border-color:#e8e9dc;color:var(--rv-ink);background:var(--rv-paper)}
+  .rv-home .rv-inverse:hover {background:#d7e2cc;color:var(--rv-ink)}
+  .rv-demo-shelf {min-width:0}
+  .rv-app-tabs {display:flex;gap:4px;flex-wrap:wrap}
+  .rv-app-tabs a {display:inline-flex;align-items:center;min-height:44px;padding:7px 13px;border:1px solid #627569;border-bottom:0;color:#e0e8da;text-decoration:none;font-size:13px;font-weight:700}
+  .rv-app-tabs a:hover,.rv-app-tabs a[aria-current] {background:var(--rv-paper);color:var(--rv-ink)}
+  .rv-app-panel {margin:0;background:#f6f6ed;color:var(--rv-ink);border:1px solid #bbc8b9}
+  .rv-app-panel[hidden] {display:none}
+  .rv-app-panel>a {display:block;padding:15px;background:#d5dece}
+  .rv-app-panel img {width:100%;max-height:285px;object-fit:contain;display:block;height:auto}
+  .rv-app-panel figcaption {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;font-size:13px;line-height:1.5}
+  .rv-app-panel figcaption a {font-weight:750;flex:none}
+  .rv-portfolio,.rv-practice,.rv-library>.rv-container {padding-block:clamp(54px,6.8vw,108px)}
+  .rv-section-head {display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:clamp(24px,3vw,48px)}
+  .rv-section-head p {margin-top:12px;color:var(--rv-muted);font-size:17px}
+  .rv-section-head>a {flex:none}
+  .rv-projects,.rv-resources {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.3vw,38px)}
+  .rv-project,.rv-resource {min-width:0;display:block;text-decoration:none}
+  .rv-project {text-align:center}
+  .rv-exhibit,.rv-resource-art {position:relative;display:grid;place-items:center;aspect-ratio:1.55;overflow:hidden}
+  .rv-exhibit img,.rv-resource-art img {width:100%;height:100%;object-fit:cover;display:block}
+  .rv-exhibit-map {background:#244b51}
+  .rv-exhibit-map img {object-fit:cover;object-position:55% center}
+  .rv-exhibit-release {background:#233941;color:#fcfcf1}
+  .rv-release-exhibit {width:83%;border-block:1px solid #aabcb7;padding:14px 0;text-align:left}
+  .rv-release-exhibit span {display:block;line-height:1.4;font:400 clamp(10px,1vw,16px)/1.4 PlexMono,monospace}
+  .rv-release-exhibit b {display:block;font:400 clamp(42px,5.1vw,90px)/1.12 var(--serif);letter-spacing:-.065em}
+  .rv-exhibit-paper {background:#e2dfd1;padding:7% 10% 0}
+  .rv-exhibit-paper img {object-position:50% 0;filter:drop-shadow(0 4px 4px #252c2119)}
+  .rv-credit {display:block;color:var(--rv-muted);font-weight:650;font-size:12px;margin:16px 0 4px}
+  .rv-project:hover h3,.rv-resource:hover h3 {text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+  .rv-responsive,.rv-library {background:var(--rv-tint)}
+  .rv-devices {position:relative;display:block;padding:0 3.8% 5% 0}
+  .rv-display,.rv-handset {display:block;border:clamp(4px,.55vw,9px) solid #24372f;box-shadow:0 14px 30px #23372929;background:#faf9f5}
+  .rv-display {width:99%;height:auto;border-radius:10px}
+  .rv-handset {position:absolute;bottom:0;right:0;width:22%;height:auto;border-radius:clamp(9px,1vw,15px)}
+  .rv-practice {display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);gap:clamp(35px,7vw,108px);align-items:center}
+  .rv-practice-copy .founder-signature {display:flex;align-items:center;gap:17px}
+  .rv-practice-copy .founder-signature img {width:clamp(70px,6.3vw,94px);height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%}
+  .rv-practice-copy .founder-signature span {color:var(--rv-muted);font-size:13px}
+  .rv-practice-copy .founder-signature h2 {font-size:clamp(32px,3vw,50px);margin-top:4px}
+  .rv-records {margin-top:27px}
+  .rv-records h3 {font:700 14px/1.5 var(--sans);letter-spacing:0;margin-bottom:5px}
+  .rv-records .field-work-row {display:block;width:fit-content;margin:0;border:0;padding:3px 0;font:500 14px/1.4 var(--sans);text-decoration:underline}
+  .rv-practice .tech-stage {height:clamp(280px,25vw,460px);aspect-ratio:auto}
+  .rv-library {border-block:1px solid var(--rv-line)}
+  .rv-resource h3 {margin-top:15px}
+  .rv-resource p {font-size:15px;color:var(--rv-muted);line-height:1.55;margin-top:8px}
+  .rv-home .closing {background:var(--rv-paper);color:var(--rv-ink)}
+  .rv-home .closing .bright {background:var(--rv-accent);color:var(--rv-on-accent);border-radius:0}
+  .rv-home .closing .tag {color:var(--rv-muted)}
+}
+@media screen and (max-width:900px) and (min-width:701px) {
+  .rv-hero-body {min-height:465px}
+  .rv-home .rv-hero h1 {font-size:clamp(48px,6.4vw,65px)}
+  .rv-hero-body .field-copy {max-width:45%}
+  .rv-hero-art {left:42%}
+}
+@media screen and (max-width:700px) {
+  .rv-home .rv-container {width:calc(100% - 40px)}
+  .rv-hero {display:flex;flex-direction:column}
+  .rv-hero .rv-hero-body {order:0;min-height:0;display:block;padding-block:32px 6px}
+  .rv-hero-body .field-copy {max-width:100%}
+  .rv-home .rv-hero h1 {font-size:clamp(50px,12vw,76px)}
+  .rv-hero .field-copy p {max-width:39ch;font-size:16px;line-height:1.45;margin:14px 0 19px}
+  .rv-home .rv-actions .rv-action {min-height:45px;padding:10px 18px}
+  .rv-hero-art {order:1;position:relative;inset:auto;display:block;width:100%;height:auto;z-index:0}
+  .rv-hero-art picture,.rv-hero-art img {display:block;width:100%;height:auto}
+  .rv-scroll {display:none}
+  .rv-intro {padding-block:35px}
+  .rv-intro>p {font-size:16px;margin:14px auto}
+  .rv-service-nav {gap:4px 16px}
+  .rv-service-nav a {padding:6px 0;font-size:13px}
+  .rv-app-layout,.rv-device-layout,.rv-practice {display:block;padding-block:36px}
+  .rv-demo-shelf,.rv-devices,.rv-practice .tech-stage {margin-top:24px}
+  .rv-app-tabs {gap:2px}
+  .rv-app-tabs a {padding-inline:8px;font-size:12px}
+  .rv-app-panel>a {padding:8px}
+  .rv-app-panel figcaption {display:block;padding:11px}
+  .rv-app-panel figcaption a {display:inline-block;margin-top:5px}
+  .rv-section-head {display:block}
+  .rv-section-head .rv-action {margin-top:14px;min-height:44px}
+  .rv-section-head p {font-size:16px}
+  .rv-projects,.rv-resources {grid-template-columns:1fr;gap:27px}
+  .rv-portfolio,.rv-library>.rv-container {padding-block:36px}
+  .rv-exhibit,.rv-resource-art {aspect-ratio:1.65}
+  .rv-release-exhibit b {font-size:clamp(48px,12vw,70px)}
+  .rv-practice .tech-stage {height:315px}
+}

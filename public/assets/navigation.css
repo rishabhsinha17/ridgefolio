@@ -1,0 +1,299 @@
+.rf-header,
+.rf-footer {
+  --nav-paper: var(--rf-nav-surface, var(--rv-paper, #faf9f5));
+  --nav-ink: var(--rf-nav-ink, var(--rv-ink, #1d332c));
+  --nav-rule: var(--rv-line, #cdd1c7);
+  --nav-accent: var(--rf-nav-accent, var(--rv-accent, #496550));
+  --nav-muted: var(--rv-muted, #4d5c55);
+  font-family: var(--sans, Manrope, Arial, sans-serif);
+}
+.rf-header {
+  position: sticky;
+  z-index: 30;
+  top: 0;
+  width: 100%;
+  color: var(--nav-ink);
+  background: var(--nav-paper);
+  border-bottom: 1px solid var(--nav-rule);
+}
+.rf-nav-wrap,
+.rf-directory-inner,
+.rf-footer-inner {
+  width: min(1480px, calc(100% - clamp(36px, 8vw, 132px)));
+  margin-inline: auto;
+}
+.rf-nav-wrap {
+  min-height: clamp(70px, 6.1vw, 94px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 2vw, 36px);
+}
+.rf-brand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: .18em;
+  font-family: var(--sans, Manrope, Arial, sans-serif);
+  font-size: clamp(24px, 2.15vw, 36px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.075em;
+  text-decoration: none;
+}
+.rf-brand svg {
+  width: 1.18em;
+  height: .9em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.3;
+}
+.rf-dot {color: var(--nav-accent)}
+.rf-header ul,
+.rf-footer ul {list-style: none; padding: 0; margin: 0}
+.rf-header #site-nav.rf-primary {
+  position: static;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-height: none;
+  overflow: visible;
+  box-shadow: none;
+}
+.rf-quick {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.8vw, 35px);
+}
+.rf-header #site-nav.rf-primary .rf-quick > li > a,
+.rf-more > summary {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  padding: 1px 0;
+  color: var(--nav-muted);
+  text-decoration: none;
+  font: 750 clamp(10px, .83vw, 13px)/1.3 var(--sans, Manrope, Arial, sans-serif);
+  text-transform: uppercase;
+  letter-spacing: .055em;
+  white-space: nowrap;
+}
+.rf-header #site-nav.rf-primary .rf-quick > li > a:hover,
+.rf-header #site-nav.rf-primary .rf-quick > li > a[aria-current],
+.rf-more > summary:hover,
+.rf-more[open] > summary {color: var(--nav-ink); text-decoration: underline; text-underline-offset: .45em}
+.rf-header summary {cursor: pointer; list-style: none}
+.rf-header summary::-webkit-details-marker {display: none}
+.rf-chevron {
+  width: .52em;
+  height: .52em;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-.12em) rotate(45deg);
+}
+.rf-more[open] .rf-chevron {transform: translateY(.14em) rotate(225deg)}
+.rf-header .rf-action,
+.rf-footer .rf-footer-book {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  background: var(--rf-nav-action-bg, var(--rv-dark, #214638));
+  color: var(--rf-nav-action-ink, var(--rv-on-dark, #fff));
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+.rf-header .rf-action {width: clamp(119px, 12vw, 180px); flex: none}
+.rf-header .rf-action:hover,
+.rf-footer .rf-footer-book:hover {text-decoration: underline; text-underline-offset: .25em}
+.rf-menu-toggle {display: none}
+
+html.rf-contact-open {overflow: hidden}
+.rf-contact-sheet:not([open]) {display: none}
+.rf-contact-sheet {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(31rem, calc(100% - min(8vw, 36px)));
+  max-width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100%;
+  margin: 0;
+  padding: clamp(20px, 4vw, 54px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 0;
+  border-left: 1px solid var(--nav-rule);
+  background: var(--nav-paper);
+  color: var(--nav-ink);
+  box-shadow: -12px 0 42px #142f2326;
+}
+.rf-contact-sheet::backdrop {background: rgb(12 32 24 / .48)}
+.rf-contact-sheet form {display: flex; justify-content: flex-end; margin: 0 0 clamp(40px, 10vh, 104px); padding: 0; border: 0; background: none}
+.rf-sheet-close {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent; color: var(--nav-ink);
+  min-height: 44px; padding: 0 4px; border: 0;
+}
+.rf-sheet-close span {font-size: 1.5em; line-height: 1}
+.rf-contact-sheet h2 {margin: 0 0 28px; color: var(--nav-ink); font: 400 clamp(36px, 5vw, 54px)/1.05 var(--serif, Georgia, serif); letter-spacing: -.045em}
+.rf-sheet-choices {border-top: 1px solid var(--nav-rule)}
+.rf-sheet-choices a {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 14px;
+  padding: 18px 0; border-bottom: 1px solid var(--nav-rule); color: var(--nav-ink);
+  font-size: 16px; font-weight: 700; text-decoration: none;
+}
+.rf-sheet-choices a:hover {text-decoration: underline; text-underline-offset: .24em}
+.rf-sheet-choices a small {grid-column: 1 / -1; font-size: 13px; font-weight: 550; overflow-wrap: anywhere; color: var(--nav-muted)}
+.rf-sheet-choices a span {display: inline-flex; align-items: center}
+@media (prefers-reduced-motion: no-preference) {
+  .rf-contact-sheet[open] {animation: rf-enter .18s ease-out}
+  @keyframes rf-enter {from {transform: translateX(18%); opacity: .5} to {transform: none; opacity: 1}}
+}
+.rf-directory {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: min(72vh, 620px);
+  overflow-y: auto;
+  background: var(--nav-paper);
+  border-block: 1px solid var(--nav-rule);
+  box-shadow: 0 18px 32px #152c2314;
+}
+.rf-directory-inner {padding-block: 20px 19px}
+.rf-directory-top,
+.rf-directory-tools {display: flex; align-items: center; justify-content: space-between; gap: 14px}
+.rf-directory-top h2 {font: 500 clamp(22px, 2vw, 33px)/1.13 var(--serif, Georgia, serif); letter-spacing: -.04em}
+.rf-close,
+.rf-menu-toggle {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 4px 8px;
+  background: transparent;
+  color: var(--nav-ink);
+  border: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+.rf-close {display: none}
+.rf-nav-ready .rf-close {display: inline-flex}
+.rf-close span {font-size: 21px; font-weight: 450}
+.rf-columns {display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; padding: 17px 0 20px}
+.rf-group {margin: 0; padding: 0; border: none}
+.rf-group > summary {
+  font-weight: 750;
+  font-size: 15px;
+  color: var(--nav-ink);
+  padding: 4px 0 9px;
+  border-bottom: 1px solid var(--nav-rule);
+}
+.rf-group li {border-bottom: 1px solid var(--nav-rule)}
+.rf-header #site-nav.rf-primary .rf-group a,
+.rf-header #site-nav.rf-primary .rf-directory-tools a {
+  display: inline-block;
+  color: var(--nav-ink);
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+.rf-header #site-nav.rf-primary .rf-group a:hover,
+.rf-header #site-nav.rf-primary .rf-group a[aria-current],
+.rf-header #site-nav.rf-primary .rf-directory-tools a:hover {text-decoration: underline; text-underline-offset: .25em}
+.rf-directory-tools {justify-content: flex-start; gap: 23px; border-top: 1px solid var(--nav-rule)}
+.rf-footer {
+  background: var(--rf-footer-surface, var(--rv-dark, #173b2d));
+  color: var(--rf-footer-ink, var(--rv-on-dark, #faf9f5));
+  border: 0;
+  padding: 0;
+}
+.rf-footer-grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr 1fr 1.15fr;
+  gap: clamp(18px, 4vw, 72px);
+  padding-block: clamp(45px, 5.6vw, 90px);
+}
+.rf-footer h2 {
+  font: 750 16px/1.3 var(--sans, Manrope, Arial, sans-serif);
+  letter-spacing: -.015em;
+  margin: 0 0 13px;
+}
+.rf-footer .rf-brand {font-size: 34px}
+.rf-footer .rf-dot {color: inherit}
+.rf-identity p {margin: 16px 0 0; font-size: 14px; line-height: 1.6}
+.rf-footer a:not(.rf-brand) {color: inherit; text-decoration: none; font-size: 14px}
+.rf-footer li a {display: inline-block; padding: 5px 0}
+.rf-footer a:not(.rf-brand):hover {text-decoration: underline; text-underline-offset: .25em}
+.rf-footer-contact {display: flex; flex-direction: column; align-items: flex-start}
+.rf-footer .contact-email {overflow-wrap: anywhere}
+.rf-footer .rf-footer-book {gap: 14px; border-color: currentColor; background: transparent; margin-top: 18px; padding: 0 16px}
+.rf-footer .rf-footer-book span {display: inline-flex}
+.rf-colophon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px 0 20px;
+  border-top: 1px solid currentColor;
+}
+.rf-colophon small,
+.rf-footer .rf-colophon a {font-size: 12px}
+.rf-colophon div {display: flex; gap: 22px}
+@media (max-width: 980px) {
+  .rf-header:not(.rf-nav-ready) {position: relative}
+  .rf-nav-wrap {min-height: 64px; gap: 16px; flex-wrap: wrap; padding-block: 7px}
+  .rf-nav-wrap > .rf-brand {margin-right: auto}
+  .rf-header .rf-action {width: auto; padding-inline: 15px; font-size: 13px}
+  .rf-nav-ready .rf-menu-toggle {display: inline-flex}
+  .rf-menu-glyph {width: 16px; height: 9px; border-block: 1.5px solid currentColor}
+  .rf-menu-toggle[aria-expanded="true"] .rf-menu-glyph {position: relative; border: 0}
+  .rf-menu-toggle[aria-expanded="true"] .rf-menu-glyph::before,
+  .rf-menu-toggle[aria-expanded="true"] .rf-menu-glyph::after {
+    content: ""; position: absolute; left: 0; top: 4px; width: 100%; border-top: 1.5px solid currentColor; transform: rotate(45deg)
+  }
+  .rf-menu-toggle[aria-expanded="true"] .rf-menu-glyph::after {transform: rotate(-45deg)}
+  .rf-header #site-nav.rf-primary {order: 5; width: 100%}
+  .rf-header.rf-nav-ready #site-nav.rf-primary {
+    display: none; position: absolute; left: 0; right: 0; top: 100%; border-block: 1px solid var(--nav-rule);
+    max-height: calc(100vh - 70px); max-height: calc(100dvh - 70px); overflow-y: auto;
+    background: var(--nav-paper); box-shadow: 0 12px 24px #152c2314;
+    padding: 10px max(18px, 4vw) 20px;
+  }
+  .rf-header.rf-nav-ready .rf-menu-toggle[aria-expanded="true"] + #site-nav.rf-primary {display: block}
+  .rf-quick {display: block}
+  .rf-quick > li {border-bottom: 1px solid var(--nav-rule)}
+  .rf-header #site-nav.rf-primary .rf-quick > li > a,
+  .rf-more > summary {display: flex; width: 100%; min-height: 45px; font-size: 13px}
+  .rf-more > summary {justify-content: space-between}
+  .rf-directory {position: static; max-height: none; border: none; box-shadow: none; overflow: visible}
+  .rf-directory-inner {width: 100%; padding: 0}
+  .rf-directory-top {display: none}
+  .rf-columns {display: block; padding: 0 0 8px 11px}
+  .rf-group > summary {display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding: 5px 0; font-size: 14px}
+  .rf-group > summary::after {content: "+"; margin-right: 3px; font-size: 16px}
+  .rf-group[open] > summary::after {content: "−"}
+  .rf-group li {border: none}
+  .rf-header #site-nav.rf-primary .rf-group a {display: flex; align-items: center; min-height: 44px; padding: 6px}
+  .rf-footer-grid {grid-template-columns: 1fr 1fr; gap: 27px}
+}
+@media (max-width: 520px) {
+  .rf-nav-wrap {gap: 10px}
+  .rf-menu-toggle > span:last-child {display: none}
+  .rf-menu-toggle {width: 44px}
+  .rf-footer-grid {gap: 26px 15px}
+  .rf-identity, .rf-footer-contact {grid-column: 1 / -1}
+}
+@media print {
+  .rf-header, .rf-footer {display: none}
+}

@@ -22,7 +22,7 @@ Font license notices are in `public/assets/fonts/`. Founder work is attributed o
 
 ## Public work samples
 
-The homepage photograph is a 2012 view of San Francisco City Hall by Carol M. Highsmith. The Library of Congress records no known restrictions on publication. The image caption links to the collection record. [Library of Congress](https://www.loc.gov/item/2013630463/)
+The angled screens on the homepage show Ridgefolio's demonstrations, founder projects and research figures. Carol M. Highsmith photographed Civic Center Plaza and City Hall. The Library of Congress lists both photographs with no known restrictions on publication. [Plaza photograph](https://www.loc.gov/item/2013630463/) · [City Hall dome photograph](https://www.loc.gov/item/2011630953/)
 
 The case study’s map plots the May 2025 CGS snapshot over Natural Earth geography. Its local data file contains only the 141 park names, statuses and coordinates, rounded to five decimals for display. Both the static map and interactive map use the same projection. Usage counts and chart values are dated snapshots. [Status GeoJSON](https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/blob/673480b96b7dbfce3990cc9f72208c87c65b54a9/data/geojson/statusGeojsonData.geojson) · [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/)
 

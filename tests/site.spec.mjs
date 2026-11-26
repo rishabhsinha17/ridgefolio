@@ -57,7 +57,17 @@ test('mobile navigation, keyboard dismissal and contact destinations', async ({ 
   await expect(page).toHaveURL(/\/work\/$/);
   await page.goto('/');
   await expect(page.locator('.contact-email')).toHaveAttribute('href', 'mailto:rishabh@ridgefolio.com');
-  for (const selector of ['.nav-cta', '.field-copy .field-link', '.field-contact > a']) {
+  const contact = page.locator('.nav-cta');
+  await expect(contact).toHaveAttribute('href', '/contact/');
+  await contact.click();
+  const sheet = page.getByRole('dialog');
+  await expect(sheet).toBeVisible();
+  await expect(sheet.locator('a[href^="mailto:"]')).toHaveAttribute('href', 'mailto:rishabh@ridgefolio.com');
+  await expect(sheet.locator('a[href^="https://cal.com/"]')).toHaveAttribute('href', 'https://cal.com/ridgefolio/intro');
+  await page.keyboard.press('Escape');
+  await expect(sheet).toBeHidden();
+  await expect(contact).toBeFocused();
+  for (const selector of ['.field-copy .field-link', '.field-contact > a']) {
     await expect(page.locator(selector)).toHaveAttribute('href', 'https://cal.com/ridgefolio/intro');
   }
   await expect(page.locator('.field-work-row').nth(1)).toHaveAttribute('href', 'https://github.com/IBM/vLLM-Hook/pull/41');
