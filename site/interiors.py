@@ -432,6 +432,8 @@ def project(path, body):
         hero_src, hero_alt = "/assets/interior-release-cover.webp", "kvcached release v0.1.6, 3 October 2026"
         hero_link, action = ed.KV + "/releases/tag/v0.1.6", "Open release"
         shot_src, shot_alt = "/assets/interior-release-record.webp", "Two merged changes and their September 2026 review dates"
+        shot_width, shot_height = 1727, 462
+        inset_width, inset_height = 1502, 677
         shot_link = hero_link
         inset_src, inset_alt = "/assets/interior-release-cover.webp", "Release marker, version 0.1.6"
         closing_src, closing_alt = shot_src, shot_alt
@@ -440,6 +442,8 @@ def project(path, body):
         hero_src, hero_alt = "/assets/editorial/monitor-results.webp", "Figure 1 comparing monitor scores across models"
         hero_link, action = ed.PAPER, "Read paper"
         shot_src, shot_alt = "/assets/editorial/paper-detail.webp", "First page of Exposure Is Not Commitment"
+        shot_width, shot_height = 772, 567
+        inset_width, inset_height = 848, 355
         shot_link = ed.PAPER
         inset_src, inset_alt = hero_src, hero_alt
         closing_src, closing_alt = "/assets/editorial/paper-detail.webp", "First page of the published paper"
@@ -448,8 +452,8 @@ def project(path, body):
         '<section id="responsive" class="padding-tb-150"><div class="container"><div class="row">'
         f'<div class="col-md-5"><div class="sticky-element">{edit_slot("title-btn")}<h2 class="h1">{full_title}</h2>'
         + summary.replace("<p>", '<p class="lead">') + '<p>' + button(source_url, source_text, True) + '</p></div></div>'
-        + f'<div class="col-md-6 col-md-offset-1 responsive-shots"><a href="{shot_link}" class="project-shot-link"><img class="shot1" src="{shot_src}" alt="{shot_alt}" loading="lazy"></a>'
-        + f'<img class="shot2 sticky-element" src="{inset_src}" alt="{inset_alt}" loading="lazy"></div></div></div></section>'
+        + f'<div class="col-md-6 col-md-offset-1 responsive-shots"><a href="{shot_link}" class="project-shot-link"><img class="shot1" src="{shot_src}" alt="{shot_alt}" width="{shot_width}" height="{shot_height}" loading="lazy"></a>'
+        + f'<img class="shot2 sticky-element" src="{inset_src}" alt="{inset_alt}" width="{inset_width}" height="{inset_height}" loading="lazy"></div></div></div></section>'
     )
     reasoning = "".join(f"<p>{part}</p>" for part in detail)
     features = (
@@ -458,7 +462,7 @@ def project(path, body):
         + f'<div class="feature-block"><h3>{topic}</h3>{relevance}</div></div>'
         + f'<div class="col-md-5 col-md-offset-1"><div class="feature-block">{exhibit}</div></div></div></div></section>'
     )
-    closing = f'<div id="project-end-image" class="relative"><div class="cover"></div><img class="full-img" src="{closing_src}" alt="{closing_alt}" loading="lazy"></div>'
+    closing = f'<div id="project-end-image" class="relative"><div class="cover"></div><img class="full-img" src="{closing_src}" alt="{closing_alt}" width="{shot_width}" height="{shot_height}" loading="lazy"></div>'
     return shell(title_hero("project-hero", title, collection, target="responsive", project=True) + banner + responsive + features + closing, "project-page")
 
 

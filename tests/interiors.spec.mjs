@@ -55,3 +55,25 @@ test('the scrolled contact prompt leaves content usable until expanded', async (
   await expect(sheet).toBeHidden();
   await expect(page.locator('header[data-ref-header]')).not.toHaveAttribute('inert', '');
 });
+
+test('project evidence keeps its space while images are downloading', async ({ page }) => {
+  let release;
+  const gate = new Promise(resolve => { release = resolve; });
+  await page.route(/\/(paper-detail|monitor-results)\.webp$/, async route => {
+    await gate;
+    await route.continue();
+  });
+  try {
+    await page.goto('/work/evaluation/', {waitUntil: 'domcontentloaded'});
+    const media = page.locator('#responsive .responsive-shots img');
+    const boxes = () => media.evaluateAll(images => images.map(image => Math.round(image.getBoundingClientRect().height)));
+    await media.evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
+    const reserved = await boxes();
+    expect(Math.min(...reserved)).toBeGreaterThan(25);
+    release();
+    await media.evaluateAll(images => Promise.all(images.map(image => image.decode())));
+    expect(await boxes()).toEqual(reserved);
+  } finally {
+    release();
+  }
+});

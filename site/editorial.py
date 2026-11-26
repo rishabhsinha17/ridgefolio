@@ -47,7 +47,7 @@ def work_gallery(cases):
 
 def project_exhibit(slug):
     if slug == "evaluation":
-        return f"""<figure class="project-plate research-figure"><a href="/assets/editorial/monitor-results.webp"><img src="/assets/editorial/monitor-results.webp" width="862" height="356" alt="Figure 1 shows how monitor scores change with training population across Qwen, Mistral and OLMo. The comparable-cases scores are 0.853, 0.896 and 0.912."></a><figcaption>Figure 1 from <cite>Exposure Is Not Commitment</cite>, page 3. Select the figure to open it at full size. <a href="https://arxiv.org/pdf/2610.37679">Read the full paper (PDF)</a>.</figcaption></figure>"""
+        return f"""<figure class="project-plate research-figure"><a href="/assets/editorial/monitor-results.webp"><img src="/assets/editorial/monitor-results.webp" width="848" height="355" alt="Figure 1 shows how monitor scores change with training population across Qwen, Mistral and OLMo. The comparable-cases scores are 0.853, 0.896 and 0.912."></a><figcaption>Figure 1 from <cite>Exposure Is Not Commitment</cite>, page 3. Select the figure to open it at full size. <a href="https://arxiv.org/pdf/2610.37679">Read the full paper (PDF)</a>.</figcaption></figure>"""
     return f'''<div class="release-plate">{release_cover()}<div class="release-records"><h2>In this release</h2>
     <p><a href="{KV}/pull/480">#480 · Clean up worker socket directories</a><small>Merged 23 September 2026</small></p>
     <p><a href="{KV}/pull/482">#482 · Release shared memory at shutdown</a><small>Merged 24 September 2026</small></p>
