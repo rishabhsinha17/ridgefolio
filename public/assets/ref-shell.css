@@ -200,6 +200,55 @@ html.ref-contact-expanded #contact-body .no-btn {display: none}
   #contact-body > .form-group {padding-right: 0}
   #contact-body .no-btn {position: static; margin-top: 10px}
 }
+/* The reference interior grid has 20px column gutters and 10px row overhangs. */
+@media screen {
+  .rv-interior [data-ref-header] .container-fluid {width: 100%; max-width: none; padding-inline: 30px}
+  .rv-interior [data-ref-header] .row > .col-md-12 {padding: 0}
+  .rv-interior [data-ref-footer] {padding: 150px 0 120px}
+  .rv-interior [data-ref-footer] .container,
+  .rv-interior .main-wrap > .copyright .container {width: 100%; max-width: 1400px; margin-inline: auto; padding-inline: 20px}
+  .rv-interior [data-ref-footer] .container > .row,
+  .rv-interior .main-wrap > .copyright .container > .row {margin-inline: -10px; padding: 0}
+  .rv-interior [data-ref-footer] .row > div,
+  .rv-interior .main-wrap > .copyright .row > div {width: auto; margin: 0; padding-inline: 20px}
+  .rv-interior [data-ref-footer] .block {margin-bottom: 30px}
+  .rv-interior [data-ref-footer] h4 {font-size: 18px; line-height: 1.2; margin-bottom: 10px; color: inherit}
+  .rv-interior [data-ref-footer] h4.h2 {font-size: 30px; line-height: 1.2; margin-bottom: 30px; color: inherit}
+  .rv-interior [data-ref-footer] .col-md-2 a {font-size: 16px; line-height: 1.8; margin-block: 10px}
+  .rv-interior [data-ref-footer] #mc-form p {margin-bottom: 30px}
+  .rv-interior [data-ref-footer] .social {font-size: 16px}
+  .rv-interior .main-wrap > .copyright {font-size: 16px; line-height: 1.8; padding: 30px 0 130px}
+}
+@media screen and (max-width: 991px) {
+  .rv-interior [data-ref-footer] {padding: 50px 0}
+  .rv-interior [data-ref-footer] .container > .row {display: block}
+  .rv-interior [data-ref-footer] h4 {font-size: 17px}
+  .rv-interior [data-ref-footer] h4.h2 {font-size: 18px}
+  .rv-interior [data-ref-footer] .row > .col-md-offset-3 {color: var(--shell-light)}
+  .rv-interior .main-wrap > .copyright {padding: 30px 0}
+}
+/* The collapsed scroll prompt is a nonmodal region. Its input opens the dialog. */
+@media screen {
+  html.ref-contact-docked {scroll-padding-bottom: 104px}
+  .ref-contact-docked #contact-form {padding: 22px 30px; box-shadow: 0 -1px 0 var(--shell-rule)}
+  .ref-contact-docked #contact-results:empty, .ref-contact-docked #message:empty {display: none}
+  .ref-contact-docked #contact-form .contact-form-inner {width: min(500px, 100%)}
+  .ref-contact-docked #contact-body > .form-group {padding: 0; margin: 0}
+  .ref-contact-docked #contact-body > .form-group label {position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden}
+  .ref-contact-docked #contact-body #name {height: 50px; padding-right: 120px; margin: 0}
+  .ref-contact-docked #contact-body .no-btn {position: absolute; inset: 0 0 auto auto; height: 50px; margin: 0}
+  .ref-contact-docked #contact-form #contact-form-close {position: absolute; left: calc(100% + 14px); top: 2px; margin: 0}
+  .ref-contact-docked #contact-form-close img {width: 26px; height: 26px}
+  .ref-menu-open.ref-contact-docked #contact-form {visibility: hidden}
+  .ref-contact-docked .rv-source #down-arrow .up:not([hidden]) {bottom: 105px}
+  .rv-interior .main-wrap:has(.form-style) > .copyright {padding-bottom: max(130px, env(safe-area-inset-bottom))}
+}
+@media screen and (max-width: 740px) {
+  .ref-contact-docked #contact-form {padding: 12px 58px 12px 20px}
+  .ref-contact-docked #contact-form #contact-form-close {left: calc(100% + 5px); width: 44px; overflow: hidden; font-size: 0; gap: 0}
+  .ref-contact-docked .rv-source #down-arrow .up:not([hidden]) {bottom: 78px}
+  .rv-interior .main-wrap:has(.form-style) > .copyright {padding-bottom: max(90px, env(safe-area-inset-bottom))}
+}
 @media print {
   [data-ref-header], [data-ref-footer], .main-wrap > .copyright, #contact-form {display: none}
   .main-wrap {padding: 0}

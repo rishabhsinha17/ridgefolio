@@ -70,7 +70,8 @@ def squares():
 
 def nav(path):
     contact_url = "/contact/#contact-hero" if path == "/contact/" else "/contact/"
-    nav_slot = placeholder("rz-edit-wrap nav-list-btn")
+    nav_slot = placeholder("rz-edit-wrap nav-list-btn") if path == "/" else ""
+    header_slot = placeholder("float_button_above rz-edit-wrap nav-btn center-btns") if path == "/" else ""
     quick = "".join(link(url, name, path, "btn btn-link") + "<br>" for url, name in QUICK_LINKS)
     columns = "".join(
         f'<div class="col-md-4"><p class="small text-muted">{DIRECTORY_ICON}{heading}</p>{nav_slot}'
@@ -78,7 +79,7 @@ def nav(path):
         for heading, items in DIRECTORY
     )
     primary = "".join("<li>" + link(url, name, path) + "</li>" for url, name in PRIMARY)
-    return f'''<header data-ref-header>{placeholder("float_button_above rz-edit-wrap nav-btn center-btns")}<div class="container-fluid"><div class="row"><div class="col-md-12">
+    return f'''<header data-ref-header>{header_slot}<div class="container-fluid"><div class="row"><div class="col-md-12">
       <a class="logo" href="/" aria-label="Ridgefolio home"><svg viewBox="0 0 44 32" width="36" height="27" aria-hidden="true"><path id="revizelogo" class="cls-1" d="{MARK}"/></svg></a>
       <div id="mega-drop-toggle" role="button" tabindex="0" aria-label="Menu" aria-expanded="false" aria-controls="site-directory">{BARS}</div>
       <a class="btn btn-inverse open-contact-form visible-md visible-lg" href="{contact_url}">Contact us</a>
@@ -90,7 +91,7 @@ def nav(path):
       </div></div></div></header>'''
 
 
-def footer():
+def footer(path):
     # Give each icon a real destination and a descriptive accessible name.
     destinations = [
         ("twitter-icon", "/resources/capabilities/", "Capability statement", "M5 2h9l5 5v15H5z M14 2v6h5 M8 12h8 M8 16h8"),
@@ -103,8 +104,9 @@ def footer():
         f'<a href="{url}" aria-label="{title}" title="{title}"><svg width="23" height="23" viewBox="0 0 24 24" aria-hidden="true"><path id="{icon_id}" class="footer-social-icon" d="{drawing}"/></svg></a>'
         for icon_id, url, title, drawing in destinations
     )
-    title_slot = placeholder("rz-edit-wrap title-btn")
-    menu_slot = placeholder("rz-edit-wrap menu-edit-btn")
+    title_slot = placeholder("rz-edit-wrap title-btn") if path == "/" else ""
+    menu_slot = placeholder("rz-edit-wrap menu-edit-btn") if path == "/" else ""
+    credit_slot = placeholder("rz-edit-wrap foo-edit-btn") if path == "/" else ""
     empty_block = f'<div class="block">{title_slot}{menu_slot}</div>'
     return f'''<footer data-ref-footer><div class="container"><div class="row">
       <div class="col-md-2"><div class="block">{title_slot}<h4>Explore</h4>{menu_slot}{link("/work/", "Project archive")}{link("/services/", "Services")}{link("/practice/", "The practice")}</div>{empty_block}</div>
@@ -114,7 +116,7 @@ def footer():
       <button type="submit" class="btn btn-inverse">Search</button><label for="mc-email">Search Ridgefolio</label>
       <p class="small">Browse services, software examples and buyer resources.</p></form>
       <div class="social"><span>Quick links</span>{icons}</div></div></div></div></footer>
-      <div class="copyright"><div class="container"><div class="row"><div class="col-sm-6">{placeholder("rz-edit-wrap foo-edit-btn")}© 2026 Ridgefolio LLC · California</div>
+      <div class="copyright"><div class="container"><div class="row"><div class="col-sm-6">{credit_slot}© 2026 Ridgefolio LLC · California</div>
       <div class="col-sm-6 text-right">{menu_slot}{link("/pricing/", "Scoping and pricing")} | {link("/contact/", "Contact")}</div></div></div></div>'''
 
 

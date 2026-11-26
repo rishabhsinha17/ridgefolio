@@ -200,12 +200,12 @@ for slug, who, desc, items in [
         + tag("Working with Ridgefolio")
         + f"<h1>{who}</h1><p>{desc}</p>"
         + buttons(
-            (ed.PDF, "Download capability statement (PDF)"),
+            (ed.PDF, "Capability PDF"),
             (
                 "/work/" if slug == "partners" else "/demos/",
-                "Review founder work"
+                "Selected work"
                 if slug == "partners"
-                else "Explore working examples",
+                else "Working demos",
             ),
         )
         + "</div>"
@@ -242,7 +242,7 @@ add(
     "/practice/",
     "The practice",
     "Meet Rishabh Sinha and see how Ridgefolio delivers software.",
-    f"""<header class="wrap portrait-intro"><div>{tag("The practice")}<h1>Rishabh Sinha</h1><p>Rishabh runs Ridgefolio, an independent software engineering practice in California. His work ranges from a public map of Indonesian industrial parks to the software that manages memory for language models.</p><div class="actions">{a("/work/", arrow("Explore the work"), "button")}{a("https://rishabhsinha.dev/", arrow("Founder portfolio"), "field-link")}</div></div><figure><img src="/assets/editorial/founder.webp" alt="Rishabh Sinha" width="428" height="428"></figure></header>"""
+    f"""<header class="wrap portrait-intro"><div>{tag("The practice")}<h1>Rishabh Sinha</h1><p>Rishabh runs Ridgefolio in California. His work spans a public map of Indonesian industrial parks and memory software for language models.</p><div class="actions">{a("/work/", arrow("Explore the work"), "button")}{a("https://rishabhsinha.dev/", arrow("Founder portfolio"), "field-link")}</div></div><figure><img src="/assets/editorial/founder.webp" alt="Rishabh Sinha" width="428" height="428"></figure></header>"""
     + section(
         "From first conversation to handover",
         rows(
@@ -503,11 +503,20 @@ for path, (title, desc, body, group) in pages.items():
             template_id = "case"
         elif template_id == "article-page":
             template_id = "freeform-page" if path.startswith("/services/") else "blog-post-page"
+    if family:
+        if path in {"/services/", "/demos/", "/resources/", "/contact/"}:
+            stylesheet = "interior-directories"
+        elif path == "/practice/" or path.startswith(("/for/", "/work/")):
+            stylesheet = "interior-projects"
+        else:
+            stylesheet = "interior-articles"
+        interior_css += f'<link rel="stylesheet" href="/assets/{stylesheet}.css">'
     robots = "noindex" if path == not_found else "index,follow"
     social_image, social_alt = ed.social_image(path)
     # Keep the source template’s section ordering and link the skip control to
     # the first heading even on pages with an existing, referenced heading ID.
-    first_heading = re.search(r"<h1\b[^>]*>", body)
+    first_heading = next((tag for tag in re.finditer(r"<h1\b[^>]*>", body)
+                          if 'aria-hidden="true"' not in tag.group() and not re.search(r"\shidden\b", tag.group())), None)
     heading_id = re.search(r'\bid="([^"]+)"', first_heading.group()) if first_heading else None
     target = heading_id[1] if heading_id else "main"
     if first_heading and not heading_id:
@@ -518,7 +527,7 @@ for path, (title, desc, body, group) in pages.items():
     landmark = "" if re.search(r"<main\b", body) else ' role="main"'
     page_body = (
         f'<div class="main-wrap{(" " + family) if family else ""}"{landmark}>{navigation.squares()}{navigation.nav(path)}'
-        f'{body}{navigation.footer()}{sheet}</div>'
+        f'{body}{navigation.footer(path)}{sheet}</div>'
     )
     page_body = page_body.replace("↗", LINK_ARROW)
     out.write_text(f'''<!doctype html>

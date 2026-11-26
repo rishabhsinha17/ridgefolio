@@ -14,6 +14,17 @@
   const name = sheet?.querySelector('#name');
   let menuOpener;
   let contactOpener;
+  let dockDismissed = false;
+  const scrollContact = sheet && document.body.classList.contains('rv-interior');
+
+  function syncContactDock() {
+    if (!scrollContact || root.classList.contains('ref-contact-open')) return;
+    if (window.scrollY < 300) dockDismissed = false;
+    const visible = window.scrollY >= 300 && !dockDismissed;
+    sheet.hidden = !visible;
+    sheet.setAttribute('role', visible ? 'region' : 'dialog');
+    root.classList.toggle('ref-contact-docked', visible);
+  }
   let inertElements = [];
 
   const plainClick = (event) => event.button === 0 &&
@@ -67,20 +78,24 @@
     }
   }
 
-  function openContact(trigger) {
-    if (!sheet || !sheet.hidden) return;
+  function openContact(trigger, focusName = true) {
+    if (!sheet || root.classList.contains('ref-contact-open')) return;
+    root.classList.remove('ref-contact-docked');
+    sheet.setAttribute('role', 'dialog');
     setMenu(false);
     contactOpener = trigger;
     sheet.hidden = false;
     sheet.setAttribute('aria-modal', 'true');
     root.classList.add('ref-contact-open');
     disableBackground();
-    name.focus({preventScroll: true});
+    if (focusName) name.focus({preventScroll: true});
   }
 
   function closeContact() {
     if (!sheet || sheet.hidden) return;
-    root.classList.remove('ref-contact-open', 'ref-contact-expanded');
+    const wasModal = root.classList.contains('ref-contact-open');
+    dockDismissed = true;
+    root.classList.remove('ref-contact-open', 'ref-contact-expanded', 'ref-contact-docked');
     sheet.hidden = true;
     moreFields.hidden = true;
     sheet.removeAttribute('aria-modal');
@@ -88,22 +103,26 @@
     sheet.querySelector('#message').replaceChildren();
     for (const element of inertElements) element.inert = false;
     inertElements = [];
-    contactOpener?.focus({preventScroll: true});
+    if (wasModal || sheet.contains(document.activeElement)) (contactOpener || header.querySelector('.logo')).focus({preventScroll: true});
+    contactOpener = null;
   }
 
   function expandContact(moveFocus = true) {
+    if (!root.classList.contains('ref-contact-open')) openContact(header.querySelector('.logo'), false);
     moreFields.hidden = false;
     root.classList.add('ref-contact-expanded');
     if (moveFocus) sheet.querySelector('#email').focus();
   }
 
   document.addEventListener('click', (event) => {
-    if (sheet && !sheet.hidden) {
+    if (sheet && root.classList.contains('ref-contact-open')) {
       if (!sheet.contains(event.target)) closeContact();
       return;
     }
     const trigger = event.target.closest('a.open-contact-form');
-    if (sheet && trigger && trigger.target !== '_blank' && plainClick(event)) {
+    const opensSheet = trigger && (trigger.getAttribute('href') === '#contact-form' ||
+      (trigger.origin === location.origin && trigger.pathname === '/contact/'));
+    if (sheet && opensSheet && trigger.target !== '_blank' && plainClick(event)) {
       event.preventDefault();
       openContact(trigger);
     } else if (root.classList.contains('ref-menu-open') && !header.contains(event.target)) {
@@ -112,7 +131,7 @@
   });
 
   document.addEventListener('keydown', (event) => {
-    if (sheet && !sheet.hidden) {
+    if (sheet && root.classList.contains('ref-contact-open')) {
       if (event.key === 'Escape') {
         event.preventDefault();
         closeContact();
@@ -136,6 +155,11 @@
   });
 
   if (sheet) {
+    if (scrollContact) {
+      name.placeholder = 'Your name';
+      window.addEventListener('scroll', syncContactDock, {passive: true});
+      syncContactDock();
+    }
     buttonKeys(close);
     close.addEventListener('click', closeContact);
     sheet.querySelector('button.open-contact-form').addEventListener('click', () => expandContact());

@@ -11,7 +11,7 @@
   color: var(--ri-ink);
 }
 /* Shared site chrome is a sibling of the source page sections. */
-@scope (.rv-source) to (.rv-source > :not(section, main.container, article.container, .case-header, .case-footer, #blog-lg-img, #project-end-image, #slider, #leaders)) {
+@scope (.rv-source) to (:scope > :not(section, main.container, article.container, .case-header, .case-footer, #blog-lg-img, #project-end-image, #slider, #leaders)) {
 :scope .container {width:1400px;max-width:100%;margin-inline:auto;padding-inline:15px;}
 :scope .row {display:flex;flex-wrap:wrap;margin-inline:-15px;}
 :scope .row > [class*="col-"] {min-width:0;padding-inline:15px;width:100%;}
@@ -274,4 +274,13 @@
   :scope .entry-section h2 {font-size:16pt;}
   :scope .caption-inner h1 {font-size:28pt;}
 }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .rv-interior [data-art-reveal="waiting"] {clip-path: inset(0 100% 0 0)}
+  .rv-interior [data-art-reveal="visible"] {animation: interior-art-reveal .8s cubic-bezier(.76,0,.24,1)}
+  @keyframes interior-art-reveal {
+    from {clip-path: inset(0 100% 0 0)}
+    to {clip-path: inset(0)}
+  }
 }

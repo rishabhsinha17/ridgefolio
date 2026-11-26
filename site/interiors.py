@@ -1,6 +1,7 @@
 """Render Ridgefolio content in the catalogue, project, case and article page families."""
 
 from html import escape
+from pathlib import Path
 import re
 
 import editorial as ed
@@ -36,9 +37,10 @@ def down(target="scroll-to"):
 
 
 
-def pixel(url, title, label):
+def pixel(url, title, label, *, banner_link=False):
+    link_class = ' class="open-contact-form"' if banner_link else ''
     return (
-        f'<div class="pixel-btn"><div class="cover"></div><a href="{escape(url, quote=True)}">'
+        f'<div class="pixel-btn"><div class="cover"></div><a{link_class} href="{escape(url, quote=True)}">'
         f'<p class="lead">{escape(title)}</p><p class="small">{escape(label)}</p>{RIGHT_ARROW}</a></div>'
     )
 
@@ -48,8 +50,8 @@ def title_hero(identifier, title, subtitle="", *, target="scroll-to", project=Fa
     if identifier == "projects-hero":
         column = "col-sm-10 col-md-offset-1"
     if service:
-        # The source stores an empty H1 before its displayed H1. Keep one accessible title.
-        headings = f'<span class="legacy-title-slot" hidden></span><h1>{title}</h1>'
+        # The original title slot remains inert; the visible title owns the skip target.
+        headings = f'<h1 hidden inert aria-hidden="true"></h1><h1>{title}</h1>'
     elif project:
         headings = f'<h1 class="h1 no-margin display-text">{title}</h1><span class="h1 text-muted text-light display-text">{subtitle}</span>'
     elif subtitle:
@@ -72,7 +74,7 @@ def image_banner(src, alt, url, title, action, extra="", *, editable=False):
     return (
         f'<div id="blog-lg-img" class="relative" data-presentation="{extra}">{edit}<div class="cover"></div>'
         f'<img class="full-img" src="{escape(src, quote=True)}" alt="{escape(alt, quote=True)}">'
-        f'{pixel(url, title, action)}</div>'
+        f'{pixel(url, title, action, banner_link=True)}</div>'
     )
 
 
@@ -90,8 +92,8 @@ def shell(content, family):
 def catalogue(demos=False):
     title, subtitle = ("Interactive", "demonstrations") if demos else ("Engineering", "services")
     description = (
-        "Use fictional records to explore service discovery, application review and reporting. Each example runs in your browser."
-        if demos else "Choose the part of the service that needs work. Each scope includes an example you can try and a way to test delivery."
+        "Find a service as a resident, review a permit as a staff member or reconcile a report. All three demos use fictional records and run in your browser."
+        if demos else "Explore the work involved in publishing a public website, reviewing an application or reconciling a report. Each service includes a working example."
     )
     first_label = "Explore the demos" if demos else "Explore services"
     lead = (
@@ -102,8 +104,8 @@ def catalogue(demos=False):
         '<div class="rotaing"><div class="one"></div><div class="two"></div><div class="three"></div></div></div></div></div></section>'
     )
     headline = (
-        'Three public-service tasks.<br><span class="text-muted">Try each one in your browser.</span>'
-        if demos else 'Websites, workflows and data.<br><span class="text-muted">Choose a service.</span>'
+        'Three tasks for delivering public services.<br><span class="text-muted">Try each one in your browser.</span>'
+        if demos else 'Public websites, workflows and data.<br><span class="text-muted">Explore three scopes of work.</span>'
     )
     intro = (
         '<section id="scroll-to" class="padding-tb-150"><div class="container" id="catalogue"><div class="row">'
@@ -116,9 +118,9 @@ def catalogue(demos=False):
         demo_name, demo_desc = demo_info[slug]
         service_url = f'/services/{service["slug"]}/'
         demo_url = f'/demos/{slug}/'
-        name = demo_name if demos else service["short"]
-        detail = service["label"] if demos else service["title"]
-        desc = demo_desc if demos else service["intro"]
+        name = demo_name if demos else service["title"]
+        detail = service["label"]
+        desc = (demo_desc + " " + service["test"]) if demos else (service["intro"] + " " + service["need"])
         side = "right" if index % 2 else "left"
         column = "col-md-4" + (" col-md-offset-8" if side == "left" else "")
         tile = pixel(demo_url if demos else service_url, demo_name if demos else service["short"], "Open demo" if demos else "View scope")
@@ -157,18 +159,18 @@ def work_index():
 
 def resource_index():
     entries = [
-        ("/resources/capabilities/", "Capability statement", RESOURCES[0][2], ed.PDF, "Download the one-page PDF"),
-        ("/resources/project-brief/", "Build a project brief", RESOURCES[2][2], ed.EXAMPLE, "Download a completed example"),
-        ("/resources/launch-checklist/", "Review launch readiness", RESOURCES[1][2], None, None),
+        ("/resources/project-brief/", "Build a project brief", RESOURCES[2][2], "Build the brief", ed.EXAMPLE, "Download a completed example"),
+        ("/resources/launch-checklist/", "Review launch readiness", RESOURCES[1][2], "Open the checklist", None, None),
+        ("/resources/capabilities/", "Capability statement", RESOURCES[0][2], "View capabilities", ed.PDF, "Download the one-page PDF"),
     ]
     items = []
-    for url, label, description, download, action in entries:
+    for url, label, description, guide_action, download, action in entries:
         extra = f'<b class="text-muted"><a href="{download}">{action}</a></b>' if download else '<b class="text-muted">Printable worksheet</b>'
         image = {"capabilities": "capability", "project-brief": "brief", "launch-checklist": "checklist"}[url.strip("/").split("/")[-1]]
         items.append(
             '<article class="blog-list-article">' + edit_slot("blog-btns", True) + '<div class="row"><div class="col-xs-12">'
             f'<a href="{url}"><h2>{label}</h2></a><p class="lead"><span>{description}</span></p></div></div>'
-            f'<div class="row"><div class="col-md-6">{button(url, "Open guide")}</div><div class="col-xs-6 text-right"><p class="small">{extra}</p></div>'
+            f'<div class="row"><div class="col-md-6">{button(url, guide_action)}</div><div class="col-xs-6 text-right"><p class="small">{extra}</p></div>'
             f'<div class="col-md-12"><a href="{url}"><img class="full-img" loading="lazy" src="/assets/showcase/{image}.webp" alt="{label} excerpt"></a></div></div></article>'
         )
     return shell(
@@ -196,8 +198,8 @@ def contact():
         '<div class="form-group"><label for="website">Project or solicitation link <small>(optional)</small></label><input id="website" class="form-control" type="url" name="website" maxlength="800"></div>'
         '<h4 class="page-header" role="heading" aria-level="2">Your project</h4>'
         '<div class="form-group"><label for="subject">Subject</label><select id="subject" class="form-control" name="subject" required><option value="">Choose a subject</option>'
-        '<option>Website or service portal</option><option>Workflow or data project</option><option>Delivery partnership</option><option>Other inquiry</option></select></div>'
-        '<div class="form-group"><label for="find">Organization (optional)</label><input id="find" class="form-control" name="organization" type="text" autocomplete="organization" maxlength="180"></div>'
+        '<option>Website or service portal</option><option>Workflow or data project</option><option data-organization>Delivery partnership</option><option>Other inquiry</option></select></div>'
+        '<div class="form-group" hidden><label for="find">Partner organization (optional)</label><input id="find" class="form-control" name="organization" type="text" autocomplete="organization" maxlength="180" disabled></div>'
         '<div class="form-group"><label for="comments">Project details</label><textarea id="comments" class="form-control" name="comments" rows="4" maxlength="4000" required placeholder="What should the service do? Which systems and deadlines apply?"></textarea></div>'
         '<fieldset><h5 class="page-header" role="heading" aria-level="3">Preview your email before sending</h5>'
         f'<label for="verify" class="verify"><img src="/assets/favicon.svg" alt="" width="20" height="20"> Recipient</label><input id="verify" class="form-control" type="email" value="{email}" readonly></fieldset>'
@@ -221,6 +223,82 @@ def strips(content):
     return re.sub(r'<section class="block [^"]*"><div class="wrap">', '<section class="entry-section"><div>', content).replace('class="wrap quick-actions"', 'class="entry-actions"')
 
 
+SERVICE_NOTES = {
+    "websites": (
+        "A permit applicant needs the service name, eligibility requirements and documents to bring. A staff editor needs one place to keep those details current.",
+        "Search by permit, roads, parks or records. Open a result to see the information a resident should prepare.",
+        "Before moving pages, list the terms residents use when they telephone the department. Those terms belong in the new search index.",
+        "Choose a published page that changes frequently. Ask the person who maintains it to show how a correction reaches the public site.",
+        "Keep links to the current application and its supporting documents with the service instructions.",
+        ("Repeat the search with the words someone would use at the counter.", "Check a saved address from the former site and confirm that it opens the corresponding service.", "Have a second editor find and correct the same instruction using the handover notes."),
+    ),
+    "workflows": (
+        "Begin with an application that staff returned for correction. Its history reveals which questions caused trouble and who could resolve them.",
+        "In the demonstration, a reviewer can return a sample application with a note. The applicant can amend it and submit it again.",
+        "Identify the role allowed to make each decision. A reviewer needs to know who owns an incomplete record.",
+        "Keep the correction request with the application so the next reviewer can see how it was addressed.",
+        "Choose one accepted application as an example of what the receipt and the staff record should contain.",
+        ("Try leaving a required field blank and check that the form identifies what to supply.", "Follow the change from correction request to resubmission in the application history.", "Compare the identifier on a sample receipt with the corresponding staff record."),
+    ),
+    "data": (
+        "Choose one number that staff already report. Trace it to the records, filters and calculation behind it.",
+        "Select a district to compare its service records and hours. The CSV download follows the active district filter.",
+        "Record how to treat a missing value, a correction and a row that was already present in the last refresh.",
+        "Keep a small sample with known totals. A maintainer can run it again after a source field or reporting rule changes.",
+        "For a map, preserve an identifier that lets a reviewer go from a point on the screen to the underlying record.",
+        ("Note when the source was last refreshed and which reporting period it covers.", "Include sample duplicates and missing values when checking the import.", "Open the export and reproduce the total using only its rows."),
+    ),
+}
+
+
+def service_article(service):
+    context, example, first, second, third, checks = SERVICE_NOTES[service["slug"]]
+    demo_url = f'/demos/{service["demo"]}/'
+    demo_name = next(title for slug, title, *_ in DEMOS if slug == service["demo"])
+    parts = [
+        f'<p><span><strong>{escape(service["intro"])}</strong></span></p>',
+        f'<p>{escape(service["need"])}</p><p>{escape(context)}</p>',
+        f'<p>Try the <a href="{demo_url}">{escape(demo_name.lower())} demonstration</a>. {escape(example)}</p>',
+        *(f'<p>{escape(paragraph)}</p>' for paragraph in (first, second, third)),
+    ]
+    for index, ((name, description), check) in enumerate(zip(service["items"], checks, strict=True), 1):
+        parts.append(f'<h1 role="heading" aria-level="2">{index}. {escape(name)}</h1><p>{escape(description)}</p><p>{escape(check)}</p>')
+    guide = f'/resources/{service["guide"]}/'
+    parts.extend((
+        '<h1 role="heading" aria-level="2">4. Scope and acceptance</h1>',
+        f'<p>{escape(service["test"])}</p><p>{escape(service["scope"])}<br><br></p>',
+        f'<div class="article-related"><a href="{guide}">Open the planning guide</a> · <a href="/pricing/">Scope and pricing</a></div>',
+    ))
+    return "".join(parts)
+
+
+def article_figure(path):
+    if path == "/resources/capabilities/":
+        return (
+            '<figure class="article-evidence document-proof"><img src="/assets/editorial/capability-page.webp" '
+            'width="618" height="800" loading="lazy" alt="First page of Ridgefolio’s capability statement">'
+            f'<figcaption><a href="{ed.PDF}">Read the capability statement as a PDF</a></figcaption></figure>'
+        )
+    if path == "/demos/permit-desk/":
+        return ed.audience_artifact("agencies")
+    if path not in ("/pricing/", "/resources/project-brief/"):
+        return ""
+    # Display the same acceptance and handover records that the buyer downloads.
+    example = Path(__file__).resolve().parents[1] / "public" / ed.EXAMPLE.lstrip("/")
+    sections = dict(part.split("\n", 1) for part in example.read_text().split("\n\n") if "\n" in part)
+    if path == "/pricing/":
+        title = "What the buyer receives at handover"
+        extract = f'<p>{escape(sections["Handover"])}</p>'
+    else:
+        title = "An acceptance test from the permit desk brief"
+        steps = sections["Acceptance walkthrough"].splitlines()
+        extract = "<ol>" + "".join(f'<li>{escape(step.partition(". ")[2])}</li>' for step in steps) + "</ol>"
+    return (
+        f'<figure class="article-evidence"><figcaption>{title}</figcaption>{extract}'
+        f'<a href="{ed.EXAMPLE}">Read the complete sample project brief</a></figure>'
+    )
+
+
 def article(path, body):
     title, category, lead, content = split_intro(body)
     banner = ""
@@ -230,95 +308,158 @@ def article(path, body):
         "/resources/launch-checklist/": ("checklist", "Launch checklist excerpt", "Open checklist"),
         "/resources/capabilities/": ("capability", "One-page Ridgefolio capability statement", "Read the statement"),
     }
+    if path.startswith("/services/"):
+        service = next(item for item in SERVICES if path == f'/services/{item["slug"]}/')
+        demo_url = f'/demos/{service["demo"]}/'
+        image, description = {
+            "websites": ("/assets/editorial/civic-center-1440.webp", "San Francisco Civic Center, photographed by Carol M. Highsmith"),
+            "workflows": ("/assets/previews/permit-desk.jpg", "Ridgefolio’s sample permit application and staff review record"),
+            "data": ("/assets/editorial/archipelago-parks.webp", "Industrial park locations across Indonesia in the CGS handover dataset"),
+        }[service["slug"]]
+        banner = image_banner(image, description, demo_url, "Working example", "Open demo", editable=True)
+        return shell(title_hero("blog-hero", title, service=True) + banner + article_body(service_article(service)), "article-page")
     if path in guide_images:
         slug, alt, action = guide_images[path]
         banner = image_banner(f"/assets/showcase/{slug}.webp", alt, "#scroll-to", action, "Open guide", "document-banner")
     elif path.startswith("/demos/"):
         slug = path.strip("/").split("/")[-1]
         banner = image_banner(f"/assets/previews/{slug}.jpg", f"{title} demonstration interface", "#scroll-to", "Try the demo", "Open workspace", "demo-banner")
-    if path.startswith("/services/"):
-        s = next(item for item in SERVICES if path == f'/services/{item["slug"]}/')
-        url = f'/demos/{s["demo"]}/'
-        banner = image_banner(f'/assets/previews/{s["demo"]}.jpg', s["short"] + " demonstration", url, "Working example", "Open demo", "demo-banner", editable=True)
-        content = re.sub(r'(<section class="wrap service-feature">)<div>(.*?)</div><a class="demo-preview".*?</a></section>', r'<section class="entry-section"><div>\2</div></section>', content, count=1, flags=re.S)
-    return shell(title_hero("blog-hero", title, category=category, service=path.startswith("/services/")) + banner + article_body(lead + strips(content)), "article-page" + ("" if banner else " no-hero-image"))
+    elif path in ("/search/", "/404.html"):
+        target = "#scroll-to" if path == "/search/" else "/search/"
+        banner = image_banner("/assets/editorial/civic-center-1440.webp", "Civic center plaza", target, "Site directory", "Find a page")
+    figure = article_figure(path)
+    if path == "/demos/permit-desk/":
+        content = re.sub(r'<p class="wrap receipt-download">.*?</p>', figure, content, count=1)
+        figure = ""
+    return shell(title_hero("blog-hero", title, category=category) + banner + article_body(lead + strips(content) + figure), "article-page")
 
 
 def about(path, body):
     title, label, lead, content = split_intro(body)
+    slug = path.strip("/").split("/")[-1]
     head = body.partition("</header>")[0]
     actions = re.search(r'<div class="actions">(.*?)</div>', head, re.S).group(1)
     links = re.findall(r'<a href="(.*?)"[^>]*>(.*?)</a>', actions)
-    group = "<p>" + " ".join(
-        button(url, re.sub(r"<[^>]+>|↗", "", label).strip(), primary=i == 0)
-        for i, (url, label) in enumerate(links)
-    ) + "</p>"
+    primary = " ".join(
+        button(url, re.sub(r"<[^>]+>|↗", "", text).strip(), primary=i == 0)
+        for i, (url, text) in enumerate(links)
+    )
     artifact = re.search(r'</h1>.*?</div></div>(.*)', head, re.S).group(1)
-    slug = path.strip("/").split("/")[-1]
+    plates = {
+        "practice": ("/assets/editorial/archipelago-parks.webp", "Industrial parks in Indonesia from the handover dataset"),
+        "agencies": ("/assets/previews/permit-desk.jpg", "Community event permit review, including corrections and the staff receipt"),
+        "partners": ("/assets/showcase/brief.webp", "Permit review project brief with scope and acceptance checks"),
+    }
+    art, alt = plates[slug]
+    if slug != "practice":
+        label = "Working together"
     if slug == "practice":
         cover = '<div class="cover-half about-portrait" role="img" aria-label="Portrait of Rishabh Sinha"></div>'
-        lead = lead.replace("</p>", '<br><img class="about-proof" src="/assets/showcase/map-desktop.webp" alt="Map interface from the Indonesian industrial parks project" width="144" height="87"></p>')
+        proof_image = "/assets/showcase/map-desktop.webp"
     else:
         cover = f'<div class="cover-half about-portrait">{artifact}</div>'
-    lead = lead.replace("<p>", '<p class="lead">')
+        proof_image = "/assets/showcase/capability.webp" if slug == "partners" else "/assets/previews/permit-desk.jpg"
+    lead = lead.replace("<p>", '<p class="lead">').replace("</p>", f'<br><img class="about-proof" src="{proof_image}" alt="" width="144" height="87"></p>')
     hero = (
         f'<section id="about-hero" class="about-{slug}">{cover}<div class="container"><div class="row">'
         f'<div class="col-sm-5 caption-wrap v-align"><div class="caption-inner">{edit_slot("center-btns")}<span class="h1 no-margin display-text">{label}</span>'
-        f'<h1 class="text-muted text-light display-text">{title}</h1>{lead}{group}{down()}</div></div></div></div>'
-        f'</section>'
+        f'<h1 class="text-muted text-light display-text">{title}</h1>{lead}<p>{primary}</p>{down()}</div></div></div></div></section>'
     )
     first, _, remaining = content.partition("</section>")
     first_title, first_body = first.split("<h2>", 1)[1].split("</h2>", 1)
-    first_body = first_body.removesuffix("</div>")
-    image = "/assets/editorial/industrial-parks.webp" if slug == "practice" else "/assets/previews/permit-desk.jpg"
+    steps = re.findall(r'<div><dt>(.*?)</dt><dd>(.*?)</dd></div>', first_body, re.S)
+    if not steps:
+        raise ValueError("Missing planning steps on " + path)
+    copy = "".join(f'<p class="no-margin"><strong>{item}</strong></p><p>{detail}</p>' for item, detail in steps)
     belief = (
         '<section id="scroll-to" class="padding-tb-150 we-believe"><div class="container"><div class="row">'
-        f'<div class="col-md-5 col-md-offset-7"><h2 class="h1">{first_title}</h2>{first_body}</div></div></div>'
-        f'<div class="we-believe-img"><div class="cover"></div><img src="{image}" alt="" loading="lazy"></div></section>'
+        f'<div class="col-md-5 col-md-offset-7">{edit_slot("believe-btn")}<h2 class="h1">{first_title}</h2>{copy}</div></div></div>'
+        f'<div class="we-believe-img" style="--belief-image:url({art})"><div class="cover"></div></div></section>'
     )
-    others = ""
     if remaining:
-        heading, copy = remaining.split("<h2>", 1)[1].split("</h2>", 1)
-        others = '<div id="leaders"><div class="leader bg-muted padding-tb-100"><div class="container"><div class="row"><div class="col-md-5">' + f'<h3 class="h2">{heading}</h3>' + '</div><div class="col-md-5 col-md-offset-2">' + copy.removesuffix("</div></section>") + "</div></div></div></div></div>"
-    if not others:
-        others = (
-            '<div id="leaders">' + edit_slot("leader-new-btn") + '<div class="leader bg-muted padding-tb-100"><div class="container"><div class="row"><div class="col-md-5">'
-            + edit_slot("leader-btns", True) + '<h3 class="h2">Website engineering</h3><p>Rishabh built a public dashboard for the University of Maryland’s Center for Global Sustainability.</p>'
-            + '<p class="no-margin">' + button("/work/industrial-parks/", "Read the case study", True) + '</p></div><div class="col-md-5 col-md-offset-2">'
-            + '<p class="h3">141 industrial parks</p><p class="text-muted no-margin">May 2025 handover dataset</p></div></div></div></div></div>'
+        heading, contents = remaining.split("<h2>", 1)[1].split("</h2>", 1)
+        description = contents.split('<div class="actions">', 1)[0]
+        link_pairs = re.findall(r'<a href="(.*?)"[^>]*>(.*?)</a>', contents)
+        actions = " ".join(button(url, re.sub(r"<[^>]+>|↗", "", text).strip(), i == 0) for i, (url, text) in enumerate(link_pairs))
+        fact, caption = (
+            ("RF-101", "Sample community event permit · fictional record")
+            if slug == "agencies" else ("One workflow, one acceptance test.", "Permit review project brief · worked example")
         )
-    quote = (
-        '<section id="inner-quotes" class="bg-muted"><div class="container-fluid"><div class="row">'
-        '<div class="quotes-carousel owl-carousel owl-theme"><div class="item">'
-        '<blockquote class="h3">Exposure Is Not Commitment</blockquote>'
-        f'<p><b>Rishabh Sinha</b> <span class="text-muted">· <a href="{ed.PAPER}">Read the research paper</a></span></p>'
-        '</div></div></div></div></section>'
+    else:
+        heading = "Website engineering"
+        description = "<p>Rishabh built a public dashboard for the University of Maryland’s Center for Global Sustainability.</p>"
+        actions = button("/work/industrial-parks/", "Read case study", True)
+        fact, caption = "141 industrial parks", "May 2025 handover dataset"
+    leaders = (
+        '<div id="leaders">' + edit_slot("leader-new-btn") + '<div class="leader bg-muted padding-tb-100"><div class="container"><div class="row"><div class="col-md-5">'
+        + edit_slot("leader-btns", True) + f'<h3 class="h2">{heading}</h3>{description}<p class="no-margin">{actions}</p></div>'
+        + f'<div class="col-md-5 col-md-offset-2"><p class="h3">{fact}</p><p class="text-muted no-margin">{caption}</p></div></div></div></div></div>'
     )
-    return shell(hero + belief + others + quote, "about-page")
+    plate = (
+        '<div class="relative" data-about-plate>' + edit_slot("banner-btn") + '<div class="cover"></div>'
+        + f'<img class="full-img" src="{art}" alt="{alt}" loading="lazy">'
+        + '</div>'
+    )
+    records = (
+        ("Exposure Is Not Commitment", "Rishabh Sinha", ed.PAPER, "Read the research paper"),
+        ("Mapping Indonesia’s industrial parks", "Center for Global Sustainability", "/work/industrial-parks/", "Read the case study"),
+        ("kvcached v0.1.6", "Open-source release", "/work/open-source/", "Inspect the contributions"),
+    )
+    records_html = "".join(
+        f'<div class="item"><blockquote class="h3">{name}</blockquote><p><b>{credit}</b> <span class="text-muted">· <a href="{url}">{action}</a></span></p></div>'
+        for name, credit, url, action in records
+    )
+    proof = (
+        '<section id="inner-quotes" class="bg-muted"><div class="container-fluid"><div class="row">'
+        f'<div class="quotes-carousel owl-carousel owl-theme" tabindex="0" role="region" aria-label="Project records">{records_html}</div></div></div></section>'
+    )
+    return shell(hero + belief + leaders + plate + proof, "about-page")
 
 
 def project(path, body):
     slug = path.strip("/").split("/")[-1]
-    title, label, lead, content = split_intro(body)
-    exhibit, remaining = content.split('<section class="block ', 1)
-    heading, article_content = remaining.split("<h2>", 1)[1].split("</h2>", 1)
-    copy, more = article_content.split('</div></section>', 1)
+    full_title, _, summary, content = split_intro(body)
+    exhibit, sections = content.split('<section class="block ', 1)
+    finding, content = sections.split("<h2>", 1)[1].split("</h2>", 1)
+    explanation, context = content.split("</div></section>", 1)
+    detail = re.findall(r"<p(?: [^>]*)?>(.*?)</p>", explanation, re.S)
+    source_url, source_text = re.search(r'<a href="(.*?)"[^>]*>(.*?)</a>', explanation, re.S).groups()
+    source_text = re.sub(r"<[^>]+>|↗", "", source_text).strip()
+    topic, relevance = context.split("<h2>", 1)[1].split("</h2>", 1)
+    relevance = relevance.removesuffix("</div></section>")
     if slug == "open-source":
-        banner = image_banner("/assets/interior-release-cover.webp", "kvcached release v0.1.6, 3 October 2026", ed.KV + "/releases/tag/v0.1.6", "Release record", "Open release", "demo-banner")
+        title, collection = "kvcached", "Release v0.1.6"
+        hero_src, hero_alt = "/assets/interior-release-cover.webp", "kvcached release v0.1.6, 3 October 2026"
+        hero_link, action = ed.KV + "/releases/tag/v0.1.6", "Open release"
+        shot_src, shot_alt = "/assets/interior-release-record.webp", "Two merged changes and their September 2026 review dates"
+        shot_link = hero_link
+        inset_src, inset_alt = "/assets/interior-release-cover.webp", "Release marker, version 0.1.6"
+        closing_src, closing_alt = shot_src, shot_alt
     else:
-        banner = image_banner("/assets/editorial/monitor-results.webp", "Figure from the research paper", ed.PAPER, "Research paper", "Read paper", "demo-banner")
+        title, collection = "AI monitor evaluation", "Research paper"
+        hero_src, hero_alt = "/assets/editorial/monitor-results.webp", "Figure 1 comparing monitor scores across models"
+        hero_link, action = ed.PAPER, "Read paper"
+        shot_src, shot_alt = "/assets/editorial/paper-detail.webp", "First page of Exposure Is Not Commitment"
+        shot_link = ed.PAPER
+        inset_src, inset_alt = hero_src, hero_alt
+        closing_src, closing_alt = "/assets/editorial/paper-detail.webp", "First page of the published paper"
+    banner = image_banner(hero_src, hero_alt, hero_link, title, action, "demo-banner")
     responsive = (
         '<section id="responsive" class="padding-tb-150"><div class="container"><div class="row">'
-        f'<div class="col-md-5"><div class="sticky-element">{edit_slot("title-btn")}<h2 class="h1">{heading}</h2>{lead}{copy}</div></div>'
-        f'<div class="col-md-6 col-md-offset-1 responsive-shots">{exhibit}</div></div></div></section>'
+        f'<div class="col-md-5"><div class="sticky-element">{edit_slot("title-btn")}<h2 class="h1">{full_title}</h2>'
+        + summary.replace("<p>", '<p class="lead">') + '<p>' + button(source_url, source_text, True) + '</p></div></div>'
+        + f'<div class="col-md-6 col-md-offset-1 responsive-shots"><a href="{shot_link}" class="project-shot-link"><img class="shot1" src="{shot_src}" alt="{shot_alt}" loading="lazy"></a>'
+        + f'<img class="shot2 sticky-element" src="{inset_src}" alt="{inset_alt}" loading="lazy"></div></div></div></section>'
     )
-    topic, explanation = more.split("<h2>", 1)[1].split("</h2>", 1)
-    explanation = explanation.removesuffix("</div></section>")
-    closing_src, closing_alt = ("/assets/editorial/paper-detail.webp", "First page of the research paper") if slug == "evaluation" else ("/assets/interior-release-record.webp", "kvcached v0.1.6 release and the two merged changes by Rishabh Sinha")
+    reasoning = "".join(f"<p>{part}</p>" for part in detail)
+    features = (
+        '<section id="about-section" class="padding-tb-150"><div class="container"><div class="row">'
+        f'<div class="col-md-5 col-md-offset-1"><div class="feature-block"><h3>{finding}</h3>{reasoning}</div>'
+        + f'<div class="feature-block"><h3>{topic}</h3>{relevance}</div></div>'
+        + f'<div class="col-md-5 col-md-offset-1"><div class="feature-block">{exhibit}</div></div></div></div></section>'
+    )
     closing = f'<div id="project-end-image" class="relative"><div class="cover"></div><img class="full-img" src="{closing_src}" alt="{closing_alt}" loading="lazy"></div>'
-    return shell(title_hero("project-hero", title, label, target="responsive", project=True) + banner + responsive
-                 + '<section id="about-section" class="padding-tb-150"><div class="container"><div class="row"><div class="col-md-5 col-md-offset-1"><div class="feature-block">'
-                 + f"<h3>{topic}</h3>{explanation}</div></div></div></div></section>" + closing, "project-page")
+    return shell(title_hero("project-hero", title, collection, target="responsive", project=True) + banner + responsive + features + closing, "project-page")
 
 
 def case_study(body):
@@ -362,7 +503,7 @@ def case_study(body):
     hero = (
         '<header class="case-header"><div class="container"><h1>Founder case study</h1></div></header>'
         '<div id="slider"><div id="blur"></div><ul class="bxslider"><li></li></ul>'
-        '<div class="container left"><div id="caption">University of Maryland</div></div><div class="container right"><div class="row">'
+        '<div class="container left"><div id="caption">A public map of 141 industrial parks in Indonesia, built at the University of Maryland.</div></div><div class="container right"><div class="row">'
         '<div class="col-md-7 col-md-offset-5 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">'
         f'<div id="white-block" class="fillRight">{edit_slot(link=True)}<strong>Center for Global Sustainability</strong><h2>{title}</h2></div></div></div></div></div>'
     )

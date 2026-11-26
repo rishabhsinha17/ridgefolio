@@ -1,0 +1,57 @@
+import { test, expect } from './browser.mjs';
+
+test('interior pages keep their skip target, page gutters and footer grid', async ({ page, request }) => {
+  const sitemap = await (await request.get('/sitemap.xml')).text();
+  const routes = [...sitemap.matchAll(/<loc>https:\/\/ridgefolio\.com(\/[^<]+)<\/loc>/g)].map(match => match[1]);
+  expect(routes).toHaveLength(22);
+  const width = page.viewportSize().width;
+  for (const route of routes) {
+    await page.goto(route);
+    const layout = await page.evaluate(() => {
+      const skip = document.querySelector('.skip');
+      const heading = document.getElementById(skip.hash.slice(1));
+      const blocks = [...document.querySelectorAll('[data-ref-footer] .container > .row > div')];
+      const [first, second, search] = blocks.map(element => element.getBoundingClientRect());
+      const input = document.querySelector('#mc-email').getBoundingClientRect();
+      return {
+        pageWidth: document.documentElement.scrollWidth,
+        heading: heading?.textContent.trim(),
+        headingExposed: !!heading?.getBoundingClientRect().height && !heading.closest('[hidden],[aria-hidden="true"]'),
+        stacked: second.top >= first.bottom - 1 && search.top >= second.bottom - 1,
+        searchWidth: Math.round(input.width),
+        missingAnchors: [...document.querySelectorAll('a[href^="#"]')].filter(link => link.hash.length > 1 &&
+          link.getClientRects().length && !document.getElementById(decodeURIComponent(link.hash.slice(1)))).map(link => link.hash)
+      };
+    });
+    expect(layout.heading, route).toBeTruthy();
+    expect(layout.headingExposed, route).toBe(true);
+    expect(layout.pageWidth, route).toBeLessThanOrEqual(width + 1);
+    expect(layout.missingAnchors, route).toEqual([]);
+    expect(layout.stacked, route).toBe(width < 992);
+    expect(layout.searchWidth, route).toBeGreaterThan(width < 992 ? width * .72 : width * .30);
+  }
+});
+
+test('a service banner link follows its own destination', async ({ page }) => {
+  await page.goto('/services/websites/');
+  const link = page.locator('#blog-lg-img .pixel-btn a');
+  const destination = new URL(await link.getAttribute('href'), page.url());
+  await link.click();
+  await expect(page).toHaveURL(destination.href);
+  await expect(page.locator('#contact-form')).not.toHaveAttribute('aria-modal', 'true');
+});
+
+test('the scrolled contact prompt leaves content usable until expanded', async ({ page }) => {
+  await page.goto('/pricing/');
+  const sheet = page.locator('#contact-form');
+  await expect(sheet).toBeHidden();
+  await page.evaluate(() => window.scrollTo({top: 450, behavior: 'instant'}));
+  await expect(sheet).toHaveAttribute('role', 'region');
+  await expect(page.locator('header[data-ref-header]')).not.toHaveAttribute('inert', '');
+  await sheet.getByRole('button', {name: 'Continue', exact: true}).click();
+  await expect(sheet).toHaveAttribute('aria-modal', 'true');
+  await expect(sheet.locator('#email')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(sheet).toBeHidden();
+  await expect(page.locator('header[data-ref-header]')).not.toHaveAttribute('inert', '');
+});

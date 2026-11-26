@@ -1,0 +1,132 @@
+/* The catalogues, buyer library and contact page share the reference's wider grid gutters. */
+:is(#apps-page, #blog-page, #contact-page) .main-wrap > section .container {padding-inline: 30px}
+:is(#apps-page, #blog-page, #contact-page) .main-wrap > section .row {margin-inline: -20px}
+:is(#apps-page, #blog-page, #contact-page) .main-wrap > section .row > [class*="col-"] {padding-inline: 20px}
+:is(#apps-page, #blog-page, #contact-page) .main-wrap > section :is(h1, .h1, .h2) {line-height: 1.2; text-wrap: initial}
+:is(#apps-page, #blog-page, #contact-page) .main-wrap > section .btn {
+  min-height: 50px; padding: 0 27px; margin-block: 0; font-size: 16px; font-weight: 700;
+}
+:is(#apps-page, #blog-page) #down-arrow {height: 0; margin: 0}
+:is(#apps-page, #blog-page) #down-arrow a.down {position: absolute; bottom: -30px; left: 0}
+
+#apps-page #apps .lead {font-size: 21px; line-height: 1.6; margin: 0 0 50px}
+@media screen and (min-width: 992px) {
+  #apps-page #apps h1 {min-block-size: 3lh}
+}
+#apps-page #apps .v-align > p:last-of-type {margin: 0 0 30px}
+@media screen and (max-width: 767px) {
+  #apps-page #apps .v-align > p:last-of-type {margin-bottom: 40px}
+}
+#apps-page #apps .rotaing {width: 100%}
+#apps-page #apps .rotaing > div {width: 949px; height: 949px; inset: 0 auto auto 0}
+#apps-page #apps .rotaing .one {background-size: contain; z-index: 1}
+#apps-page #apps .rotaing .two, #apps-page #apps .rotaing .three {border: 0; border-radius: 0}
+#apps-page #apps .rotaing .two {z-index: 2}
+#apps-page #apps .rotaing .three {z-index: 3}
+#apps-page #apps .rotaing :is(.two, .three)::before,
+#apps-page #apps .rotaing :is(.two, .three)::after {
+  content: ""; position: absolute; aspect-ratio: 1; border-radius: 50%;
+  background: var(--portrait) center / cover no-repeat var(--ri-wash);
+}
+#apps-page #apps .two::before {width: 14%; left: 13%; top: 27%; --portrait: url("/assets/editorial/civic-center-768.webp")}
+#apps-page #apps .two::after {width: 12%; right: 10%; bottom: 24%; --portrait: url("/assets/editorial/industrial-parks.webp")}
+#apps-page #apps .three::before {width: 17%; right: 28%; top: 8%; --portrait: url("/assets/editorial/city-hall-dome-600.webp")}
+#apps-page #apps .three::after {width: 10%; left: 28%; bottom: 18%; --portrait: url("/assets/showcase/dashboard-charts.webp")}
+
+#apps-page .app-row {display: block}
+#apps-page .app-row .h2 {font-size: 30px; margin-bottom: 30px}
+#apps-page .app-row .lead {margin: 0; font-size: 21px; line-height: 1.6}
+#apps-page #finder-app {--setting: url("/assets/editorial/civic-center-1440.webp"); --scene-focus: 54% 75%}
+#apps-page #permit-desk-app {--setting: url("/assets/editorial/city-hall-dome-1050.webp"); --scene-focus: center 65%}
+#apps-page #service-ledger-app {--setting: url("/assets/editorial/archipelago-parks.webp"); --scene-focus: center}
+#apps-page .app-row :is(.app-img-left, .app-img-right) {background: var(--ri-wash)}
+#apps-page .app-row :is(.app-img-left, .app-img-right)::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 15%, #162e254f 100%), var(--setting) var(--scene-focus) / cover no-repeat;
+}
+#apps-page .app-row :is(.app-img-left, .app-img-right)::after {
+  top: 32%; width: 82%; aspect-ratio: 954 / 621; background-size: contain;
+  background-color: #fff; border: clamp(4px, .6vw, 9px) solid #203129; border-radius: 8px;
+  box-shadow: 0 24px 54px -18px #0c1d1bd9;
+}
+#apps-page #permit-desk-app .app-img-right::after {aspect-ratio: 954 / 563}
+#apps-page #service-ledger-app .app-img-left::after {aspect-ratio: 954 / 580}
+
+#blog-page #blog-hero .display-text {font-size: 62px; line-height: 1.2}
+#blog-page #blog-lg-img[data-presentation="document-banner"] {padding: 0}
+#blog-page #blog-lg-img[data-presentation="document-banner"] .full-img {
+  width: 100%; height: auto; aspect-ratio: 1600 / 835; max-height: none; min-height: 0;
+  object-fit: cover; object-position: center 40%;
+}
+#blog-page .blog-list-article {padding: 0; border: 0}
+#blog-page #scroll-to .blog-list-article > .row {margin-inline: -10px}
+#blog-page .blog-list-article h2 {font-size: 30px; line-height: 1.2}
+#blog-page .blog-list-article p {margin: 0 0 20px}
+#blog-page .blog-list-article .full-img {height: auto; aspect-ratio: 3 / 2; margin: 30px 0 0; object-fit: cover}
+
+#contact-page #contact-hero .row {align-items: flex-start}
+#contact-page #contact-hero .caption-inner {max-width: none}
+#contact-page #contact {padding: 0; background: transparent}
+#contact-page #contactform {display: block; padding: 0; margin: 0}
+#contact-page #contactform .form-group {margin: 0 0 34px}
+#contact-page #contactform .form-group label {margin: 0 0 5px; font-size: 16px; line-height: 1.8}
+#contact-page #contactform .form-control {max-width: 100%; min-height: 50px; margin: 0; border-radius: 0}
+#contact-page #contactform input.form-control, #contact-page #contactform select.form-control {height: 50px}
+#contact-page #contactform textarea.form-control {min-height: 200px}
+#contact-page #contactform .page-header {margin: 36px 0 25px}
+#contact-page #contactform fieldset {margin-bottom: 30px}
+#contact-page #contactform fieldset .form-control {max-width: 350px}
+#contact-page #contactform .submit {width: auto; height: 50px; margin: 0}
+
+@media (max-width: 991px) {
+  :is(#apps-page, #blog-page, #contact-page) .main-wrap > section :is(h1, .h1, .display-text),
+  #blog-page #blog-hero .display-text {
+    font-size: clamp(25px, calc(3.273vw + 12.727px), 46px);
+  }
+  #apps-page #apps {padding: 50px 0 100px}
+  #apps-page #apps .v-align {padding-bottom: 0}
+  #apps-page #apps .lead, #apps-page .app-row .lead {font-size: 16px}
+  #apps-page #apps .rotating-apps {padding-inline: 0}
+  #apps-page #apps .rotaing {height: 900px; max-width: none}
+  #apps-page #apps .rotaing > div {width: 100%; height: auto; aspect-ratio: 1; top: 50%; translate: 0 -50%}
+  #apps-page .app-row .h2, #blog-page .blog-list-article h2 {font-size: clamp(20px, 2.9vw, 30px)}
+  #apps-page .app-row .padding-tb-150 {padding-block: 50px}
+  #apps-page .app-row :is(.app-img-left, .app-img-right) {height: 900px}
+  #apps-page .app-row :is(.app-img-left, .app-img-right)::after {width: min(86%, 620px)}
+  #apps-page .app-row > .pixel-btn, #blog-page #blog-lg-img .pixel-btn {width: 150px; height: 150px}
+  #apps-page .app-row > .pixel-btn {left: 50px; bottom: 40px}
+  #blog-page #blog-lg-img {margin-top: 50px}
+  #blog-page #blog-lg-img .pixel-btn {top: -50px; right: 50px}
+  #contact-page #contact-hero .caption-inner {padding: 50px 0 0}
+  #contact-page #contact-hero address {margin: 12px 0}
+}
+@media (max-width: 767px) {
+  :is(#apps-page, #blog-page) #down-arrow a.down {bottom: -10px}
+  #apps-page #apps .rotaing {height: 200px}
+  #apps-page #apps .rotaing > div {top: 350px}
+  #blog-page .blog-list-article .row:last-child > .col-xs-6 {margin-top: 5px}
+}
+@media (max-width: 479px) {
+  #apps-page #apps .v-align .btn {padding-inline: clamp(10px, 3.8vw, 18px); font-size: 15px}
+  #apps-page #apps .rotaing {height: 100px}
+  #apps-page #apps .rotaing > div {top: 200px}
+}
+@media (prefers-reduced-motion: no-preference) {
+  #apps-page #apps .rotaing .one {animation: directory-orbit 67s linear infinite}
+  #apps-page #apps .rotaing .two {animation: directory-orbit 50s linear infinite}
+  #apps-page #apps .rotaing .three {animation: directory-orbit 70s linear infinite reverse}
+  @keyframes directory-orbit {to {transform: rotate(1turn)}}
+}
+@media print {
+  #apps-page .app-row {min-height: 0}
+  #apps-page .app-row :is(.app-img-left, .app-img-right), #apps-page #apps .rotating-apps {display: none}
+}
+
+@media screen {
+  #blog-page #blog-hero h1 {min-block-size: 2lh}
+  #contact-page #contactform {margin: 0 0 30px; min-block-size: 1179px}
+}
+@media screen and (max-width: 767px) {
+  #contact-page #contactform {min-block-size: 1189px}
+  #contact-page #contact-hero address {margin-bottom: 9px}
+}
