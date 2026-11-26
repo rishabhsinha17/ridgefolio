@@ -3,6 +3,7 @@
   const menu = document.querySelector('.menu-button');
   const nav = document.querySelector('#site-nav');
   if (menu && nav) {
+    document.documentElement.classList.add("menu-ready");
     const close = () => {
       nav.classList.remove('is-open');
       menu.setAttribute('aria-expanded', 'false');
@@ -19,6 +20,6 @@
         menu.focus();
       }
     });
-    addEventListener('resize', () => { if (innerWidth > 600) close(); }, { passive: true });
+    addEventListener('resize', () => { if (innerWidth > 900) close(); }, { passive: true });
   }
 })();

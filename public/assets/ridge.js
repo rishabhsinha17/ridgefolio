@@ -67,7 +67,7 @@
     ctx.restore();
   }
 
-  function draw(){if(state.w&&state.h)ridge();}
+  function draw(){if(state.w&&state.h){ridge();stage.classList.add("is-drawn");}}
   function frame(now){
     state.frame=0;if(!state.visible||document.hidden)return;
     if(now-state.last<30){state.frame=requestAnimationFrame(frame);return;}
