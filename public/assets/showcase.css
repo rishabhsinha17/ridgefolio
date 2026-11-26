@@ -392,3 +392,11 @@
 @media (min-width:540px) and (max-width:991px) {
   .rv-home #blog-list {--dome-photo:url("/assets/home-evidence/dome-2400.webp")}
 }
+
+@media (min-width:992px) {
+  .rv-home #responsive {overflow:clip}
+  .rv-home #responsive .col-md-5>.sticky-element {top:clamp(80px,calc(100svh - 650px),250px)}
+  .rv-home #responsive .responsive-shots {display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
+  .rv-home #responsive .responsive-shots>img {grid-area:1/1}
+  .rv-home #responsive .shot2 {position:sticky;top:min(150px,16.67svh);left:auto;margin-left:-20px}
+}

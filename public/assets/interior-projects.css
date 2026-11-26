@@ -188,3 +188,11 @@
 @media screen and (min-width:1600px) and (min-resolution:1.5dppx) {
   .rv-source.case-page #slider .bxslider {background-image:url("/assets/editorial/java-at-night-4010.webp");}
 }
+
+@media screen and (min-width:992px) {
+  .rv-source.project-page #responsive .row {align-items:stretch}
+  .rv-source.project-page #responsive .col-md-5>.sticky-element {position:sticky;top:clamp(80px,calc(100svh - 650px),250px)}
+  .rv-source.project-page #responsive .responsive-shots {display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
+  .rv-source.project-page #responsive .responsive-shots>* {grid-area:1/1}
+  .rv-source.project-page #responsive .shot2 {position:sticky;top:min(150px,16.67svh);margin:0 0 0 -20px;transform:none}
+}

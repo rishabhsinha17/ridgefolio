@@ -76,6 +76,17 @@ test('project evidence keeps its space while images are downloading', async ({ p
     release();
     await media.evaluateAll(images => Promise.all(images.map(image => image.decode())));
     expect(await boxes()).toEqual(reserved);
+    if (page.viewportSize().width >= 992) {
+      for (const path of ['/work/evaluation/', '/']) {
+        if (path === '/') await page.goto(path);
+        const section = page.locator('#responsive');
+        await section.evaluate(element => scrollTo({ top: element.offsetTop + 180, behavior: 'instant' }));
+        const sticky = section.locator('.col-md-5 > .sticky-element');
+        await expect.poll(() => sticky.evaluate(element => {
+          return Math.abs(element.getBoundingClientRect().top - parseFloat(getComputedStyle(element).top));
+        })).toBeLessThan(2);
+      }
+    }
   } finally {
     release();
   }
