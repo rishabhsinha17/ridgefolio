@@ -15,7 +15,7 @@
   let menuOpener;
   let contactOpener;
   let dockDismissed = false;
-  const scrollContact = sheet && document.body.classList.contains('rv-interior');
+  const scrollContact = Boolean(sheet);
 
   function syncContactDock() {
     if (!scrollContact || root.classList.contains('ref-contact-open')) return;

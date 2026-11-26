@@ -58,8 +58,10 @@ test('the scrolled contact prompt leaves content usable until expanded', async (
 
 test('project evidence keeps its space while images are downloading', async ({ page }) => {
   let release;
+  const pending = new Set();
   const gate = new Promise(resolve => { release = resolve; });
-  await page.route(/\/(paper-detail|monitor-results)\.webp$/, async route => {
+  await page.route(/\/(paper-page\.webp|monitor-strata\.svg)$/, async route => {
+    pending.add(new URL(route.request().url()).pathname);
     await gate;
     await route.continue();
   });
@@ -68,6 +70,7 @@ test('project evidence keeps its space while images are downloading', async ({ p
     const media = page.locator('#responsive .responsive-shots img');
     const boxes = () => media.evaluateAll(images => images.map(image => Math.round(image.getBoundingClientRect().height)));
     await media.evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
+    await expect.poll(() => pending.size).toBe(2);
     const reserved = await boxes();
     expect(Math.min(...reserved)).toBeGreaterThan(25);
     release();

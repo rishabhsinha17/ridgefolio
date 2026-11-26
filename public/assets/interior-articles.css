@@ -53,11 +53,8 @@
     font:400 48px/1.2 var(--serif);letter-spacing:-.035em;margin:0 0 30px;text-wrap:wrap;
   }
   #freeform-page .article-related a {color:var(--rv-accent);text-underline-offset:.18em}
-  #blog-post-page #scroll-to .entry-section {border:0;padding:0;margin:0 0 45px}
-  #blog-post-page #scroll-to .entry-section h2 {font:400 30px/1.2 var(--serif);letter-spacing:-.035em;margin:0 0 20px;text-wrap:wrap}
-  #blog-post-page #scroll-to .entry-section>div>p {max-width:none;margin:0 0 30px}
-  #blog-post-page #scroll-to .workspace {width:100%;max-width:100%}
-  #blog-post-page #scroll-to .entry-actions {margin:0 0 35px}
+  #blog-post-page #scroll-to .workspace {width:100%;max-width:100%;margin-block:0 30px}
+  #blog-post-page #scroll-to .entry-actions {margin:0 0 30px}
   #blog-post-page #scroll-to :is(.receipt-download,.worksheet-example) {width:auto;margin:0 0 30px}
 }
 @media screen and (min-width:768px) {
@@ -77,24 +74,37 @@
   :is(#freeform-page,#blog-post-page) #blog-lg-img .pixel-btn svg {left:117px;bottom:18px;width:20px}
 }
 @media screen {
-  #blog-post-page .blog-post .article-evidence {margin:40px 0 30px;padding:clamp(20px,4vw,56px);background:var(--rv-tint);color:var(--rv-ink)}
-  #blog-post-page .blog-post .article-evidence figcaption {font:400 clamp(23px,2.1vw,32px)/1.22 var(--serif);margin:0 0 18px}
-  #blog-post-page .blog-post .article-evidence :is(ol,p) {max-width:72ch;margin:0 0 20px}
-  #blog-post-page .blog-post .article-evidence ol {padding-left:1.45em}
-  #blog-post-page .blog-post .article-evidence li+li {margin-top:5px}
-  #blog-post-page .blog-post .article-evidence a {color:var(--rv-accent);font:700 15px/1.5 var(--sans)}
-  #blog-post-page .blog-post .document-proof {display:grid;justify-items:center}
-  #blog-post-page .blog-post .document-proof img {width:min(100%,475px);height:auto;box-shadow:0 9px 22px #23372e26}
-  #blog-post-page .blog-post .document-proof figcaption {margin:18px 0 0}
-  #blog-post-page .blog-post .receipt-facsimile {margin:25px 0 40px;max-width:630px}
+  #blog-post-page #scroll-to .blog-post>.article-subheading {
+    font:700 24px/1.8 var(--sans);letter-spacing:-.022em;margin:0 0 30px;color:var(--rv-ink);
+  }
+  #blog-post-page .blog-post :is(.article-links,.article-steps) {margin:0 0 30px;padding-left:1.45em}
+  #blog-post-page .blog-post .article-links .button {
+    display:inline;border:0;background:none;color:var(--rv-accent);padding:0;min-height:0;
+    font:inherit;text-decoration:underline;text-underline-offset:.18em;
+  }
+  #blog-post-page .blog-post .article-links .button span[aria-hidden] {display:none}
+  #blog-post-page .blog-post .article-links li+li {margin-top:6px}
+  #blog-post-page .blog-post>:is(.article-document,.article-illustration) {margin:0 0 30px;padding:0}
+  #blog-post-page .blog-post>.article-illustration img {display:block;width:100%;height:auto}
+  #blog-post-page .blog-post>.article-document img {width:min(100%,660px);height:auto;display:block}
+  #blog-post-page .blog-post>:is(.article-document,.article-illustration) figcaption {font:500 16px/1.8 var(--sans);margin:12px 0 0}
+  #blog-post-page .blog-post>.article-transcript {
+    background:transparent;border:0;border-inline-start:2px solid var(--rv-accent);color:var(--rv-ink);
+    margin:0 0 30px;padding:0 0 0 20px;white-space:pre-wrap;overflow-wrap:anywhere;font:400 15px/1.65 PlexMono,monospace;
+  }
+  #blog-post-page .blog-post :is(#brief,#checklist,#search-form,#site-results) {margin-bottom:30px}
 }
 @media print {
-  #blog-post-page .blog-post :is(.article-evidence,.receipt-facsimile) {display:none}
+  #blog-post-page .blog-post :is(.article-document,.article-illustration) {display:none}
+  #blog-post-page .blog-post .article-subheading {font-weight:700;break-after:avoid}
+  #blog-post-page .blog-post .article-transcript {white-space:pre-wrap}
 }
 @media screen {
   #blog-post-page #blog-hero h1 {min-block-size:3lh}
 }
 @media screen and (max-width:767px) {
   #blog-post-page #blog-hero h1 {min-block-size:4lh}
+}
+@media screen and (max-width:991px) {
   #freeform-page #blog-hero h1:not([hidden]) {min-block-size:2lh}
 }

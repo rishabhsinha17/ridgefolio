@@ -44,9 +44,13 @@
       const clone = index < edge || index >= edge + slides.length;
       const item = box(clone ? 'owl-item cloned' : 'owl-item');
       if (clone) {
-        item.inert = true;
         item.setAttribute('aria-hidden', 'true');
-        item.append(slide.cloneNode(true));
+        const copy = slide.cloneNode(true);
+        // A visible preview at the edge remains a native pointer link. Only the
+        // original appears in the tab sequence and accessibility tree.
+        for (const link of copy.querySelectorAll('a')) link.tabIndex = -1;
+        if (records) item.inert = true;
+        item.append(copy);
       } else {
         item.append(slide);
         item.setAttribute('role', 'group');
@@ -76,10 +80,11 @@
     dots.setAttribute('aria-hidden', 'true');
     carousel.replaceChildren(viewport, nav, dots);
 
-    let selected = edge + (!records && innerWidth >= 1100 ? 1 : 0);
+    let selected = edge;
     let settleTimer;
     function offset(index) {
-      return items[index].offsetLeft - items[0].offsetLeft;
+      const inset = records ? 0 : (viewport.clientWidth - items[index].offsetWidth) / 2;
+      return items[index].offsetLeft - items[0].offsetLeft - inset;
     }
     function align(index, smooth) {
       selected = index;

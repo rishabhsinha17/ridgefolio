@@ -29,3 +29,7 @@ The case study’s map plots the May 2025 CGS snapshot over Natural Earth geogra
 The research images reproduce details of pages 1 and 3 of Rishabh Sinha’s preprint. The release exhibit links directly to the two merged changes and their published release. [Paper](https://arxiv.org/abs/2610.37679) · [Release notes](https://github.com/ovg-project/kvcached/releases/tag/v0.1.6)
 
 The sample permit receipt in `public/downloads/` was exported from the working demonstration using the walkthrough in the example project brief.
+
+The project records section uses astronaut photograph ISS056-E-6994, acquired from the International Space Station. It shows Java at night. The skyline and City Hall photographs were downsampled from the Library of Congress archival masters. [NASA Earth Observatory](https://science.nasa.gov/earth/earth-observatory/lights-of-java-92666/) · [San Francisco Civic Center](https://www.loc.gov/item/2013630463/) · [City Hall dome](https://www.loc.gov/item/2011630953/)
+
+The industrial parks project card uses a September 2019 ASTER satellite view of southeast Sulawesi. Credit: NASA/METI/AIST/Japan Space Systems, and U.S./Japan ASTER Science Team. [NASA Photojournal, PIA26007](https://science.nasa.gov/photojournal/sulawesi-indonesia/)

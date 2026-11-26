@@ -132,10 +132,17 @@ test("the featured project carousel opens the working ledger", async ({ page }) 
   const next = gallery.getByRole('button', {name:'Next project'});
   const active = () => gallery.locator('.owl-item.active').first().textContent();
   await expect.poll(active).toBeTruthy();
+  const centerError = () => gallery.locator('.owl-item.center').evaluate(item => {
+    const card = item.getBoundingClientRect();
+    const rail = item.closest('.owl-stage-outer').getBoundingClientRect();
+    return Math.abs((card.left + card.right - rail.left - rail.right) / 2);
+  });
+  await expect.poll(centerError).toBeLessThan(2);
   const initial = await active();
   await next.focus();
   await next.press('Enter');
   await expect.poll(active).not.toBe(initial);
+  await expect.poll(centerError).toBeLessThan(2);
   await expect(viewport).toBeVisible();
   await gallery.getByRole('link', {name:/Service ledger/i}).click();
   await expect(page).toHaveURL(/\/demos\/service-ledger\/$/);

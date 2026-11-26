@@ -6,7 +6,7 @@ test('production assets, fonts and responsive geometry', async ({ page }, info) 
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.status() >= 400) failures.push(response.url()); });
   await page.goto('/');
-  await page.evaluate(() => Promise.all([document.fonts.load('500 16px Manrope'), document.fonts.load('400 16px SourceSerif')]));
+  await page.evaluate(() => Promise.all([...document.fonts].map(face => face.load())));
   expect(await page.evaluate(() => [...document.fonts].every(font => font.status === 'loaded'))).toBeTruthy();
   const planes = page.locator('#home-hero .animatable img.card');
   await expect(planes).toHaveCount(16);

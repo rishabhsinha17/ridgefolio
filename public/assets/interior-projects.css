@@ -116,3 +116,75 @@
   .rv-source.case-page > .case-footer .feedback + .feedback {margin-top:50px;}
   .rv-source.case-page > .case-footer .feedback-person {margin-top:15px;}
 }
+
+@media screen {
+  .rv-source.about-page #about-hero.about-practice .about-portrait {
+    background:var(--ri-wash) url("/assets/editorial/founder.webp") center / min(82%,428px) auto no-repeat;
+  }
+  .rv-source.about-page #scroll-to:has(+ #leaders) .we-believe-img {background-size:cover;}
+  .rv-source.about-page:has(.about-agencies,.about-partners) #scroll-to .we-believe-img {
+    background-color:var(--ri-wash);background-size:contain;
+  }
+  .rv-source.about-page [data-about-plate] img.full-img {object-fit:cover;}
+  .rv-source.about-page:has(.about-partners) [data-about-plate] img.full-img {
+    object-fit:cover;object-position:center top;background:var(--ri-dark);
+  }
+  :is(.rv-source.about-page [data-about-plate],.rv-source.project-page #project-end-image) .plate-credit {
+    position:absolute;z-index:1;bottom:15px;right:15px;max-width:calc(100% - 30px);
+    padding:9px 14px;border-radius:2px;background:var(--ri-paper);color:var(--ri-ink);
+    font:600 13px/1.5 var(--sans);text-decoration:underline;text-underline-offset:3px;
+  }
+  .rv-source.about-page .project-record-nav {display:none;}
+  .rv-source.about-page .quotes-carousel:focus-visible,.rv-source.projects-page .simple-project a:focus-visible,
+  .rv-source.project-page .project-shot-link:focus-visible {outline:3px solid var(--ri-ink);outline-offset:-3px;}
+  .rv-source.projects-page .project-image[data-project="evaluation"] {background-size:84% auto;}
+  .rv-source.projects-page .project-image[data-project="open-source"] {
+    background-color:var(--ri-wash);background-size:92% auto;
+  }
+  .rv-source.project-page #responsive .shot2 {background:var(--ri-paper);}
+  .rv-source.project-page #project-end-image {position:relative;}
+  .rv-source.project-page #project-end-image .full-img {display:block; margin:0;}
+  .rv-source.case-page #slider .bxslider {background-image:url("/assets/editorial/java-at-night-1920.webp");}
+  .rv-source.case-page #slider .bxslider li {background:linear-gradient(0deg,rgba(10,27,26,.85),transparent 65%);}
+  .rv-source.case-page .map-photograph-credit {font:500 13px/1.6 var(--sans);color:var(--ri-muted);}
+  .rv-source.case-page .evidence-figure {margin:28px 0 6px;}
+  .rv-source.case-page .evidence-figure img {display:block;width:100%;height:auto;}
+  .rv-source.case-page .evidence-figure figcaption {font:500 13px/1.7 var(--sans);margin-top:10px;color:var(--ri-muted);}
+}
+@media screen and (min-resolution:1.5dppx) {
+  .rv-source.about-page #about-hero.about-practice .about-portrait {background-size:min(82%,214px) auto;}
+  .rv-source.case-page #slider .bxslider {background-image:url("/assets/editorial/java-at-night-3200.webp");}
+}
+@media screen and (min-resolution:2.5dppx) {
+  .rv-source.about-page #about-hero.about-practice .about-portrait {background-size:min(82%,142px) auto;}
+}
+@media screen and (min-width:1600px) {
+  .rv-source.case-page #slider .bxslider {background-image:url("/assets/editorial/java-at-night-3200.webp");}
+}
+@media screen and (max-width:991px) {
+  .rv-source.about-page #inner-quotes .item {scroll-margin-top:90px;}
+  .rv-source.about-page .project-record-nav {display:flex;justify-content:center;gap:8px;padding-top:18px;}
+  .rv-source.about-page .project-record-nav a {
+    display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--ri-line);border-radius:50%;
+    font:600 15px/1 var(--sans);color:var(--ri-ink);text-decoration:none;
+  }
+  .rv-source.about-page .project-record-nav a:is(:hover,:focus-visible) {background:var(--ri-ink);color:var(--ri-paper);}
+  .rv-source.about-page #inner-quotes .item:target {background:var(--ri-paper);}
+}
+@media screen and (max-width:600px) {
+  :is(.rv-source.about-page [data-about-plate],.rv-source.project-page #project-end-image) .plate-credit {
+    bottom:5px;right:5px;max-width:calc(100% - 10px);padding:6px 8px;font-size:11px;
+  }
+}
+@media screen {
+  .rv-source.case-page .atlas-map canvas {position:absolute;inset:0;width:100%;height:100%;}
+}
+@media print {
+  .rv-source.case-page .atlas-map canvas {display:none!important;}
+  .rv-source.case-page .atlas-map {aspect-ratio:1440/660;background:#fff;}
+  .rv-source.case-page .atlas-map img {content:url("/assets/project-evidence/parks-atlas.svg");}
+}
+
+@media screen and (min-width:1600px) and (min-resolution:1.5dppx) {
+  .rv-source.case-page #slider .bxslider {background-image:url("/assets/editorial/java-at-night-4010.webp");}
+}

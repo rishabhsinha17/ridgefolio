@@ -36,21 +36,28 @@
 #apps-page .app-row {display: block}
 #apps-page .app-row .h2 {font-size: 30px; margin-bottom: 30px}
 #apps-page .app-row .lead {margin: 0; font-size: 21px; line-height: 1.6}
-#apps-page #finder-app {--setting: url("/assets/editorial/civic-center-1440.webp"); --scene-focus: 54% 75%}
-#apps-page #permit-desk-app {--setting: url("/assets/editorial/city-hall-dome-1050.webp"); --scene-focus: center 65%}
-#apps-page #service-ledger-app {--setting: url("/assets/editorial/archipelago-parks.webp"); --scene-focus: center}
-#apps-page .app-row :is(.app-img-left, .app-img-right) {background: var(--ri-wash)}
+#apps-page #finder-app {--panel-paper: #c1d2ce; --panel-ink: #203c37}
+#apps-page #permit-desk-app {--panel-paper: #dfcda7; --panel-ink: #483b25}
+#apps-page #service-ledger-app {--panel-paper: #c9d3b6; --panel-ink: #2d412d}
+#apps-page .app-row :is(.app-img-left, .app-img-right) {
+  --art-gutter: clamp(28px, 4vw, 70px);
+  --art-inner: clamp(52px, 6.5vw, 108px);
+  background: var(--panel-paper);
+}
 #apps-page .app-row :is(.app-img-left, .app-img-right)::before {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 15%, #162e254f 100%), var(--setting) var(--scene-focus) / cover no-repeat;
+  content: attr(data-caption); position: absolute; inset: 68px var(--art-inner) auto var(--art-gutter);
+  max-width: 23ch; color: var(--panel-ink);
+  font: 400 clamp(26px, 2.45vw, 42px)/1.12 var(--serif); letter-spacing: -.035em;
 }
 #apps-page .app-row :is(.app-img-left, .app-img-right)::after {
-  top: 32%; width: 82%; aspect-ratio: 954 / 621; background-size: contain;
-  background-color: #fff; border: clamp(4px, .6vw, 9px) solid #203129; border-radius: 8px;
-  box-shadow: 0 24px 54px -18px #0c1d1bd9;
+  content: ""; position: absolute; inset: 195px var(--art-inner) 75px var(--art-gutter);
+  width: auto; max-width: 960px; height: auto; aspect-ratio: auto; margin: auto;
+  border: 0; box-shadow: none; background: var(--capture) center / contain no-repeat;
+  filter: drop-shadow(0 12px 18px #16272017);
 }
-#apps-page #permit-desk-app .app-img-right::after {aspect-ratio: 954 / 563}
-#apps-page #service-ledger-app .app-img-left::after {aspect-ratio: 954 / 580}
+#apps-page .app-row .app-img-right::before, #apps-page .app-row .app-img-right::after {
+  inset-inline: var(--art-inner) var(--art-gutter);
+}
 
 #blog-page #blog-hero .display-text {font-size: 62px; line-height: 1.2}
 #blog-page #blog-lg-img[data-presentation="document-banner"] {padding: 0}
@@ -62,6 +69,7 @@
 #blog-page #scroll-to .blog-list-article > .row {margin-inline: -10px}
 #blog-page .blog-list-article h2 {font-size: 30px; line-height: 1.2}
 #blog-page .blog-list-article p {margin: 0 0 20px}
+#blog-page .blog-list-article .lead {max-width: none}
 #blog-page .blog-list-article .full-img {height: auto; aspect-ratio: 3 / 2; margin: 30px 0 0; object-fit: cover}
 
 #contact-page #contact-hero .row {align-items: flex-start}
@@ -74,8 +82,18 @@
 #contact-page #contactform input.form-control, #contact-page #contactform select.form-control {height: 50px}
 #contact-page #contactform textarea.form-control {min-height: 200px}
 #contact-page #contactform .page-header {margin: 36px 0 25px}
-#contact-page #contactform fieldset {margin-bottom: 30px}
-#contact-page #contactform fieldset .form-control {max-width: 350px}
+#contact-page #contactform fieldset {
+  display: grid; grid-template-columns: 100px minmax(0, 245px); align-content: start;
+  min-height: 174px; margin-bottom: 30px;
+}
+#contact-page #contactform fieldset .page-header {grid-column: 1 / -1}
+#contact-page #contactform fieldset .verify {
+  display: flex; align-items: center; gap: 5px; margin: 0; padding-inline: 10px;
+  min-height: 50px; background: var(--ri-wash);
+}
+#contact-page #contactform fieldset .verify img {width: 17px; margin: 0}
+#contact-page #contactform fieldset .form-control {min-width: 0; max-width: 100%}
+#contact-page #contactform #verify {padding-inline: 10px}
 #contact-page #contactform .submit {width: auto; height: 50px; margin: 0}
 
 @media (max-width: 991px) {
@@ -92,7 +110,9 @@
   #apps-page .app-row .h2, #blog-page .blog-list-article h2 {font-size: clamp(20px, 2.9vw, 30px)}
   #apps-page .app-row .padding-tb-150 {padding-block: 50px}
   #apps-page .app-row :is(.app-img-left, .app-img-right) {height: 900px}
-  #apps-page .app-row :is(.app-img-left, .app-img-right)::after {width: min(86%, 620px)}
+  #apps-page .app-row :is(.app-img-left, .app-img-right) {--art-gutter: clamp(24px, 5vw, 48px); --art-inner: var(--art-gutter)}
+  #apps-page .app-row :is(.app-img-left, .app-img-right)::before {top: 52px}
+  #apps-page .app-row :is(.app-img-left, .app-img-right)::after {top: 150px; bottom: 205px; max-width: 780px}
   #apps-page .app-row > .pixel-btn, #blog-page #blog-lg-img .pixel-btn {width: 150px; height: 150px}
   #apps-page .app-row > .pixel-btn {left: 50px; bottom: 40px}
   #blog-page #blog-lg-img {margin-top: 50px}
@@ -110,6 +130,13 @@
   #apps-page #apps .v-align .btn {padding-inline: clamp(10px, 3.8vw, 18px); font-size: 15px}
   #apps-page #apps .rotaing {height: 100px}
   #apps-page #apps .rotaing > div {top: 200px}
+}
+@media (max-width: 519px) {
+  #apps-page .app-row :is(.app-img-left, .app-img-right)::after {background-image: var(--capture-narrow)}
+}
+@media (max-width: 389px) {
+  #contact-page #contactform fieldset {grid-template-columns: minmax(0, 1fr)}
+  #contact-page #contactform fieldset .verify {min-height: 32px}
 }
 @media (prefers-reduced-motion: no-preference) {
   #apps-page #apps .rotaing .one {animation: directory-orbit 67s linear infinite}

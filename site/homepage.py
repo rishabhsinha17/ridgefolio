@@ -6,38 +6,38 @@ from html import escape
 # The skipped card numbers are part of the published stage layout. Two pictures
 # may share the same ground position while the foreground picture floats above it.
 HERO_SCREENS = (
-    (1, "previews/permit-desk.jpg"),
-    (2, "showcase/capability.webp"),
-    (3, "showcase/dashboard-charts.webp"),
-    (4, "editorial/paper-detail.webp"),
-    (5, "editorial/civic-center-768.webp"),
-    (6, "editorial/industrial-parks.webp"),
-    (7, "showcase/checklist.webp"),
-    (8, "ridge-still.webp"),
-    (9, "showcase/brief.webp"),
-    (10, "editorial/monitor-results.webp"),
-    (11, "previews/finder.jpg"),
-    (12, "editorial/city-hall-dome-600.webp"),
-    (14, "editorial/archipelago-parks.webp"),
-    (19, "showcase/map-mobile.webp"),
-    (20, "editorial/capability-page.webp"),
-    (22, "previews/service-ledger.jpg"),
+    (1, "article-evidence/permit-desk-1920.webp"),
+    (2, "article-evidence/capability-1920.webp"),
+    (3, "project-evidence/monitor-confidence.svg"),
+    (4, "project-evidence/paper-page.webp"),
+    (5, "editorial/civic-center-1440.webp"),
+    (6, "project-evidence/parks-editorial.svg"),
+    (7, "article-evidence/launch-checklist-960.webp"),
+    (8, "editorial/java-at-night-1920.webp"),
+    (9, "article-evidence/project-brief-1920.webp"),
+    (10, "project-evidence/monitor-strata.svg"),
+    (11, "article-evidence/finder-1920.webp"),
+    (12, "editorial/city-hall-dome-1050.webp"),
+    (14, "project-evidence/parks-atlas.svg"),
+    (19, "home-evidence/finder.webp"),
+    (20, "article-evidence/capability-sheet.webp"),
+    (22, "article-evidence/service-ledger-1920.webp"),
 )
 
 PROJECTS = (
-    ("/work/industrial-parks/", "Indonesia’s industrial parks", "University of Maryland · Founder project", "showcase/map-desktop.webp"),
-    ("/demos/permit-desk/", "Permit desk", "Working demonstration", "previews/permit-desk.jpg"),
-    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "editorial/paper-detail.webp"),
-    ("/demos/service-ledger/", "Service ledger", "Working demonstration", "previews/service-ledger.jpg"),
-    ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", None),
-    ("/demos/finder/", "Service finder", "Working demonstration", "previews/finder.jpg"),
+    ("/work/industrial-parks/", "Indonesia’s industrial parks", "University of Maryland · Founder project", "home-evidence/sulawesi.webp"),
+    ("/demos/permit-desk/", "Permit desk", "Working demonstration", "home-evidence/permit-desk.webp"),
+    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "project-evidence/paper-page.webp"),
+    ("/demos/service-ledger/", "Service ledger", "Working demonstration", "home-evidence/service-ledger.webp"),
+    ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", "project-evidence/worker-review.webp"),
+    ("/demos/finder/", "Service finder", "Working demonstration", "home-evidence/finder.webp"),
 )
 
 RESOURCES = (
-    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "showcase/brief.webp"),
-    ("/resources/launch-checklist/", "Launch checklist", "Check accessibility, redirects, handover and the tasks residents need to complete.", "showcase/checklist.webp"),
-    ("/resources/capabilities/", "Capability statement", "A one-page overview of Ridgefolio’s services, delivery arrangements and founder experience.", "showcase/capability.webp"),
-    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "editorial/civic-center-768.webp"),
+    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "home-evidence/project-brief.webp"),
+    ("/resources/launch-checklist/", "Launch checklist", "Check accessibility, redirects, handover and the tasks residents need to complete.", "home-evidence/launch-checklist.webp"),
+    ("/resources/capabilities/", "Capability statement", "A one-page overview of Ridgefolio’s services, delivery arrangements and founder experience.", "article-evidence/capability-sheet.webp"),
+    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "home-evidence/dome-1440.webp"),
 )
 
 ENGINEERING = (
@@ -110,10 +110,7 @@ def apps():
 def projects():
     cards = []
     for url, title, credit, asset in PROJECTS:
-        if asset:
-            art = f'<div class="project-image" style="background-image:url(/assets/{asset})"></div>'
-        else:
-            art = '<div class="project-image" data-release="v0.1.6"></div>'
+        art = f'<div class="project-image" style="background-image:url(/assets/{asset})"></div>'
         cards.append(f'''<div class="item"><div class="simple-project"><a href="{url}">
           <div class="img-wrap">{art}</div><p class="h3">{escape(title)}<small>{escape(credit)}</small></p></a></div></div>''')
     return f'''<section id="our-work-header" class="padding-t-150-b-50"><div class="container" id="work"><div class="row">
@@ -133,8 +130,8 @@ def responsive():
         {action("/contact/", "Contact us", "btn-inverse open-contact-form")}{action("/work/industrial-parks/", "Case study")}<p></p>
       </div></div>
       <div class="col-md-6 col-md-offset-1 responsive-shots">
-        <img class="shot1" src="/assets/showcase/map-long.webp" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="lazy">
-        <img class="shot2 sticky-element" src="/assets/showcase/map-mobile.webp" alt="The same map and controls on a phone" width="350" height="684" loading="lazy">
+        <img class="shot1" src="/assets/home-evidence/atlas-desktop-1300.webp" srcset="/assets/home-evidence/atlas-desktop-740.webp 740w, /assets/home-evidence/atlas-desktop-1300.webp 1300w, /assets/home-evidence/atlas-desktop-2600.webp 2600w, /assets/home-evidence/atlas-desktop-3300.webp 3300w" sizes="(max-width: 991px) calc(100vw - 60px), min(1300px, 100vw)" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="lazy">
+        <img class="shot2 sticky-element" src="/assets/home-evidence/atlas-phone-600.webp" srcset="/assets/home-evidence/atlas-phone-600.webp 600w, /assets/home-evidence/atlas-phone-1200.webp 1200w" sizes="(max-width: 991px) 200px, 400px" alt="The same map and controls on a phone" width="400" height="780" loading="lazy">
       </div></div></div></section>'''
 
 
@@ -147,7 +144,7 @@ def evidence():
         notes.append(f'<div class="item" data-source="{escape(url, quote=True)}"><div class="h3">{record}</div><p class="text-muted">{escape(label)}</p></div>')
     return f'''<section id="quotes" aria-label="Founder and studio project records"><div class="container" id="practice"><div class="row">
       <div class="col-md-5 hidden-sm hidden-xs" id="about">
-        <img class="client-shot" src="/assets/editorial/founder.webp" alt="Rishabh Sinha" width="428" height="428" loading="lazy"></div>
+        <img class="client-shot" src="/assets/editorial/java-at-night-1920.webp" srcset="/assets/editorial/java-at-night-960.webp 960w, /assets/editorial/java-at-night-1920.webp 1920w, /assets/editorial/java-at-night-3200.webp 3200w" sizes="(max-width: 991px) 1px, min(1200px, 100vw)" alt="City lights trace the north coast of Java in an astronaut photograph from the International Space Station" width="5011" height="3341" loading="lazy"></div>
       <div class="col-md-5 col-md-offset-2 padding-t-150-b-50">{placeholder("testimonial-btn")}<div class="testimonials owl-carousel owl-theme" tabindex="0" aria-label="Eleven project records">
         {''.join(notes)}</div>
       </div></div></div></section>'''
@@ -156,8 +153,9 @@ def evidence():
 def library():
     cards = []
     for href, title, desc, asset in RESOURCES:
+        image = "var(--dome-photo)" if href == "/pricing/" else f"url(/assets/{asset})"
         cards.append(f'''<div class="col-md-3"><div class="blog-list-item"><a href="{href}">
-          <div class="blog-lest-img relative"><div class="blog-image" style="background-image:url(/assets/{asset})"></div><div class="cover"></div></div>
+          <div class="blog-lest-img relative"><div class="blog-image" style="background-image:{image}"></div><div class="cover"></div></div>
           <h4>{escape(title)}</h4><p>{escape(desc)}</p><span class="btn btn-link">Open resource</span></a></div></div>''')
     return f'''<section id="blog-list" class="padding-tb-150"><div class="container">
       <div class="row"><div class="col-md-8">{placeholder()}<h3 class="h1">For buyers<br><span class="text-muted">Plan your next project.</span></h3></div>

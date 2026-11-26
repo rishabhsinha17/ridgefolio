@@ -71,9 +71,15 @@ def title_hero(identifier, title, subtitle="", *, target="scroll-to", project=Fa
 
 def image_banner(src, alt, url, title, action, extra="", *, editable=False):
     edit = edit_slot("banner-btn") if editable else ""
+    responsive = ""
+    if src.startswith("/assets/article-evidence/") and src.endswith(".webp"):
+        stem = src.removesuffix(".webp")
+        responsive = f' srcset="{stem}-960.webp 960w, {stem}-1920.webp 1920w, {src} 3840w" sizes="100vw" width="3840" height="2560"'
+    elif src == "/assets/editorial/civic-center-3840.webp":
+        responsive = ' srcset="/assets/editorial/civic-center-768.webp 768w, /assets/editorial/civic-center-1440.webp 1440w, /assets/editorial/civic-center-1920.webp 1920w, /assets/editorial/civic-center-3200.webp 3200w, /assets/editorial/civic-center-3840.webp 3840w" sizes="100vw" width="3840" height="2560"'
     return (
         f'<div id="blog-lg-img" class="relative" data-presentation="{extra}">{edit}<div class="cover"></div>'
-        f'<img class="full-img" src="{escape(src, quote=True)}" alt="{escape(alt, quote=True)}">'
+        f'<img class="full-img" src="{escape(src, quote=True)}"{responsive} alt="{escape(alt, quote=True)}">'
         f'{pixel(url, title, action, banner_link=True)}</div>'
     )
 
@@ -112,6 +118,11 @@ def catalogue(demos=False):
         f'<div class="col-md-10 col-md-offset-1">{edit_slot("title-edit-btn")}<h2 class="h1 text-center">{headline}</h2></div></div></div></section>'
     )
     demo_info = {slug: (name, desc) for slug, name, desc, _ in DEMOS}
+    captions = {
+        "finder": ("Two services match a search for “park”.", "Check what to prepare before applying."),
+        "permit-desk": ("The approval keeps the full review history.", "A reviewer asks which entrance to use."),
+        "service-ledger": ("Six sample records add up to 32 service hours.", "Two records in the South district account for 10 hours."),
+    }
     bands = []
     for index, service in enumerate(SERVICES):
         slug = service["demo"]
@@ -126,20 +137,25 @@ def catalogue(demos=False):
         tile = pixel(demo_url if demos else service_url, demo_name if demos else service["short"], "Open demo" if demos else "View scope")
         secondary_url, secondary_label = (service_url, "View service scope") if demos else (demo_url, f"Try {demo_name.lower()}")
         secondary = f'<a href="{secondary_url}">{escape(secondary_label)}</a>'
+        state = "demo" if demos else "scope"
+        scope_caption, demo_caption = captions[slug]
+        caption = escape(demo_caption if demos else scope_caption, quote=True)
+        artwork = f"/assets/directory-evidence/{slug}-{state}"
         bands.append(
             f'<section id="{slug}-app" class="app-row relative">{tile}<div class="container"><div class="row">'
             f'<div class="{column} padding-tb-150"><h3 class="h2">{escape(name)}<br><span class="text-muted">{escape(detail)}</span></h3>'
             f'<p class="lead"><span>{escape(desc)}</span> {secondary}</p></div></div></div>'
-            f'<div class="app-img-{side}" style="--interface-preview:url(/assets/previews/{slug}.jpg)" role="img" aria-label="{escape(demo_name)} interface"><div class="cover"></div></div></section>'
+            f'<div class="app-img-{side}" style="--capture:url({artwork}-wide.webp);--capture-narrow:url({artwork}-narrow.webp)" '
+            f'data-caption="{caption}" role="img" aria-label="{escape(demo_name)} demonstration. {caption}"><div class="cover"></div></div></section>'
         )
     return shell(lead + intro + "".join(bands), "apps-page")
 
 
 def work_index():
     project_images = {
-        "industrial-parks": "/assets/editorial/industrial-parks.webp",
-        "open-source": "/assets/interior-release-cover.webp",
-        "evaluation": "/assets/editorial/paper-detail.webp",
+        "industrial-parks": "/assets/project-evidence/parks-editorial.svg",
+        "open-source": "/assets/project-evidence/worker-review.webp",
+        "evaluation": "/assets/project-evidence/paper-page.webp",
     }
     cards = []
     for slug, *_ in CASES:
@@ -159,23 +175,35 @@ def work_index():
 
 def resource_index():
     entries = [
-        ("/resources/project-brief/", "Build a project brief", RESOURCES[2][2], "Build the brief", ed.EXAMPLE, "Download a completed example"),
-        ("/resources/launch-checklist/", "Review launch readiness", RESOURCES[1][2], "Open the checklist", None, None),
-        ("/resources/capabilities/", "Capability statement", RESOURCES[0][2], "View capabilities", ed.PDF, "Download the one-page PDF"),
+        ("/resources/project-brief/", "Build a project brief",
+         "Describe what staff do today, what should change and how you’ll check the result. The completed permit example shows how a correction and approval become acceptance criteria. Download your own brief as plain text.",
+         "Build the brief", ed.EXAMPLE, "Download a completed example"),
+        ("/resources/launch-checklist/", "Review launch readiness",
+         "Work through six checks with the people responsible for a website launch. Mark the resident tasks, redirects and handover steps you’ve verified, then download a copy that shows what’s still open.",
+         "Open the checklist", None, None),
+        ("/resources/capabilities/", "Capability statement",
+         "Get a one-page overview of Ridgefolio’s website, workflow and data services. It names the engineer responsible for delivery and links to his work on the Indonesian industrial parks dashboard.",
+         "View capabilities", ed.PDF, "Download the one-page PDF"),
     ]
     items = []
     for url, label, description, guide_action, download, action in entries:
         extra = f'<b class="text-muted"><a href="{download}">{action}</a></b>' if download else '<b class="text-muted">Printable worksheet</b>'
-        image = {"capabilities": "capability", "project-brief": "brief", "launch-checklist": "checklist"}[url.strip("/").split("/")[-1]]
+        image, caption = {
+            "capabilities": ("capability", "Ridgefolio’s capability statement with its website, workflow and data services"),
+            "project-brief": ("project-brief", "Project brief builder filled with the fictional community event permit example"),
+            "launch-checklist": ("launch-checklist", "Launch readiness worksheet with three of six checks marked complete"),
+        }[url.strip("/").split("/")[-1]]
         items.append(
             '<article class="blog-list-article">' + edit_slot("blog-btns", True) + '<div class="row"><div class="col-xs-12">'
             f'<a href="{url}"><h2>{label}</h2></a><p class="lead"><span>{description}</span></p></div></div>'
             f'<div class="row"><div class="col-md-6">{button(url, guide_action)}</div><div class="col-xs-6 text-right"><p class="small">{extra}</p></div>'
-            f'<div class="col-md-12"><a href="{url}"><img class="full-img" loading="lazy" src="/assets/showcase/{image}.webp" alt="{label} excerpt"></a></div></div></article>'
+            f'<div class="col-md-12"><a href="{url}"><img class="full-img" loading="lazy" width="3840" height="2560" src="/assets/article-evidence/{image}.webp" '
+            f'srcset="/assets/article-evidence/{image}-960.webp 960w, /assets/article-evidence/{image}-1920.webp 1920w, /assets/article-evidence/{image}.webp 3840w" '
+            f'sizes="(max-width: 991px) calc(100vw - 80px), min(1090px, 83vw)" alt="{caption}"></a></div></div></article>'
         )
     return shell(
         title_hero("blog-hero", "Buyer resources", "Planning guides")
-        + image_banner("/assets/showcase/capability.webp", "Ridgefolio capability statement", ed.PDF, "Capability statement", "Open PDF", "document-banner", editable=True)
+        + image_banner("/assets/directory-evidence/capability-excerpt.svg", "Top of the Ridgefolio capability statement with its three engineering service areas", ed.PDF, "Capability statement", "Open PDF", "document-banner", editable=True)
         + '<section id="scroll-to" class="padding-tb-150"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1">' + edit_slot("center-btns")
         + "".join(items) + "</div></div></div></section>", "blog-page",
     )
@@ -218,9 +246,31 @@ def split_intro(body):
     return title, label.group(1) if label else "", lead.group(1) if lead else "", content
 
 
-def strips(content):
-    # The input markup comes only from the generator's section() and intro() helpers.
-    return re.sub(r'<section class="block [^"]*"><div class="wrap">', '<section class="entry-section"><div>', content).replace('class="wrap quick-actions"', 'class="entry-actions"')
+def article_subheading(title):
+    return f'<p class="article-subheading" role="heading" aria-level="2"><span><strong>{title}</strong></span></p>'
+
+
+def article_sections(content):
+    """Move the generator’s sections onto the reading grid, keeping live tools intact."""
+    sections = re.split(r'<section class="block [^"]*"><div class="wrap"><h2>(.*?)</h2>', content, flags=re.S)
+    result = [sections[0].replace('class="wrap quick-actions"', 'class="entry-actions"')]
+    for title, fragment in zip(sections[1::2], sections[2::2], strict=True):
+        body, closing, after = fragment.rpartition('</div></section>')
+        if not closing:
+            raise ValueError(f'Incomplete generated article section {title!r}')
+        result.extend((article_subheading(title), body, after))
+    # In the source article, related destinations are simple lists and definition-like
+    # passages open with a bold inline label. Keep native controls and tables in place.
+    def links(match):
+        items = re.findall(r'(<a[^>]+>.*?</a>)', match.group(1), flags=re.S)
+        return '<ul class="article-links">' + ''.join(f'<li><span>{item}</span></li>' for item in items) + '</ul>'
+
+    def definitions(match):
+        pairs = re.findall(r'<div><dt>(.*?)</dt><dd>(.*?)</dd></div>', match.group(1), flags=re.S)
+        return ''.join(f'<p><span><strong>{term}.</strong> {description}</span></p>' for term, description in pairs)
+
+    text = re.sub(r'<div class="actions">(.*?)</div>', links, ''.join(result), flags=re.S)
+    return re.sub(r'<dl class="rows">(.*?)</dl>', definitions, text, flags=re.S)
 
 
 SERVICE_NOTES = {
@@ -275,15 +325,37 @@ def service_article(service):
 def article_figure(path):
     if path == "/resources/capabilities/":
         return (
-            '<figure class="article-evidence document-proof"><img src="/assets/editorial/capability-page.webp" '
-            'width="618" height="800" loading="lazy" alt="First page of Ridgefolio’s capability statement">'
+            '<figure class="article-document"><img src="/assets/article-evidence/capability-sheet.webp" '
+            'width="2720" height="3520" loading="lazy" alt="The one-page Ridgefolio capability statement, including services, delivery process and company contact information.">'
             f'<figcaption><a href="{ed.PDF}">Read the capability statement as a PDF</a></figcaption></figure>'
         )
     if path == "/demos/permit-desk/":
-        return ed.audience_artifact("agencies")
+        receipt = Path(__file__).resolve().parents[1] / "public" / ed.RECEIPT.lstrip("/")
+        return (
+            article_subheading("Example of an approved receipt")
+            + '<p>The receipt keeps the corrected location and the reviewer’s original note with the same application number.</p>'
+            + f'<pre class="article-transcript">{escape(receipt.read_text().strip())}</pre>'
+            + f'<p><a href="{ed.RECEIPT}">Download the completed sample receipt</a></p>'
+        )
+    if path in ("/demos/finder/", "/demos/service-ledger/", "/resources/launch-checklist/"):
+        notes = {
+            "/demos/finder/": (
+                "Follow the permit application",
+                'Search for “permit” and expand the Community event permit entry. The entry lists what to prepare and links directly to the application. Use the <a href="/demos/permit-desk/">permit desk</a> to follow the same task through staff review.',
+            ),
+            "/demos/service-ledger/": (
+                "Reconcile a filtered export",
+                'Choose <strong>North</strong>. Records RF-202 and RF-206 show nine and three service hours. Download the filtered CSV and add the Hours column. It should total 12, the number displayed above the chart.',
+            ),
+            "/resources/launch-checklist/": (
+                "Keep the review record",
+                'Mark a check after someone has completed the task. Choose <strong>Download checklist</strong> to keep the marked and outstanding items together. Closing the browser tab ends this worksheet session.',
+            ),
+        }
+        heading, note = notes[path]
+        return article_subheading(heading) + f'<p>{note}</p>'
     if path not in ("/pricing/", "/resources/project-brief/"):
         return ""
-    # Display the same acceptance and handover records that the buyer downloads.
     example = Path(__file__).resolve().parents[1] / "public" / ed.EXAMPLE.lstrip("/")
     sections = dict(part.split("\n", 1) for part in example.read_text().split("\n\n") if "\n" in part)
     if path == "/pricing/":
@@ -292,10 +364,15 @@ def article_figure(path):
     else:
         title = "An acceptance test from the permit desk brief"
         steps = sections["Acceptance walkthrough"].splitlines()
-        extract = "<ol>" + "".join(f'<li>{escape(step.partition(". ")[2])}</li>' for step in steps) + "</ol>"
+        extract = '<ol class="article-steps">' + "".join(f'<li>{escape(step.partition(". ")[2])}</li>' for step in steps) + "</ol>"
     return (
-        f'<figure class="article-evidence"><figcaption>{title}</figcaption>{extract}'
-        f'<a href="{ed.EXAMPLE}">Read the complete sample project brief</a></figure>'
+        article_subheading(title) + extract
+        + '<figure class="article-illustration"><img src="/assets/article-evidence/permit-approval.webp" '
+        'srcset="/assets/article-evidence/permit-approval-720.webp 720w, /assets/article-evidence/permit-approval-1440.webp 1440w, /assets/article-evidence/permit-approval.webp 2560w" '
+        'sizes="(min-width:1400px) 1110px, (min-width:992px) 80vw, calc(100vw - 60px)" width="2560" height="1141" loading="lazy" '
+        'alt="Approved permit RF-101 for Neighborhood art fair at Harbor Square, east entrance. The case file preserves the request for correction and the resubmission.">'
+        f'<figcaption>The permit desk after approval. <a href="{ed.RECEIPT}">Read the exported receipt</a>.</figcaption></figure>'
+        f'<p><a href="{ed.EXAMPLE}">Read the complete sample project brief</a></p>'
     )
 
 
@@ -303,35 +380,35 @@ def article(path, body):
     title, category, lead, content = split_intro(body)
     banner = ""
     guide_images = {
-        "/pricing/": ("brief", "Sample permit project brief", "Plan the estimate"),
-        "/resources/project-brief/": ("brief", "Project brief worksheet", "Build a project brief"),
-        "/resources/launch-checklist/": ("checklist", "Launch checklist excerpt", "Open checklist"),
+        "/pricing/": ("scope-brief", "The published project brief for the sample community event permit", "Plan the estimate"),
+        "/resources/project-brief/": ("project-brief", "Ridgefolio’s project worksheet filled with the community event permit example", "Build a project brief"),
+        "/resources/launch-checklist/": ("launch-checklist", "A worked launch review with content, keyboard and cutover checks marked", "Open checklist"),
         "/resources/capabilities/": ("capability", "One-page Ridgefolio capability statement", "Read the statement"),
     }
     if path.startswith("/services/"):
         service = next(item for item in SERVICES if path == f'/services/{item["slug"]}/')
         demo_url = f'/demos/{service["demo"]}/'
         image, description = {
-            "websites": ("/assets/editorial/civic-center-1440.webp", "San Francisco Civic Center, photographed by Carol M. Highsmith"),
-            "workflows": ("/assets/previews/permit-desk.jpg", "Ridgefolio’s sample permit application and staff review record"),
-            "data": ("/assets/editorial/archipelago-parks.webp", "Industrial park locations across Indonesia in the CGS handover dataset"),
+            "websites": ("/assets/editorial/civic-center-3840.webp", "San Francisco Civic Center, photographed by Carol M. Highsmith"),
+            "workflows": ("/assets/article-evidence/permit-desk.webp", "Ridgefolio’s sample permit application and staff review record"),
+            "data": ("/assets/project-evidence/parks-editorial.svg", "Industrial park locations across Indonesia in the CGS handover dataset"),
         }[service["slug"]]
         banner = image_banner(image, description, demo_url, "Working example", "Open demo", editable=True)
         return shell(title_hero("blog-hero", title, service=True) + banner + article_body(service_article(service)), "article-page")
     if path in guide_images:
         slug, alt, action = guide_images[path]
-        banner = image_banner(f"/assets/showcase/{slug}.webp", alt, "#scroll-to", action, "Open guide", "document-banner")
+        banner = image_banner(f"/assets/article-evidence/{slug}.webp", alt, "#scroll-to", action, "Open guide", "document-banner")
     elif path.startswith("/demos/"):
         slug = path.strip("/").split("/")[-1]
-        banner = image_banner(f"/assets/previews/{slug}.jpg", f"{title} demonstration interface", "#scroll-to", "Try the demo", "Open workspace", "demo-banner")
+        banner = image_banner(f"/assets/article-evidence/{slug}.webp", f"{title} interface showing fictional service records", "#scroll-to", "Try the demo", "Open workspace", "demo-banner")
     elif path in ("/search/", "/404.html"):
         target = "#scroll-to" if path == "/search/" else "/search/"
-        banner = image_banner("/assets/editorial/civic-center-1440.webp", "Civic center plaza", target, "Site directory", "Find a page")
+        banner = image_banner("/assets/editorial/civic-center-3840.webp", "San Francisco Civic Center plaza, photographed by Carol M. Highsmith", target, "Site directory", "Find a page")
     figure = article_figure(path)
     if path == "/demos/permit-desk/":
         content = re.sub(r'<p class="wrap receipt-download">.*?</p>', figure, content, count=1)
         figure = ""
-    return shell(title_hero("blog-hero", title, category=category) + banner + article_body(lead + strips(content) + figure), "article-page")
+    return shell(title_hero("blog-hero", title, category=category) + banner + article_body(lead + article_sections(content) + figure), "article-page")
 
 
 def about(path, body):
@@ -346,19 +423,33 @@ def about(path, body):
     )
     artifact = re.search(r'</h1>.*?</div></div>(.*)', head, re.S).group(1)
     plates = {
-        "practice": ("/assets/editorial/archipelago-parks.webp", "Industrial parks in Indonesia from the handover dataset"),
-        "agencies": ("/assets/previews/permit-desk.jpg", "Community event permit review, including corrections and the staff receipt"),
-        "partners": ("/assets/showcase/brief.webp", "Permit review project brief with scope and acceptance checks"),
+        "practice": ("/assets/project-evidence/parks-editorial.svg", "/assets/editorial/java-at-night-3200.webp",
+                     "A view of Java at night, photographed from the International Space Station", "Java at night · NASA, Expedition 56",
+                     "https://science.nasa.gov/earth/earth-observatory/lights-of-java-92666/"),
+        "agencies": ("/assets/article-evidence/permit-desk.webp", "/assets/editorial/civic-center-3200.webp",
+                     "The Civic Center in San Francisco", "San Francisco Civic Center · Carol M. Highsmith, Library of Congress",
+                     "https://www.loc.gov/item/2013630463/"),
+        "partners": ("/assets/article-evidence/project-brief.webp", "/assets/project-evidence/worker-changes.webp",
+                     "Reviewed changes to the kvcached command-line tool on GitHub", "Worker socket cleanup · kvcached pull request 480",
+                     ed.KV + "/pull/480/files"),
     }
-    art, alt = plates[slug]
+    art, illustration, alt, caption_text, caption_url = plates[slug]
+    sizes = {
+        "practice": "/assets/editorial/java-at-night-960.webp 960w, /assets/editorial/java-at-night-1920.webp 1920w, /assets/editorial/java-at-night-3200.webp 3200w, /assets/editorial/java-at-night-4010.webp 4010w",
+        "agencies": "/assets/editorial/civic-center-768.webp 768w, /assets/editorial/civic-center-1440.webp 1440w, /assets/editorial/civic-center-1920.webp 1920w, /assets/editorial/civic-center-3200.webp 3200w, /assets/editorial/civic-center-3840.webp 3840w",
+        "partners": "/assets/project-evidence/worker-changes-960.webp 960w, /assets/project-evidence/worker-changes-1920.webp 1920w, /assets/project-evidence/worker-changes.webp 4104w",
+    }
+    plate_width = "107vw" if slug == "partners" else "100vw"
     if slug != "practice":
         label = "Working together"
     if slug == "practice":
         cover = '<div class="cover-half about-portrait" role="img" aria-label="Portrait of Rishabh Sinha"></div>'
-        proof_image = "/assets/showcase/map-desktop.webp"
+        proof_image = "/assets/project-evidence/parks-editorial.svg"
     else:
+        if slug == "partners":
+            artifact = artifact.replace("/assets/editorial/capability-page.webp", "/assets/article-evidence/capability-sheet.webp")
         cover = f'<div class="cover-half about-portrait">{artifact}</div>'
-        proof_image = "/assets/showcase/capability.webp" if slug == "partners" else "/assets/previews/permit-desk.jpg"
+        proof_image = "/assets/article-evidence/capability-sheet.webp" if slug == "partners" else "/assets/article-evidence/permit-desk.webp"
     lead = lead.replace("<p>", '<p class="lead">').replace("</p>", f'<br><img class="about-proof" src="{proof_image}" alt="" width="144" height="87"></p>')
     hero = (
         f'<section id="about-hero" class="about-{slug}">{cover}<div class="container"><div class="row">'
@@ -397,7 +488,8 @@ def about(path, body):
     )
     plate = (
         '<div class="relative" data-about-plate>' + edit_slot("banner-btn") + '<div class="cover"></div>'
-        + f'<img class="full-img" src="{art}" alt="{alt}" loading="lazy">'
+        + f'<img class="full-img" src="{illustration}" srcset="{sizes[slug]}" sizes="{plate_width}" alt="{alt}" loading="lazy">'
+        + f'<a class="plate-credit" href="{caption_url}">{caption_text} <span aria-hidden="true">↗</span></a>'
         + '</div>'
     )
     records = (
@@ -406,12 +498,15 @@ def about(path, body):
         ("kvcached v0.1.6", "Open-source release", "/work/open-source/", "Inspect the contributions"),
     )
     records_html = "".join(
-        f'<div class="item"><blockquote class="h3">{name}</blockquote><p><b>{credit}</b> <span class="text-muted">· <a href="{url}">{action}</a></span></p></div>'
-        for name, credit, url, action in records
+        f'<div class="item" id="project-record-{i}"><blockquote class="h3">{name}</blockquote><p><b>{credit}</b> <span class="text-muted">· <a href="{url}">{action}</a></span></p></div>'
+        for i, (name, credit, url, action) in enumerate(records, 1)
     )
+    record_nav = '<nav class="project-record-nav" aria-label="Jump to a project record">' + "".join(
+        f'<a href="#project-record-{i}" aria-label="Show {name}">{i}</a>' for i, (name, *_) in enumerate(records, 1)
+    ) + '</nav>'
     proof = (
         '<section id="inner-quotes" class="bg-muted"><div class="container-fluid"><div class="row">'
-        f'<div class="quotes-carousel owl-carousel owl-theme" tabindex="0" role="region" aria-label="Project records">{records_html}</div></div></div></section>'
+        f'<div class="quotes-carousel owl-carousel owl-theme" tabindex="0" role="region" aria-label="Project records">{records_html}</div>{record_nav}</div></div></section>'
     )
     return shell(hero + belief + leaders + plate + proof, "about-page")
 
@@ -429,25 +524,41 @@ def project(path, body):
     relevance = relevance.removesuffix("</div></section>")
     if slug == "open-source":
         title, collection = "kvcached", "Release v0.1.6"
-        hero_src, hero_alt = "/assets/interior-release-cover.webp", "kvcached release v0.1.6, 3 October 2026"
+        hero_src, hero_alt = "/assets/project-evidence/release-note.webp", "Published notes for kvcached v0.1.6 credit the release contributors"
         hero_link, action = ed.KV + "/releases/tag/v0.1.6", "Open release"
-        shot_src, shot_alt = "/assets/interior-release-record.webp", "Two merged changes and their September 2026 review dates"
-        shot_width, shot_height = 1727, 462
-        inset_width, inset_height = 1502, 677
-        shot_link = hero_link
-        inset_src, inset_alt = "/assets/interior-release-cover.webp", "Release marker, version 0.1.6"
-        closing_src, closing_alt = shot_src, shot_alt
+        shot_src, shot_alt = "/assets/project-evidence/worker-review.webp", "Published review for the cleanup of tensor-parallel worker sockets, with summary and validation"
+        shot_width, shot_height = 3402, 3180
+        inset_width, inset_height = 3024, 303
+        shot_link = ed.KV + "/pull/480"
+        inset_src, inset_alt = "/assets/project-evidence/worker-merged.webp", "GitHub records pull request 480 as merged"
+        closing_src, closing_alt = "/assets/project-evidence/engine-review.webp", "Pull request 482 documents the EngineCore shared-memory change"
+        closing_link, closing_label = ed.KV + "/pull/482", "Read the shared-memory review"
+        closing_width, closing_height = 4000, 2287
     else:
         title, collection = "AI monitor evaluation", "Research paper"
-        hero_src, hero_alt = "/assets/editorial/monitor-results.webp", "Figure 1 comparing monitor scores across models"
+        hero_src, hero_alt = "/assets/project-evidence/monitor-strata.svg", "Figure 1 comparing monitor scores across models"
         hero_link, action = ed.PAPER, "Read paper"
-        shot_src, shot_alt = "/assets/editorial/paper-detail.webp", "First page of Exposure Is Not Commitment"
-        shot_width, shot_height = 772, 567
-        inset_width, inset_height = 848, 355
+        shot_src, shot_alt = "/assets/project-evidence/paper-page.webp", "First page of Exposure Is Not Commitment, including the full abstract"
+        shot_width, shot_height = 2295, 2970
+        inset_width, inset_height = 407, 169
         shot_link = ed.PAPER
         inset_src, inset_alt = hero_src, hero_alt
-        closing_src, closing_alt = "/assets/editorial/paper-detail.webp", "First page of the published paper"
+        closing_src, closing_alt = "/assets/project-evidence/monitor-confidence.svg", "Figure 2 compares pre-action commitment with 95 percent bootstrap intervals"
+        closing_link, closing_label = "https://arxiv.org/pdf/2610.37679#page=8", "Read Figure 2 on page eight"
+        closing_width, closing_height = 353, 196
+        exhibit = exhibit.replace("/assets/editorial/monitor-results.webp", hero_src).replace(
+            "</figcaption>", ' Figures by Rishabh Sinha, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</figcaption>'
+        )
     banner = image_banner(hero_src, hero_alt, hero_link, title, action, "demo-banner")
+    closing_sources = ""
+    if slug == "open-source":
+        def review_sources(name):
+            folder = "/assets/project-evidence/"
+            return (f' srcset="{folder}{name}-960.webp 960w, {folder}{name}-1920.webp 1920w, {folder}{name}.webp 4000w"'
+                    ' sizes="100vw"')
+        banner = banner.replace(f'src="{hero_src}"', f'src="{hero_src}"{review_sources("release-note")}')
+        closing_sources = review_sources("engine-review")
+
     responsive = (
         '<section id="responsive" class="padding-tb-150"><div class="container"><div class="row">'
         f'<div class="col-md-5"><div class="sticky-element">{edit_slot("title-btn")}<h2 class="h1">{full_title}</h2>'
@@ -462,7 +573,10 @@ def project(path, body):
         + f'<div class="feature-block"><h3>{topic}</h3>{relevance}</div></div>'
         + f'<div class="col-md-5 col-md-offset-1"><div class="feature-block">{exhibit}</div></div></div></div></section>'
     )
-    closing = f'<div id="project-end-image" class="relative"><div class="cover"></div><img class="full-img" src="{closing_src}" alt="{closing_alt}" width="{shot_width}" height="{shot_height}" loading="lazy"></div>'
+    closing = (
+        f'<div id="project-end-image" class="relative"><div class="cover"></div><img class="full-img" src="{closing_src}"{closing_sources} alt="{closing_alt}" width="{closing_width}" height="{closing_height}" loading="lazy">'
+        f'<a class="plate-credit" href="{closing_link}">{closing_label} <span aria-hidden="true">↗</span></a></div>'
+    )
     return shell(title_hero("project-hero", title, collection, target="responsive", project=True) + banner + responsive + features + closing, "project-page")
 
 
@@ -502,7 +616,16 @@ def case_study(body):
         )
         proof.append(f'<div class="feedback">{copy}<span class="feedback-person"><a href="{url}">{text}</a></span></div>')
 
-    approach = paired_dividers((implementation[1], engineering[0]), (engineering[1], engineering[2]), implementation[0])
+    overview += '<p class="map-photograph-credit">Java at night, seen from the International Space Station. <a href="https://science.nasa.gov/earth/earth-observatory/lights-of-java-92666/">NASA, Expedition 56</a>.</p>'
+    contents = contents.replace("/assets/editorial/archipelago-parks.webp", "/assets/project-evidence/parks-atlas.svg")
+    regional_chart = (
+        '<figure class="evidence-figure"><a href="/assets/project-evidence/regional-status.svg">'
+        '<img src="/assets/project-evidence/regional-status.svg" width="760" height="530" loading="lazy" '
+        'alt="Regional distribution by park status. Of 141 parks, 66 are in Java and 45 in Sumatra."></a>'
+        '<figcaption>Regional distribution by status, replotted from the archived dashboard. '
+        '<a href="https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/blob/673480b96b7dbfce3990cc9f72208c87c65b54a9/dashboard.html#L430-L467">Original chart calculation</a>.</figcaption></figure>'
+    )
+    approach = paired_dividers((implementation[1], engineering[0] + regional_chart), (engineering[1], engineering[2]), implementation[0])
     maintenance = paired_dividers((engineering[3], engineering[4]), (engineering[5], engineering[6]))
     hero = (
         '<header class="case-header"><div class="container"><h1>Founder case study</h1></div></header>'

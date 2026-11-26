@@ -113,12 +113,12 @@
 :where(.rv-home) #apps .two {inset:10%;z-index:2;border-style:dashed!important}
 :where(.rv-home) #apps .three {inset:0;z-index:1}
 :where(.rv-home) #apps .rotaing>div::before,:where(.rv-home) #apps .rotaing>div::after {content:"";position:absolute;width:clamp(110px,13vw,188px);aspect-ratio:1.4;background:center/cover #f9f8f0;border:5px solid var(--rv-paper);box-shadow:0 13px 25px -12px #1c3a225e}
-:where(.rv-home) #apps .one::before {left:-7%;top:26%;background-image:url("/assets/previews/permit-desk.jpg")!important;transform:rotate(-9deg)}
-:where(.rv-home) #apps .one::after {right:-10%;bottom:22%;background-image:url("/assets/editorial/industrial-parks.webp")!important;transform:rotate(8deg)}
-:where(.rv-home) #apps .two::before {top:-5%;left:35%;background-image:url("/assets/previews/finder.jpg")!important;transform:rotate(5deg)}
-:where(.rv-home) #apps .two::after {bottom:-4%;left:33%;background-image:url("/assets/previews/service-ledger.jpg")!important;transform:rotate(-4deg)}
-:where(.rv-home) #apps .three::before {left:-6%;bottom:17%;background-image:url("/assets/showcase/dashboard-charts.webp")!important;transform:rotate(8deg)}
-:where(.rv-home) #apps .three::after {right:0;top:7%;background-image:url("/assets/editorial/archipelago-parks.webp")!important;transform:rotate(-6deg)}
+:where(.rv-home) #apps .one::before {left:-7%;top:26%;background-image:url("/assets/article-evidence/permit-desk-960.webp")!important;transform:rotate(-9deg)}
+:where(.rv-home) #apps .one::after {right:-10%;bottom:22%;background-image:url("/assets/project-evidence/parks-editorial.svg")!important;transform:rotate(8deg)}
+:where(.rv-home) #apps .two::before {top:-5%;left:35%;background-image:url("/assets/article-evidence/finder-960.webp")!important;transform:rotate(5deg)}
+:where(.rv-home) #apps .two::after {bottom:-4%;left:33%;background-image:url("/assets/article-evidence/service-ledger-960.webp")!important;transform:rotate(-4deg)}
+:where(.rv-home) #apps .three::before {left:-6%;bottom:17%;background-image:url("/assets/project-evidence/monitor-confidence.svg")!important;transform:rotate(8deg)}
+:where(.rv-home) #apps .three::after {right:0;top:7%;background-image:url("/assets/project-evidence/parks-atlas.svg")!important;transform:rotate(-6deg)}
 @media (prefers-reduced-motion:no-preference) {
   :where(.rv-home) #apps .one,:where(.rv-home) #apps .three {animation:home-orbit-in 4.6s ease-out both}
   :where(.rv-home) #apps .two {animation:home-orbit-in 4s ease-out reverse}
@@ -267,7 +267,7 @@
 .rv-home .owl-carousel.owl-loaded {display:block;overflow:visible;scroll-snap-type:none;padding:0}
 .rv-home .owl-stage-outer {overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;scroll-snap-type:x mandatory}
 .rv-home .owl-stage {display:grid;position:relative;grid-auto-flow:column}
-.rv-home .project-carousel .owl-stage {grid-auto-columns:clamp(228px,76.4vw,300px);gap:clamp(16px,4.2vw,76px)}
+.rv-home .project-carousel .owl-stage {grid-auto-columns:calc((100% - 90px) / 4);gap:30px}
 .rv-home .testimonials .owl-stage {grid-auto-columns:100%}
 .rv-home .owl-item {min-width:0;scroll-snap-align:start}
 .rv-home .owl-nav {display:flex;gap:4px;margin-block:12px 0}
@@ -328,4 +328,65 @@
 @media (max-width:767px) {
   .rv-home #welcome-header h2 {font-size:clamp(18px,5.5vw,24px);line-height:1.36}
   .rv-home #quotes .h3 {font-size:clamp(18px,5.2vw,23px)}
+}
+
+
+/* The project rail shows two cards on phones and four from tablet width.
+   Half of each neighboring card remains in view around the selected one. */
+.rv-home .project-carousel .owl-item {scroll-snap-align:center}
+.rv-home .project-carousel .h3 {font-size:clamp(16px,1.6vw,24px);line-height:1.18}
+.rv-home #featured-projects .project-image {background-position:top center}
+.rv-home #featured-projects a[href="/work/industrial-parks/"] .project-image {background-position:center}
+.rv-home #featured-projects a[href="/work/open-source/"] .project-image {background-position:top left}
+.rv-home #blog-list :is(h3,h4), .rv-home #our-work-header h3, .rv-home #responsive h3 {font-size:clamp(25px,3.34vw,48px);line-height:1.2}
+.rv-home #blog-list .blog-list-item h4 {font-size:clamp(24px,2.5vw,36px);margin:30px 0 14px}
+.rv-home #blog-list .blog-list-item p {font-size:16px;line-height:1.8}
+.rv-home #blog-list .row+.row {margin-top:30px}
+.rv-home #testimonials-header h2, .rv-home #welcome-header h2 {font-size:clamp(21px,2.78vw,40px);line-height:1.2}
+.rv-home #welcome-header {min-height:0}
+.rv-home #quotes #about {width:auto}
+.rv-home #quotes .client-shot {object-position:52% 56%}
+@media (min-width:992px) {
+  .rv-home :is(#welcome-header,#apps,#responsive,#quotes,#our-work-header,#blog-list,#testimonials-header) .container {width:100%;max-width:1400px;padding-inline:20px}
+  .rv-home :is(#welcome-header,#apps,#responsive,#quotes,#our-work-header,#blog-list,#testimonials-header) .row {margin-inline:-10px}
+  .rv-home :is(#welcome-header,#apps,#responsive,#quotes,#our-work-header,#blog-list,#testimonials-header) .row>[class*=col-] {padding-inline:20px}
+  .rv-home #responsive .sticky-element {align-self:start}
+  .rv-home #responsive .col-md-5>.sticky-element {top:0}
+  .rv-home #responsive .shot2 {left:0}
+  .rv-home #quotes .padding-t-150-b-50 {padding-block:150px 50px}
+  .rv-home #quotes .testimonials {min-height:433px}
+  .rv-home #quotes #about {min-height:0}
+  .rv-home #quotes .client-shot {width:min(71vw,1000px);height:calc(100% + 110px);max-width:none;inset:-65px auto auto min(0px,calc((1400px - 100vw) / 2 - 100px));clip-path:inset(0 9% 0 0)}
+  .rv-home #quotes #about::after {content:"Java at night · NASA / Johnson Space Center";position:absolute;left:20px;bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
+  .rv-home #blog-list .row+.row {gap:0}
+}
+@media(max-width:767px) {
+  .rv-home .project-carousel .owl-stage {grid-auto-columns:calc((100% - 30px) / 2)}
+  .rv-home #our-work-header {padding-bottom:50px}
+  .rv-home #responsive .responsive-shots {margin-top:0}
+  .rv-home #quotes .testimonials {min-height:280px}
+  .rv-home #blog-list .row+.row {gap:50px}
+}
+
+@media (min-width:768px) and (max-width:991px) {
+  .rv-home :is(#welcome-header,#apps,#responsive,#quotes,#our-work-header,#blog-list,#testimonials-header) .row {display:block}
+  .rv-home :is(#welcome-header,#testimonials-header) h2 {font-size:clamp(30px,4.55vw,40px)}
+  .rv-home :is(#responsive,#our-work-header,#blog-list) h3 {font-size:clamp(36px,4.94vw,45px)}
+  .rv-home #apps {padding-block:100px}
+  .rv-home #apps .rotaing {width:calc(100% + 40px);height:900px;margin-left:-20px}
+  .rv-home #our-work-header {padding-bottom:50px}
+  .rv-home :is(#our-work-header,#blog-list) .pull-right {text-align:left;margin-top:25px}
+  .rv-home #responsive .col-md-5>.sticky-element {position:static}
+  .rv-home #responsive .shot1 {width:100%}
+  .rv-home #responsive .shot2 {width:200px;left:-20px}
+  .rv-home #quotes #about {display:none}
+  .rv-home #quotes .padding-t-150-b-50 {padding-block:50px}
+  .rv-home #quotes .testimonials {min-height:310px}
+  .rv-home #blog-list .row+.row {display:grid;grid-template-columns:minmax(0,1fr);gap:50px}
+}
+
+
+.rv-home #blog-list {--dome-photo:url("/assets/home-evidence/dome-1440.webp")}
+@media (min-width:540px) and (max-width:991px) {
+  .rv-home #blog-list {--dome-photo:url("/assets/home-evidence/dome-2400.webp")}
 }

@@ -77,7 +77,16 @@
     if(!reduced.matches&&Math.abs(state.tx-state.x)+Math.abs(state.ty-state.y)>.002)state.frame=requestAnimationFrame(frame);
   }
   function request(){if(!state.frame&&state.visible&&!document.hidden)state.frame=requestAnimationFrame(frame);}
-  function resize(){const r=canvas.getBoundingClientRect();state.w=r.width;state.h=r.height;state.dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(r.width*state.dpr);canvas.height=Math.round(r.height*state.dpr);draw();request();}
+  function resize() {
+    const bounds = canvas.getBoundingClientRect();
+    state.w = bounds.width;
+    state.h = bounds.height;
+    state.dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(bounds.width * state.dpr);
+    canvas.height = Math.round(bounds.height * state.dpr);
+    draw();
+    request();
+  }
   function reset(){state.tx=state.ty=0;if(reduced.matches)state.x=state.y=0;request();}
   stage.addEventListener('pointermove',e=>{if(!fine.matches||reduced.matches)return;const r=stage.getBoundingClientRect();state.tx=(e.clientX-r.left)/r.width-.5;state.ty=(e.clientY-r.top)/r.height-.5;request();},{passive:true});
   stage.addEventListener('pointerleave',reset,{passive:true});
