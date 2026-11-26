@@ -82,41 +82,56 @@
 
     let selected = edge;
     let settleTimer;
-    function offset(index) {
-      const inset = records ? 0 : (viewport.clientWidth - items[index].offsetWidth) / 2;
-      return items[index].offsetLeft - items[0].offsetLeft - inset;
+    let isDragging = false;
+    let measuredWidth = 0;
+    function centerDistance(item, bounds) {
+      const rect = item.getBoundingClientRect();
+      return (rect.left + rect.right - bounds.left - bounds.right) / 2;
+    }
+    function update() {
+      const bounds = viewport.getBoundingClientRect();
+      let closest = 0;
+      let distance = Infinity;
+      items.forEach((item, index) => {
+        const rect = item.getBoundingClientRect();
+        const delta = Math.abs((rect.left + rect.right - bounds.left - bounds.right) / 2);
+        if (delta < distance) {
+          closest = index;
+          distance = delta;
+        }
+        item.classList.toggle('active', rect.right > bounds.left + 2 && rect.left < bounds.right - 2);
+      });
+      items.forEach((item, index) => item.classList.toggle('center', !records && index === closest));
+      return closest;
     }
     function align(index, smooth) {
       selected = index;
-      viewport.scrollTo({left:offset(index), behavior:smooth && !reduceMotion.matches ? 'smooth' : 'instant'});
+      const delta = centerDistance(items[index], viewport.getBoundingClientRect());
+      const animate = smooth && !reduceMotion.matches;
+      viewport.scrollTo({left: viewport.scrollLeft + delta, behavior: animate ? 'smooth' : 'instant'});
+      update();
     }
     function move(direction) {
       const next = selected + direction;
       if (next >= 0 && next < items.length) align(next, true);
     }
-    function update() {
-      const bounds = viewport.getBoundingClientRect();
-      let nearest = 0;
-      let center = 0;
-      let closestCenter = Infinity;
-      items.forEach((item, index) => {
-        const rect = item.getBoundingClientRect();
-        const middle = Math.abs((rect.left + rect.right - bounds.left - bounds.right) / 2);
-        if (Math.abs(offset(index) - viewport.scrollLeft) < Math.abs(offset(nearest) - viewport.scrollLeft)) nearest = index;
-        if (middle < closestCenter) {
-          center = index;
-          closestCenter = middle;
-        }
-        item.classList.toggle('active', rect.right > bounds.left + 2 && rect.left < bounds.right - 2);
-      });
-      items.forEach((item,index) => item.classList.toggle('center', !records && index === center));
-      selected = nearest;
-    }
     function settle() {
-      update();
-      if (selected < edge) align(selected + slides.length, false);
-      else if (selected >= edge + slides.length) align(selected - slides.length, false);
+      if (isDragging) return;
+      const nearest = update();
+      const original = edge + ((nearest - edge + slides.length) % slides.length);
+      const drift = centerDistance(items[original], viewport.getBoundingClientRect());
+      if (Math.abs(drift) > 0.75) align(original, false);
+      selected = original;
     }
+    viewport.addEventListener('pointerdown', () => { isDragging = true; }, {passive:true});
+    const finishDrag = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(settle, 160);
+    };
+    window.addEventListener('pointerup', finishDrag, {passive:true});
+    window.addEventListener('pointercancel', finishDrag, {passive:true});
     carousel.addEventListener('keydown', event => {
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
       if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
@@ -129,8 +144,10 @@
       settleTimer = setTimeout(settle, 150);
     }, {passive:true});
     new ResizeObserver(() => {
-      align(selected, false);
-      update();
+      if (viewport.clientWidth !== measuredWidth) {
+        measuredWidth = viewport.clientWidth;
+        align(selected, false);
+      }
     }).observe(viewport);
     align(selected, false);
     update();

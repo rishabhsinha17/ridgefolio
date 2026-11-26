@@ -265,7 +265,9 @@
 /* Keep the static list usable without JavaScript. Once enhanced, the outer
    viewport scrolls and the inert edge copies create a continuous gallery. */
 .rv-home .owl-carousel.owl-loaded {display:block;overflow:visible;scroll-snap-type:none;padding:0}
-.rv-home .owl-stage-outer {overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;scroll-snap-type:x mandatory}
+/* Enhanced rails settle on the nearest center after a native scroll.
+   A second CSS snap races programmatic centering in desktop WebKit. */
+.rv-home .owl-stage-outer {overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;scroll-snap-type:none}
 .rv-home .owl-stage {display:grid;position:relative;grid-auto-flow:column}
 .rv-home .project-carousel .owl-stage {grid-auto-columns:calc((100% - 90px) / 4);gap:30px}
 .rv-home .testimonials .owl-stage {grid-auto-columns:100%}
