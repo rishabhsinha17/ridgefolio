@@ -22,7 +22,7 @@ Font license notices are in `public/assets/fonts/`. Founder work is attributed o
 
 ## Public work samples
 
-The homepage pairs two Carol M. Highsmith photographs from the Library of Congress. Each catalog record lists no known restrictions on publication. [City Hall dome](https://www.loc.gov/item/2011630953/) · [Civic Center Plaza](https://www.loc.gov/item/2013630463/)
+The homepage photograph is a 2012 view of San Francisco City Hall by Carol M. Highsmith. The Library of Congress records no known restrictions on publication. The image caption links to the collection record. [Library of Congress](https://www.loc.gov/item/2013630463/)
 
 The case study’s map plots the May 2025 CGS snapshot over Natural Earth geography. Its local data file contains only the 141 park names, statuses and coordinates, rounded to five decimals for display. Both the static map and interactive map use the same projection. Usage counts and chart values are dated snapshots. [Status GeoJSON](https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/blob/673480b96b7dbfce3990cc9f72208c87c65b54a9/data/geojson/statusGeojsonData.geojson) · [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/)
 

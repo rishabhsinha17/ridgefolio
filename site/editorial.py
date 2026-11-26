@@ -9,12 +9,11 @@ RECEIPT = "/downloads/sample-permit-receipt.txt"
 EXAMPLE = "/downloads/permit-desk-project-brief.txt"
 LOC = "https://www.loc.gov/item/2013630463/"
 
-PHOTO = f'''<figure class="civic-photo"><div class="civic-stack"><img class="plaza-photo" src="/assets/editorial/civic-center-1440.webp"
+PHOTO = f'''<figure class="civic-photo"><img src="/assets/editorial/civic-center-1440.webp"
  srcset="/assets/editorial/civic-center-768.webp 768w, /assets/editorial/civic-center-1440.webp 1440w"
  sizes="(max-width: 700px) 100vw, 55vw" width="1440" height="960" fetchpriority="high"
  alt="People walking beneath a double row of trees in front of San Francisco City Hall">
- <img class="dome-print" src="/assets/editorial/city-hall-dome-600.webp" width="600" height="757" alt="Architectural detail of the San Francisco City Hall dome"></div>
- <figcaption><span>San Francisco Civic Center</span><span>Carol M. Highsmith / Library of Congress · <a href="{LOC}">Plaza</a> / <a href="https://www.loc.gov/item/2011630953/">Dome</a></span></figcaption></figure>'''
+ <figcaption><span>San Francisco Civic Center, 2012</span><a href="{LOC}">Carol M. Highsmith / Library of Congress</a></figcaption></figure>'''
 
 
 def release_cover():

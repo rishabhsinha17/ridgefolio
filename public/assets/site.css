@@ -839,20 +839,7 @@ textarea {
   .field-copy p { color:var(--ink); max-width:37ch; font-size:clamp(16px,1.42vw,22px); }
   figure { margin:0; }
   .civic-photo { align-self:stretch; display:flex; flex-direction:column; justify-content:center; }
-  .civic-stack { position:relative; isolation:isolate; padding:0 6% clamp(17px,2vw,30px) 0; }
-  .civic-stack .plaza-photo { display:block; width:100%; height:clamp(325px,32vw,475px); object-fit:cover; object-position:50% 52%; }
-  .civic-stack .dome-print {
-    position:absolute;
-    right:1.3%;
-    bottom:3px;
-    width:27%;
-    height:auto;
-    aspect-ratio:4/5;
-    object-fit:cover;
-    border:clamp(3px,.44vw,7px) solid #faf9f5;
-    transform:rotate(-3deg);
-    box-shadow:0 2px 5px #19251e38, 0 8px 18px #19251e32;
-  }
+  .civic-photo img { width:100%; height:clamp(325px,32vw,475px); object-fit:cover; object-position:50% 52%; }
   .menu-glyph { display:inline-block; width:14px; height:8px; border-block:1.5px solid currentColor; margin-right:8px; vertical-align:1px; }
   .civic-photo figcaption,.project-plate figcaption { font:500 12px/1.5 var(--sans); color:var(--muted); padding-block:9px 0; }
   .civic-photo figcaption { display:flex; justify-content:space-between; gap:4px 16px; flex-wrap:wrap; }
@@ -928,7 +915,7 @@ textarea {
   .home-hero { gap:24px; padding-top:29px; padding-bottom:18px; }
   .home-hero h1 { font-size:clamp(50px,11.6vw,74px); margin:11px 0 14px; }
   .home-hero .actions { margin-top:18px; }
-  .civic-stack .plaza-photo { height:auto; aspect-ratio:1.9; }
+  .civic-photo img { height:auto; aspect-ratio:1.9; }
   .civic-photo figcaption { font-size:11px; }
   .audience { gap:7px 20px; padding:12px 0; }
   .audience strong { width:100%; }
