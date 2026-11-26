@@ -72,7 +72,7 @@ def preview(slug, title):
 
 
 ridge = '<div class="tech-stage tech-dark" data-tech="ridge"><div class="tech-stage-top"><span>COMPUTATIONAL RIDGE</span></div><canvas class="tech-canvas" role="img" aria-label="Interactive topographic ridge rendered as a green mesh"></canvas><div class="tech-stage-bottom"><span class="tech-interaction">Explore the terrain</span><div class="tech-controls"><button data-mode="surface" aria-pressed="true">Surface</button><button data-mode="wire" aria-pressed="false">Wireframe</button></div></div></div>'
-home = homepage.render(BOOK, ridge)
+home = homepage.render()
 add(
     "/",
     "Software engineering for public agencies",
@@ -84,13 +84,7 @@ add(
     "/services/",
     "Services",
     "Choose a starting point for a website, operations or reporting project.",
-    intro(
-        "Engineering services",
-        "Engineering services",
-        "Choose the part of the service that needs work. Each scope includes an example you can try and a way to test delivery.",
-        actions=interiors.catalogue_actions("Explore services"),
-    )
-    + interiors.showcase(demos=False),
+    interiors.catalogue(demos=False),
     "Services",
 )
 for s in SERVICES:
@@ -141,60 +135,21 @@ add(
     "/work/",
     "Selected work",
     "Public records of founder contributions to research tools and software.",
-    intro(
-        "Project evidence",
-        "Selected work",
-        "Maps, infrastructure and published research from Rishabh Sinha’s work before and alongside Ridgefolio. Each project links to the original record.",
-        actions=f'<a class="rv-jump" href="#catalogue" aria-label="View projects">{interiors.DOWN_ARROW}</a>',
-    )
-    + '<section id="catalogue" class="block catalogue"><div class="wrap"><h2>Project notes</h2>'
-    + ed.work_gallery(CASES)
-    + "</div></section>",
+    interiors.work_index(),
     "Work",
 )
 add(
     "/demos/",
     "Live demos",
     "Try three public-service tasks using fictional records.",
-    intro(
-        "Demonstration studio",
-        "Try the software",
-        "Use fictional records to explore service discovery, application review and reporting. Each example runs in your browser.",
-        actions=interiors.catalogue_actions("Explore the demos"),
-    )
-    + interiors.showcase(demos=True),
+    interiors.catalogue(demos=True),
     "Demos",
 )
 add(
     "/resources/",
     "Buyer resources",
     "Planning tools for buyers and delivery partners.",
-    intro(
-        "Buyer resources",
-        "Buyer resources",
-        "Prepare a scope, check launch readiness or take a capability statement into your next meeting.",
-    )
-    + '<div class="wrap library-shelf">'
-    + ed.library()
-    + "</div>"
-    + section(
-        "Plan a project",
-        ed.directory(
-            [
-                ("/resources/project-brief/", "Build a project brief", RESOURCES[2][2]),
-                (
-                    ed.EXAMPLE,
-                    "Read a completed brief",
-                    "A worked example for a permit review, with handover and acceptance criteria.",
-                ),
-                (
-                    "/resources/launch-checklist/",
-                    "Review launch readiness",
-                    RESOURCES[1][2],
-                ),
-            ]
-        ),
-    ),
+    interiors.resource_index(),
     "Resources",
 )
 for slug, who, desc, items in [
@@ -313,33 +268,7 @@ add(
     "/contact/",
     "Contact Ridgefolio",
     "Discuss an agency project or a subcontracting opportunity.",
-    intro(
-        "Contact",
-        "Start a conversation.",
-        "Book a 30-minute introduction or email a public solicitation link and the work you have in mind.",
-    )
-    + '<div class="wrap quick-actions">'
-    + buttons((BOOK, "Book a 30-minute call"), (EMAIL, "rishabh@ridgefolio.com"))
-    + "</div>"
-    + section(
-        "What to bring",
-        rows(
-            [
-                (
-                    "For a new project",
-                    "The task people struggle with today, the systems involved and the date you are working toward.",
-                ),
-                (
-                    "For a solicitation",
-                    "The public listing, submission deadline and designated communication channel.",
-                ),
-                (
-                    "For a partnership",
-                    "The part of the scope you would like Ridgefolio to own and the responsibilities your team already covers.",
-                ),
-            ]
-        ),
-    ),
+    interiors.contact(),
     "Contact",
 )
 
@@ -521,13 +450,6 @@ add(
 )
 
 
-contact = (
-    '<section id="contact" class="closing"><div class="wrap field-contact"><div>'
-    + tag("Contact Ridgefolio")
-    + "<h2>Have a project in mind?</h2></div>"
-    + a(BOOK, arrow("Book a call"), "button bright")
-    + "</div></section>"
-)
 not_found = "/404.html"
 add(
     not_found, "Page not found", "Return to Ridgefolio or search the site.",
@@ -538,6 +460,10 @@ add(
 index = []
 for path, (title, desc, body, group) in pages.items():
     body = interiors.adapt(path, body)
+    family = ""
+    family_wrapper = re.fullmatch(r'<div class="(rv-source [^"]+)">(.*)</div>', body, re.S)
+    if family_wrapper:
+        family, body = family_wrapper.groups()
     if path not in ("/search/", not_found):
         index.append(
             dict(
@@ -550,27 +476,14 @@ for path, (title, desc, body, group) in pages.items():
         )
     out = PUBLIC / "404.html" if path == not_found else PUBLIC / path.strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
-    crumb = (
-        ""
-        if path in ("/", not_found)
-        else '<div class="wrap breadcrumb">'
-        + a("/", "Home")
-        + ' <span aria-hidden="true">/</span> '
-        + (
-            a("/" + path.split("/")[1] + "/", group)
-            + ' <span aria-hidden="true">/</span> '
-            if path.count("/") > 2 and not path.startswith("/for/")
-            else ""
-        )
-        + escape(title)
-        + "</div>"
-    )
     is_cgs = path == "/work/industrial-parks/"
     case_css = '<link rel="stylesheet" href="/assets/cgs.css">' if is_cgs else ""
     scripts = (
-        '<script src="/assets/navigation.js" defer></script><script src="/assets/site.js" defer></script>'
+        '<script src="/assets/ref-shell.js" defer></script><script src="/assets/site.js" defer></script>'
         + ('<script src="/assets/atlas.js" defer></script>' if is_cgs else "")
-        + ('<script src="/assets/ridge.js" defer></script><script src="/assets/showcase.js" defer></script>' if path == "/" else "")
+        + ('<script src="/assets/showcase.js" defer></script>' if path == "/" else "")
+        + ('<script src="/assets/ridge.js" defer></script>' if path == "/practice/" else "")
+        + ('<script src="/assets/interiors.js" defer></script>' if path != "/" else "")
     )
     is_task = (
         path.startswith("/demos/")
@@ -578,19 +491,39 @@ for path, (title, desc, body, group) in pages.items():
         or path
         in ("/search/", "/resources/launch-checklist/", "/resources/project-brief/")
     )
-    ending = "" if is_task or path in ("/contact/", cap, "/pricing/", not_found) else contact
     body_class = (
         "task-page" if is_task else "document-page" if path == cap else "site-page"
     )
     body_class += " rv-home" if path == "/" else " rv-interior"
     interior_css = '' if path == "/" else '<link rel="stylesheet" href="/assets/interiors.css">'
+    template_id = "homepage"
+    if family:
+        template_id = family.split()[1]
+        if template_id == "case-page":
+            template_id = "case"
+        elif template_id == "article-page":
+            template_id = "freeform-page" if path.startswith("/services/") else "blog-post-page"
     robots = "noindex" if path == not_found else "index,follow"
     social_image, social_alt = ed.social_image(path)
-    page_body = f'{navigation.nav(path)}<main id="main">{crumb}{body}{ending}</main>{navigation.footer()}'
+    # Keep the source template’s section ordering and link the skip control to
+    # the first heading even on pages with an existing, referenced heading ID.
+    first_heading = re.search(r"<h1\b[^>]*>", body)
+    heading_id = re.search(r'\bid="([^"]+)"', first_heading.group()) if first_heading else None
+    target = heading_id[1] if heading_id else "main"
+    if first_heading and not heading_id:
+        body = body[:first_heading.end()-1] + ' id="main" tabindex="-1">' + body[first_heading.end():]
+    if path == "/practice/":
+        body += f'<details class="ridge-example wrap"><summary>Explore the terrain study</summary>{ridge}</details>'
+    sheet = "" if path == "/contact/" else navigation.contact_form()
+    landmark = "" if re.search(r"<main\b", body) else ' role="main"'
+    page_body = (
+        f'<div class="main-wrap{(" " + family) if family else ""}"{landmark}>{navigation.squares()}{navigation.nav(path)}'
+        f'{body}{navigation.footer()}{sheet}</div>'
+    )
     page_body = page_body.replace("↗", LINK_ARROW)
     out.write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/navigation.css">{scripts}</head>
-<body class="{body_class}"><a class="skip" href="#main">Skip to content</a>{page_body}</body></html>''')
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/ref-shell.css">{scripts}</head>
+<body id="{template_id}" class="rz-page {body_class}"><a class="skip" href="#{target}">Skip to content</a>{page_body}</body></html>''')
 (PUBLIC / "assets/search.json").write_text(json.dumps(index, ensure_ascii=False))
 (PUBLIC / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'

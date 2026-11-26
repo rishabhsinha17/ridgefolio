@@ -1,6 +1,7 @@
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import assert from "node:assert/strict";
+import { runInNewContext } from "node:vm";
 
 const root = resolve("public");
 const html = readFileSync(resolve(root, "index.html"), "utf8");
@@ -86,3 +87,22 @@ console.log(
     routes.length +
     " pages.",
 );
+
+// Verify the draft in an isolated JavaScript context without a browser or OS handler.
+const siteScript = readFileSync(resolve(root, "assets/site.js"), "utf8");
+const isolated = { document: { getElementById: () => null } };
+runInNewContext(siteScript, isolated);
+const recipient = "rishabh@ridgefolio.com";
+const subject = "Ridgefolio — Workflow or data project";
+const example = "Workflow for agencies & partners + a pass.\nReview the permit page.";
+const draft = new URL(isolated.contactDraftURL(recipient, subject, example));
+assert.equal(draft.protocol, "mailto:");
+assert.equal(draft.pathname, recipient);
+assert.equal(draft.searchParams.get("subject"), subject);
+assert.equal(draft.searchParams.get("body"), example.replace("\n", "\r\n"));
+for (const file of ["ref-shell.js", "interiors.js"]) {
+  const code = readFileSync(resolve(root, "assets", file), "utf8");
+  assert(!/(?:location(?:\.href)?\s*=|location\.(?:assign|replace)\s*\(|window\.open\s*\()/.test(code),
+    file + " must present the draft as a link for a separate visitor action");
+}
+console.log("Contact draft recipient, subject and body verified without a mail handler.");

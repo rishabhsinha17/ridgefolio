@@ -1,126 +1,331 @@
-/* Shared color names keep the reference layout in Ridgefolio's visual identity. */
 :root {
-  --rv-paper:#faf9f5; --rv-ink:#1d332c; --rv-muted:#4d6255;
-  --rv-accent:#214638; --rv-on-accent:#fffdf4; --rv-tint:#ecede4;
-  --rv-line:#cdd1c7; --rv-dark:#19392e; --rv-on-dark:#f8f7ef;
+  --rv-paper:#faf9f5;
+  --rv-ink:#1d332c;
+  --rv-muted:#4d6255;
+  --rv-accent:#214638;
+  --rv-on-accent:#fffdf4;
+  --rv-tint:#ecede4;
+  --rv-line:#cdd1c7;
+  --rv-dark:#19392e;
+  --rv-on-dark:#f8f7ef;
 }
 @media screen {
   body {background:var(--rv-paper);color:var(--rv-ink)}
-  .rv-home .rv-container {width:min(1520px,90%);margin-inline:auto}
-  .rv-home h1,.rv-home h2,.rv-home h3 {font-family:var(--serif);font-weight:400}
-  .rv-home h2 {font-size:clamp(38px,4.4vw,72px);line-height:1.03;letter-spacing:-.047em}
-  .rv-home h3 {font-size:clamp(22px,2vw,34px);line-height:1.16;letter-spacing:-.032em}
-  .rv-home .rv-action {display:inline-flex;align-items:center;justify-content:center;text-align:center;background:var(--rv-accent);color:var(--rv-on-accent);border:1px solid var(--rv-accent);border-radius:0;padding:13px 25px;min-height:50px;font:700 14px/1.3 var(--sans);text-decoration:none}
-  .rv-home .rv-action:hover {background:var(--rv-ink);color:white}
-  .rv-home .rv-secondary {color:var(--rv-ink);background:transparent;border-color:#9daea2}
-  .rv-home .rv-secondary:hover {background:var(--rv-tint);color:var(--rv-ink)}
-  .rv-actions {display:flex;align-items:stretch;flex-wrap:wrap;gap:0}
-  .rv-actions .rv-action {min-width:clamp(125px,10.7vw,175px)}
-  .rv-hero {position:relative;isolation:isolate;overflow:hidden;background:var(--rv-paper)}
-  .rv-hero-body {min-height:clamp(560px,46vw,810px);display:grid;align-items:center;position:relative;padding-block:55px 100px;pointer-events:none}
-  .rv-hero-body .field-copy {max-width:41%;padding:0;pointer-events:auto}
-  .rv-home .rv-hero h1 {font-size:clamp(56px,5.6vw,99px);line-height:1.01;letter-spacing:-.061em;margin:0}
-  .rv-hero h1 em {font-family:inherit;font-style:normal;color:#536e59}
-  .rv-hero .field-copy p {max-width:32ch;font:500 clamp(16px,1.23vw,21px)/1.6 var(--sans);margin:24px 0 31px;color:var(--rv-ink)}
-  .rv-hero-art {position:absolute;inset:0 0 0 40%;z-index:-1;display:flex;align-items:center}
-  .rv-hero-art picture {width:100%;height:100%;display:block}
-  .rv-hero-art img {display:block;width:100%;height:100%;object-fit:contain;object-position:right center}
-  .rv-scroll {position:absolute;bottom:32px;left:0;width:45px;height:45px;display:grid;place-items:center;pointer-events:auto}
-  .rv-scroll:hover {color:#50735d}
-  .rv-intro {border-top:1px solid var(--rv-line);padding-block:clamp(45px,6.5vw,100px);text-align:center;scroll-margin-top:24px}
-  .rv-home .rv-intro h2 {font-size:clamp(34px,3.75vw,60px)}
-  .rv-intro>p {margin:22px auto;max-width:62ch;font:500 clamp(17px,1.45vw,23px)/1.55 var(--sans)}
-  .rv-service-nav {display:flex;align-items:baseline;justify-content:center;gap:14px 34px;flex-wrap:wrap}
-  .rv-service-nav a,.rv-textlink {font-weight:700;font-size:14px;text-underline-offset:5px}
-  .rv-apps {background:var(--rv-dark);color:var(--rv-on-dark)}
-  .rv-app-layout,.rv-device-layout {padding-block:clamp(45px,6vw,98px);display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);gap:clamp(30px,5vw,85px);align-items:center}
-  .rv-app-copy>p,.rv-device-copy>p,.rv-practice-copy>p {max-width:47ch;margin:18px 0 24px;font:500 clamp(16px,1.24vw,20px)/1.65 var(--sans)}
-  .rv-home .rv-inverse {border-color:#e8e9dc;color:var(--rv-ink);background:var(--rv-paper)}
-  .rv-home .rv-inverse:hover {background:#d7e2cc;color:var(--rv-ink)}
-  .rv-demo-shelf {min-width:0}
-  .rv-app-tabs {display:flex;gap:4px;flex-wrap:wrap}
-  .rv-app-tabs a {display:inline-flex;align-items:center;min-height:44px;padding:7px 13px;border:1px solid #627569;border-bottom:0;color:#e0e8da;text-decoration:none;font-size:13px;font-weight:700}
-  .rv-app-tabs a:hover,.rv-app-tabs a[aria-current] {background:var(--rv-paper);color:var(--rv-ink)}
-  .rv-app-panel {margin:0;background:#f6f6ed;color:var(--rv-ink);border:1px solid #bbc8b9}
-  .rv-app-panel[hidden] {display:none}
-  .rv-app-panel>a {display:block;padding:15px;background:#d5dece}
-  .rv-app-panel img {width:100%;max-height:285px;object-fit:contain;display:block;height:auto}
-  .rv-app-panel figcaption {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;font-size:13px;line-height:1.5}
-  .rv-app-panel figcaption a {font-weight:750;flex:none}
-  .rv-portfolio,.rv-practice,.rv-library>.rv-container {padding-block:clamp(54px,6.8vw,108px)}
-  .rv-section-head {display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:clamp(24px,3vw,48px)}
-  .rv-section-head p {margin-top:12px;color:var(--rv-muted);font-size:17px}
-  .rv-section-head>a {flex:none}
-  .rv-projects,.rv-resources {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.3vw,38px)}
-  .rv-project,.rv-resource {min-width:0;display:block;text-decoration:none}
-  .rv-project {text-align:center}
-  .rv-exhibit,.rv-resource-art {position:relative;display:grid;place-items:center;aspect-ratio:1.55;overflow:hidden}
-  .rv-exhibit img,.rv-resource-art img {width:100%;height:100%;object-fit:cover;display:block}
-  .rv-exhibit-map {background:#244b51}
-  .rv-exhibit-map img {object-fit:cover;object-position:55% center}
-  .rv-exhibit-release {background:#233941;color:#fcfcf1}
-  .rv-release-exhibit {width:83%;border-block:1px solid #aabcb7;padding:14px 0;text-align:left}
-  .rv-release-exhibit span {display:block;line-height:1.4;font:400 clamp(10px,1vw,16px)/1.4 PlexMono,monospace}
-  .rv-release-exhibit b {display:block;font:400 clamp(42px,5.1vw,90px)/1.12 var(--serif);letter-spacing:-.065em}
-  .rv-exhibit-paper {background:#e2dfd1;padding:7% 10% 0}
-  .rv-exhibit-paper img {object-position:50% 0;filter:drop-shadow(0 4px 4px #252c2119)}
-  .rv-credit {display:block;color:var(--rv-muted);font-weight:650;font-size:12px;margin:16px 0 4px}
-  .rv-project:hover h3,.rv-resource:hover h3 {text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
-  .rv-responsive,.rv-library {background:var(--rv-tint)}
-  .rv-devices {position:relative;display:block;padding:0 3.8% 5% 0}
-  .rv-display,.rv-handset {display:block;border:clamp(4px,.55vw,9px) solid #24372f;box-shadow:0 14px 30px #23372929;background:#faf9f5}
-  .rv-display {width:99%;height:auto;border-radius:10px}
-  .rv-handset {position:absolute;bottom:0;right:0;width:22%;height:auto;border-radius:clamp(9px,1vw,15px)}
-  .rv-practice {display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);gap:clamp(35px,7vw,108px);align-items:center}
-  .rv-practice-copy .founder-signature {display:flex;align-items:center;gap:17px}
-  .rv-practice-copy .founder-signature img {width:clamp(70px,6.3vw,94px);height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%}
-  .rv-practice-copy .founder-signature span {color:var(--rv-muted);font-size:13px}
-  .rv-practice-copy .founder-signature h2 {font-size:clamp(32px,3vw,50px);margin-top:4px}
-  .rv-records {margin-top:27px}
-  .rv-records h3 {font:700 14px/1.5 var(--sans);letter-spacing:0;margin-bottom:5px}
-  .rv-records .field-work-row {display:block;width:fit-content;margin:0;border:0;padding:3px 0;font:500 14px/1.4 var(--sans);text-decoration:underline}
-  .rv-practice .tech-stage {height:clamp(280px,25vw,460px);aspect-ratio:auto}
-  .rv-library {border-block:1px solid var(--rv-line)}
-  .rv-resource h3 {margin-top:15px}
-  .rv-resource p {font-size:15px;color:var(--rv-muted);line-height:1.55;margin-top:8px}
-  .rv-home .closing {background:var(--rv-paper);color:var(--rv-ink)}
-  .rv-home .closing .bright {background:var(--rv-accent);color:var(--rv-on-accent);border-radius:0}
-  .rv-home .closing .tag {color:var(--rv-muted)}
 }
-@media screen and (max-width:900px) and (min-width:701px) {
-  .rv-hero-body {min-height:465px}
-  .rv-home .rv-hero h1 {font-size:clamp(48px,6.4vw,65px)}
-  .rv-hero-body .field-copy {max-width:45%}
-  .rv-hero-art {left:42%}
+.rv-home {--home-margin:clamp(25px,5vw,96px);--space:clamp(70px,9.4vw,150px)}
+.rv-home .header-block,.rv-home #apps,.rv-home #responsive,.rv-home #quotes,.rv-home #blog-list {position:relative}
+.rv-home .main-wrap>section .container {width:min(1400px,calc(100% - 2 * var(--home-margin)));margin-inline:auto}
+.rv-home .main-wrap>section .row {display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:center}
+.rv-home .col-sm-5,.rv-home .col-md-5 {grid-column:span 5;min-width:0}
+.rv-home .col-sm-7,.rv-home .col-md-7 {grid-column:span 7;min-width:0}
+.rv-home .col-md-3 {grid-column:span 3;min-width:0}
+.rv-home .col-md-4 {grid-column:span 4;min-width:0}
+.rv-home .col-md-6 {grid-column:span 6;min-width:0}
+.rv-home .col-md-8 {grid-column:span 8;min-width:0}
+.rv-home .col-md-10.col-md-offset-1 {grid-column:2 / span 10;min-width:0}
+.rv-home .col-md-7.col-md-offset-1 {grid-column:6 / span 7}
+.rv-home .col-md-6.col-md-offset-1 {grid-column:7 / span 6}
+.rv-home .col-md-5.col-md-offset-2 {grid-column:8 / span 5}
+.rv-home .col-md-12 {grid-column:1 / -1;min-width:0}
+.rv-home .padding-tb-150 {padding-block:var(--space)}
+.rv-home .padding-t-150-b-50 {padding-block:var(--space) clamp(25px,3.5vw,50px)}
+.rv-home .text-center {text-align:center}
+.rv-home .text-muted {color:var(--rv-muted)}
+.rv-home :is(.h1,.h3,.display-text,.header-block h2) {font-family:var(--serif);font-weight:400;letter-spacing:-.045em}
+.rv-home :is(.h1,.display-text) {font-size:clamp(46px,4.55vw,72px);line-height:1.04}
+.rv-home .h3 {font-size:clamp(22px,2.1vw,33px);line-height:1.24}
+.rv-home .lead {max-width:45ch;color:var(--rv-ink);font-size:clamp(16px,1.35vw,21px);line-height:1.63;margin:20px 0 27px}
+.rv-home .btn {display:inline-flex;align-items:center;justify-content:center;vertical-align:top;min-height:48px;padding:12px clamp(17px,1.85vw,30px);border:1px solid var(--rv-accent);color:var(--rv-on-accent);background:var(--rv-accent);font:700 14px/1.4 var(--sans);text-decoration:none;letter-spacing:0;border-radius:0}
+.rv-home .btn:hover {color:var(--rv-on-accent);background:var(--rv-ink)}
+.rv-home .btn-default,.rv-home .btn-inverse+.btn-inverse {background:transparent;color:var(--rv-ink)}
+.rv-home .btn-default:hover,.rv-home .btn-inverse+.btn-inverse:hover {background:var(--rv-tint);color:var(--rv-ink)}
+.rv-home .btn+.btn {margin-left:-1px}
+.rv-home .pull-right {text-align:right}
+
+/* The project sheets sit on a shared ground plane. Pairs use the same floor
+   coordinates while their elevation and shadows separate the layers. */
+:where(.rv-home) #home-hero {position:relative;isolation:isolate;overflow:hidden}
+:where(.rv-home) #home-hero .row {min-height:clamp(560px,calc(100svh - 85px),930px)}
+:where(.rv-home) #home-hero .caption-wrap {position:relative;z-index:2;align-self:center;padding-block:60px}
+:where(.rv-home) #home-hero .caption-inner {max-width:560px}
+:where(.rv-home) #home-hero .display-text {display:block;margin:0}
+:where(.rv-home) #home-hero h1 {font-size:clamp(49px,4.6vw,75px);max-width:7.5em}
+:where(.rv-home) #home-hero h1 img {display:block;width:clamp(215px,19vw,300px);height:auto;margin:24px 0 30px}
+:where(.rv-home) #home-hero .btn {min-width:clamp(145px,12.7vw,200px)}
+.rv-home .rz-edit-wrap {display:none}
+:where(.rv-home) #down-arrow {position:relative;height:44px;margin-top:15px}
+:where(.rv-home) #down-arrow a {display:inline-grid;width:44px;height:44px;align-items:center;justify-items:start;color:var(--rv-muted)}
+:where(.rv-home) #down-arrow .up {display:none}
+.rv-home.show-return-arrow #down-arrow .up {display:grid;position:fixed;right:18px;bottom:18px;z-index:4;justify-items:center;width:44px;height:44px;color:var(--rv-on-accent);background:var(--rv-accent)}
+:where(.rv-home) #down-arrow .up svg {transform:rotate(180deg)}
+:where(.rv-home) #down-arrow a:hover {color:var(--rv-accent)}
+:where(.rv-home) #home-hero .perspective-section {height:500px;position:relative;top:90px}
+:where(.rv-home) #home-hero .animatable {position:absolute;inset:0;width:100%;height:500px;transform-origin:50% 45%}
+:where(.rv-home) #home-hero .card,:where(.rv-home) #home-hero .card-border,:where(.rv-home) #home-hero .card-border-dashed {
+  position:absolute;left:50%;bottom:var(--floor);margin-left:var(--across);
+  transform:translateY(var(--lift,0px)) rotate(-25deg) skewX(35deg) scaleY(.86)
 }
-@media screen and (max-width:700px) {
-  .rv-home .rv-container {width:calc(100% - 40px)}
-  .rv-hero {display:flex;flex-direction:column}
-  .rv-hero .rv-hero-body {order:0;min-height:0;display:block;padding-block:32px 6px}
-  .rv-hero-body .field-copy {max-width:100%}
-  .rv-home .rv-hero h1 {font-size:clamp(50px,12vw,76px)}
-  .rv-hero .field-copy p {max-width:39ch;font-size:16px;line-height:1.45;margin:14px 0 19px}
-  .rv-home .rv-actions .rv-action {min-height:45px;padding:10px 18px}
-  .rv-hero-art {order:1;position:relative;inset:auto;display:block;width:100%;height:auto;z-index:0}
-  .rv-hero-art picture,.rv-hero-art img {display:block;width:100%;height:auto}
-  .rv-scroll {display:none}
-  .rv-intro {padding-block:35px}
-  .rv-intro>p {font-size:16px;margin:14px auto}
-  .rv-service-nav {gap:4px 16px}
-  .rv-service-nav a {padding:6px 0;font-size:13px}
-  .rv-app-layout,.rv-device-layout,.rv-practice {display:block;padding-block:36px}
-  .rv-demo-shelf,.rv-devices,.rv-practice .tech-stage {margin-top:24px}
-  .rv-app-tabs {gap:2px}
-  .rv-app-tabs a {padding-inline:8px;font-size:12px}
-  .rv-app-panel>a {padding:8px}
-  .rv-app-panel figcaption {display:block;padding:11px}
-  .rv-app-panel figcaption a {display:inline-block;margin-top:5px}
-  .rv-section-head {display:block}
-  .rv-section-head .rv-action {margin-top:14px;min-height:44px}
-  .rv-section-head p {font-size:16px}
-  .rv-projects,.rv-resources {grid-template-columns:1fr;gap:27px}
-  .rv-portfolio,.rv-library>.rv-container {padding-block:36px}
-  .rv-exhibit,.rv-resource-art {aspect-ratio:1.65}
-  .rv-release-exhibit b {font-size:clamp(48px,12vw,70px)}
-  .rv-practice .tech-stage {height:315px}
+:where(.rv-home) #home-hero .card {display:block;width:var(--sheet-width,245px);max-width:none;aspect-ratio:1.69;object-fit:cover;object-position:center;
+  background:#f9faf2;box-shadow:-3px 5px 3px #2533293d;outline:1px solid #1c322529}
+:where(.rv-home) #home-hero .card1 {--floor:105px;--across:-325px}
+:where(.rv-home) #home-hero .card2 {--floor:425px;--across:230px}
+:where(.rv-home) #home-hero .card3 {--floor:242px;--across:-40px}
+:where(.rv-home) #home-hero .card4 {--floor:140px;--across:145px}
+:where(.rv-home) #home-hero .card5 {--floor:360px;--across:-240px}
+:where(.rv-home) #home-hero .card6 {--floor:242px;--across:-40px}
+:where(.rv-home) #home-hero .card7 {--floor:55px;--across:285px}
+:where(.rv-home) #home-hero .card8 {--floor:255px;--across:515px}
+:where(.rv-home) #home-hero .card9,:where(.rv-home) #home-hero .card10 {--floor:338px;--across:372px}
+:where(.rv-home) #home-hero .card11 {--floor:2px;--across:-150px}
+:where(.rv-home) #home-hero .card12 {--floor:20px;--across:-138px}
+:where(.rv-home) #home-hero .card14 {--floor:342px;--across:-40px}
+:where(.rv-home) #home-hero .card19 {--floor:30px;--across:193px;--sheet-width:120px;aspect-ratio:.69}
+:where(.rv-home) #home-hero .card20 {--floor:85px;--across:310px;--sheet-width:120px;aspect-ratio:.85}
+:where(.rv-home) #home-hero .card22 {--floor:-270px;--across:530px;--sheet-width:250px}
+:where(.rv-home) #home-hero :is(.card4,.card7) {display:none}
+:where(.rv-home) #home-hero :is(.card3,.card5,.card10,.card12,.card14) {--lift:-80px;z-index:1;box-shadow:-37px 49px 18px -12px #283a3152}
+:where(.rv-home) #home-hero .card12 {z-index:2}
+:where(.rv-home) #home-hero [class^=card-border] {--lift:-200px;width:290px;height:185px;border:1px solid #354a3436;pointer-events:none}
+:where(.rv-home) #home-hero .card-border-dashed {border-style:dashed}
+:where(.rv-home) #home-hero .card-border1 {--floor:-120px;--across:-350px}
+:where(.rv-home) #home-hero .card-border2 {--floor:15px;--across:-65px}
+:where(.rv-home) #home-hero .card-border3 {--floor:-450px;--across:335px;height:650px}
+:where(.rv-home) #home-hero .card-border4 {--floor:130px;--across:-240px;width:275px;height:156px}
+@media (prefers-reduced-motion:no-preference) {
+  :where(.rv-home) #home-hero .card {animation:home-plane-arrival 1.2s cubic-bezier(.2,.65,.3,1) both}
+  :where(.rv-home) #home-hero :is(.card3,.card10,.card12,.card14) {animation-delay:180ms}
+  @keyframes home-plane-arrival {
+    from {opacity:.25;transform:translateY(calc(var(--lift,0px) - 32px)) rotate(-25deg) skewX(35deg) scaleY(.86)}
+  }
+}
+.rv-home .header-block h2 {font-size:clamp(33px,3.38vw,55px);line-height:1.16;max-width:38ch;margin-inline:auto}
+:where(.rv-home) #welcome-header {border-top:1px solid var(--rv-line)}
+
+/* Three independently rotating layers keep the circular composition open,
+   with each screen drawn from a live Ridgefolio demo or case study. */
+:where(.rv-home) #apps {background:var(--rv-tint);overflow:hidden}
+:where(.rv-home) #apps .row {min-height:clamp(560px,54vw,880px)}
+:where(.rv-home) #apps .v-align {z-index:2}
+:where(.rv-home) #apps .rotating-apps {padding:0}
+:where(.rv-home) #apps .rotaing {position:relative;width:clamp(700px,67vw,949px);aspect-ratio:1;margin-block:-4%}
+:where(.rv-home) #apps .rotaing>div {position:absolute;border-radius:50%;border:1px solid #6c80694a}
+:where(.rv-home) #apps .one {inset:23%;z-index:3;box-shadow:0 0 0 1.4vw #b8c4ae12}
+:where(.rv-home) #apps .two {inset:10%;z-index:2;border-style:dashed!important}
+:where(.rv-home) #apps .three {inset:0;z-index:1}
+:where(.rv-home) #apps .rotaing>div::before,:where(.rv-home) #apps .rotaing>div::after {content:"";position:absolute;width:clamp(110px,13vw,188px);aspect-ratio:1.4;background:center/cover #f9f8f0;border:5px solid var(--rv-paper);box-shadow:0 13px 25px -12px #1c3a225e}
+:where(.rv-home) #apps .one::before {left:-7%;top:26%;background-image:url("/assets/previews/permit-desk.jpg")!important;transform:rotate(-9deg)}
+:where(.rv-home) #apps .one::after {right:-10%;bottom:22%;background-image:url("/assets/editorial/industrial-parks.webp")!important;transform:rotate(8deg)}
+:where(.rv-home) #apps .two::before {top:-5%;left:35%;background-image:url("/assets/previews/finder.jpg")!important;transform:rotate(5deg)}
+:where(.rv-home) #apps .two::after {bottom:-4%;left:33%;background-image:url("/assets/previews/service-ledger.jpg")!important;transform:rotate(-4deg)}
+:where(.rv-home) #apps .three::before {left:-6%;bottom:17%;background-image:url("/assets/showcase/dashboard-charts.webp")!important;transform:rotate(8deg)}
+:where(.rv-home) #apps .three::after {right:0;top:7%;background-image:url("/assets/editorial/archipelago-parks.webp")!important;transform:rotate(-6deg)}
+@media (prefers-reduced-motion:no-preference) {
+  :where(.rv-home) #apps .one,:where(.rv-home) #apps .three {animation:home-orbit-in 4.6s ease-out both}
+  :where(.rv-home) #apps .two {animation:home-orbit-in 4s ease-out reverse}
+  @keyframes home-orbit-in {from {transform:rotate(-9deg)} to {transform:rotate(0)}}
+}
+
+:where(.rv-home) #our-work-header .lead {max-width:55ch;margin-bottom:0}
+:where(.rv-home) #featured-projects {padding-bottom:var(--space);overflow:hidden}
+.rv-home :is(.project-carousel,.testimonials) {display:grid;grid-auto-flow:column;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
+.rv-home :is(.project-carousel,.testimonials)>.item {min-width:0;scroll-snap-align:start}
+.rv-home .project-carousel {grid-auto-columns:clamp(255px,27.1vw,490px);gap:clamp(15px,1.6vw,26px);padding:5px var(--home-margin) 16px;scroll-padding-inline:var(--home-margin)}
+:where(.rv-home) .simple-project a {display:block;text-decoration:none}
+:where(.rv-home) .simple-project .img-wrap {overflow:hidden;background:#dce2d6}
+:where(.rv-home) .simple-project .project-image {aspect-ratio:1/1.2;background-size:cover;background-position:center;transition:transform .55s ease-out}
+:where(.rv-home) .simple-project :is(a:hover,a:focus-visible) .project-image {transform:scale(1.045)}
+:where(.rv-home) .simple-project .h3 {margin-top:15px}
+:where(.rv-home) .simple-project .h3 small {display:block;margin-top:5px;color:var(--rv-muted);font:600 clamp(12px,.94vw,15px)/1.5 var(--sans);letter-spacing:0}
+:where(.rv-home) .simple-project [data-release] {position:relative;display:grid;place-items:center;background:var(--rv-dark);color:var(--rv-on-dark)}
+:where(.rv-home) .simple-project [data-release]::before {content:attr(data-release);font:400 clamp(52px,6vw,105px)/1.1 var(--serif);letter-spacing:-.07em}
+:where(.rv-home) .simple-project [data-release]::after {content:"kvcached / releases";position:absolute;left:9%;top:8%;font:400 clamp(11px,.9vw,15px)/1.6 PlexMono,monospace}
+
+:where(.rv-home) #responsive {overflow:hidden;background:var(--rv-tint)}
+:where(.rv-home) #responsive .responsive-shots {position:relative;align-self:center;padding:0 0 9% 10%}
+:where(.rv-home) #responsive .shot1 {width:112%;max-width:none;height:auto;display:block;border:5px solid #233a2d;border-radius:8px;box-shadow:0 10px 42px #23382b26}
+:where(.rv-home) #responsive .shot2 {width:29%;position:absolute;bottom:0;left:0;height:auto;border:4px solid #233a2d;border-radius:13px;box-shadow:0 9px 26px #23382b3b}
+
+:where(.rv-home) #quotes {background:#e2e9df;overflow:hidden}
+:where(.rv-home) #quotes .container>.row {align-items:stretch}
+:where(.rv-home) #quotes #about {width:100%;height:100%;min-height:360px;position:relative;display:block}
+:where(.rv-home) #quotes .client-shot {height:100%;width:100%;object-fit:cover;object-position:50% 40%;max-height:570px;position:absolute;inset:0;display:block;border-radius:0}
+:where(.rv-home) #quotes .padding-t-150-b-50 {display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding-block:clamp(45px,7vw,125px)}
+:where(.rv-home) #quotes .testimonials {grid-auto-columns:100%;width:100%;scrollbar-width:none}
+:where(.rv-home) #quotes .testimonials .item {padding:5px 7px}
+:where(.rv-home) #quotes .h3 {font-size:clamp(25px,2.5vw,40px);line-height:1.2}
+:where(.rv-home) #quotes .text-muted {margin-top:20px}
+
+:where(.rv-home) #blog-list {isolation:isolate;overflow:hidden}
+:where(.rv-home) #blog-list::before {content:"";position:absolute;inset:0 0 55%;z-index:-1;background:var(--rv-tint)}
+:where(.rv-home) #blog-list .row+.row {margin-top:clamp(32px,4vw,62px);gap:clamp(14px,2.3vw,38px);grid-template-columns:repeat(4,minmax(0,1fr));align-items:start}
+:where(.rv-home) #blog-list .col-md-3 {grid-column:auto}
+:where(.rv-home) .blog-list-item a {display:block;text-decoration:none}
+:where(.rv-home) .blog-lest-img {position:relative;overflow:hidden;background:#e1e5d9}
+:where(.rv-home) .blog-list-item .blog-image {aspect-ratio:1/1.5625;background-size:cover;background-position:top center;transition:transform .5s ease-out}
+:where(.rv-home) .blog-list-item :is(a:focus-visible,a:hover) .blog-image {transform:scale(1.035)}
+:where(.rv-home) .blog-list-item .cover {position:absolute;inset:0;border:1px solid #30473626;pointer-events:none}
+:where(.rv-home) .blog-list-item h4 {font-size:clamp(22px,2vw,32px);margin:24px 0 12px}
+:where(.rv-home) .blog-list-item p {font-size:15px;color:var(--rv-muted)}
+.rv-home .blog-list-item .btn-link {display:inline-block;min-height:0;margin-top:15px;padding:0;border:0;background:transparent;color:var(--rv-accent);text-decoration:underline;text-underline-offset:4px}
+@media (min-width:1550px) {
+  :where(.rv-home) #home-hero .animatable {transform:scale(1.15)}
+}
+@media (min-width:768px) and (max-width:1199px) {
+  :where(.rv-home) #home-hero .animatable {transform:scale(.8);transform-origin:42% 45%}
+  :where(.rv-home) #home-hero .perspective-section {top:55px}
+}
+@media (max-width:991px) {
+  .rv-home {--space:clamp(52px,7vw,76px)}
+  .rv-home :is(.h1,.display-text) {font-size:clamp(35px,5vw,50px)}
+  :where(.rv-home) #apps .row {min-height:520px}
+  :where(.rv-home) #blog-list .row+.row {grid-template-columns:repeat(2,minmax(0,1fr));row-gap:36px}
+  :where(.rv-home) .blog-list-item .blog-image {aspect-ratio:1/1.12}
+}
+@media (min-width:768px) and (max-width:991px) {
+  :where(.rv-home) #home-hero .row {min-height:clamp(480px,70vw,685px)}
+  :where(.rv-home) #home-hero h1 {font-size:clamp(40px,5.2vw,50px)}
+  :where(.rv-home) #home-hero .btn {min-width:110px}
+  :where(.rv-home) #home-hero .animatable {transform:scale(.67);transform-origin:48% 50%}
+  :where(.rv-home) #home-hero .perspective-section {top:32px}
+}
+@media (max-width:767px) {
+  .rv-home {--home-margin:clamp(20px,5.5vw,36px);--space:48px}
+  .rv-home .main-wrap>section .row {display:block}
+  .rv-home .pull-right {text-align:left;margin-top:18px}
+  :where(.rv-home) #home-hero .row {min-height:0}
+  :where(.rv-home) #home-hero .caption-wrap {padding:clamp(30px,8vw,58px) 0 0}
+  :where(.rv-home) #home-hero .display-text,:where(.rv-home) #home-hero h1 {font-size:clamp(43px,9.3vw,62px)}
+  :where(.rv-home) #home-hero h1 img {width:200px;margin:15px 0 18px}
+  :where(.rv-home) #home-hero .btn {min-width:clamp(103px,31vw,150px)}
+  :where(.rv-home) #down-arrow {position:absolute;right:0;bottom:0;margin:0}
+  :where(.rv-home) #down-arrow a {justify-items:center}
+  :where(.rv-home) #home-hero .perspective-section {height:clamp(245px,65vw,400px);top:0;margin:8px calc(-1 * var(--home-margin)) 0;overflow:hidden}
+  :where(.rv-home) #home-hero .animatable {top:55%;left:50%;width:670px;height:500px;inset-inline-end:auto;bottom:auto;transform:translate(-56%,-44%) scale(.56);transform-origin:50% 50%}
+  .rv-home .header-block h2 {font-size:clamp(28px,5.6vw,42px)}
+  :where(.rv-home) #apps .row {min-height:0;padding-top:var(--space)}
+  :where(.rv-home) #apps .lead,:where(.rv-home) #responsive .lead {margin:15px 0 21px}
+  :where(.rv-home) #apps .rotaing {width:min(580px,107vw);margin:26px auto -21%;left:0;transform:translateX(4%)}
+  :where(.rv-home) #apps .rotaing>div::before,:where(.rv-home) #apps .rotaing>div::after {width:clamp(76px,23vw,130px);border-width:3px}
+  .rv-home .project-carousel {grid-auto-columns:clamp(220px,73vw,370px)}
+  :where(.rv-home) .simple-project .project-image {aspect-ratio:1/.99}
+  :where(.rv-home) #responsive .responsive-shots {margin-top:35px;padding:0 4% 10% 12%}
+  :where(.rv-home) #responsive .shot1 {width:100%}
+  :where(.rv-home) #responsive .shot2 {width:25%}
+  :where(.rv-home) #quotes .container>.row {display:block;padding-top:35px}
+  :where(.rv-home) #quotes #about {min-height:0;aspect-ratio:1;width:84px}
+  :where(.rv-home) #quotes .client-shot {border-radius:50%}
+  :where(.rv-home) #quotes .padding-t-150-b-50 {padding:18px 0}
+  :where(.rv-home) #quotes .testimonials .item {padding:3px}
+  :where(.rv-home) #blog-list .row+.row {display:grid;gap:28px 18px}
+  :where(.rv-home) .blog-list-item .blog-image {aspect-ratio:.9}
+  :where(.rv-home) .blog-list-item h4 {margin:14px 0 8px;font-size:22px}
+  :where(.rv-home) .blog-list-item p {font-size:14px;line-height:1.5}
+  .rv-home .btn {padding-inline:18px}
+}
+@media (max-width:380px) {
+  .rv-home {--home-margin:17px}
+  :where(.rv-home) #home-hero .animatable {transform:translate(-56%,-44%) scale(.49)}
+  :where(.rv-home) #blog-list .row+.row {grid-template-columns:1fr}
+  :where(.rv-home) .blog-list-item .blog-image {aspect-ratio:1.4}
+}
+@media (prefers-reduced-motion:reduce) {
+  .rv-home :is(.project-image,.blog-image) {transition:none}
+}
+
+/* Shared gutter and vertical rhythm of the two-column source template. */
+.rv-home {--home-margin:max(30px,calc((100vw - 1400px)/2 + 30px));--space:150px}
+.rv-home .main-wrap>section .container {width:calc(100% - 2 * var(--home-margin));max-width:1340px}
+.rv-home #home-hero .row {min-height:calc(100svh - 1px)}
+.rv-home #home-hero .caption-wrap {align-self:start;padding:0;margin-top:max(94px,calc((100svh - 735px)/2))}
+.rv-home #home-hero .caption-inner {padding-right:20px}
+.rv-home #home-hero .caption-inner>span {font-size:62px;line-height:1.2}
+.rv-home #home-hero h1 {font-size:60px;line-height:1.2;max-width:100%;margin:0 0 30px}
+.rv-home #home-hero h1 img {display:block;width:100%;height:auto;aspect-ratio:535/205;object-fit:contain;object-position:left center;margin:20px 0}
+.rv-home #home-hero .caption-inner>p {margin:0 0 30px}
+.rv-home #home-hero .btn {height:50px;min-height:50px;min-width:0;font-size:16px;padding:0 16px}
+.rv-home #home-hero .btn-inverse {width:146px}
+.rv-home #home-hero .btn-default {width:135px;margin-left:5px}
+.rv-home #down-arrow {position:relative;right:auto;bottom:auto;left:auto;height:0;margin:0}
+.rv-home #down-arrow .down {position:absolute;left:0;bottom:-30px;justify-content:start}
+.rv-home #home-hero .col-sm-7 {align-self:start;margin-top:max(70px,calc((100svh - 681px)/2))}
+.rv-home #home-hero .perspective-section {top:100px}
+.rv-home .header-block h2 {font-size:clamp(26px,2.1vw,33px);line-height:1.35;max-width:100%;margin-bottom:30px}
+.rv-home #welcome-header {min-height:474px;display:grid;align-items:center}
+.rv-home #apps .row {min-height:0}
+.rv-home #apps .rotating-apps {padding-block:150px}
+.rv-home #apps .rotaing {width:949px;height:949px;margin:0;background:url('/assets/interior-orbit.svg') center/contain no-repeat}
+.rv-home #responsive .responsive-shots {padding:0}
+.rv-home #responsive .shot1 {display:block;width:200%;max-width:1300px;height:auto;border:0;border-radius:0;box-shadow:none}
+.rv-home #responsive .shot2 {width:min(62%,400px);left:-20px;top:0;bottom:auto}
+.rv-home #responsive .col-md-5 {align-self:stretch}
+.rv-home #responsive .col-md-5>.sticky-element {position:sticky;top:140px}
+.rv-home #quotes .client-shot {max-height:none}
+.rv-home #blog-list .blog-image {aspect-ratio:1/1.5625}
+
+/* Keep the static list usable without JavaScript. Once enhanced, the outer
+   viewport scrolls and the inert edge copies create a continuous gallery. */
+.rv-home .owl-carousel.owl-loaded {display:block;overflow:visible;scroll-snap-type:none;padding:0}
+.rv-home .owl-stage-outer {overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;scroll-snap-type:x mandatory}
+.rv-home .owl-stage {display:grid;position:relative;grid-auto-flow:column}
+.rv-home .project-carousel .owl-stage {grid-auto-columns:clamp(228px,76.4vw,300px);gap:clamp(16px,4.2vw,76px)}
+.rv-home .testimonials .owl-stage {grid-auto-columns:100%}
+.rv-home .owl-item {min-width:0;scroll-snap-align:start}
+.rv-home .owl-nav {display:flex;gap:4px;margin-block:12px 0}
+.rv-home .project-carousel .owl-nav {justify-content:center}
+.rv-home .owl-nav [role=button] {display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--rv-line);cursor:pointer;color:var(--rv-accent);font:400 22px/1 var(--sans)}
+.rv-home .owl-nav [role=button]:is(:hover,:focus-visible) {background:var(--rv-accent);color:var(--rv-on-accent)}
+.rv-home .testimonials [role=link] {color:var(--rv-accent);font-size:14px;font-weight:700;cursor:pointer;text-underline-offset:4px;text-decoration:underline}
+.rv-home .testimonials [role=link]::after {content:" ↗"}
+.rv-home .owl-dots:empty {display:none}
+@media (max-width:991px) {
+  .rv-home {--space:50px}
+  .rv-home #home-hero {padding:50px 0}
+  .rv-home #home-hero .row {min-height:0}
+  .rv-home #home-hero .caption-wrap,.rv-home #home-hero .col-sm-7 {margin-top:0}
+  .rv-home #home-hero .caption-inner {padding-right:0}
+  .rv-home #home-hero :is(h1,.caption-inner>span) {font-size:calc(3.273vw + 12.72727px);line-height:1.2}
+  .rv-home #apps .rotating-apps {padding:0}
+  .rv-home #welcome-header {min-height:253px}
+  .rv-home #featured-projects {padding-bottom:100px}
+}
+@media (max-width:767px) {
+  .rv-home {--home-margin:30px}
+  .rv-home #home-hero .caption-inner>p {margin-bottom:30px;min-height:60px}
+  .rv-home #home-hero .btn-default {margin-left:5px}
+  .rv-home #down-arrow .down {bottom:-2px;justify-items:start;width:24px}
+  .rv-home #home-hero .perspective-section {top:150px;height:500px;margin:0;overflow:visible}
+  .rv-home #home-hero .animatable {width:100%;height:500px;inset:0;transform:none}
+  .rv-home #home-hero .row {padding-bottom:0}
+  .rv-home #apps {padding:100px 0}
+  .rv-home #apps .row {padding-top:0}
+  .rv-home #apps .rotaing {width:100%;height:clamp(115px,43vw,230px);margin:0;left:0;transform:none;background-size:100% auto;background-position:50% 0}
+  .rv-home #apps .rotaing>div {display:none}
+  .rv-home #apps .lead {margin-bottom:24px}
+  .rv-home #responsive .col-md-5>.sticky-element {position:static}
+  .rv-home #responsive .responsive-shots {margin-top:32px;padding:0}
+  .rv-home #responsive .shot1 {width:100%;height:auto}
+  .rv-home #responsive .shot2 {width:min(61%,200px);left:-20px;top:0}
+  .rv-home #quotes #about {display:none}
+  .rv-home #quotes .container>.row {padding:50px 0}
+  .rv-home #quotes .padding-t-150-b-50 {padding:0}
+  .rv-home #blog-list .row+.row {grid-template-columns:minmax(0,1fr);gap:50px}
+  .rv-home #blog-list .blog-image {aspect-ratio:1/1.5625}
+  .rv-home .simple-project .project-image {aspect-ratio:1/1.2}
+}
+@media (max-width:355px) {
+  .rv-home #home-hero .btn-inverse {width:51%}
+  .rv-home #home-hero .btn-default {width:46%;margin-left:2%}
+}
+.rv-home #home-hero .row {margin-inline:-20px}
+.rv-home #home-hero :is(.col-sm-5,.col-sm-7) {padding-inline:20px}
+.rv-home #home-hero .caption-inner {padding-right:0}
+.rv-home #home-hero h1 {display:flow-root}
+.rv-home .project-carousel.owl-loaded {position:relative}
+.rv-home .project-carousel .owl-nav {position:absolute;left:0;right:0;bottom:-54px}
+@media (min-width:992px) {
+  .rv-home #home-hero .caption-wrap {margin-top:max(72px,calc((100svh - 735px)/2))}
+}
+@media (max-width:767px) {
+  .rv-home #welcome-header h2 {font-size:clamp(18px,5.5vw,24px);line-height:1.36}
+  .rv-home #quotes .h3 {font-size:clamp(18px,5.2vw,23px)}
 }

@@ -1,0 +1,206 @@
+/* The chrome uses the same paper, ink and forest colors as the page body. */
+:root {
+  --shell-paper: var(--rv-paper, #faf9f5);
+  --shell-ink: var(--rv-ink, #1d332c);
+  --shell-secondary: var(--rv-muted, #4d6255);
+  --shell-rule: var(--rv-line, #cdd1c7);
+  --shell-forest: var(--rv-dark, #19392e);
+  --shell-light: var(--rv-on-dark, #f8f7ef);
+  --shell-tint: var(--rv-tint, #ecede4);
+}
+.main-wrap {padding-top: 0}
+.main-wrap > .squares {display: none}
+[data-ref-header] {
+  position: fixed; inset: 0 0 auto; z-index: 100;
+  height: 90px; padding: 30px 0;
+  background: var(--shell-paper); color: var(--shell-ink);
+  border-bottom: 1px solid var(--shell-rule);
+}
+[data-ref-header] .container-fluid {width: calc(100% - 8%); max-width: 1800px; margin-inline: auto; padding: 0}
+[data-ref-header] .container-fluid > .row,
+[data-ref-header] .row > .col-md-12 {padding: 0; margin: 0; position: static; display: block; width: 100%}
+[data-ref-header] .logo {
+  float: left; display: inline-flex; align-items: center; gap: 5px;
+  font: 800 30px/1 var(--sans, Manrope, sans-serif); letter-spacing: -.07em; text-decoration: none; color: inherit;
+}
+[data-ref-header] .logo::after {content: "ridgefolio."}
+[data-ref-header] .logo svg {width: 29px; height: 24px; display: block}
+[data-ref-header] .logo svg path {fill: none; stroke: currentColor; stroke-width: 2.2}
+[data-ref-header] nav {text-align: center}
+[data-ref-header] nav > ul {display: inline-flex; gap: 0; margin: 0; padding: 0; list-style: none; align-items: center}
+[data-ref-header] nav > ul > li > a {
+  display: inline-flex; align-items: center; min-height: 44px; margin-top: -7px; padding: 0 clamp(8px, 1.3vw, 22px);
+  font: 700 clamp(10px, .91vw, 14px)/1.3 var(--sans, Manrope, sans-serif); white-space: nowrap; text-transform: uppercase;
+  letter-spacing: .055em; color: var(--shell-secondary); text-decoration: none;
+}
+[data-ref-header] nav > ul > li > a:hover,
+[data-ref-header] nav > ul > li > a[aria-current],
+[data-ref-header] nav > ul > li > a[aria-expanded="true"] {color: var(--shell-ink); text-decoration: underline; text-underline-offset: .36em}
+[data-ref-header] .btn,
+[data-ref-footer] .btn,
+#contact-form .btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 50px;
+  border-radius: 0; border: 1px solid transparent; padding: 0 26px;
+  font: 700 15px/1.35 var(--sans, Manrope, sans-serif); text-decoration: none;
+}
+[data-ref-header] .btn-inverse,
+[data-ref-footer] .btn-inverse,
+#contact-form .btn-inverse {color: var(--shell-light); background: var(--shell-forest)}
+[data-ref-header] .btn-inverse:hover,
+[data-ref-footer] .btn-inverse:hover,
+#contact-form .btn-inverse:hover {text-decoration: underline; text-underline-offset: 4px}
+[data-ref-header] .col-md-12 > .btn {float: right; margin-top: -10px; min-width: clamp(125px, 12.5vw, 183px)}
+[data-ref-header] .visible-sm.visible-xs {display: none}
+#mega-drop-toggle {display: none}
+#mega-drop-toggle-desktop > .bar,
+#mega-drop-toggle-desktop > .bar-2 {display: none}
+[data-ref-header] .mega-drop {
+  display: none; position: absolute; inset: 89px 0 auto; max-height: calc(100vh - 90px); max-height: calc(100dvh - 90px); overflow-y: auto;
+  overscroll-behavior: contain; border-block: 1px solid var(--shell-rule); padding: 4vw 0;
+  background: var(--shell-paper); text-align: left; box-shadow: 0 15px 28px #192d2415;
+}
+.ref-menu-open [data-ref-header] .mega-drop,
+html:not(.ref-shell-ready) [data-ref-header] .mega-drop:target {display: block}
+[data-ref-header] .mega-drop-inner {width: min(1400px, 100%); padding-inline: clamp(24px, 3vw, 48px); margin: 0 auto}
+[data-ref-header] .mega-drop-inner > .row {display: grid; grid-template-columns: .9fr 1.05fr 1.05fr; gap: clamp(34px, 6vw, 100px); margin: 0; padding: 0}
+[data-ref-header] .mega-drop .col-md-4 {width: auto; min-width: 0; padding: 0}
+[data-ref-header] .mega-drop .social-col {border-right: 1px solid var(--shell-rule); padding-left: 18px}
+[data-ref-header] .mega-drop .social-col .btn {
+  display: inline-flex; min-height: 44px; padding: 6px 0; background: none; color: var(--shell-secondary); font-weight: 650;
+}
+[data-ref-header] .mega-drop .social-col .btn::before,
+[data-ref-header] .link-btn .btn-link::before {content: "›"; display: inline; color: var(--shell-secondary); margin-right: 8px}
+[data-ref-header] .mega-drop .small {display: flex; align-items: center; gap: 7px; margin: 0 0 18px; color: var(--shell-secondary); font-size: 14px; font-weight: 650}
+[data-ref-header] .mega-drop a.h4 {
+  display: block; width: fit-content; margin: 0 0 clamp(12px, 1.5vw, 24px); color: var(--shell-ink);
+  text-decoration: none; font: 400 clamp(16px, 1.45vw, 23px)/1.25 var(--serif, Georgia, serif);
+}
+[data-ref-header] .mega-drop a:hover,
+[data-ref-header] .mega-drop a[aria-current] {text-decoration: underline; text-underline-offset: .22em}
+#mega-close, #contact-form-close {
+  cursor: pointer; display: inline-flex; align-items: center; gap: 7px; justify-content: center; min-height: 44px;
+  color: var(--shell-ink); font: 700 12px/1 var(--sans, Manrope, sans-serif); letter-spacing: .045em;
+}
+#mega-close {position: absolute; right: 3%; top: 7px}
+#mega-close img, #contact-form-close img {border-radius: 50%; width: 30px; height: 30px; padding: 6px; background: var(--shell-tint)}
+html.ref-menu-open {overflow: hidden}
+html:not(.ref-shell-ready) #mega-close {display: none}
+[data-ref-header] noscript a {display: inline-flex; min-height: 44px; align-items: center}
+[data-ref-footer] {padding: clamp(72px, 10vw, 150px) 0 clamp(68px, 8vw, 120px); color: var(--shell-light); background: linear-gradient(90deg, var(--shell-forest) 0 50%, var(--shell-tint) 50%); border: 0}
+[data-ref-footer] .container,
+.main-wrap > .copyright .container {width: min(1400px, 92%); padding: 0; margin: 0 auto}
+[data-ref-footer] .container > .row {display: grid; grid-template-columns: 2fr 2fr 3fr 5fr; gap: 0; margin: 0; padding: 0}
+[data-ref-footer] .row > div {width: auto; min-width: 0; padding: 0 16px; margin: 0}
+[data-ref-footer] .row > .col-md-offset-3 {grid-column: 4; color: var(--shell-ink)}
+[data-ref-footer] h4 {margin: 0 0 12px; font: 700 17px/1.35 var(--sans, Manrope, sans-serif); color: inherit; letter-spacing: -.01em}
+[data-ref-footer] h4.h2 {font: 400 clamp(29px, 3.2vw, 48px)/1.08 var(--serif, Georgia, serif); letter-spacing: -.045em; margin-bottom: 22px}
+[data-ref-footer] .block {padding: 0; margin: 0 0 24px; border: 0; background: transparent}
+[data-ref-footer] .block:not(:has(a)) {display: none}
+[data-ref-footer] .col-md-2 a {display: block; width: fit-content; color: inherit; font-size: 14px; line-height: 1.55; margin-block: 8px; text-decoration: none}
+[data-ref-footer] .col-md-2 a:hover {text-decoration: underline}
+#mc-form {position: relative; display: block; margin: 0; padding: 0; background: none; border: 0}
+#mc-email {width: 100%; min-height: 50px; border: 1px solid var(--shell-rule); background: var(--shell-paper); color: var(--shell-ink); border-radius: 0; font: inherit; padding: 10px 110px 10px 14px}
+#mc-form button {position: absolute; right: 0; top: 0; height: 50px}
+#mc-form label {position: absolute; clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; white-space: nowrap}
+#mc-form p {color: var(--shell-secondary); font-size: 13px; margin: 8px 0 20px}
+[data-ref-footer] .social {display: flex; align-items: center; flex-wrap: wrap; gap: 3px; font-size: 13px}
+[data-ref-footer] .social span {margin-right: 8px}
+[data-ref-footer] .social a {width: 36px; height: 38px; display: inline-grid; place-items: center; color: inherit}
+[data-ref-footer] .social a:hover {color: var(--shell-secondary)}
+.footer-social-icon {fill: none; stroke: currentColor; stroke-width: 1.55; stroke-linejoin: round; stroke-linecap: round}
+.main-wrap > .copyright {background: var(--shell-ink); color: var(--shell-light); padding: 30px 0 clamp(45px, 9vw, 130px); font-size: 13px}
+.main-wrap > .copyright .row {display: flex; justify-content: space-between; column-gap: 30px; padding: 0 16px; margin: 0}
+.main-wrap > .copyright .col-sm-6 {width: auto; min-width: 0; padding: 0}
+.main-wrap > .copyright a {color: inherit}
+.form-style#contact-form {
+  position: fixed; z-index: 120; inset: auto 0 0; max-height: calc(100vh - 90px); max-height: calc(100dvh - 90px); overflow-y: auto; overscroll-behavior: contain;
+  padding: 17px 28px; background: var(--shell-tint); color: var(--shell-ink); border-top: 1px solid var(--shell-rule); box-shadow: 0 -14px 40px #10251b26;
+}
+#contact-form[hidden], #contact-toggle[hidden], #contact-form [hidden] {display: none}
+#contact-form .contact-form-inner {position: relative; width: min(500px, 100%); margin: 0 auto}
+#contact-form #contact-form-close {position: absolute; top: -2px; left: calc(100% + 20px); white-space: nowrap}
+#contact-form #contact-form-close img {background: var(--shell-paper)}
+#contact-body .form-group {margin: 0 0 16px}
+#contact-body > .form-group {padding-right: 130px; margin: 0}
+#contact-body label, #contact-body .verify {display: block; margin: 0 0 5px; color: var(--shell-ink); font: 650 13px/1.4 var(--sans, Manrope, sans-serif)}
+#contact-body .form-control {
+  display: block; width: 100%; min-height: 45px; padding: 10px 14px; border: 1px solid #93a195; border-radius: 0;
+  font: 500 16px/1.45 var(--sans, Manrope, sans-serif); color: var(--shell-ink); background: var(--shell-paper)
+}
+#contact-body textarea.form-control {min-height: 103px; resize: vertical}
+#contact-body .no-btn {position: absolute; top: 21px; right: 0; height: 45px; min-width: 110px; padding: 0 14px; border: 0; border-radius: 0; background: var(--shell-forest); color: var(--shell-light)}
+#contact-body #message {margin: 16px 0; font-size: 14px}
+#contact-body #message:not(:empty) {padding: 18px; border: 1px solid var(--shell-rule); background: var(--shell-paper); overflow-wrap: anywhere}
+#contact-body #message h3 {margin: 0 0 12px; font: 650 18px/1.35 var(--sans, Manrope, sans-serif)}
+#contact-body #message p {margin: 4px 0}
+#contact-body #message pre {margin: 14px 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere}
+#contact-body #message a {display: inline-block; color: var(--shell-ink); font-weight: 700; text-decoration: underline; text-underline-offset: .2em}
+#contact-body fieldset {border: 0; margin: 0 0 14px; padding: 0}
+#contact-body .page-header {font: 650 15px/1.4 var(--sans, Manrope, sans-serif); margin: 0 0 9px}
+#contact-body .verify img {width: 16px; height: 16px; margin-right: 5px; vertical-align: text-bottom}
+#contact-body #verify {font-size: 14px; min-height: 36px; background: transparent}
+#contact-results:not(:empty) {font-size: 14px; padding: 11px; border: 1px solid var(--shell-rule); margin-bottom: 14px}
+html.ref-contact-open {overflow: hidden}
+html.ref-contact-open .main-wrap::after {content: ""; position: fixed; inset: 0; z-index: 110; pointer-events: auto; background: #11251d55}
+html.ref-contact-expanded #contact-form {top: 90px; max-height: none; padding-block: 65px 44px}
+html.ref-contact-expanded #contact-form-close {top: -55px; right: 0; left: auto}
+html.ref-contact-expanded #contact-body > .form-group {padding: 0; margin-bottom: 16px}
+html.ref-contact-expanded #contact-body .no-btn {display: none}
+@media (min-width: 992px) and (max-width: 1199px) {
+  [data-ref-header] .logo {font-size: 25px}
+  [data-ref-header] nav > ul > li > a {padding-inline: 8px}
+}
+@media (max-width: 991px) {
+  .main-wrap {padding-top: 0}
+  [data-ref-header] {position: relative; height: 90px}
+  [data-ref-header] .container-fluid {width: calc(100% - 44px)}
+  [data-ref-header] .logo {font-size: 27px}
+  [data-ref-header] .col-md-12 > .btn {display: none}
+  [data-ref-header] .visible-sm.visible-xs.link-btn {display: block; float: right; margin: -8px 14px 0 0}
+  [data-ref-header] .link-btn .btn {min-height: 44px; padding-inline: 4px; color: var(--shell-ink); font-size: 13px; background: transparent}
+  #mega-drop-toggle {float: right; display: block; position: relative; margin: -7px -9px 0 0; width: 44px; height: 44px; cursor: pointer}
+  #mega-drop-toggle .bar, #mega-drop-toggle .bar-2 {position: absolute; left: 12px; top: 18px; width: 20px; height: 2px; background: var(--shell-ink)}
+  #mega-drop-toggle .bar-2 {top: 24px; width: 14px}
+  #mega-drop-toggle[aria-expanded="true"] .bar {top: 21px; transform: rotate(45deg)}
+  #mega-drop-toggle[aria-expanded="true"] .bar-2 {top: 21px; width: 20px; transform: rotate(-45deg)}
+  [data-ref-header] nav > ul {display: none}
+  [data-ref-header] .mega-drop {background: var(--shell-tint); padding: 25px 0 30px}
+  [data-ref-header] .mega-drop-inner {padding-inline: 25px}
+  [data-ref-header] .mega-drop-inner > .row {display: block}
+  [data-ref-header] .mega-drop .social-col, #mega-close {display: none}
+  [data-ref-header] .mega-drop .col-md-4 + .col-md-4 {margin: 12px 0 18px}
+  [data-ref-header] .mega-drop a.h4 {min-height: 33px; margin-bottom: 7px}
+  [data-ref-header] .mega-drop .small {margin-bottom: 12px}
+  .ref-menu-open [data-ref-header] {position: sticky; top: 0}
+  html:not(.ref-shell-ready) #mega-drop-toggle {display: none}
+  html:not(.ref-shell-ready) [data-ref-header] {height: auto; min-height: 90px}
+  html:not(.ref-shell-ready) [data-ref-header] nav {clear: both; padding-top: 12px}
+  html:not(.ref-shell-ready) [data-ref-header] nav > ul {display: flex; flex-wrap: wrap}
+  html:not(.ref-shell-ready) [data-ref-header] nav > ul > li > a {font-size: 11px; margin: 0; padding: 0 11px}
+  html:not(.ref-shell-ready) [data-ref-header] .mega-drop:target {position: static; max-height: none}
+  [data-ref-footer] {background: var(--shell-forest); padding: 50px 0}
+  [data-ref-footer] .container > .row {grid-template-columns: 1fr 1fr; gap: 24px}
+  [data-ref-footer] .row > .col-md-offset-3 {grid-column: 1 / -1; color: var(--shell-light)}
+  [data-ref-footer] #mc-form p {color: var(--shell-light)}
+  [data-ref-footer] #mc-form button {background: var(--shell-paper); color: var(--shell-ink); border-color: var(--shell-rule)}
+  [data-ref-footer] .social a:hover {color: var(--shell-light)}
+  .main-wrap > .copyright {padding: 27px 0 32px}
+  #contact-form #contact-form-close {position: relative; top: auto; left: auto; margin: 0 0 10px; min-height: 36px}
+  html.ref-contact-expanded #contact-form {top: 0; padding: 25px 22px}
+  html.ref-contact-expanded #contact-form-close {position: relative; top: auto; right: auto}
+}
+@media (max-width: 540px) {
+  [data-ref-header] .container-fluid {width: calc(100% - 34px)}
+  [data-ref-header] .logo {font-size: 25px}
+  [data-ref-header] .logo svg {width: 22px}
+  [data-ref-footer] .row > div, .main-wrap > .copyright .row {padding-inline: 2px}
+  .main-wrap > .copyright .row {display: grid; gap: 8px}
+  #mc-email {padding: 10px 13px}
+  #mc-form button {position: static; width: 100%; margin-top: 8px}
+  #contact-body > .form-group {padding-right: 0}
+  #contact-body .no-btn {position: static; margin-top: 10px}
+}
+@media print {
+  [data-ref-header], [data-ref-footer], .main-wrap > .copyright, #contact-form {display: none}
+  .main-wrap {padding: 0}
+}

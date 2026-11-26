@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser.mjs';
+import { createHash } from 'node:crypto';
 
 test('production assets, fonts and responsive geometry', async ({ page }, info) => {
   const errors = [], failures = [];
@@ -7,13 +8,9 @@ test('production assets, fonts and responsive geometry', async ({ page }, info) 
   await page.goto('/');
   await page.evaluate(() => Promise.all([document.fonts.load('500 16px Manrope'), document.fonts.load('400 16px SourceSerif')]));
   expect(await page.evaluate(() => [...document.fonts].every(font => font.status === 'loaded'))).toBeTruthy();
-  await expect(page.locator('.tech-canvas')).toBeVisible();
-  await expect.poll(() => page.locator('.tech-canvas').evaluate(canvas => {
-    const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
-    return pixels.some((value, index) => index % 4 === 3 && value > 0);
-  })).toBeTruthy();
-  await page.locator('.founder-signature img').scrollIntoViewIfNeeded();
-  await expect.poll(() => page.locator('.founder-signature img').evaluate(img => img.complete && img.naturalWidth > 0)).toBeTruthy();
+  const planes = page.locator('#home-hero .animatable img.card');
+  await expect(planes).toHaveCount(16);
+  await expect.poll(() => planes.evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0))).toBe(true);
   const widths = info.project.name.includes('desktop') ? [320, 360, 390, 430, 768, 1024, 1440] : [360, 390, 430, 844];
   for (const width of widths) {
     await page.setViewportSize({ width, height: width === 844 ? 390 : 844 });
@@ -25,7 +22,7 @@ test('production assets, fonts and responsive geometry', async ({ page }, info) 
         return rect.width && (rect.left < -1 || rect.right > innerWidth + 1) && getComputedStyle(element).position !== 'fixed';
       }).slice(0, 10).map(element => ({ tag: element.tagName, class: element.className, right: element.getBoundingClientRect().right }))
     }]), { message: `No horizontal overflow at ${width}px` }).toEqual([]);
-    const clipped = await page.locator('h1,h2,.field-work-row,.field-contact,footer').evaluateAll(elements => elements.filter(element => {
+    const clipped = await page.locator('h1,h2,footer').evaluateAll(elements => elements.filter(element => {
       const r = element.getBoundingClientRect(); return r.width && (r.left < -1 || r.right > innerWidth + 1);
     }).map(element => element.className || element.tagName));
     expect(clipped, `Overflow at ${width}px`).toEqual([]);
@@ -46,38 +43,40 @@ test('mobile navigation, keyboard dismissal and contact destinations', async ({ 
   await page.setViewportSize({ width: 390, height: 844 });
   const menu = page.getByRole('button', { name: 'Menu', exact: true });
   await menu.click();
-  await expect(page.locator('#site-nav')).toBeVisible();
-  await page.getByRole('link', { name: 'Selected work', exact: true }).click();
-  await expect(menu).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('#site-nav')).toBeHidden();
+  const directory = page.locator('#site-directory');
+  await expect(directory).toBeVisible();
+  await directory.getByRole('link', { name: 'Selected work', exact: true }).click();
+  await expect(page).toHaveURL(/\/work\/$/);
+  await expect(directory).toBeHidden();
   await menu.click();
-  await menu.press('Escape');
+  await page.keyboard.press('Escape');
   await expect(menu).toHaveAttribute('aria-expanded', 'false');
   await expect(menu).toBeFocused();
-  await expect(page).toHaveURL(/\/work\/$/);
+
   await page.goto('/');
-  await expect(page.locator('.contact-email')).toHaveAttribute('href', 'mailto:rishabh@ridgefolio.com');
-  const contact = page.locator('.nav-cta');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const contact = page.locator('header[data-ref-header] a.open-contact-form');
   await expect(contact).toHaveAttribute('href', '/contact/');
   await contact.click();
-  const sheet = page.getByRole('dialog');
+  const sheet = page.getByRole('dialog', { name: 'Contact Ridgefolio' });
   await expect(sheet).toBeVisible();
-  await expect(sheet.locator('a[href^="mailto:"]')).toHaveAttribute('href', 'mailto:rishabh@ridgefolio.com');
-  await expect(sheet.locator('a[href^="https://cal.com/"]')).toHaveAttribute('href', 'https://cal.com/ridgefolio/intro');
+  await sheet.getByRole('button', { name: 'Continue' }).click();
+  await expect(sheet.getByLabel('Reply email', {exact:false})).toBeVisible();
+  await expect(sheet.getByRole('button', {name:'Review email draft'})).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(sheet).toBeHidden();
   await expect(contact).toBeFocused();
-  for (const selector of ['.field-copy .field-link', '.field-contact > a']) {
-    await expect(page.locator(selector)).toHaveAttribute('href', 'https://cal.com/ridgefolio/intro');
-  }
-  await expect(page.locator('.field-work-row').nth(1)).toHaveAttribute('href', 'https://github.com/IBM/vLLM-Hook/pull/41');
-  await expect(page.locator('.field-work-row').nth(2)).toHaveAttribute('href', 'https://arxiv.org/abs/2610.37679');
+  await page.goto('/contact/');
+  await expect(page.locator('a[href="mailto:rishabh@ridgefolio.com"]').first()).toHaveAttribute('href','mailto:rishabh@ridgefolio.com');
+  await expect(page.locator('#contact-hero address').getByRole('link', {name:'Book a 30-minute call'})).toHaveAttribute('href','https://cal.com/ridgefolio/intro');
 });
 
 test('reduced motion preserves the static ridge and navigation', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
+  await page.goto('/practice/');
+  await page.locator('summary').filter({hasText:'Explore the terrain study'}).click();
   const before = await ridgeFingerprint(page);
   const box = await page.locator('.tech-canvas').boundingBox();
   await page.mouse.move(box.x + box.width * .8, box.y + box.height * .25);
@@ -85,14 +84,14 @@ test('reduced motion preserves the static ridge and navigation', async ({ page }
   expect(await ridgeFingerprint(page)).toBe(before);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole('button', { name: 'Menu', exact: true }).click();
-  await expect(page.locator('#site-nav')).toBeVisible();
+  await expect(page.locator('#site-directory')).toBeVisible();
 });
 
 test('not-found page provides a styled way home', async ({ page }) => {
   await page.goto('/404.html');
   await expect(page.getByRole('heading', { name: 'This page isn’t here.' })).toBeVisible();
   await page.getByRole('link', { name: 'Back to Ridgefolio' }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Software forpublic agencies.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Software for\s*public agencies\./);
 });
 
 async function ridgeFingerprint(page) {
@@ -106,7 +105,8 @@ async function ridgeFingerprint(page) {
 
 test('surface and wireframe views work with keyboard and touch-sized controls', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
+  await page.goto('/practice/');
+  await page.locator('summary').filter({hasText:'Explore the terrain study'}).click();
   await page.setViewportSize({ width: 390, height: 844 });
   const surface = page.getByRole('button', { name: 'Surface', exact: true });
   const wireframe = page.getByRole('button', { name: 'Wireframe', exact: true });
@@ -123,5 +123,62 @@ test('surface and wireframe views work with keyboard and touch-sized controls', 
   expect(await ridgeFingerprint(page)).toBe(original);
   for (const control of [surface, wireframe]) {
     expect(await control.evaluate(element => element.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
+  }
+});
+
+// These are the ordered tag and class trees in the independent November 26
+// homepage source capture. Copy, URLs, and project-specific assets are editable.
+const sourceSections = {
+  "squares": "348699838ad518c749909f8fb89043bd9cfd3d878fcae4eddef85d77e74f6a82",
+  "header": "d7925330addfd46c0233fec57a916353f2c2ce3cae59bea89c66324c68132eea",
+  "home-hero": "fceb75f2ba02770834353ec3a6529f62e13769c729354b1ba9a6486720b869a2",
+  "welcome-header": "7791812b80256dd64daaa51f5b5ba3825ae63063bf1500d32813416e07fdac96",
+  "apps": "3b90ca171231c4522156b377c05057238432cffd25ba3af1acb8ef7d85c2069e",
+  "our-work-header": "ea5dc3188f850fb36bcba003f4401ea678ae7fd2672a838f9e4fa398c1dc626b",
+  "featured-projects": "e9d970f33fdf2ca22d4356c9896a667eceb269bc84acf5dfe66882b874b058f6",
+  "responsive": "ed7882f181d700ea80c09d621c75f51368bd6ace0b1519e92a81765e1c5f2c57",
+  "testimonials-header": "cc3fc5f6b2e7561b0f0c61cf2a70a3410871ab6f845b9e41539d1e2eaebdd576",
+  "quotes": "349a5720e0b328ea1d7a6ac27e0682ce87c4a248bdc9ef2ff826d3e2e074558b",
+  "blog-list": "a093718757939cd052f1b20713daff7640fb390d7ff3e04f0b79e8cb40e50bb5",
+  "footer": "85f955cf367d0b8c8f3b08444af55eae886a1e5cc3c69a503a2af9b874bd8842",
+  "copyright": "cb1d645c6ca8242127e3da69d15730bca2aff311f57503f229edbd4b8c201a48",
+  "contact-form": "423f080dd3eb31d2af90feb06ff47e4c94bfb9a5ed1e6222c8757482ded27ed3"
+};
+
+test('homepage templates retain the source hierarchy before enhancement', async ({ page, request }) => {
+  const response = await request.get('/');
+  const sections = await page.evaluate(html => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    function shape(element) {
+      const children = [...element.children].filter(child =>
+        !['script', 'style', 'link', 'iframe', 'noscript'].includes(child.localName)
+      );
+      return element.localName + '.' + [...element.classList].join('.') + '(' + children.map(shape).join('') + ')';
+    }
+    return [...doc.querySelector('.main-wrap').children].map(region => [
+      region.id || region.classList[0] || region.localName, shape(region)
+    ]);
+  }, await response.text());
+  expect(sections.map(([id]) => id)).toEqual(Object.keys(sourceSections));
+  for (const [id, value] of sections) {
+    expect(createHash('sha256').update(value).digest('hex'), id).toBe(sourceSections[id]);
+  }
+  await page.goto('/');
+  await expect(page.locator('#quotes .owl-item')).toHaveCount(23);
+  const enhanced = {
+    "home-hero": "2c0c06236f132744d740f7661ff0a0041608208e971f1a8be6ca50d7a7faba73",
+    "featured-projects": "496677e2e35ae10d178924b62db062db0b19186a2eec58d37450f62b47d432c0",
+    "quotes": "5695ccdb72ec1a272577c2c89573e0f03a35b467403f69a2d22fcd9d24c7bbd8"
+};
+  const liveTrees = await page.evaluate(ids => {
+    const transient = new Set(['active', 'center', 'aos-init', 'aos-animate']);
+    function tree(el) {
+      const classes = [...el.classList].filter(token => !transient.has(token));
+      return el.localName + '.' + classes.join('.') + '(' + [...el.children].map(tree).join('') + ')';
+    }
+    return ids.map(id => [id, tree(document.getElementById(id))]);
+  }, Object.keys(enhanced));
+  for (const [id, value] of liveTrees) {
+    expect(createHash('sha256').update(value).digest('hex'), 'rendered ' + id).toBe(enhanced[id]);
   }
 });

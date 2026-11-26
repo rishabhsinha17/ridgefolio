@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./browser.mjs";
 import { readFile } from "node:fs/promises";
 
 async function downloadedText(page, name) {
@@ -10,9 +10,9 @@ test("find a service, request a correction, approve and take the matching receip
   page,
 }) => {
   await page.goto("/demos/finder/");
-  await page.getByRole("searchbox").fill("not-a-service");
+  await page.getByRole("searchbox", {name: "Search services"}).fill("not-a-service");
   await expect(page.getByRole("status")).toContainText("No matching");
-  await page.getByRole("searchbox").fill("permit");
+  await page.getByRole("searchbox", {name: "Search services"}).fill("permit");
   await page.getByText("Community event permit", { exact: true }).click();
   await page.getByRole("link", { name: "Try the permit application" }).click();
   await page.getByLabel("Event name").fill("Neighborhood art fair");
@@ -121,14 +121,23 @@ test("the research map retains its image and sources without JavaScript", async 
   }
 });
 
-test("the homepage preview opens the selected working application", async ({ page }) => {
-  await page.goto("/");
-  const selector = page.getByRole("navigation", {name: "Application previews"});
-  await selector.getByRole("link", {name: "Service ledger"}).click();
-  await expect(page.locator("#preview-finder")).toBeHidden();
-  const ledger = page.locator("#preview-service-ledger");
-  await expect(ledger).toBeVisible();
-  await ledger.getByRole("link", {name: "Filter the ledger"}).click();
+test("the featured project carousel opens the working ledger", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const gallery = page.locator('#featured-projects .project-carousel');
+  const viewport = gallery.locator('.owl-stage-outer');
+  await expect(gallery.locator('.owl-item')).toHaveCount(14);
+  await expect(gallery.locator('.owl-item.cloned[aria-hidden=true]')).toHaveCount(8);
+  await expect(page.locator('#quotes .owl-item')).toHaveCount(23);
+  const next = gallery.getByRole('button', {name:'Next project'});
+  const active = () => gallery.locator('.owl-item.active').first().textContent();
+  await expect.poll(active).toBeTruthy();
+  const initial = await active();
+  await next.focus();
+  await next.press('Enter');
+  await expect.poll(active).not.toBe(initial);
+  await expect(viewport).toBeVisible();
+  await gallery.getByRole('link', {name:/Service ledger/i}).click();
   await expect(page).toHaveURL(/\/demos\/service-ledger\/$/);
-  await expect(page.getByLabel("District", {exact: true})).toBeVisible();
+  await expect(page.getByLabel('District', {exact:true})).toBeVisible();
 });

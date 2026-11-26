@@ -5,7 +5,7 @@
   "description": "Ridgefolio \u2014 independent software engineering for public agencies and delivery partners.",
   "scripts": {
     "dev": "wrangler dev",
-    "check": "node --check public/assets/civic.js && node --check public/assets/ridge.js && node --check public/assets/site.js && node --check public/assets/atlas.js && node --check public/assets/navigation.js && node --check public/assets/showcase.js && node scripts/check.mjs",
+    "check": "node --check public/assets/civic.js && node --check public/assets/ridge.js && node --check public/assets/site.js && node --check public/assets/atlas.js && node --check public/assets/ref-shell.js && node --check public/assets/showcase.js && node --check public/assets/interiors.js && node scripts/check.mjs",
     "deploy": "wrangler deploy",
     "test": "playwright test"
   },

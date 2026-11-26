@@ -1,4 +1,9 @@
 "use strict";
+// Produces a link for a visitor to open after reviewing the draft.
+function contactDraftURL(recipient, subject, body) {
+  const lines = body.replace(/\r?\n/g, "\r\n");
+  return "mailto:" + recipient + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines);
+}
 const byId = (id) => document.getElementById(id);
 function element(tag, text, className) {
   const node = document.createElement(tag);
