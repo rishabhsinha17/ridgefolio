@@ -19,3 +19,13 @@ Run `npm run check`, install the Playwright browsers and run `npm test`. Browser
 Cloudflare Workers Builds deploys pushes to `main` to `ridgefolio.com`. The build command is `npm run check`, and the deploy command is `npx wrangler deploy`. The repository contains no deployment credentials. Reverting a site change on the production branch triggers a new build. The Cloudflare settings are in `wrangler.jsonc`.
 
 Font license notices are in `public/assets/fonts/`. Founder work is attributed on each project page. The site code, original artwork, branding and portrait carry no open-source license merely by being publicly viewable.
+
+## Public work samples
+
+The homepage photograph is a 2012 view of San Francisco City Hall by Carol M. Highsmith. The Library of Congress records no known restrictions on publication. The image caption links to the collection record. [Library of Congress](https://www.loc.gov/item/2013630463/)
+
+The industrial parks illustration plots all 141 point features in the linked repository snapshot over Natural Earth geography. It illustrates the file version cited on the project page. [Coordinate file](https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/blob/673480b96b7dbfce3990cc9f72208c87c65b54a9/data/geojson/basicGeojsonData.geojson) · [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/)
+
+The research images reproduce details of pages 1 and 3 of Rishabh Sinha’s preprint. The release exhibit links directly to the two merged changes and their published release. [Paper](https://arxiv.org/abs/2610.37679) · [Release notes](https://github.com/ovg-project/kvcached/releases/tag/v0.1.6)
+
+The sample permit receipt in `public/downloads/` was exported from the working demonstration using the walkthrough in the example project brief.

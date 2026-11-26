@@ -54,6 +54,8 @@ test('mobile navigation, keyboard dismissal and contact destinations', async ({ 
   await menu.press('Escape');
   await expect(menu).toHaveAttribute('aria-expanded', 'false');
   await expect(menu).toBeFocused();
+  await expect(page).toHaveURL(/\/work\/$/);
+  await page.goto('/');
   await expect(page.locator('.contact-email')).toHaveAttribute('href', 'mailto:rishabh@ridgefolio.com');
   for (const selector of ['.nav-cta', '.field-copy .field-link', '.field-contact > a']) {
     await expect(page.locator(selector)).toHaveAttribute('href', 'https://cal.com/ridgefolio/intro');
@@ -80,7 +82,7 @@ test('not-found page provides a styled way home', async ({ page }) => {
   await page.goto('/404.html');
   await expect(page.getByRole('heading', { name: 'This page isn’t here.' })).toBeVisible();
   await page.getByRole('link', { name: 'Back to Ridgefolio' }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Better systems.Strongerplaces.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Software forpublic agencies.');
 });
 
 async function ridgeFingerprint(page) {

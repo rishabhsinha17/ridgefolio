@@ -4,6 +4,7 @@ from pathlib import Path
 from html import escape
 import json
 import re
+import editorial as ed
 from content import SERVICES, DEMOS, RESOURCES, CASES, CHECKS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,35 +38,6 @@ def buttons(*links):
     )
 
 
-def art(kind):
-    if kind == "blue":
-        inner = '<div class="mini-page"><i></i><b></b><span></span><span></span><small></small></div><div class="mini-page back"><i></i><b></b><span></span></div>'
-    elif kind == "gold":
-        inner = '<div class="mini-flow"><i></i><em></em><i></i><em></em><i></i></div>'
-    else:
-        inner = (
-            '<div class="mini-chart">'
-            + "".join(
-                f'<i style="--h:{h}%"></i>' for h in [34, 52, 43, 78, 64, 92, 72, 85]
-            )
-            + "</div>"
-        )
-    return f'<div class="art {kind}" aria-hidden="true">{inner}</div>'
-
-
-def card(url, title, desc, category="", tone=""):
-    return a(
-        url,
-        (art(tone) if tone else "")
-        + f'<div class="card-body">{tag(category) if category else ""}<h3>{title}</h3><p>{desc}</p><span class="go" aria-hidden="true">↗</span></div>',
-        "card",
-    )
-
-
-def grid(items):
-    return '<div class="cards">' + "".join(items) + "</div>"
-
-
 def rows(items):
     return (
         '<dl class="rows">'
@@ -79,72 +51,37 @@ def section(title, body, extra=""):
 
 
 def intro(family, title, copy):
-    return f'<header class="page-head wrap">{tag(family)}<h1>{title}</h1><p>{copy}</p></header>'
+    return f'<header class="page-head wrap">{tag(family) if family != title else ""}<h1>{title}</h1><p>{copy}</p></header>'
 
 
 def add(path, title, desc, body, group):
     pages[path] = (title, desc, body, group)
 
 
-def service_cards():
-    return grid(
-        card(
-            "/services/" + s["slug"] + "/",
-            s["title"],
-            s["intro"],
-            s["label"],
-            s["tone"],
-        )
-        for s in SERVICES
-    )
-
-
-def demo_cards():
-    return grid(
-        card("/demos/" + slug + "/", title, desc, "Interactive demo", tone)
-        for slug, title, desc, tone in DEMOS
+def service_list():
+    return ed.directory(
+        ("/services/" + s["slug"] + "/", s["title"], s["intro"]) for s in SERVICES
     )
 
 
 def preview(slug, title):
-    return f'<a class="demo-preview" href="/demos/{slug}/"><img src="/assets/previews/{slug}.jpg" alt="Preview of the {title} demonstration" width="960" height="520" loading="lazy"><span>Open the interactive demo <b aria-hidden="true">↗</b></span></a>'
-
-
-def resource_cards():
-    return grid(
-        card("/resources/" + slug + "/", title, desc, "Field guide")
-        for slug, title, desc in RESOURCES
-    )
-
-
-def work_cards():
-    return grid(
-        card("/work/" + slug + "/", title, summary, cat)
-        for slug, title, cat, summary, *_ in CASES
-    )
-
-
-def case_strip():
-    return section(
-        "Selected work",
-        work_cards()
-        + '<p class="caption">These projects document Rishabh Sinha’s individual experience.</p>',
-    )
+    return f'<a class="demo-preview" href="/demos/{slug}/"><img src="/assets/previews/{slug}.jpg" alt="{title} demonstration interface" width="954" height="600" loading="lazy"><span>Try the software <b aria-hidden="true">↗</b></span></a>'
 
 
 logo = '<svg viewBox="0 0 44 32" aria-hidden="true"><path d="M2 29 15 5l9 16 6-10 12 18M9 29l6-11 6 11M27 29l3-6 4 6"/></svg>ridgefolio<span class="brand-dot">.</span>'
 ridge = '<div class="tech-stage tech-dark" data-tech="ridge"><div class="tech-stage-top"><span>COMPUTATIONAL RIDGE</span></div><canvas class="tech-canvas" role="img" aria-label="Interactive topographic ridge rendered as a green mesh"></canvas><div class="tech-stage-bottom"><span class="tech-interaction">Explore the terrain</span><div class="tech-controls"><button data-mode="surface" aria-pressed="true">Surface</button><button data-mode="wire" aria-pressed="false">Wireframe</button></div></div></div>'
-home = f"""<section class="home-head"><div class="wrap hero-layout"><div class="field-copy">{tag("Independent public-sector engineering")}<h1>Better systems.<br><em>Stronger</em><br>places.</h1><p>We build public websites and the systems behind them, from permit review to reporting.</p><div class="actions">{a("/demos/", arrow("Explore live demos"), "button bright")}{a(BOOK, arrow("Book a call"), "field-link")}</div></div>{ridge}</div></section>
-<div class="audience wrap"><strong>Who we work with</strong>{a("/for/agencies/", arrow("Public agencies"))}{a("/for/partners/", arrow("Delivery partners"))}</div>"""
-home += section("What do you need to build?", service_cards())
-home += section(
-    "Try the permit desk",
-    f'<div class="feature"><div>{tag("Working demonstration")}<h3>One application.<br>Both sides of the desk.</h3><p>Submit a fictional permit request, switch to staff review and see every decision appear in the record.</p>{buttons(("/demos/permit-desk/", "Open permit desk"))}</div><div class="sample-ticket" aria-hidden="true"><div>APPLICATION RECORD <b>DEMO</b></div><h4>Community event permit</h4><p>Harbor Square · Public gathering</p><ol><li>Application received</li><li>Staff review</li><li>Decision &amp; receipt</li></ol></div></div>',
-    "tinted",
+home = f"""<section class="home-hero wrap"><div class="field-copy">{tag("Independent software engineering")}<h1>Software for<br><em>public agencies.</em></h1><p>A resident looks up a permit. A reviewer asks for a correction. A director checks the numbers. We build the websites and tools behind those tasks.</p><div class="actions">{a("/demos/permit-desk/", arrow("Try the permit desk"), "button")}{a(BOOK, arrow("Book a call"), "field-link")}</div></div>{ed.PHOTO}</section>
+<div class="audience wrap"><strong>Working with Ridgefolio</strong>{a("/for/agencies/", arrow("For public agencies"))}{a("/for/partners/", arrow("For delivery partners"))}</div>"""
+home += (
+    '<section id="work" class="block"><div class="wrap"><div class="shelf-head"><h2>Selected work</h2>'
+    + a("/work/", "All project notes ↗")
+    + "</div>"
+    + ed.work_gallery(CASES)
+    + "</div></section>"
 )
-home += '<div id="work">' + case_strip() + "</div>"
+home += section("What we build", service_list())
 home += section(
-    "Engineering you can inspect",
+    "Engineering records",
     '<div class="sources">'
     + "".join(
         a(u, f"<strong>{n}</strong><span>{l} ↗</span>", "field-work-row")
@@ -164,13 +101,7 @@ home += section(
     )
     + "</div>",
 )
-home += (
-    '<span id="about"></span><section id="practice" class="block"><div class="wrap founder-signature"><img src="/assets/founder.jpg" alt="Rishabh Sinha" width="128" height="128" loading="lazy"><div>'
-    + tag("Founder")
-    + "<h2>Rishabh Sinha</h2><p>Work directly with the engineer who designs the system and hands it over to your team.</p>"
-    + a("/practice/", arrow("Meet the practice"))
-    + "</div></div></section>"
-)
+home += f"""<span id="about"></span><section id="practice" class="block studio"><div class="wrap studio-grid"><div class="founder-signature"><img src="/assets/editorial/founder.webp" alt="Rishabh Sinha" width="128" height="128" loading="lazy"><div>{tag("The practice")}<h2>Meet Rishabh.</h2><p>Rishabh Sinha leads Ridgefolio from California. He scopes the work, writes the software and walks your team through the handover.</p>{a("/practice/", arrow("About the practice"))}</div></div>{ridge}</div></section>"""
 add(
     "/",
     "Software engineering for public agencies",
@@ -184,19 +115,16 @@ add(
     "Choose a starting point for a website, operations or reporting project.",
     intro(
         "Engineering services",
-        "What do you need to build?",
-        "Explore the deliverables, acceptance checks and scoping questions for each service.",
+        "Engineering services",
+        "Choose the part of the service that needs work. Each scope includes an example you can try and a way to test delivery.",
     )
-    + section("Engineering services", service_cards()),
+    + section("Service areas", service_list(), "catalogue"),
     "Services",
 )
 for s in SERVICES:
     body = (
         intro(s["label"], s["title"], s["intro"])
-        + section(
-            "Where to start",
-            f'<div class="split"><p class="lead">{s["need"]}</p>{preview(s["demo"], s["short"])}</div>',
-        )
+        + f'<section class="wrap service-feature"><div><h2>The starting point</h2><p class="lead">{s["need"]}</p></div>{preview(s["demo"], s["short"])}</section>'
         + section("What the work includes", rows(s["items"]))
         + section(
             "How to evaluate it",
@@ -219,12 +147,24 @@ for slug, title, cat, summary, detail, why, source, label in CASES:
         "/work/" + slug + "/",
         title,
         summary,
-        intro("Founder experience · " + cat, title, summary)
+        f'<header class="wrap case-header">{tag(ed.WORK_CAPTIONS[slug])}<h1>{ed.WORK_TITLES[slug]}</h1><p>{summary}</p></header>'
+        + f'<div class="wrap exhibit">{ed.project_exhibit(slug)}</div>'
         + section(
-            "Inside the work",
-            f'<p class="lead">{detail}</p>' + buttons((source, label)),
+            ed.EXHIBIT_COPY[slug][0],
+            f'<div class="reading-copy"><p class="lead">{ed.EXHIBIT_COPY[slug][1]}</p><p>{detail}</p>'
+            + buttons((source, label))
+            + (
+                '<a class="subtle-link" href="https://cgsindustrialparks.org/">Visit the CGS dashboard ↗</a>'
+                if slug == "industrial-parks"
+                else ""
+            )
+            + "</div>",
         )
-        + section("What a buyer can take from it", f"<p>{why}</p>"),
+        + section(
+            "Relevance to a project",
+            f"<p>{why}</p>"
+            + a("/work/", "Browse the other project notes ↗", "text-action"),
+        ),
         "Work",
     )
 add(
@@ -234,9 +174,9 @@ add(
     intro(
         "Project evidence",
         "Selected work",
-        "Explore founder contributions in their original setting, with a public source for each project.",
+        "Maps, infrastructure and published research from Rishabh Sinha’s work before and alongside Ridgefolio. Each project links to the original record.",
     )
-    + section("Project notes", work_cards()),
+    + section("Project notes", ed.work_gallery(CASES), "catalogue"),
     "Work",
 )
 add(
@@ -245,10 +185,10 @@ add(
     "Try three public-service tasks using fictional records.",
     intro(
         "Demonstration studio",
-        "Try the software.",
+        "Try the software",
         "Use fictional records to explore service discovery, application review and reporting. Each example runs in your browser.",
     )
-    + section("Choose a demonstration", demo_cards()),
+    + section("Choose a demonstration", ed.demo_gallery(DEMOS), "catalogue"),
     "Demos",
 )
 add(
@@ -257,10 +197,30 @@ add(
     "Planning tools for buyers and delivery partners.",
     intro(
         "Buyer resources",
-        "Bring a better brief.",
+        "Buyer resources",
         "Prepare a scope, check launch readiness or take a capability statement into your next meeting.",
     )
-    + section("Planning tools", resource_cards()),
+    + '<div class="wrap library-shelf">'
+    + ed.library()
+    + "</div>"
+    + section(
+        "Plan a project",
+        ed.directory(
+            [
+                ("/resources/project-brief/", "Build a project brief", RESOURCES[2][2]),
+                (
+                    ed.EXAMPLE,
+                    "Read a completed brief",
+                    "A worked example for a permit review, with handover and acceptance criteria.",
+                ),
+                (
+                    "/resources/launch-checklist/",
+                    "Review launch readiness",
+                    RESOURCES[1][2],
+                ),
+            ]
+        ),
+    ),
     "Resources",
 )
 for slug, who, desc, items in [
@@ -307,14 +267,45 @@ for slug, who, desc, items in [
         "/for/" + slug + "/",
         who,
         desc,
-        intro("Who we work with", who, desc)
-        + section("Working together", rows(items))
-        + section(
-            "Plan the engagement",
-            buttons(
-                ("/resources/capabilities/", "Capability statement"),
-                ("/resources/project-brief/", "Build a project brief"),
+        '<header class="wrap audience-intro"><div>'
+        + tag("Working with Ridgefolio")
+        + f"<h1>{who}</h1><p>{desc}</p>"
+        + buttons(
+            (ed.PDF, "Download capability statement (PDF)"),
+            (
+                "/work/" if slug == "partners" else "/demos/",
+                "Review founder work"
+                if slug == "partners"
+                else "Explore working examples",
             ),
+        )
+        + "</div>"
+        + ed.audience_artifact(slug)
+        + "</header>"
+        + section(
+            "Planning a subcontract"
+            if slug == "partners"
+            else "Who to bring into the project",
+            rows(items),
+        )
+        + (
+            section(
+                "See the permit record",
+                "<p>Follow an application from the original request through the reviewer’s correction to the final receipt.</p>"
+                + buttons(
+                    ("/demos/permit-desk/", "Try the permit desk"),
+                    (ed.RECEIPT, "Read the example receipt"),
+                ),
+            )
+            if slug == "agencies"
+            else section(
+                "Scope a work package",
+                "<p>A prime can use the example brief to assign the implementation, specify what the customer will test and identify who is responsible after handover.</p>"
+                + buttons(
+                    (ed.EXAMPLE, "Read the example brief"),
+                    ("/pricing/", "Scope and pricing"),
+                ),
+            )
         ),
         "Practice",
     )
@@ -322,15 +313,7 @@ add(
     "/practice/",
     "The practice",
     "Meet Rishabh Sinha and see how Ridgefolio delivers software.",
-    intro(
-        "Ridgefolio LLC",
-        "The practice",
-        "Ridgefolio is an independent software engineering practice in California led by Rishabh Sinha.",
-    )
-    + section(
-        "Rishabh Sinha",
-        f'<div class="founder-signature"><img src="/assets/founder.jpg" alt="Rishabh Sinha" width="128" height="128"><div><p>Rishabh has contributed to open-source infrastructure, public research tools and AI evaluation. His work includes a map of Indonesian industrial parks and contributions to kvcached.</p>{a("https://rishabhsinha.dev/", arrow("Founder portfolio"))}</div></div>',
-    )
+    f"""<header class="wrap portrait-intro"><div>{tag("The practice")}<h1>Rishabh Sinha</h1><p>Rishabh runs Ridgefolio, an independent software engineering practice in California. His work ranges from a public map of Indonesian industrial parks to the software that manages memory for language models.</p><div class="actions">{a("/work/", arrow("Explore the work"), "button")}{a("https://rishabhsinha.dev/", arrow("Founder portfolio"), "field-link")}</div></div><figure><img src="/assets/editorial/founder.webp" alt="Rishabh Sinha" width="428" height="428"></figure></header>"""
     + section(
         "From first conversation to handover",
         rows(
@@ -361,11 +344,9 @@ add(
         "Start a conversation.",
         "Book a 30-minute introduction or email a public solicitation link and the work you have in mind.",
     )
-    + section(
-        "Contact Ridgefolio",
-        buttons((BOOK, "Book a call"), (EMAIL, "Email Rishabh"))
-        + f"<p>{a(EMAIL, 'rishabh@ridgefolio.com')}</p>",
-    )
+    + '<div class="wrap quick-actions">'
+    + buttons((BOOK, "Book a 30-minute call"), (EMAIL, "rishabh@ridgefolio.com"))
+    + "</div>"
     + section(
         "What to bring",
         rows(
@@ -394,9 +375,15 @@ add(
     "Prepare a software estimate with a defined scope, acceptance test and support period.",
     intro(
         "Procurement",
-        "Scope a project.",
+        "Scoping and pricing",
         "To prepare an estimate, we need the task, the systems it touches and your acceptance test. Choose the engagement that fits your buying process.",
     )
+    + '<div class="wrap quick-actions">'
+    + buttons(
+        (ed.estimate_link(EMAIL), "Request an estimate"),
+        (ed.EXAMPLE, "See a completed scope"),
+    )
+    + "</div>"
     + section(
         "Ways to buy the work",
         rows(
@@ -417,14 +404,9 @@ add(
         ),
     )
     + section(
-        "Request an estimate",
-        buttons(
-            (
-                EMAIL + "?subject=Project%20estimate%20inquiry",
-                "Request pricing by email",
-            ),
-            ("/resources/project-brief/", "Prepare a project brief"),
-        ),
+        "What goes in the estimate",
+        "<p>A permit review might include intake, staff review and a receipt. Connecting to an identity provider or migrating old permits adds a separate line of work. We identify the deliverable and acceptance test for each milestone, and list third-party fees and ongoing support separately.</p>"
+        + buttons(("/resources/project-brief/", "Prepare a project brief")),
     ),
     "Resources",
 )
@@ -435,6 +417,9 @@ capbody = (
         "Ridgefolio LLC",
         "Independent software engineering for public agencies and delivery partners.",
     )
+    + '<div class="wrap quick-actions">'
+    + buttons((ed.PDF, "Download the one-page PDF"))
+    + "</div>"
     + section("Core capabilities", rows([(s["title"], s["intro"]) for s in SERVICES]))
     + section(
         "Delivery and evidence",
@@ -446,15 +431,6 @@ capbody = (
         + "<p>California · Remote delivery · "
         + a(EMAIL, "rishabh@ridgefolio.com")
         + " · ridgefolio.com</p>",
-    )
-    + section(
-        "Take a copy",
-        buttons(
-            (
-                "/downloads/ridgefolio-capabilities.pdf",
-                "Download capability statement (PDF)",
-            )
-        ),
     )
 )
 add(cap, "Capability statement", RESOURCES[0][2], capbody, "Resources")
@@ -469,11 +445,11 @@ add(
     intro(
         "Field guide",
         "Website launch checklist",
-        "Check off each item as your team verifies it. Download your marked copy before closing the tab.",
+        "Check each item as your team verifies it. Your choices stay in this browser tab. Download a copy to keep or share.",
     )
     + section(
         "Launch review",
-        f'<div id="checklist">{checks}<p role="status" id="check-count">0 of {len(CHECKS)} checked</p><button data-download-checks>Download checklist</button></div>',
+        f'<div id="checklist">{checks}<p role="status" id="check-count">0 of {len(CHECKS)} checked</p><button data-download-checks>Download checklist</button> <button type="button" class="quiet" data-clear-checks>Clear checklist</button></div>',
     ),
     "Resources",
 )
@@ -502,7 +478,7 @@ add(
     )
     + section(
         "Project worksheet",
-        f'<form id="brief">{fields}<button>Download my brief</button><p id="brief-state" role="status"></p></form>',
+        f'<p class="worksheet-example"><a href="{ed.EXAMPLE}" download>Download a completed example</a></p><form id="brief">{fields}<button>Download my brief</button> <button type="reset" class="quiet">Clear brief</button><p id="brief-state" role="status"></p></form>',
     ),
     "Resources",
 )
@@ -526,6 +502,13 @@ for slug, title, desc, tone in DEMOS:
             + '"><p class="workspace-note">Fictional service data · Runs in this tab</p><noscript>Enable JavaScript to use the interactive workspace.</noscript>'
             + demo_body(slug)
             + "</div>",
+        )
+        + (
+            '<p class="wrap receipt-download">'
+            + a(ed.RECEIPT, "View a completed sample receipt")
+            + "</p>"
+            if slug == "permit-desk"
+            else ""
         )
         + section(
             "Explore the service",
@@ -556,7 +539,7 @@ add(
     )
     + section(
         "Find a page",
-        '<form action="/search/" id="search-form"><label for="query">Search pages</label><input name="q" id="query" type="search" placeholder="Try workflow, migration or brief"><button>Search</button></form><p id="results-count" role="status"></p><div id="site-results"></div>',
+        '<form action="/search/" id="search-form"><label for="query">Search pages</label><input name="q" id="query" type="search" placeholder="Try workflow, migration or brief"><button>Search</button></form><p id="results-count" role="status"></p><div id="site-results"></div><noscript><p>Browse <a href="/services/">services</a>, <a href="/work/">selected work</a> or <a href="/resources/">buyer resources</a>.</p></noscript>',
     ),
     "Search",
 )
@@ -568,11 +551,11 @@ def nav(path):
         ("/demos/", "Demos"),
         ("/work/", "Selected work"),
         ("/resources/", "Resources"),
-        ("/practice/", "Practice"),
+        ("/pricing/", "Pricing"),
         ("/search/", "Search"),
     ]
     items = "".join(
-        f'<a href="{("#work" if u == "/work/" and path == "/" else u)}"'
+        f'<a href="{u}"'
         + (' aria-current="page"' if path == u else "")
         + ">"
         + t
@@ -594,6 +577,7 @@ foot = (
     + a("/", logo, "brand")
     + "<p>Independent software engineering<br>California</p></div><div><strong>Explore</strong>"
     + a("/services/", "Services")
+    + a("/practice/", "The practice")
     + a("/demos/", "Demos")
     + a("/work/", "Selected projects")
     + "</div><div><strong>For buyers</strong>"
@@ -647,9 +631,20 @@ for path, (title, desc, body, group) in pages.items():
         '<script src="/assets/civic.js" defer></script><script src="/assets/site.js" defer></script>'
         + ('<script src="/assets/ridge.js" defer></script>' if path == "/" else "")
     )
+    is_task = (
+        path.startswith("/demos/")
+        and path != "/demos/"
+        or path
+        in ("/search/", "/resources/launch-checklist/", "/resources/project-brief/")
+    )
+    ending = "" if is_task or path in ("/contact/", cap, "/pricing/") else contact
+    body_class = (
+        "task-page" if is_task else "document-page" if path == cap else "site-page"
+    )
+    social_image, social_alt = ed.social_image(path)
     out.write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}/assets/ridge-preview.jpg"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{scripts}</head>
-<body><a class="skip" href="#main">Skip to content</a>{nav(path)}<main id="main">{crumb}{body}{contact}</main>{foot}</body></html>''')
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{scripts}</head>
+<body class="{body_class}"><a class="skip" href="#main">Skip to content</a>{nav(path)}<main id="main">{crumb}{body}{ending}</main>{foot}</body></html>''')
 (PUBLIC / "assets/search.json").write_text(json.dumps(index, ensure_ascii=False))
 (PUBLIC / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'

@@ -65,13 +65,21 @@ test("search, prepare a brief and download a marked checklist", async ({
   await page
     .getByLabel("Acceptance", { exact: true })
     .fill("Find the branch hours on mobile");
+  await page.reload();
   expect(await downloadedText(page, "Download my brief")).toContain(
     "Find the branch hours on mobile",
   );
+  await page.getByRole("button", { name: "Clear brief" }).click();
+  await page.reload();
+  await expect(page.getByLabel("Project name")).toHaveValue("");
   await page.goto("/resources/launch-checklist/");
   await page.getByRole("checkbox").first().check();
   await expect(page.getByRole("status")).toHaveText("1 of 6 checked");
+  await page.reload();
   const file = await downloadedText(page, "Download checklist");
   expect(file).toContain("[x] Content and redirects");
   expect(file).toContain("[ ] Resident tasks");
+  await page.getByRole("button", { name: "Clear checklist" }).click();
+  await page.reload();
+  await expect(page.getByRole("status")).toHaveText("0 of 6 checked");
 });

@@ -33,6 +33,11 @@ function renderSearch() {
           .toLowerCase()
           .split(/\s+/)
           .filter(Boolean);
+        if (!terms.length) {
+          results.replaceChildren();
+          status.textContent = "";
+          return;
+        }
         const matches = pages
           .map((page) => {
             const title = page.title.toLowerCase(),
@@ -321,8 +326,44 @@ if (byId("query")) renderSearch();
 if (byId("service-query")) renderFinder();
 if (byId("desk-step")) permitDesk();
 if (byId("district")) ledger();
-if (byId("brief"))
-  byId("brief").addEventListener("submit", (event) => {
+// These planning tools keep drafts in the current tab, including across refreshes.
+function tabDraft(key) {
+  return {
+    load() {
+      try {
+        return JSON.parse(sessionStorage.getItem(key));
+      } catch {
+        return null;
+      }
+    },
+    save(value) {
+      try {
+        if (value === null) sessionStorage.removeItem(key);
+        else sessionStorage.setItem(key, JSON.stringify(value));
+      } catch {
+        // A browser can disable storage. The form and its download still work.
+      }
+    },
+  };
+}
+if (byId("brief")) {
+  const form = byId("brief");
+  const draft = tabDraft("ridgefolio.project-brief.v1");
+  const restored = draft.load();
+  for (const field of form.querySelectorAll("textarea")) {
+    if (typeof restored?.[field.name] === "string") {
+      field.value = restored[field.name].slice(0, field.maxLength);
+    }
+  }
+  form.addEventListener("input", () => {
+    draft.save(Object.fromEntries(new FormData(form)));
+    byId("brief-state").textContent = "";
+  });
+  form.addEventListener("reset", () => {
+    draft.save(null);
+    byId("brief-state").textContent = "Brief cleared.";
+  });
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
     const fields = [...new FormData(event.target)].map(
       ([label, value]) => label + "\n" + (value.trim() || "To be determined"),
@@ -333,14 +374,30 @@ if (byId("brief"))
     );
     byId("brief-state").textContent = "Your brief is ready to download.";
   });
+}
 if (byId("checklist")) {
   const boxes = [...byId("checklist").querySelectorAll("input")];
-  byId("checklist").addEventListener("change", () => {
+  const draft = tabDraft("ridgefolio.launch-checklist.v1");
+  const restored = draft.load();
+  if (Array.isArray(restored)) {
+    boxes.forEach((box, i) => { box.checked = restored[i] === true; });
+  }
+  function updateCount() {
     byId("check-count").textContent =
       boxes.filter((b) => b.checked).length +
       " of " +
       boxes.length +
       " checked";
+  }
+  updateCount();
+  byId("checklist").addEventListener("change", () => {
+    draft.save(boxes.map((box) => box.checked));
+    updateCount();
+  });
+  document.querySelector("[data-clear-checks]").addEventListener("click", () => {
+    boxes.forEach((box) => { box.checked = false; });
+    draft.save(null);
+    updateCount();
   });
   document
     .querySelector("[data-download-checks]")
