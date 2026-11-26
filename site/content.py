@@ -126,7 +126,7 @@ CASES = [
         "Industrial parks in Indonesia",
         "Research dashboard",
         "At the University of Maryland’s Center for Global Sustainability, Rishabh contributed to a public dashboard for exploring Indonesian industrial parks.",
-        "The ArcGIS map uses CSV and GeoJSON data. Separate pages explain the methodology and offer the dataset for download. Visitors can explore park status, energy sources and other layers.",
+        "The Leaflet map uses CSV and GeoJSON data. Separate pages explain the methodology and offer the dataset for download. Visitors can explore park status, energy sources and other layers.",
         "For a public data project, the methodology and underlying records are as important as the map. A reviewer can follow a park from its map marker back to a source record.",
         "https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard",
         "Read the project repository",
