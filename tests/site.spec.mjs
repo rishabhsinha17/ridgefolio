@@ -90,6 +90,9 @@ test('mobile navigation, keyboard dismissal and contact destinations', async ({ 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.keyboard.press('Escape');
   await expect(page.locator('header[data-ref-header] .link-btn a')).toBeFocused();
+  // Some browsers finish the breakpoint change after the sheet closes.
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await expect(contact).toBeFocused();
   await page.goto('/contact/');
   await expect(page.locator('a[href="mailto:rishabh@ridgefolio.com"]').first()).toHaveAttribute('href','mailto:rishabh@ridgefolio.com');
   await expect(page.locator('#contact-hero address').getByRole('link', {name:'Book a 30-minute call'})).toHaveAttribute('href','https://cal.com/ridgefolio/intro');

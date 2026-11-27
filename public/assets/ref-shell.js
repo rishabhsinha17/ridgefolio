@@ -14,6 +14,9 @@
   const name = sheet?.querySelector('#name');
   let menuOpener;
   let contactOpener;
+  const desktopContact = header.querySelector('a.open-contact-form');
+  const phoneContact = header.querySelector('.link-btn a');
+  let headerContactHadFocus = false;
   let dockDismissed = false;
   const scrollContact = sheet && !document.getElementById('workspace');
 
@@ -61,10 +64,23 @@
   buttonKeys(phoneToggle);
   buttonKeys(menuClose);
   menuClose.addEventListener('click', () => setMenu(false, true));
+  function focusVisibleContact() {
+    const link = mobile.matches ? phoneContact : desktopContact;
+    link?.focus({preventScroll: true});
+  }
+  function restoreHeaderContactAfterLayout() {
+    const active = document.activeElement;
+    if (headerContactHadFocus && (active === document.body || active === desktopContact || active === phoneContact)) {
+      focusVisibleContact();
+    }
+  }
   mobile.addEventListener('change', () => {
     if (root.classList.contains('ref-menu-open')) setMenu(false, true);
+    // WebKit may commit its new viewport after the Escape key has closed the panel.
+    requestAnimationFrame(restoreHeaderContactAfterLayout);
   });
   document.addEventListener('focusin', (event) => {
+    headerContactHadFocus = event.target === phoneContact || event.target === desktopContact;
     if (root.classList.contains('ref-menu-open') && !header.contains(event.target)) setMenu(false);
   });
 
@@ -104,9 +120,13 @@
     for (const element of inertElements) element.inert = false;
     inertElements = [];
     if (wasModal || sheet.contains(document.activeElement)) {
-      const returnTo = contactOpener?.getClientRects().length ? contactOpener
-        : header.querySelector(mobile.matches ? '.link-btn a' : '.open-contact-form');
-      returnTo.focus({preventScroll: true});
+      if (contactOpener !== desktopContact && contactOpener !== phoneContact && contactOpener?.getClientRects().length) {
+        contactOpener.focus({preventScroll: true});
+      } else {
+        headerContactHadFocus = true;
+        focusVisibleContact();
+        requestAnimationFrame(restoreHeaderContactAfterLayout);
+      }
     }
     contactOpener = null;
   }
