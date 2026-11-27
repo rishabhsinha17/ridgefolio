@@ -81,3 +81,32 @@ test('article templates keep just one pinned arrow above the scrolled page', asy
     }
   }
 });
+
+test('public-service records orbit in depth, pause, and stay still for reduced motion', async ({page}) => {
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.goto('/#apps');
+  const wheel = page.locator('.app-wheel');
+  await wheel.scrollIntoViewIfNeeded();
+  await expect(wheel).toHaveAttribute('data-orbit-running', '');
+  const toggle = wheel.getByRole('button', {name:'Pause app previews'});
+  await toggle.press('Enter');
+  await expect(wheel).not.toHaveAttribute('data-orbit-running', '');
+  const poses = await wheel.evaluate(el => {
+    const image = el.querySelector('.wheel-finder img');
+    const box = time => {
+      el.getAnimations({subtree:true}).forEach(animation => { animation.currentTime = time; });
+      const r = image.getBoundingClientRect();
+      return {x:r.x, size:r.width};
+    };
+    return [box(0), box(7000), box(14000), box(28000)];
+  });
+  expect(Math.abs(poses[0].x - poses[1].x)).toBeGreaterThan(35);
+  expect(poses[0].size / poses[2].size).toBeGreaterThan(1.15);
+  expect(Math.abs(poses[0].x - poses[3].x)).toBeLessThan(1);
+  await wheel.getByRole('button', {name:'Play app previews'}).press('Space');
+  await expect(wheel).toHaveAttribute('data-orbit-running', '');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await expect(wheel.getByRole('button')).toHaveCount(0);
+  expect(await wheel.evaluate(el=>el.getAnimations({subtree:true}).length)).toBe(0);
+  await expect(wheel.locator('img')).toHaveCount(3);
+});

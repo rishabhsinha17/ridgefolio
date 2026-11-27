@@ -24,12 +24,12 @@ HERO_SCREENS = (
 )
 
 PROJECTS = (
-    ("/work/industrial-parks/", "Indonesia’s industrial parks", "University of Maryland · Founder project", "home-evidence/sulawesi.webp"),
-    ("/demos/permit-desk/", "Permit desk", "Working demonstration", "interior-art/public-market-2560.webp"),
-    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "project-evidence/monitor-confidence-preview.svg"),
-    ("/demos/service-ledger/", "Service ledger", "Working demonstration", "home-evidence/service-ledger.webp"),
-    ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", "interior-art/review-changes-2560.webp"),
-    ("/demos/finder/", "Service finder", "Working demonstration", "interior-art/kiosk-2560.webp"),
+    ("/work/industrial-parks/", "Indonesia’s industrial parks", "University of Maryland · Founder project", "atlas"),
+    ("/demos/permit-desk/", "Permit desk", "Working demonstration", "permit"),
+    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "evaluation"),
+    ("/demos/service-ledger/", "Service ledger", "Working demonstration", "ledger"),
+    ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", "release"),
+    ("/demos/finder/", "Service finder", "Working demonstration", "finder"),
 )
 
 RESOURCES = (
@@ -99,24 +99,34 @@ def statement(section_id, text, anchor):
 
 
 def apps():
+    records = "".join(
+        f'<span class="wheel-arm wheel-{slug}"><img class="wheel-print" src="/assets/home-projects/wheel-{slug}-960.webp" '
+        f'srcset="/assets/home-projects/wheel-{slug}-480.webp 480w, /assets/home-projects/wheel-{slug}-960.webp 960w, '
+        f'/assets/home-projects/wheel-{slug}-1280.webp 1280w" sizes="(max-width:991px) min(50vw, 320px), min(28vw, 410px)" '
+        f'width="960" height="522" alt="" loading="eager"></span>'
+        for slug in ("finder", "permit", "ledger")
+    )
     return f'''<section id="apps"><div class="container"><div class="row">
       <div class="col-md-4 v-align">{placeholder()}<h3 class="h1">Web applications<br><span class="text-muted">for public services.</span></h3>
         <p class="lead"><span>Find a service, review a permit or filter a workload report. Try each task with sample records.</span></p>
         <p>{action("/demos/", "Try the apps")}{action("/work/", "Our work")}</p></div>
-      <div class="col-md-7 col-md-offset-1 rotating-apps equal padding-tb-150" aria-hidden="true"><div class="rotaing">
-        <div class="one"></div><div class="two"></div><div class="three"></div>
-      </div></div></div></div></section>'''
+      <div class="col-md-7 col-md-offset-1 rotating-apps"><div class="app-wheel">
+        <div class="wheel-paths" aria-hidden="true"></div><div class="wheel-scene" aria-hidden="true">{records}</div>
+        <button type="button" class="wheel-play" aria-label="Pause app previews" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path class="pause" d="M8 5v14m8-14v14"/><path class="play" d="m8 5 10 7-10 7z"/></svg>
+        </button></div></div></div></div></section>'''
 
 
 def projects():
     cards = []
     for url, title, credit, asset in PROJECTS:
-        if asset.startswith("interior-art/") and asset.endswith("-2560.webp"):
-            base = "/assets/" + asset.removesuffix("-2560.webp")
-            image = f"image-set(url({base}-960.webp) 1x, url({base}-1536.webp) 2x, url({base}-2560.webp) 3x)"
+        if asset == "evaluation":
+            source = 'src="/assets/project-evidence/monitor-strata-compact.svg"'
         else:
-            image = f"url(/assets/{asset})"
-        art = f'<div class="project-image" style="--project-image:{image}"></div>'
+            path = f"/assets/home-projects/cover-{asset}-"
+            source = (f'src="{path}640.webp" srcset="{path}640.webp 640w, {path}960.webp 960w, {path}1440.webp 1440w" '
+                      'sizes="(max-width:767px) calc((100vw - 30px) / 2), calc((100vw - 90px) / 4)"')
+        art = f'<img class="project-image" {source} alt="" width="360" height="432" loading="eager">'
         cards.append(f'''<div class="item"><div class="simple-project"><a href="{url}">
           <div class="img-wrap">{art}</div><p class="h3">{escape(title)}<small>{escape(credit)}</small></p></a></div></div>''')
     return f'''<section id="our-work-header" class="padding-t-150-b-50"><div class="container" id="work"><div class="row">

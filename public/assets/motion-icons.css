@@ -54,12 +54,12 @@
     transition-property:left,top,width,height,transform,opacity;
     transition-duration:1s; transition-timing-function:cubic-bezier(.86,0,.07,1);
   }
-  .rv-home #apps .rotaing > div, .rv-interior #apps .rotaing > div {
+  .rv-interior #apps .rotaing > div {
     animation: rf-orbit 67s cubic-bezier(.35,0,.35,1) infinite; animation-play-state:paused;
   }
-  .rv-home #apps .rotaing > .two, .rv-interior #apps .rotaing > .two {animation-duration:50s}
-  .rv-home #apps .rotaing > .three, .rv-interior #apps .rotaing > .three {animation-duration:70s;--orbit-angle:-19deg}
-  .rv-home #apps .rotaing[data-orbit-running] > div,.rv-interior #apps .rotaing[data-orbit-running] > div {animation-play-state:running}
+  .rv-interior #apps .rotaing > .two {animation-duration:50s}
+  .rv-interior #apps .rotaing > .three {animation-duration:70s;--orbit-angle:-19deg}
+  .rv-interior #apps .rotaing[data-orbit-running] > div {animation-play-state:running}
   @keyframes rf-orbit {0%,100% {rotate:0deg} 50% {rotate:var(--orbit-angle,21deg)}}
   .ref-menu-open [data-ref-header] .mega-drop {animation:rf-menu-in .26s ease-out}
   @keyframes rf-menu-in {from {opacity:0;clip-path:inset(0 0 18%)} to {opacity:1;clip-path:inset(0)}}
@@ -68,7 +68,7 @@
 }
 @media (prefers-reduced-motion:reduce) {
   #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a {transition:none}
-  .rv-home #apps .rotaing > div,.rv-interior #apps .rotaing > div {animation:none}
+  .rv-interior #apps .rotaing > div {animation:none}
 }
 @media print {#down-arrow-sticky-wrapper {display:none!important}}
 .rv-home .owl-carousel.owl-loaded {position:relative}

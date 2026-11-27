@@ -81,13 +81,27 @@
   }
 
   // Artwork is visible immediately. Pause continuous decoration off screen.
-  const orbit = document.querySelector('.rotaing');
+  const orbit = document.querySelector('.app-wheel, .rotaing');
   const planes = document.querySelector('#home-hero .animatable');
   if (window.IntersectionObserver && (orbit || planes)) {
     const visible = new Set();
+    const toggle = orbit?.querySelector('.wheel-play');
+    let userPaused = false;
+    if (toggle) {
+      orbit.setAttribute('data-wheel-ready', '');
+      toggle.addEventListener('click', () => {
+        userPaused = !userPaused;
+        updateMotion();
+      });
+    }
     function updateMotion() {
       const running = !document.hidden && !reduced.matches;
-      orbit?.toggleAttribute('data-orbit-running', running && visible.has(orbit));
+      orbit?.toggleAttribute('data-orbit-running', running && visible.has(orbit) && !userPaused);
+      if (toggle) {
+        toggle.hidden = reduced.matches;
+        toggle.toggleAttribute('data-paused', userPaused);
+        toggle.setAttribute('aria-label', userPaused ? 'Play app previews' : 'Pause app previews');
+      }
       planes?.toggleAttribute('data-fly-running', running && visible.has(planes));
     }
     const observer = new IntersectionObserver(entries => {

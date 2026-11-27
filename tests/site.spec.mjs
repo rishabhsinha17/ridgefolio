@@ -166,9 +166,10 @@ const sourceSections = {
   "header": "43a4aa1d13f7a819e4b7d9c16984ea0699ea5452fdddb8a2646af09e60ebba97",
   "home-hero": "dbdc849d8b9db268a15b663792f99cf615cf5bcbe6a9b3fb74f49ba97041fef8",
   "welcome-header": "7791812b80256dd64daaa51f5b5ba3825ae63063bf1500d32813416e07fdac96",
-  "apps": "3b90ca171231c4522156b377c05057238432cffd25ba3af1acb8ef7d85c2069e",
+  // The public-service orbit contains three eager record images and a pause button.
+  "apps": "598554d2f929b3a482aa55bf5cbe9c115bc5ab494ca249dbc61f653856efa7d1",
   "our-work-header": "ea5dc3188f850fb36bcba003f4401ea678ae7fd2672a838f9e4fa398c1dc626b",
-  "featured-projects": "e9d970f33fdf2ca22d4356c9896a667eceb269bc84acf5dfe66882b874b058f6",
+  "featured-projects": "930a0203a623ba6ad27dd6be2b56e9157dc3a28ab06ebb0996e52e5befbf5441",
   "responsive": "ed7882f181d700ea80c09d621c75f51368bd6ace0b1519e92a81765e1c5f2c57",
   "testimonials-header": "cc3fc5f6b2e7561b0f0c61cf2a70a3410871ab6f845b9e41539d1e2eaebdd576",
   "quotes": "349a5720e0b328ea1d7a6ac27e0682ce87c4a248bdc9ef2ff826d3e2e074558b",
@@ -200,7 +201,7 @@ test('homepage templates retain the source hierarchy before enhancement', async 
   await expect(page.locator('#quotes .owl-item')).toHaveCount(23);
   const enhanced = {
     "home-hero": "fe14dba3cbd8945e285fa22832dacf872765e4d783d4fd8bb1a275c83bbd50df",
-    "featured-projects": "496677e2e35ae10d178924b62db062db0b19186a2eec58d37450f62b47d432c0",
+    "featured-projects": "23af0fbfafb18a2018a8de16dfb79750b05f04a22a87025cb39ae7ba739a7ad9",
     "quotes": "5695ccdb72ec1a272577c2c89573e0f03a35b467403f69a2d22fcd9d24c7bbd8"
 };
   const liveTrees = await page.evaluate(ids => {

@@ -91,29 +91,8 @@
 .rv-home .header-block h2 {font-size:clamp(33px,3.38vw,55px);line-height:1.16;max-width:38ch;margin-inline:auto}
 :where(.rv-home) #welcome-header {border-top:1px solid var(--rv-line)}
 
-/* Three independently rotating layers keep the circular composition open,
-   with each screen drawn from a live Ridgefolio demo or case study. */
-:where(.rv-home) #apps {background:var(--rv-tint);overflow:hidden}
-:where(.rv-home) #apps .row {min-height:clamp(560px,54vw,880px)}
+:where(.rv-home) #apps {position:relative;background:var(--rv-tint);overflow:hidden}
 :where(.rv-home) #apps .v-align {z-index:2}
-:where(.rv-home) #apps .rotating-apps {padding:0}
-:where(.rv-home) #apps .rotaing {position:relative;width:clamp(700px,67vw,949px);aspect-ratio:1;margin-block:-4%}
-:where(.rv-home) #apps .rotaing>div {position:absolute;border-radius:50%;border:1px solid #6c80694a}
-:where(.rv-home) #apps .one {inset:23%;z-index:3;box-shadow:0 0 0 1.4vw #b8c4ae12}
-:where(.rv-home) #apps .two {inset:10%;z-index:2;border-style:dashed!important}
-:where(.rv-home) #apps .three {inset:0;z-index:1}
-:where(.rv-home) #apps .rotaing>div::before,:where(.rv-home) #apps .rotaing>div::after {content:"";position:absolute;width:clamp(110px,13vw,188px);aspect-ratio:1.4;background:center/cover #f9f8f0;border:5px solid var(--rv-paper);box-shadow:0 13px 25px -12px #1c3a225e}
-:where(.rv-home) #apps .one::before {left:-7%;top:26%;background-image:url("/assets/article-evidence/permit-desk-960.webp")!important;transform:rotate(-9deg)}
-:where(.rv-home) #apps .one::after {right:-10%;bottom:22%;background-image:url("/assets/project-evidence/parks-editorial.svg")!important;transform:rotate(8deg)}
-:where(.rv-home) #apps .two::before {top:-5%;left:35%;background-image:url("/assets/article-evidence/finder-960.webp")!important;transform:rotate(5deg)}
-:where(.rv-home) #apps .two::after {bottom:-4%;left:33%;background-image:url("/assets/article-evidence/service-ledger-960.webp")!important;transform:rotate(-4deg)}
-:where(.rv-home) #apps .three::before {left:-6%;bottom:17%;background-image:url("/assets/project-evidence/monitor-confidence-preview.svg")!important;transform:rotate(8deg)}
-:where(.rv-home) #apps .three::after {right:0;top:7%;background-image:url("/assets/project-evidence/parks-atlas.svg")!important;transform:rotate(-6deg)}
-@media (prefers-reduced-motion:no-preference) {
-  :where(.rv-home) #apps .one,:where(.rv-home) #apps .three {animation:home-orbit-in 4.6s ease-out both}
-  :where(.rv-home) #apps .two {animation:home-orbit-in 4s ease-out reverse}
-  @keyframes home-orbit-in {from {transform:rotate(-9deg)} to {transform:rotate(0)}}
-}
 
 :where(.rv-home) #our-work-header .lead {max-width:55ch;margin-bottom:0}
 :where(.rv-home) #featured-projects {padding-bottom:var(--space);overflow:hidden}
@@ -193,8 +172,6 @@
   .rv-home .header-block h2 {font-size:clamp(28px,5.6vw,42px)}
   :where(.rv-home) #apps .row {min-height:0;padding-top:var(--space)}
   :where(.rv-home) #apps .lead,:where(.rv-home) #responsive .lead {margin:15px 0 21px}
-  :where(.rv-home) #apps .rotaing {width:min(580px,107vw);margin:26px auto -21%;left:0;transform:translateX(4%)}
-  :where(.rv-home) #apps .rotaing>div::before,:where(.rv-home) #apps .rotaing>div::after {width:clamp(76px,23vw,130px);border-width:3px}
   .rv-home .project-carousel {grid-auto-columns:clamp(220px,73vw,370px)}
   :where(.rv-home) .simple-project .project-image {aspect-ratio:1/.99}
   :where(.rv-home) #responsive .responsive-shots {margin-top:35px;padding:0 4% 10% 12%}
@@ -240,8 +217,6 @@
 .rv-home .header-block h2 {font-size:clamp(26px,2.1vw,33px);line-height:1.35;max-width:100%;margin-bottom:30px}
 .rv-home #welcome-header {min-height:474px;display:grid;align-items:center}
 .rv-home #apps .row {min-height:0}
-.rv-home #apps .rotating-apps {padding-block:150px}
-.rv-home #apps .rotaing {width:949px;height:949px;margin:0;background:url('/assets/interior-orbit.svg') center/contain no-repeat}
 .rv-home #responsive .responsive-shots {padding:0}
 .rv-home #responsive .shot1 {display:block;width:200%;max-width:1300px;height:auto;border:0;border-radius:0;box-shadow:none}
 .rv-home #responsive .shot2 {width:min(62%,400px);left:-20px;top:0;bottom:auto}
@@ -288,8 +263,6 @@
   .rv-home #home-hero .row {padding-bottom:0}
   .rv-home #apps {padding:100px 0}
   .rv-home #apps .row {padding-top:0}
-  .rv-home #apps .rotaing {width:100%;height:clamp(115px,43vw,230px);margin:0;left:0;transform:none;background-size:100% auto;background-position:50% 0}
-  .rv-home #apps .rotaing>div {display:none}
   .rv-home #apps .lead {margin-bottom:24px}
   .rv-home #responsive .col-md-5>.sticky-element {position:static}
   .rv-home #responsive .responsive-shots {margin-top:32px;padding:0}
@@ -326,9 +299,6 @@
    Half of each neighboring card remains in view around the selected one. */
 .rv-home .project-carousel .owl-item {scroll-snap-align:center}
 .rv-home .project-carousel .h3 {font-size:clamp(16px,1.6vw,24px);line-height:1.18}
-.rv-home #featured-projects .project-image {background-position:top center}
-.rv-home #featured-projects a[href="/work/industrial-parks/"] .project-image {background-position:center}
-.rv-home #featured-projects a[href="/work/open-source/"] .project-image {background-position:top left}
 .rv-home #blog-list :is(h3,h4), .rv-home #our-work-header h3, .rv-home #responsive h3 {font-size:clamp(25px,3.34vw,48px);line-height:1.2}
 .rv-home #blog-list .blog-list-item h4 {font-size:clamp(24px,2.5vw,36px);margin:30px 0 14px}
 .rv-home #blog-list .blog-list-item p {font-size:16px;line-height:1.8}
@@ -364,7 +334,6 @@
   .rv-home :is(#welcome-header,#testimonials-header) h2 {font-size:clamp(30px,4.55vw,40px)}
   .rv-home :is(#responsive,#our-work-header,#blog-list) h3 {font-size:clamp(36px,4.94vw,45px)}
   .rv-home #apps {padding-block:100px}
-  .rv-home #apps .rotaing {width:calc(100% + 40px);height:900px;margin-left:-20px}
   .rv-home #our-work-header {padding-bottom:50px}
   .rv-home :is(#our-work-header,#blog-list) .pull-right {text-align:left;margin-top:25px}
   .rv-home #responsive .col-md-5>.sticky-element {position:static}
@@ -396,36 +365,6 @@
   .rv-home #blog-list a[href="/resources/project-brief/"] .blog-image {aspect-ratio:3/2}
 }
 
-/* Field photographs alternate with product evidence around three concentric
-   tracks. Every crop is local so the artwork survives restrictive clients. */
-.rv-home #apps .rotaing {background-image:none}
-.rv-home #apps .rotaing>div::before,.rv-home #apps .rotaing>div::after {
-  border-radius:50%;border:0;aspect-ratio:1;box-shadow:0 0 0 2px var(--rv-tint);
-}
-.rv-home #apps .rotaing .one::before {background-image:url("/assets/home-evidence/field-map-test-900.webp")!important;background-position:40% 44%}
-.rv-home #apps .rotaing .one::after {background-image:url("/assets/cgs-atlas/morowali-960.webp")!important;background-position:60% 57%}
-.rv-home #apps .rotaing .two::before {background-image:url("/assets/home-evidence/planning-workshop-1000.webp")!important;background-position:51% 42%}
-.rv-home #apps .rotaing .two::after {background-image:url("/assets/home-evidence/research-priorities.webp")!important;background-position:50% 40%}
-.rv-home #apps .rotaing .three::before {background-image:url("/assets/article-evidence/service-ledger-960.webp")!important;background-position:32% 40%}
-.rv-home #apps .rotaing .three::after {background-image:url("/assets/home-evidence/design-method-cards.webp")!important;background-position:52% 50%}
-@media (max-width:767px) {
-  .rv-home #apps .rotaing {height:clamp(140px,46vw,260px);overflow:hidden;margin-top:12px}
-  .rv-home #apps .rotaing>div {display:block;inset:0;border:0!important;box-shadow:none;background:none}
-  .rv-home #apps .rotaing>div::before,.rv-home #apps .rotaing>div::after {inset:auto;width:22%;transform:none}
-  .rv-home #apps .rotaing .one::before {top:28%;left:1%}
-  .rv-home #apps .rotaing .one::after {width:27%;top:46%;right:9%}
-  .rv-home #apps .rotaing .two::before {width:16%;top:5%;left:27%}
-  .rv-home #apps .rotaing .two::after {width:12%;top:52%;left:43%}
-  .rv-home #apps .rotaing .three::before {width:13%;top:79%;left:25%}
-  .rv-home #apps .rotaing .three::after {width:19%;top:0;right:4%}
-}
-
-.rv-home #featured-projects a[href="/demos/permit-desk/"] .project-image {background-position:62% 44%}
-.rv-home #featured-projects a[href="/demos/finder/"] .project-image {background-position:50% 48%}
-.rv-home #featured-projects a[href="/work/open-source/"] .project-image {background-position:38% 50%}
-.rv-home #featured-projects a[href="/work/evaluation/"] .project-image {
-  background-color:#fff;background-size:contain;background-repeat:no-repeat;background-position:50% 50%;
-}
 .rv-home #blog-list a[href="/pricing/"] .blog-image {background-position:59% 50%}
 @media (max-width:991px) {
   .rv-home #blog-list a[href="/pricing/"] .blog-image {aspect-ratio:3/2}
@@ -446,12 +385,6 @@
   .rv-home #home-hero .perspective-section {top:150px}
 }
 
-.rv-home .simple-project .project-image {background-image:var(--project-image)}
-@media (min-width:1921px) and (min-resolution:1.5dppx) {
-  .rv-home #featured-projects a[href="/work/open-source/"] .project-image {
-    background-image:url("/assets/interior-art/review-changes-3840.webp");
-  }
-}
 
 @media screen and (min-width:992px) {
   /* Leave space for the fixed return shortcut on the left; keep the content grid centered. */
@@ -459,3 +392,57 @@
     width:calc(100% - 76px);
   }
 }
+
+/* A perspective stage with counter-rotated faces: every record stays readable
+   as its distance and viewing angle change. The nested arms share one clock. */
+.rv-home #apps .rotating-apps {padding-block:clamp(45px,7vw,105px)}
+.app-wheel {position:relative;width:100%;max-width:850px;container-type:inline-size;margin-inline:auto}
+.wheel-paths,.wheel-scene {--radius:26cqw;--card-width:38.5cqw;perspective:128cqw;pointer-events:none}
+.wheel-scene {position:relative;z-index:1;width:100%;aspect-ratio:1.3;transform-style:preserve-3d}
+.wheel-paths {position:absolute;inset:0 0 auto;aspect-ratio:1.3}
+@property --service-turn {syntax:"<angle>";inherits:false;initial-value:0deg}
+.wheel-paths::before,.wheel-paths::after {
+  content:"";position:absolute;left:50%;top:50%;width:calc(2 * var(--radius));aspect-ratio:1;
+  border:1.5px solid #839984;border-radius:50%;
+  transform:translate(-50%,-50%) rotateZ(-12deg) rotateX(52deg);
+}
+.wheel-paths::after {width:calc(2 * var(--radius) - 3.5cqw);border:1px dashed #a6b5a2}
+.wheel-arm {
+  position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;
+  --start:83deg;--phase:calc(var(--start) + var(--service-turn,0deg));
+  transform:rotateZ(-12deg) rotateX(52deg) rotateZ(var(--phase)) translateX(var(--radius))
+    rotateZ(calc(-1 * var(--phase))) rotateX(-52deg) rotateZ(12deg);
+}
+.wheel-permit {--start:203deg;--bank:-5deg;--yaw:9deg}
+.wheel-ledger {--start:323deg;--bank:4deg;--yaw:-9deg}
+.wheel-finder {--bank:-2deg;--yaw:-4deg}
+.wheel-print {position:absolute;top:0;left:0;display:block;width:var(--card-width);max-width:none;height:auto;border-radius:3px;
+  box-shadow:0 1px 1px #28533b50,0 4px 0 -2px #aeb7a4,0 10px 19px -8px #263e375e;
+  transform:translate(-50%,-50%) rotateY(var(--yaw)) rotateZ(var(--bank))}
+.wheel-play {z-index:2;position:absolute;bottom:0;right:0;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #97a79a;
+  background:transparent;border-radius:50%;cursor:pointer;color:var(--rv-ink)}
+.wheel-play:is(:hover,:focus-visible) {background:var(--rv-paper);border-color:currentColor}
+.wheel-play svg {fill:none;stroke:currentColor;stroke-width:1.7}
+.wheel-play .play,.wheel-play[data-paused] .pause,.wheel-play[hidden] {display:none}
+.wheel-play[data-paused] .play {display:block}
+/* Animate the angle itself. WebKit can collapse a compound 360-degree
+   transform and its inverse to two identical matrices. */
+@keyframes service-orbit {from {--service-turn:0deg} to {--service-turn:360deg}}
+@keyframes service-bank {
+  50% {transform:translate(-50%,-50%) rotateY(calc(-1 * var(--yaw))) rotateZ(calc(-1 * var(--bank)))}
+}
+@media (prefers-reduced-motion:no-preference) {
+  .app-wheel[data-wheel-ready] .wheel-arm {animation:service-orbit 28s linear infinite paused}
+  .app-wheel[data-wheel-ready] .wheel-print {animation:service-bank 28s ease-in-out infinite paused}
+  .app-wheel[data-orbit-running] :is(.wheel-arm,.wheel-print) {animation-play-state:running}
+}
+@media (prefers-reduced-motion:reduce) {.wheel-play {display:none}}
+@media (max-width:991px) {
+  .rv-home #apps .rotating-apps {padding:0}
+  .app-wheel {max-width:640px;margin:24px auto 0}
+}
+@media (max-width:767px) {
+  .app-wheel {width:calc(100% + 20px);margin:18px -10px 0;padding-bottom:44px}
+}
+.rv-home #featured-projects .project-image {display:block;width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;background:#faf9f3}
+.rv-home #featured-projects a[href="/work/evaluation/"] .project-image {object-fit:contain}
