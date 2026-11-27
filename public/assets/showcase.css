@@ -61,6 +61,43 @@
 :where(.rv-home) #down-arrow a:hover {color:var(--rv-accent)}
 :where(.rv-home) #home-hero .perspective-section {height:500px;position:relative;top:90px}
 :where(.rv-home) #home-hero .animatable {position:absolute;inset:0;width:100%;height:500px;transform-origin:50% 45%}
+:where(.rv-home) #home-hero .card,:where(.rv-home) #home-hero .card-border,:where(.rv-home) #home-hero .card-border-dashed {
+  position:absolute;left:50%;bottom:var(--floor);margin-left:var(--across);
+  transform:translateY(var(--lift,0px)) rotate(-25deg) skewX(35deg) scaleY(.86)
+}
+:where(.rv-home) #home-hero .card {display:block;width:var(--sheet-width,245px);max-width:none;aspect-ratio:1.69;object-fit:cover;object-position:center;
+  background:#f9faf2;box-shadow:-3px 5px 3px #2533293d;outline:1px solid #1c322529}
+:where(.rv-home) #home-hero .card1 {--floor:105px;--across:-325px}
+:where(.rv-home) #home-hero .card2 {--floor:425px;--across:230px}
+:where(.rv-home) #home-hero .card3 {--floor:242px;--across:-40px}
+:where(.rv-home) #home-hero .card4 {--floor:140px;--across:145px}
+:where(.rv-home) #home-hero .card5 {--floor:360px;--across:-240px}
+:where(.rv-home) #home-hero .card6 {--floor:242px;--across:-40px}
+:where(.rv-home) #home-hero .card7 {--floor:55px;--across:285px}
+:where(.rv-home) #home-hero .card8 {--floor:255px;--across:515px}
+:where(.rv-home) #home-hero .card9,:where(.rv-home) #home-hero .card10 {--floor:338px;--across:372px}
+:where(.rv-home) #home-hero .card11 {--floor:2px;--across:-150px}
+:where(.rv-home) #home-hero .card12 {--floor:20px;--across:-138px}
+:where(.rv-home) #home-hero .card14 {--floor:342px;--across:-40px}
+:where(.rv-home) #home-hero .card19 {--floor:30px;--across:193px;--sheet-width:120px;aspect-ratio:.69}
+:where(.rv-home) #home-hero .card20 {--floor:85px;--across:310px;--sheet-width:120px;aspect-ratio:.85}
+:where(.rv-home) #home-hero .card22 {--floor:-270px;--across:530px;--sheet-width:250px}
+:where(.rv-home) #home-hero :is(.card4,.card7) {display:none}
+:where(.rv-home) #home-hero :is(.card3,.card5,.card10,.card12,.card14) {--lift:-80px;z-index:1;box-shadow:-37px 49px 18px -12px #283a3152}
+:where(.rv-home) #home-hero .card12 {z-index:2}
+:where(.rv-home) #home-hero [class^=card-border] {--lift:-200px;width:290px;height:185px;border:1px solid #354a3436;pointer-events:none}
+:where(.rv-home) #home-hero .card-border-dashed {border-style:dashed}
+:where(.rv-home) #home-hero .card-border1 {--floor:-120px;--across:-350px}
+:where(.rv-home) #home-hero .card-border2 {--floor:15px;--across:-65px}
+:where(.rv-home) #home-hero .card-border3 {--floor:-450px;--across:335px;height:650px}
+:where(.rv-home) #home-hero .card-border4 {--floor:130px;--across:-240px;width:275px;height:156px}
+@media (prefers-reduced-motion:no-preference) {
+  :where(.rv-home) #home-hero .card {animation:home-plane-arrival 1.2s cubic-bezier(.2,.65,.3,1) both}
+  :where(.rv-home) #home-hero :is(.card3,.card10,.card12,.card14) {animation-delay:180ms}
+  @keyframes home-plane-arrival {
+    from {opacity:.25;transform:translateY(calc(var(--lift,0px) - 32px)) rotate(-25deg) skewX(35deg) scaleY(.86)}
+  }
+}
 .rv-home .header-block h2 {font-size:clamp(33px,3.38vw,55px);line-height:1.16;max-width:38ch;margin-inline:auto}
 :where(.rv-home) #welcome-header {border-top:1px solid var(--rv-line)}
 
@@ -71,6 +108,23 @@
 :where(.rv-home) #apps .v-align {z-index:2}
 :where(.rv-home) #apps .rotating-apps {padding:0}
 :where(.rv-home) #apps .rotaing {position:relative;width:clamp(700px,67vw,949px);aspect-ratio:1;margin-block:-4%}
+:where(.rv-home) #apps .rotaing>div {position:absolute;border-radius:50%;border:1px solid #6c80694a}
+:where(.rv-home) #apps .one {inset:23%;z-index:3;box-shadow:0 0 0 1.4vw #b8c4ae12}
+:where(.rv-home) #apps .two {inset:10%;z-index:2;border-style:dashed!important}
+:where(.rv-home) #apps .three {inset:0;z-index:1}
+:where(.rv-home) #apps .rotaing>div::before,:where(.rv-home) #apps .rotaing>div::after {content:"";position:absolute;width:clamp(110px,13vw,188px);aspect-ratio:1.4;background:center/cover #f9f8f0;border:5px solid var(--rv-paper);box-shadow:0 13px 25px -12px #1c3a225e}
+:where(.rv-home) #apps .one::before {left:-7%;top:26%;background-image:url("/assets/article-evidence/permit-desk-960.webp")!important;transform:rotate(-9deg)}
+:where(.rv-home) #apps .one::after {right:-10%;bottom:22%;background-image:url("/assets/project-evidence/parks-editorial.svg")!important;transform:rotate(8deg)}
+:where(.rv-home) #apps .two::before {top:-5%;left:35%;background-image:url("/assets/article-evidence/finder-960.webp")!important;transform:rotate(5deg)}
+:where(.rv-home) #apps .two::after {bottom:-4%;left:33%;background-image:url("/assets/article-evidence/service-ledger-960.webp")!important;transform:rotate(-4deg)}
+:where(.rv-home) #apps .three::before {left:-6%;bottom:17%;background-image:url("/assets/project-evidence/monitor-confidence.svg")!important;transform:rotate(8deg)}
+:where(.rv-home) #apps .three::after {right:0;top:7%;background-image:url("/assets/project-evidence/parks-atlas.svg")!important;transform:rotate(-6deg)}
+@media (prefers-reduced-motion:no-preference) {
+  :where(.rv-home) #apps .one,:where(.rv-home) #apps .three {animation:home-orbit-in 4.6s ease-out both}
+  :where(.rv-home) #apps .two {animation:home-orbit-in 4s ease-out reverse}
+  @keyframes home-orbit-in {from {transform:rotate(-9deg)} to {transform:rotate(0)}}
+}
+
 :where(.rv-home) #our-work-header .lead {max-width:55ch;margin-bottom:0}
 :where(.rv-home) #featured-projects {padding-bottom:var(--space);overflow:hidden}
 .rv-home :is(.project-carousel,.testimonials) {display:grid;grid-auto-flow:column;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
@@ -307,7 +361,7 @@
   .rv-home #quotes .testimonials {min-height:433px}
   .rv-home #quotes #about {min-height:0}
   .rv-home #quotes .client-shot {width:min(71vw,1000px);height:calc(100% + 110px);max-width:none;inset:-65px auto auto min(0px,calc((1400px - 100vw) / 2 - 100px));clip-path:inset(0 9% 0 0)}
-  .rv-home #quotes #about::after {content:attr(data-credit);position:absolute;left:20px;bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
+  .rv-home #quotes #about::after {content:"Morowali Industrial Park · Ministry of Public Works of Indonesia";position:absolute;left:20px;bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
   .rv-home #blog-list .row+.row {gap:0}
 }
 @media(max-width:767px) {
@@ -346,11 +400,63 @@
 
 .rv-home #quotes .client-shot {object-position:52% 52%}
 .rv-home #quotes #about::after {max-width:90%}
+.rv-home #blog-list .cover[data-photo-credit]::after {
+  content:attr(data-photo-credit);position:absolute;inset:auto auto 10px 10px;
+  padding:4px 7px;background:#142b24e8;color:white;font:500 11px/1.4 var(--sans);
+}
+.rv-home #blog-list a[href="/resources/project-brief/"] .blog-image {background-position:43% 46%}
+@media (max-width:991px) {
+  .rv-home #blog-list a[href="/resources/project-brief/"] .blog-image {aspect-ratio:3/2}
+}
+
+/* Field photographs alternate with product evidence around three concentric
+   tracks. Every crop is local so the artwork survives restrictive clients. */
+.rv-home #apps .rotaing {background-image:none}
+.rv-home #apps .rotaing>div::before,.rv-home #apps .rotaing>div::after {
+  border-radius:50%;border:0;aspect-ratio:1;box-shadow:0 0 0 2px var(--rv-tint);
+}
+.rv-home #apps .rotaing .one::before {background-image:url("/assets/home-evidence/field-map-test-900.webp")!important;background-position:40% 44%}
+.rv-home #apps .rotaing .one::after {background-image:url("/assets/cgs-atlas/morowali-960.webp")!important;background-position:60% 57%}
+.rv-home #apps .rotaing .two::before {background-image:url("/assets/home-evidence/planning-workshop-1000.webp")!important;background-position:51% 42%}
+.rv-home #apps .rotaing .two::after {background-image:url("/assets/home-evidence/research-priorities.webp")!important;background-position:50% 40%}
+.rv-home #apps .rotaing .three::before {background-image:url("/assets/article-evidence/service-ledger-960.webp")!important;background-position:32% 40%}
+.rv-home #apps .rotaing .three::after {background-image:url("/assets/home-evidence/design-method-cards.webp")!important;background-position:52% 50%}
+@media (max-width:767px) {
+  .rv-home #apps .rotaing {height:clamp(140px,46vw,260px);overflow:hidden;margin-top:12px}
+  .rv-home #apps .rotaing>div {display:block;inset:0;border:0!important;box-shadow:none;background:none}
+  .rv-home #apps .rotaing>div::before,.rv-home #apps .rotaing>div::after {inset:auto;width:22%;transform:none}
+  .rv-home #apps .rotaing .one::before {top:28%;left:1%}
+  .rv-home #apps .rotaing .one::after {width:27%;top:46%;right:9%}
+  .rv-home #apps .rotaing .two::before {width:16%;top:5%;left:27%}
+  .rv-home #apps .rotaing .two::after {width:12%;top:52%;left:43%}
+  .rv-home #apps .rotaing .three::before {width:13%;top:79%;left:25%}
+  .rv-home #apps .rotaing .three::after {width:19%;top:0;right:4%}
+}
+
 .rv-home #featured-projects a[href="/demos/permit-desk/"] .project-image {background-position:62% 44%}
 .rv-home #featured-projects a[href="/demos/finder/"] .project-image {background-position:50% 48%}
 .rv-home #featured-projects a[href="/work/open-source/"] .project-image {background-position:38% 50%}
 .rv-home #featured-projects a[href="/work/evaluation/"] .project-image {
   background-color:#fff;background-size:contain;background-repeat:no-repeat;background-position:50% 50%;
+}
+.rv-home #blog-list a[href="/pricing/"] .blog-image {background-position:59% 50%}
+@media (max-width:991px) {
+  .rv-home #blog-list a[href="/pricing/"] .blog-image {aspect-ratio:3/2}
+}
+
+/* Above the phone breakpoint the artboard keeps its native perspective scale.
+   At tablet widths the caption uses the first row, followed by the artwork. */
+@media (min-width:768px) {
+  .rv-home #home-hero .animatable {transform:none}
+}
+@media (min-width:992px) {
+  .rv-home #home-hero .col-sm-7 {margin-top:max(0px,calc((100svh - 501px)/2))}
+}
+@media (min-width:768px) and (max-width:991px) {
+  .rv-home #home-hero .row {display:block}
+  .rv-home #home-hero .caption-wrap {width:100%}
+  .rv-home #home-hero .col-sm-7 {width:58.333333%}
+  .rv-home #home-hero .perspective-section {top:150px}
 }
 
 .rv-home .simple-project .project-image {background-image:var(--project-image)}
@@ -358,153 +464,4 @@
   .rv-home #featured-projects a[href="/work/open-source/"] .project-image {
     background-image:url("/assets/interior-art/review-changes-3840.webp");
   }
-}
-
-/* A documented place, its atlas, a park record and a chart. Keep each
-   subject in the same camera plane and reserve space for the source link. */
-.rv-home #home-hero .col-sm-7 {align-self:center;margin-top:52px}
-.rv-home #home-hero .perspective-section {
-  display:block;position:relative;isolation:isolate;top:0;width:100%;height:auto;
-  aspect-ratio:1.38;overflow:visible;margin:0;color:var(--rv-accent);text-decoration:none;
-}
-.rv-home #home-hero .animatable {width:100%;height:100%;inset:0;transform:none}
-.rv-home #home-hero .card {
-  position:absolute;display:block;max-width:none;height:auto;background:#f7f8f2;
-  border:1px solid #84988c66;border-radius:3px;object-fit:contain;
-  transform:perspective(860px) rotateX(18deg) rotateY(-12deg) rotateZ(-7deg);
-  box-shadow:0 2px 3px #213a2b20,0 13px 24px -12px #213a2b60;
-}
-.rv-home #home-hero .site-photo {left:42%;top:6%;width:50%;aspect-ratio:1.8;object-fit:cover;object-position:50% 56%}
-.rv-home #home-hero .national-map {left:6%;top:26%;width:69%}
-.rv-home #home-hero .regional-chart {left:65%;top:53%;width:26%}
-.rv-home #home-hero .park-record {left:13%;top:71%;width:27%;max-width:162px}
-.rv-home #home-hero .project-caption {
-  position:absolute;bottom:0;right:7%;display:inline-flex;align-items:center;gap:7px;
-  font:600 13px/1.5 var(--sans);text-decoration:underline;text-decoration-color:#afbcad;
-  text-underline-offset:4px;
-}
-.rv-home #home-hero .perspective-section:hover .project-caption {text-decoration-color:currentColor}
-@media (prefers-reduced-motion:no-preference) {
-  .rv-home #home-hero .animated .national-map {animation:rf-atlas-arrive .8s ease-out both}
-  @keyframes rf-atlas-arrive {from {translate:0 12px;opacity:.65}}
-}
-@media (max-width:991px) {
-  .rv-home #home-hero .row {display:block}
-  .rv-home #home-hero .caption-wrap {width:100%}
-  .rv-home #home-hero .col-sm-7 {width:100%;max-width:740px;margin:15px auto 0}
-  .rv-home #home-hero .perspective-section {aspect-ratio:1.54}
-  .rv-home #home-hero h1 img {width:clamp(245px,65vw,375px);aspect-ratio:auto;max-width:100%;margin:18px 0 8px}
-}
-@media (max-width:767px) {
-  .rv-home #home-hero {padding-bottom:34px}
-  .rv-home #home-hero .col-sm-7 {margin-top:24px}
-  .rv-home #home-hero .perspective-section {aspect-ratio:1.35}
-  .rv-home #home-hero .caption-inner>p {margin-bottom:14px;min-height:50px}
-  .rv-home #home-hero .project-caption {font-size:11px;right:2%}
-  .rv-home #home-hero .regional-chart {left:65%;top:54%}
-}
-
-/* A public market gives the permit example a setting. The foreground is the
-   actual receipt a visitor can produce in the demo. */
-.rv-home #apps {padding-block:clamp(56px,7.4vw,108px)}
-.rv-home #apps .rotating-apps {padding:0}
-.rv-home #apps .rotaing {
-  position:relative;isolation:isolate;width:100%;height:auto;aspect-ratio:1.62;
-  margin:0;left:0;transform:none;overflow:visible;background:none;
-}
-.rv-home #apps .rotaing>div {
-  display:block;position:absolute;inset:auto;aspect-ratio:auto;border:0!important;
-  border-radius:2px;box-shadow:none;rotate:none!important;animation:none;
-}
-.rv-home #apps .rotaing>div::before,.rv-home #apps .rotaing>div::after {content:none}
-.rv-home #apps .rotaing .one {
-  inset:0 9% 9% 0;z-index:0;
-  background:url("/assets/interior-art/public-market-2560.webp") 58% 48%/cover no-repeat;
-}
-.rv-home #apps .rotaing .two {
-  bottom:0;right:0;z-index:1;width:43%;aspect-ratio:1.58;
-  background:#faf9f5 url("/assets/home-evidence/permit-detail.webp") center/contain no-repeat;
-  border:1px solid #9aada0!important;box-shadow:0 7px 20px #1c392b2b;
-}
-.rv-home #apps .rotaing .one::after {content:"Old Town Farmers’ Market · Carol M. Highsmith";position:absolute;inset:auto auto 7px 7px;
-  background:#18352be8;color:white;font:500 clamp(9px,.8vw,12px)/1.35 var(--sans);padding:4px 6px}
-.rv-home #apps .rotaing .three {display:none}
-@media (max-width:991px) {
-  .rv-home #apps .row {display:grid;grid-template-columns:minmax(0,1fr);gap:30px;margin:0;padding:0}
-  .rv-home #apps .row>div {grid-column:auto;margin:0}
-  .rv-home #apps .rotaing {width:100%;max-width:710px;aspect-ratio:1.7;margin:0}
-}
-@media (max-width:600px) {
-  .rv-home #apps .rotaing .one {right:4%}
-  .rv-home #apps .rotaing .two {width:44%}
-  .rv-home #apps .rotaing .one::after {max-width:48%;font-size:9px}
-}
-
-/* Keep documents legible and each buyer action at a predictable depth. */
-.rv-home #blog-list .blog-list-item,
-.rv-home #blog-list .blog-list-item>a {height:100%}
-.rv-home #blog-list .row+.row {align-items:stretch}
-.rv-home #blog-list .blog-list-item>a {display:flex;flex-direction:column;align-items:flex-start}
-.rv-home #blog-list .blog-lest-img {width:100%}
-.rv-home #blog-list .blog-list-item .blog-image {aspect-ratio:4/3}
-.rv-home #blog-list .blog-list-item h4 {font-size:clamp(23px,2.05vw,31px);margin:20px 0 8px}
-.rv-home #blog-list .blog-list-item p {margin:0 0 14px;line-height:1.55}
-.rv-home #blog-list .btn-link {margin-top:auto}
-@media (min-width:601px) and (max-width:991px) {
-  .rv-home #blog-list .row+.row {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 22px}
-  .rv-home #blog-list .row+.row>div {grid-column:auto}
-}
-@media (max-width:600px) {
-  .rv-home #blog-list .row+.row {gap:32px}
-  .rv-home #blog-list .blog-list-item .blog-image {aspect-ratio:1.75}
-}
-@media (min-width:992px) {
-  .rv-home #quotes .container>.row {align-items:stretch}
-  .rv-home #quotes #about {grid-column:1 / span 6;align-self:stretch;min-height:320px;height:auto;padding:0}
-  .rv-home #quotes .client-shot {position:absolute;inset:0;clip-path:none;width:100%;height:100%;max-width:100%}
-  .rv-home #quotes #about:is([data-art-kind="screen"],[data-art-kind="chart"]) {background:#f0f1e8}
-  .rv-home #quotes #about:is([data-art-kind="screen"],[data-art-kind="chart"]) .client-shot {
-    padding:clamp(20px,2vw,42px);object-fit:scale-down;object-position:center;
-  }
-  .rv-home #quotes .padding-t-150-b-50 {padding-block:clamp(45px,6vw,92px)}
-  .rv-home #quotes .testimonials {min-height:330px}
-}
-
-/* The desktop exhibit and handset share one bounded stage at every width.
-   The phone can stick while a reader scrolls a tall screen on desktop. */
-.rv-home #responsive {padding-block:clamp(58px,7.6vw,112px)}
-.rv-home #responsive .responsive-shots {
-  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:start;
-  padding:0;isolation:isolate;min-width:0;
-}
-.rv-home #responsive .responsive-shots>.shot1 {
-  position:relative;grid-area:1/2/2/-1;align-self:start;width:100%;height:auto;
-  aspect-ratio:1.12;object-fit:cover;object-position:top;border:1px solid #a9b7ab;
-  border-radius:6px;box-shadow:0 9px 28px -18px #29443570;
-}
-.rv-home #responsive .responsive-shots>.shot2 {
-  grid-area:1/1/2/6;align-self:start;position:relative;inset:auto;z-index:1;
-  width:min(100%,235px);margin:clamp(76px,7vw,110px) 0 0;
-}
-@media (min-width:992px) {
-  .rv-home #responsive .col-md-5>.sticky-element {top:clamp(112px,13vh,160px)}
-  .rv-home #responsive .responsive-shots>.shot2 {position:sticky;top:112px}
-}
-@media (max-width:991px) {
-  .rv-home #responsive .responsive-shots {max-width:680px;margin:25px auto 0}
-  .rv-home #responsive .responsive-shots>.shot1 {grid-column:2/-1}
-  .rv-home #responsive .responsive-shots>.shot2 {width:min(100%,180px);margin-top:clamp(60px,8vw,95px)}
-}
-
-.rv-home #testimonials-header {padding-block:clamp(36px,4.6vw,70px)}
-.rv-home #testimonials-header h2 {margin:0}
-.rv-home #our-work-header {padding-bottom:clamp(18px,2.8vw,40px)}
-.rv-home #featured-projects .project-image {aspect-ratio:5/4}
-.rv-home #featured-projects a:is([href="/demos/service-ledger/"],[href="/work/evaluation/"]) .project-image {
-  background-color:#f5f5ed;background-size:93% auto;background-position:center;background-repeat:no-repeat;
-}
-.rv-home #blog-list .blog-lest-img {background:#f2f3ec;border:1px solid #c2cbc1}
-.rv-home #blog-list .blog-image {background-size:90% auto;background-position:center 12%;background-repeat:no-repeat}
-@media (max-width:600px) {
-  .rv-home .project-carousel .owl-stage {grid-auto-columns:72%;gap:16px}
 }

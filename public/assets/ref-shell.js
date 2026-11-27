@@ -14,16 +14,21 @@
   const name = sheet?.querySelector('#name');
   let menuOpener;
   let contactOpener;
-  const footerReturn = document.querySelector('.footer-return');
+  let dockDismissed = false;
+  const scrollContact = Boolean(sheet);
+
+  function syncContactDock() {
+    if (!scrollContact || root.classList.contains('ref-contact-open')) return;
+    if (window.scrollY < 300) dockDismissed = false;
+    const visible = window.scrollY >= 300 && !dockDismissed;
+    sheet.hidden = !visible;
+    sheet.setAttribute('role', visible ? 'region' : 'dialog');
+    root.classList.toggle('ref-contact-docked', visible);
+  }
   let inertElements = [];
 
   const plainClick = (event) => event.button === 0 &&
     !event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey;
-
-  footerReturn?.addEventListener('click', event => {
-    if (!plainClick(event)) return;
-    header.querySelector('.logo').focus({preventScroll:true});
-  });
 
   function buttonKeys(element) {
     element?.addEventListener('keydown', (event) => {
@@ -39,8 +44,7 @@
     desktopToggle.setAttribute('aria-expanded', String(open));
     phoneToggle.setAttribute('aria-expanded', String(open));
     if (open) {
-      menu.scrollTop = 0;
-      (mobile.matches ? menu.querySelector('.social-col a[href]') : menuClose).focus({preventScroll:true});
+      (mobile.matches ? menu.querySelector('.col-md-4:not(.social-col) a') : menuClose).focus();
     } else if (restoreFocus) {
       (menuOpener?.getClientRects().length ? menuOpener : mobile.matches ? phoneToggle : desktopToggle).focus();
     }
@@ -74,20 +78,24 @@
     }
   }
 
-  function openContact(trigger) {
+  function openContact(trigger, focusName = true) {
     if (!sheet || root.classList.contains('ref-contact-open')) return;
+    root.classList.remove('ref-contact-docked');
+    sheet.setAttribute('role', 'dialog');
     setMenu(false);
-    contactOpener = menu.contains(trigger) ? (mobile.matches ? phoneToggle : desktopToggle) : trigger;
+    contactOpener = trigger;
     sheet.hidden = false;
     sheet.setAttribute('aria-modal', 'true');
     root.classList.add('ref-contact-open');
     disableBackground();
-    name.focus({preventScroll:true});
+    if (focusName) name.focus({preventScroll: true});
   }
 
   function closeContact() {
     if (!sheet || sheet.hidden) return;
-    root.classList.remove('ref-contact-open', 'ref-contact-expanded');
+    const wasModal = root.classList.contains('ref-contact-open');
+    dockDismissed = true;
+    root.classList.remove('ref-contact-open', 'ref-contact-expanded', 'ref-contact-docked');
     sheet.hidden = true;
     moreFields.hidden = true;
     sheet.removeAttribute('aria-modal');
@@ -95,15 +103,15 @@
     sheet.querySelector('#message').replaceChildren();
     for (const element of inertElements) element.inert = false;
     inertElements = [];
-    const trigger = contactOpener?.getClientRects().length ? contactOpener : (mobile.matches ? phoneToggle : desktopToggle);
-    trigger.focus({preventScroll:true});
+    if (wasModal || sheet.contains(document.activeElement)) (contactOpener || header.querySelector('.logo')).focus({preventScroll: true});
     contactOpener = null;
   }
 
-  function expandContact() {
+  function expandContact(moveFocus = true) {
+    if (!root.classList.contains('ref-contact-open')) openContact(header.querySelector('.logo'), false);
     moreFields.hidden = false;
     root.classList.add('ref-contact-expanded');
-    sheet.querySelector('#email').focus();
+    if (moveFocus) sheet.querySelector('#email').focus();
   }
 
   document.addEventListener('click', (event) => {
@@ -111,7 +119,7 @@
       if (!sheet.contains(event.target)) closeContact();
       return;
     }
-    const trigger = event.target.closest('a.open-contact-form, a.btn, a.button, a.text-action');
+    const trigger = event.target.closest('a.open-contact-form');
     const opensSheet = trigger && (trigger.getAttribute('href') === '#contact-form' ||
       (trigger.origin === location.origin && trigger.pathname === '/contact/'));
     if (sheet && opensSheet && trigger.target !== '_blank' && plainClick(event)) {
@@ -147,6 +155,11 @@
   });
 
   if (sheet) {
+    if (scrollContact) {
+      name.placeholder = 'Your name';
+      window.addEventListener('scroll', syncContactDock, {passive: true});
+      syncContactDock();
+    }
     buttonKeys(close);
     close.addEventListener('click', closeContact);
     sheet.querySelector('button.open-contact-form').addEventListener('click', () => expandContact());
@@ -155,6 +168,9 @@
         event.preventDefault();
         expandContact();
       }
+    });
+    name.addEventListener('input', () => {
+      if (name.value.trim() && moreFields.hidden) expandContact(false);
     });
     const preview = sheet.querySelector('#message');
     sheet.addEventListener('input', () => {

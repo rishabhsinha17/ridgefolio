@@ -212,6 +212,7 @@
           const area = tag("small",group.regionName);
           area.className = "cluster-place " + group.regionName.toLowerCase();
           marker.getElement().append(area);
+          marker.getElement().removeAttribute("aria-label");
         }
         marker.getElement().addEventListener("keydown", e => {
           if (e.key === " ") {e.preventDefault(); chooseGroup(group);}
@@ -251,9 +252,7 @@
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       region.value = anchor.dataset.region; status.value = "";
-      focusRegion();
-      document.getElementById("the-map").scrollIntoView({block:"start"});
-      region.focus({preventScroll:true});
+      focusRegion(); document.getElementById("the-map").scrollIntoView({block:"start"});
     }));
     map.on("zoomend moveend", () => {drawContext(); drawMarks();});
     let lastWidth = node.clientWidth;

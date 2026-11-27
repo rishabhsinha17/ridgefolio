@@ -1,7 +1,6 @@
 /* The scroll rail is measured against the original anchor in the layout.
    Its small, transparent popover has only one hit target. */
 @media screen {
-  #down-arrow-sticky-wrapper {height:0;min-height:0}
   #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] {
     display:block; position:relative; inset:auto; overflow:visible; z-index:8;
     margin:0; padding:0; width:0; height:0; border:0; background:transparent;
@@ -24,7 +23,7 @@
   }
   #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a[inert] {pointer-events:none}
   #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a {
-    left:var(--travel-x); top:var(--rail-top,-20px); width:50px; height:50px; transform:rotate(180deg);
+    left:var(--travel-x); top:-20px; width:50px; height:50px; transform:rotate(180deg);
   }
   #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a.up {opacity:1;z-index:1}
   #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a.down {opacity:0}
@@ -35,7 +34,7 @@
   html:is(.ref-menu-open,.ref-contact-open) #down-arrow-sticky-wrapper .up {visibility:hidden}
   @media (max-width:767px) {
     #down-arrow-sticky-wrapper #down-arrow[data-scroll-control] a:is(.up,.down) {top:-34px}
-    #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a {top:var(--rail-top,calc(100dvh - 370px))}
+    #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a {top:clamp(-65px,calc(100dvh - 370px),calc(100dvh - 260px))}
   }
 }
 .rf-diagonal-arrow {display:inline-block; width:.82em; height:.82em; vertical-align:-.035em; flex:none}
@@ -106,7 +105,3 @@
 .rv-source.about-page .record-rotation:is(:hover,:focus-visible) {color:var(--ri-paper);background:var(--ri-ink)}
 .rv-source.about-page .record-rotation[hidden] {display:none}
 @media (prefers-reduced-motion:reduce) {.rv-source.about-page .record-rotation {display:none}}
-
-#down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-rail-covered] a.up {
-  visibility:hidden;opacity:0;pointer-events:none;transition:none;
-}

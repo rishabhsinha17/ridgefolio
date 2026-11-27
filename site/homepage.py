@@ -3,29 +3,41 @@
 from html import escape
 
 
-# The opening follows one project from the photographed site to its mapped
-# record, working atlas and distribution chart.
-ATLAS_SHEETS = (
-    ("site-photo", "cgs-atlas/morowali", (960, 1920), "350px", 4639, 2980),
-    ("national-map", "home-evidence/cgs-atlas", (960, 1920), "560px", 2572, 1536),
-    ("regional-chart", "home-evidence/cgs-region", (720, 1256), "230px", 1256, 1218),
-    ("park-record", "home-evidence/cgs-park-record", (400, 564), "162px", 564, 290),
+# The skipped card numbers are part of the published stage layout. Two pictures
+# may share the same ground position while the foreground picture floats above it.
+HERO_SCREENS = (
+    (1, "article-evidence/permit-desk-1920.webp"),
+    (2, "article-evidence/capability-1920.webp"),
+    (3, "project-evidence/monitor-confidence.svg"),
+    (4, "project-evidence/paper-page.webp"),
+    (5, "home-evidence/field-map-test.webp"),
+    (6, "cgs-atlas/overview.webp"),
+    (7, "home-evidence/design-method-cards.webp"),
+    (8, "cgs-atlas/morowali-1920.webp"),
+    (9, "home-evidence/planning-workshop.webp"),
+    (10, "project-evidence/monitor-strata.svg"),
+    (11, "article-evidence/finder-1920.webp"),
+    (12, "editorial/city-hall-dome-1050.webp"),
+    (14, "interior-art/kiosk-960.webp"),
+    (19, "home-evidence/finder.webp"),
+    (20, "article-evidence/capability-sheet.webp"),
+    (22, "article-evidence/service-ledger-1920.webp"),
 )
 
 PROJECTS = (
     ("/work/industrial-parks/", "Indonesia’s industrial parks", "University of Maryland · Founder project", "home-evidence/sulawesi.webp"),
     ("/demos/permit-desk/", "Permit desk", "Working demonstration", "interior-art/public-market-2560.webp"),
     ("/work/evaluation/", "Testing tool-using agents", "Founder research", "project-evidence/monitor-confidence.svg"),
-    ("/demos/service-ledger/", "Service ledger", "Working demonstration", "home-evidence/ledger-detail.webp"),
+    ("/demos/service-ledger/", "Service ledger", "Working demonstration", "home-evidence/service-ledger.webp"),
     ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", "interior-art/review-changes-2560.webp"),
     ("/demos/finder/", "Service finder", "Working demonstration", "interior-art/kiosk-2560.webp"),
 )
 
 RESOURCES = (
-    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "home-evidence/buyer-brief.webp"),
-    ("/resources/launch-checklist/", "Launch checklist", "Check accessibility, redirects, handover and the tasks residents need to complete.", "home-evidence/buyer-checklist.webp"),
+    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "home-evidence/planning-workshop.webp"),
+    ("/resources/launch-checklist/", "Launch checklist", "Check accessibility, redirects, handover and the tasks residents need to complete.", "home-evidence/launch-checklist.webp"),
     ("/resources/capabilities/", "Capability statement", "A one-page overview of Ridgefolio’s services, delivery arrangements and founder experience.", "article-evidence/capability-sheet.webp"),
-    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "home-evidence/buyer-pricing.webp"),
+    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "interior-art/railway-plan-2560.webp"),
 )
 
 ENGINEERING = (
@@ -58,22 +70,24 @@ def arrow(label, link, direction):
 
 def hero():
     planes = []
-    for kind, stem, widths, size, width, height in ATLAS_SHEETS:
-        sources = ", ".join(f"/assets/{stem}-{w}.webp {w}w" for w in widths)
-        planes.append(f'<img class="card {kind}" src="/assets/{stem}-{widths[0]}.webp" srcset="{sources}" '
-                      f'sizes="(max-width: 640px) min(68vw, {size}), {size}" width="{width}" height="{height}" alt="" decoding="async">')
+    outlines = {1: ("card-border-dashed", 1), 4: ("card-border", 2),
+                8: ("card-border-dashed", 3), 12: ("card-border-dashed", 4)}
+    for number, asset in HERO_SCREENS:
+        planes.append(f'<img src="/assets/{asset}" alt="" class="card card{number}" decoding="async">')
+        if number in outlines:
+            style, index = outlines[number]
+            planes.append(f'<div class="{style} card-border{index}"></div>')
     return f'''<section id="home-hero" class="tour" aria-labelledby="hero-heading">
       <div class="container"><div class="row">
         <div class="col-sm-5 caption-wrap v-align">{placeholder()}<div class="caption-inner">
           <span class="no-margin h1 display-text">We build</span>
-          <h1 class="text-muted text-light display-text" id="hero-heading" tabindex="-1">Software for public agencies.<br><img class="aos-init aos-animate" src="/assets/showcase/home-services.svg" width="300" height="83" alt="Websites, workflows and data tools."></h1>
+          <h1 class="text-muted text-light display-text" id="hero-heading">Software for public agencies.<br><img class="aos-init aos-animate" src="/assets/showcase/home-services.svg" width="300" height="83" alt="Websites, workflows and data tools."></h1>
           <p>{action("/contact/", "Contact us", "btn-inverse open-contact-form")}{action("/work/", "Our work", "btn-default")}</p>
           <div id="down-arrow">{arrow("Back to the top", "#home-hero", "up")}{arrow("Explore the practice", "#welcome-header", "down")}</div>
         </div></div>
-        <div class="col-sm-7 v-align"><a class="perspective-section" href="/work/industrial-parks/" aria-label="View the Indonesia industrial parks case study">
+        <div class="col-sm-7 v-align"><div class="perspective-section" role="img" aria-label="Ridgefolio demonstrations, maps, research charts and project records">
           <div class="animatable" aria-hidden="true">{''.join(planes)}</div>
-          <span class="project-caption">Indonesia’s industrial parks <svg aria-hidden="true" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13 13 3M4 3h9v9"/></svg></span>
-        </a></div>
+        </div></div>
       </div></div></section>'''
 
 
@@ -86,7 +100,7 @@ def statement(section_id, text, anchor):
 def apps():
     return f'''<section id="apps"><div class="container"><div class="row">
       <div class="col-md-4 v-align">{placeholder()}<h3 class="h1">Web applications<br><span class="text-muted">for public services.</span></h3>
-        <p class="lead"><span>Find community event requirements, review a permit application or compare service hours by district. Try each task with sample records.</span></p>
+        <p class="lead"><span>Find a service, review a permit or filter a workload report. Try each task with sample records.</span></p>
         <p>{action("/demos/", "Try the apps")}{action("/work/", "Our work")}</p></div>
       <div class="col-md-7 col-md-offset-1 rotating-apps equal padding-tb-150" aria-hidden="true"><div class="rotaing">
         <div class="one"></div><div class="two"></div><div class="three"></div>
@@ -122,31 +136,14 @@ def responsive():
 
 
 def evidence():
-    # A record's illustration travels with its source, including during a swipe.
-    district = ("cgs-atlas/morowali-4000.webp", "Morowali Industrial Park · Ministry of Public Works of Indonesia", "Daylight view of Morowali Industrial Park on the coast of Sulawesi", "photo")
-    atlas = ("home-evidence/cgs-atlas-1920.webp", "CGS handover · May 2025", "The national industrial parks atlas", "screen")
-    electricity = ("home-evidence/cgs-energy-1256.webp", "Electricity sources · May 2025 CGS records", "Chart showing the reported sources of electricity for the parks", "chart")
-    illustrations = (
-        district, atlas, electricity,
-        ("home-evidence/generation-script.webp", "CGS repository · generate_geojson.py", "The publishing script selects park attributes and writes GeoJSON files", "screen"),
-        ("home-evidence/launch-record.webp", "CGS case study · June 2024 launch record", "Project timeline entry with the June 2024 launch presentation and its six map layers", "screen"),
-        ("home-evidence/reuse-record.webp", "CGS case study · December 2025 research record", "Methods citation for the UMD study of nickel smelters", "screen"),
-        ("interior-art/review-changes-3840.webp", "kvcached · Merged code review", "The reviewed worker cleanup changes", "screen"),
-        ("home-evidence/ibm-hook-review.webp", "IBM vLLM Hook · Pull request 41", "Merged pull request for the tool-call risk analyzer", "screen"),
-        ("project-evidence/monitor-confidence.svg", "Agent evaluation · Monitor confidence", "Confidence plotted against monitor accuracy in the research paper", "chart"),
-        ("article-evidence/permit-approval.webp", "Permit desk · Fictional application", "The approval receipt from the permit desk demonstration", "screen"),
-        ("home-evidence/ledger-detail.webp", "Service ledger · Fictional records", "Service hours in the demonstration ledger", "screen"),
-    )
     notes = []
-    for index, ((text, label, url), (asset, credit, alt, kind)) in enumerate(zip(ENGINEERING, illustrations, strict=True)):
+    for index, (text, label, url) in enumerate(ENGINEERING):
         record = escape(text)
         if index in (2, 9, 10):
             record = f"<span>{record}</span>"
-        notes.append(f'<div class="item" data-source="{escape(url, quote=True)}" data-art="/assets/{asset}" '
-                     f'data-credit="{escape(credit, quote=True)}" data-alt="{escape(alt, quote=True)}" data-art-kind="{kind}">'
-                     f'<div class="h3">{record}</div><p class="text-muted">{escape(label)}</p></div>')
+        notes.append(f'<div class="item" data-source="{escape(url, quote=True)}"><div class="h3">{record}</div><p class="text-muted">{escape(label)}</p></div>')
     return f'''<section id="quotes" aria-label="Founder and studio project records"><div class="container" id="practice"><div class="row">
-      <div class="col-md-5 hidden-sm hidden-xs" id="about" data-art-kind="photo" data-credit="Morowali Industrial Park · Ministry of Public Works of Indonesia">
+      <div class="col-md-5 hidden-sm hidden-xs" id="about">
         <img class="client-shot" src="/assets/cgs-atlas/morowali-1920.webp" srcset="/assets/cgs-atlas/morowali-960.webp 960w, /assets/cgs-atlas/morowali-1920.webp 1920w, /assets/cgs-atlas/morowali-4000.webp 4000w" sizes="(max-width: 991px) 1px, min(1200px, 100vw)" alt="Daylight view of Indonesia Morowali Industrial Park on the Central Sulawesi coast" width="4639" height="2980" loading="lazy"></div>
       <div class="col-md-5 col-md-offset-2 padding-t-150-b-50">{placeholder("testimonial-btn")}<div class="testimonials owl-carousel owl-theme" tabindex="0" aria-label="Eleven project records">
         {''.join(notes)}</div>
@@ -156,9 +153,12 @@ def evidence():
 def library():
     cards = []
     for href, title, desc, asset in RESOURCES:
+        credit = ' data-photo-credit="Service design workshop · 18F"' if href == "/resources/project-brief/" else ""
+        if href == "/pricing/":
+            credit = ' data-photo-credit="San Francisco Cable Car Powerhouse · HAER"'
         image = f"url(/assets/{asset})"
         cards.append(f'''<div class="col-md-3"><div class="blog-list-item"><a href="{href}">
-          <div class="blog-lest-img relative"><div class="blog-image" style="background-image:{image}"></div><div class="cover"></div></div>
+          <div class="blog-lest-img relative"><div class="blog-image" style="background-image:{image}"></div><div class="cover"{credit}></div></div>
           <h4>{escape(title)}</h4><p>{escape(desc)}</p><span class="btn btn-link">Open resource</span></a></div></div>''')
     return f'''<section id="blog-list" class="padding-tb-150"><div class="container">
       <div class="row"><div class="col-md-8">{placeholder()}<h3 class="h1">For buyers<br><span class="text-muted">Plan your next project.</span></h3></div>

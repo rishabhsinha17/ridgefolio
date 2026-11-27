@@ -226,33 +226,29 @@ html.ref-contact-expanded #contact-body .no-btn {display: none}
   :is(.rv-home,.rv-interior) [data-ref-footer] .row > .col-md-offset-3 {color: var(--shell-light)}
   :is(.rv-home,.rv-interior) .main-wrap > .copyright {padding: 30px 0}
 }
+/* The collapsed scroll prompt is a nonmodal region. Its input opens the dialog. */
+@media screen {
+  html.ref-contact-docked {scroll-padding-bottom: 104px}
+  .ref-contact-docked #contact-form {padding: 22px 30px; box-shadow: 0 -1px 0 var(--shell-rule)}
+  .ref-contact-docked #contact-results:empty, .ref-contact-docked #message:empty {display: none}
+  .ref-contact-docked #contact-form .contact-form-inner {width: min(500px, 100%)}
+  .ref-contact-docked #contact-body > .form-group {padding: 0; margin: 0}
+  .ref-contact-docked #contact-body > .form-group label {position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden}
+  .ref-contact-docked #contact-body #name {height: 50px; padding-right: 120px; margin: 0}
+  .ref-contact-docked #contact-body .no-btn {position: absolute; inset: 0 0 auto auto; height: 50px; margin: 0}
+  .ref-contact-docked #contact-form #contact-form-close {position: absolute; left: calc(100% + 14px); top: 2px; margin: 0}
+  .ref-contact-docked #contact-form-close img {width: 26px; height: 26px}
+  .ref-menu-open.ref-contact-docked #contact-form {visibility: hidden}
+  .ref-contact-docked :is(.rv-home,.rv-source) #down-arrow .up:not([hidden]) {bottom: 105px}
+  :is(.rv-home,.rv-interior) .main-wrap:has(.form-style) > .copyright {padding-bottom: max(130px, env(safe-area-inset-bottom))}
+}
+@media screen and (max-width: 740px) {
+  .ref-contact-docked #contact-form {padding: 12px 58px 12px 20px}
+  .ref-contact-docked #contact-form #contact-form-close {left: calc(100% + 5px); width: 44px; overflow: hidden; font-size: 0; gap: 0}
+  .ref-contact-docked :is(.rv-home,.rv-source) #down-arrow .up:not([hidden]) {bottom: 78px}
+  :is(.rv-home,.rv-interior) .main-wrap:has(.form-style) > .copyright {padding-bottom: max(90px, env(safe-area-inset-bottom))}
+}
 @media print {
   [data-ref-header], [data-ref-footer], .main-wrap > .copyright, #contact-form {display: none}
   .main-wrap {padding: 0}
 }
-
-/* Keep native fragments and the first keyboard shortcut clear of the header. */
-html {scroll-padding-top:104px}
-.skip:focus {z-index:150}
-.rv-home #home-hero {overflow:clip}
-.search-recovery {display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px}
-.search-recovery > :is(a,button) {display:inline-flex;align-items:center;min-height:44px}
-html.ref-contact-expanded #contact-form {scroll-padding-block:65px 16px}
-html.ref-contact-expanded #contact-form-close {
-  position:sticky;top:0;inset-inline:auto;z-index:2;display:flex;width:max-content;min-height:44px;
-  margin:0 0 12px auto;padding:4px 8px;background:var(--shell-paper);
-}
-@media (max-width:991px) {
-  html {scroll-padding-top:16px}
-  [data-ref-header] .mega-drop .social-col {
-    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;
-    border:0;border-bottom:1px solid var(--shell-rule);padding:0 0 12px;margin:0 0 18px;
-  }
-  [data-ref-header] .mega-drop .social-col a {
-    display:inline-flex;justify-content:flex-start;text-align:left;white-space:normal;
-    padding:0;min-height:44px;font:650 14px/1.35 var(--sans);
-  }
-  [data-ref-header] .mega-drop .social-col > :not(a) {display:none}
-}
-
-@media (scripting:none) {#search-form,#results-count,#site-results {display:none}}
