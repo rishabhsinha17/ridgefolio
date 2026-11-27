@@ -82,8 +82,7 @@ def nav(path):
     return f'''<header data-ref-header>{header_slot}<div class="container-fluid"><div class="row"><div class="col-md-12">
       <a class="logo" href="/" aria-label="Ridgefolio home"><svg viewBox="0 0 44 32" width="36" height="27" aria-hidden="true"><path id="revizelogo" class="cls-1" d="{MARK}"/></svg></a>
       <div id="mega-drop-toggle" role="button" tabindex="0" aria-label="Menu" aria-expanded="false" aria-controls="site-directory">{BARS}</div>
-      <a class="btn btn-inverse open-contact-form visible-md visible-lg" href="{contact_url}">Contact us</a>
-      <div class="visible-sm visible-xs pull-right link-btn"><a class="btn btn-link" href="{contact_url}">Contact us</a></div>
+      <div class="link-btn"><a class="btn btn-inverse open-contact-form" href="{contact_url}">Contact us</a></div>
       <nav aria-label="Main navigation"><div class="mega-drop" id="site-directory"><div class="mega-drop-inner">
       <div id="mega-close" role="button" tabindex="0" aria-label="Close menu">Close <img alt="" src="{CLOSE}"></div><noscript><a href="#mega-drop-toggle-desktop">Close menu</a></noscript>
       <div class="row"><div class="col-md-4 social-col">{nav_slot}{quick}</div>{columns}</div></div></div>

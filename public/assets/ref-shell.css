@@ -52,7 +52,8 @@
 [data-ref-header] .btn-inverse:hover,
 [data-ref-footer] .btn-inverse:hover,
 #contact-form .btn-inverse:hover {text-decoration: underline; text-underline-offset: 4px}
-[data-ref-header] .col-md-12 > .btn {float: right; margin-top: -10px; min-width: clamp(125px, 12.5vw, 183px)}
+[data-ref-header] .link-btn {float: right; margin-top: -10px}
+[data-ref-header] .link-btn .btn {min-width: clamp(125px, 12.5vw, 183px)}
 [data-ref-header] .visible-sm.visible-xs {display: none}
 #mega-drop-toggle {display: none}
 #mega-drop-toggle-desktop > .bar,
@@ -157,9 +158,8 @@ html.ref-contact-expanded #contact-body .no-btn {display: none}
   [data-ref-header] {position: relative; height: 90px}
   [data-ref-header] .container-fluid {width: calc(100% - 44px)}
   [data-ref-header] .logo {font-size: 27px}
-  [data-ref-header] .col-md-12 > .btn {display: none}
-  [data-ref-header] .visible-sm.visible-xs.link-btn {display: block; float: right; margin: -8px 14px 0 0}
-  [data-ref-header] .link-btn .btn {min-height: 44px; padding-inline: 4px; color: var(--shell-ink); font-size: 13px; background: transparent}
+  [data-ref-header] .link-btn {margin: -8px 14px 0 0}
+  [data-ref-header] .link-btn .btn {min-width: 0; min-height: 44px; padding-inline: 4px; color: var(--shell-ink); font-size: 13px; background: transparent}
   #mega-drop-toggle {float: right; display: block; position: relative; margin: -7px -9px 0 0; width: 44px; height: 44px; cursor: pointer}
   #mega-drop-toggle .bar, #mega-drop-toggle .bar-2 {position: absolute; left: 12px; top: 18px; width: 20px; height: 2px; background: var(--shell-ink)}
   #mega-drop-toggle .bar-2 {top: 24px; width: 14px}

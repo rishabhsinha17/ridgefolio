@@ -90,10 +90,13 @@ test('mobile navigation, keyboard dismissal and contact destinations', async ({ 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.keyboard.press('Escape');
   await expect(page.locator('header[data-ref-header] .link-btn a')).toBeFocused();
-  // Some browsers finish the breakpoint change after the sheet closes.
+  // Keep focus on the same link as the header changes layout.
   await page.setViewportSize({ width: 1280, height: 800 });
   await expect(contact).toBeFocused();
-  await page.goto('/contact/');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(() => page.evaluate(() => matchMedia('(max-width: 991px)').matches)).toBe(true);
+  await contact.click();
+  await expect(page).toHaveURL(/\/contact\/$/);
   await expect(page.locator('a[href="mailto:rishabh@ridgefolio.com"]').first()).toHaveAttribute('href','mailto:rishabh@ridgefolio.com');
   await expect(page.locator('#contact-hero address').getByRole('link', {name:'Book a 30-minute call'})).toHaveAttribute('href','https://cal.com/ridgefolio/intro');
 });
@@ -157,7 +160,8 @@ test('surface and wireframe views work with keyboard and touch-sized controls', 
 // homepage source capture. Copy, URLs, and project-specific assets are editable.
 const sourceSections = {
   "squares": "348699838ad518c749909f8fb89043bd9cfd3d878fcae4eddef85d77e74f6a82",
-  "header": "d7925330addfd46c0233fec57a916353f2c2ce3cae59bea89c66324c68132eea",
+  // The responsive header uses one persistent Contact link for keyboard focus.
+  "header": "43a4aa1d13f7a819e4b7d9c16984ea0699ea5452fdddb8a2646af09e60ebba97",
   "home-hero": "fceb75f2ba02770834353ec3a6529f62e13769c729354b1ba9a6486720b869a2",
   "welcome-header": "7791812b80256dd64daaa51f5b5ba3825ae63063bf1500d32813416e07fdac96",
   "apps": "3b90ca171231c4522156b377c05057238432cffd25ba3af1acb8ef7d85c2069e",

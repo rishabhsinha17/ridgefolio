@@ -40,11 +40,12 @@
 .rf-diagonal-arrow {display:inline-block; width:.82em; height:.82em; vertical-align:-.035em; flex:none}
 .rf-control-icon {display:block; width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.65; stroke-linecap:round; stroke-linejoin:round}
 [data-ref-header] .mega-drop .social-col .btn::before,
-[data-ref-header] .link-btn .btn-link::before {
+[data-ref-header] .link-btn .btn::before {
   content:""; display:inline-block; width:.72em; height:.72em; flex:0 0 auto; margin-right:8px;
   background-color:currentColor;
   -webkit-mask:var(--rf-chevron) center/contain no-repeat; mask:var(--rf-chevron) center/contain no-repeat;
 }
+@media (min-width:992px) { [data-ref-header] .link-btn .btn::before {display:none} }
 :root {
   --rf-chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m8 4 8 8-8 8' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
