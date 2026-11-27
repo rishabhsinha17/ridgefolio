@@ -82,7 +82,7 @@ function strata(compact) {
 }
 
 function forest(compact) {
-  const w=compact?365:900,pad=compact?12:40,x0=compact?168:335,x1=compact?317:729;
+  const w=compact?365:900,pad=compact?12:40,x0=compact?168:335,x1=compact?310:729;
   const x=n=>fmt(x0+(x1-x0)*(n-.42)/.58);
   const m=[label(pad,compact?29:39,"AGENTDOJO  /  PRE-ACTION MONITORS",compact?11:14),
     text(pad,compact?67:94,"Predicting commitment",compact?32:51,'class="display"'),
@@ -115,7 +115,7 @@ function forest(compact) {
     m.push(line(tx,chartTop,tx,y-37,tick===.5?"#879b8b":P.faint,tick===.5?'stroke-dasharray="4 5"':''),
       text(tx,axis,tick.toFixed(1),compact?10:14,center));
   }
-  m.push(text(w-pad,axis,compact?"AUROC":"AUROC  [95% interval]",compact?10:13,end),...rows,
+  m.push(text(w-pad,axis,compact?"Score":"AUROC  [95% interval]",compact?10:13,end),...rows,
     note(pad,y-5,"Qwen2.5-7B unless another model is named.",compact?12:15),
     note(pad,y+15,"NB = naive Bayes. Chance = 0.500.",compact?12:15));
   return art(w,y+34,"Predicting commitment",groups.map(([name,rows])=>name+": "+rows.map(([label,v,l,h,g])=>label+" "+decimal(v)+" ["+decimal(l)+", "+decimal(h)+"]"+(g==null?"":"; grouped "+decimal(g))).join(". ")).join(". "),paper+" · Figure 2 · "+research,m);
