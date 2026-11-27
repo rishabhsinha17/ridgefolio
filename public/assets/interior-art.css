@@ -7,58 +7,6 @@
   }
   .rv-interior .documentary-credit:hover,.rv-interior .documentary-credit:focus-visible {text-decoration:underline}
   .rv-interior .documentary-credit span {font-weight:450}
-  #blog-page #blog-lg-img[data-presentation="documentary"]>.full-img {object-position:50% 47%}
-  #blog-post-page #blog-lg-img:is([data-presentation="documentary-pair"],[data-presentation="permit-demonstration"]) {
-    display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center;
-    width:100%;height:auto;aspect-ratio:3/2;background:#e9eee4;
-  }
-  #blog-post-page #blog-lg-img[data-presentation="documentary-pair"]>.full-img {
-    width:100%;height:100%;aspect-ratio:auto;object-fit:cover;
-  }
-  #blog-post-page #blog-lg-img[data-presentation="documentary-pair"]>.documentary-credit {max-width:50%}
-  #blog-post-page #blog-lg-img .field-record,
-  #blog-post-page #blog-lg-img .permit-result,
-  #blog-post-page #blog-lg-img .search-record {
-    color:#1b372c;padding:0;margin:0 clamp(24px,4vw,84px);
-  }
-  #blog-post-page #blog-lg-img :is(.field-record,.permit-result,.search-record) figcaption {
-    font:650 clamp(12px,1vw,17px)/1.4 var(--sans);letter-spacing:.018em;
-    padding-bottom:16px;border-bottom:1px solid #7f9180;margin:0 0 18px;
-  }
-  #blog-post-page #blog-lg-img .field-record .record-total,
-  #blog-post-page #blog-lg-img .permit-result .record-name {
-    font:400 clamp(46px,7vw,118px)/1 var(--serif);margin:0 0 22px;letter-spacing:-.045em;
-  }
-  #blog-post-page .field-record .record-total span {display:block;font:500 clamp(17px,2vw,32px)/1.45 var(--sans);letter-spacing:0}
-  #blog-post-page .field-record dl,#blog-post-page .field-record ul {padding:0;margin:0;font:550 clamp(13px,1.18vw,20px)/1.5 var(--sans)}
-  #blog-post-page .field-record dl>div {border-top:1px solid #adbaaa;padding-block:8px;display:flex;gap:8px;justify-content:space-between}
-  #blog-post-page .field-record dd {margin:0;white-space:nowrap}
-  #blog-post-page .checklist-record li {list-style:none;padding:8px 0;border-top:1px solid #95a795}
-  #blog-post-page .brief-record blockquote {border:0;margin:0 0 15px;padding:0;font:400 clamp(24px,3.2vw,64px)/1.15 var(--serif);letter-spacing:-.035em}
-  #blog-post-page .brief-record>p {margin:0;font:550 clamp(12px,1.05vw,17px)/1.5 var(--sans)}
-  #blog-post-page #blog-lg-img[data-plate="service-areas"] {background:#f0e8d5}
-  #blog-post-page #blog-lg-img[data-plate="library-elevation"] {background:#f5eddf}
-  #blog-post-page #blog-lg-img[data-presentation="permit-demonstration"] {grid-template-columns:minmax(0,.85fr) minmax(0,1.18fr);background:#ede3cd;}
-  #blog-post-page .permit-interface {width:100%;padding-right:clamp(20px,5vw,100px)}
-  #blog-post-page .permit-interface img {width:100%;height:auto;display:block;border:1px solid #b9ae93;box-shadow:0 15px 35px #4d432221}
-  #blog-post-page .permit-result>p:not(.record-name) {margin:0 0 25px;font:450 clamp(17px,1.8vw,29px)/1.5 var(--serif)}
-  #blog-post-page .permit-result>a {font-weight:650;color:#263e2f;text-decoration:underline;text-underline-offset:.16em}
-  #blog-post-page #blog-lg-img[data-presentation="finder-demonstration"] {position:relative}
-  #blog-post-page #blog-lg-img .search-record {position:absolute;right:6%;bottom:14%;max-width:32%;margin:0;background:#faf9f3;box-shadow:0 16px 38px #263a2a27;padding:clamp(18px,2.8vw,56px)}
-  #blog-post-page #blog-lg-img .search-record p {margin:0;font:450 clamp(14px,1.25vw,21px)/1.55 var(--sans)}
-  #blog-post-page #blog-lg-img .search-record .record-name {margin:0 0 12px;font:400 clamp(23px,3vw,56px)/1.12 var(--serif);letter-spacing:-.035em}
-  #blog-post-page #blog-lg-img[data-presentation="portrait-document"] {
-    aspect-ratio:3/2;display:grid;place-items:center;background:#e4ebe1;
-    padding:clamp(20px,4vw,70px);
-  }
-  #blog-post-page #blog-lg-img[data-presentation="portrait-document"]>.full-img {
-    width:auto;max-width:100%;height:100%;max-height:61vw;aspect-ratio:auto;object-fit:contain;
-    box-shadow:0 10px 32px #26463526;
-  }
-  #blog-post-page #blog-hero.utility-heading {padding:clamp(118px,16vh,162px) 0 8px}
-  #blog-post-page #blog-hero.utility-heading h1 {min-block-size:0;margin:0}
-  #blog-post-page #blog-hero.utility-heading + #scroll-to {padding-block:20px clamp(55px,9vw,100px)}
-  #blog-post-page #blog-hero.utility-heading + #scroll-to .article-subheading {font-size:20px;line-height:1.35}
   #apps-page .app-row :is(.app-img-left,.app-img-right).directory-landscape {background:none;overflow:hidden}
   #apps-page .app-row .directory-landscape::after,#apps-page .app-row .directory-landscape::before {content:none}
   #apps-page .app-row .directory-landscape>img {display:block;width:100%;height:100%;object-fit:cover}
@@ -74,36 +22,8 @@
 @media screen and (max-width:991px) {
   #apps-page .app-row :is(.app-img-left,.app-img-right).directory-landscape {height:clamp(320px,89vw,660px)}
 }
-@media screen and (max-width:799px) {
-  #blog-post-page #blog-lg-img:is([data-presentation="documentary-pair"],[data-presentation="permit-demonstration"]) {
-    grid-template-columns:1fr 1fr;aspect-ratio:1.2;
-  }
-  #blog-post-page #blog-lg-img .field-record,#blog-post-page #blog-lg-img .permit-result {margin-inline:clamp(12px,3.5vw,24px)}
-  #blog-post-page #blog-lg-img :is(.permit-result,.field-record,.search-record) figcaption {font-size:11px;padding-bottom:9px;margin-bottom:10px}
-  #blog-post-page #blog-lg-img .field-record .record-total,#blog-post-page #blog-lg-img .permit-result .record-name {font-size:clamp(34px,7vw,54px);margin-bottom:12px}
-  #blog-post-page #blog-lg-img .record-total span,.rv-source .field-record ul,.rv-source .field-record dl {font-size:13px}
-  #blog-post-page .brief-record blockquote {font-size:clamp(15px,3.4vw,25px)}
-  #blog-post-page .field-record dl>div {display:block;padding:5px 0}
-  #blog-post-page .field-record dd {font-weight:bold}
-  #blog-post-page #blog-lg-img .documentary-credit {font-size:10px;left:8px;bottom:8px;padding:4px 6px}
-  #blog-post-page #blog-lg-img[data-presentation="documentary-pair"]>.documentary-credit {max-width:46%}
-  #blog-post-page #blog-lg-img:is([data-presentation="documentary-pair"],[data-presentation="permit-demonstration"],[data-presentation="finder-demonstration"])>.pixel-btn {width:clamp(95px,22vw,140px);height:96px;top:-72px;right:15px}
-  #blog-post-page #blog-lg-img:is([data-presentation="documentary-pair"],[data-presentation="permit-demonstration"],[data-presentation="finder-demonstration"]) .pixel-btn .lead {left:9px;top:8px;width:calc(100% - 18px);font-size:14px}
-  #blog-post-page #blog-lg-img:is([data-presentation="documentary-pair"],[data-presentation="permit-demonstration"],[data-presentation="finder-demonstration"]) .pixel-btn .small {left:9px;bottom:5px;font-size:10px}
-  #blog-post-page #blog-lg-img:is([data-presentation="documentary-pair"],[data-presentation="permit-demonstration"],[data-presentation="finder-demonstration"]) .pixel-btn svg {left:auto;right:4px;bottom:6px;width:13px}
-  #blog-post-page #blog-lg-img .search-record {max-width:47%;right:9px;bottom:15%;padding:12px}
-  #blog-post-page #blog-lg-img .search-record p {font-size:12px}
-  #blog-post-page #blog-lg-img .search-record .record-name {font-size:21px}
-  #blog-post-page .permit-interface {padding:0 10px 0 0}
-  #blog-post-page .permit-result>p:not(.record-name),#blog-post-page .permit-result>a {font-size:13px}
-  #blog-post-page #blog-hero.utility-heading {padding-top:45px}
-}
-@media screen and (max-width:480px) {
-  #blog-post-page #blog-lg-img[data-presentation="finder-demonstration"]>.full-img {aspect-ratio:1.1;object-position:40% center}
-}
 @media print {
-  .rv-interior .documentary-credit,.rv-interior #blog-lg-img>.field-record,
-  .rv-interior #blog-lg-img>.permit-result,.rv-interior #blog-lg-img>.search-record,.rv-interior .permit-interface {display:none}
+  .rv-interior .documentary-credit {display:none}
 }
 @media screen {
   #about-page .rv-source.about-page #about-hero .lead {min-height:0}
@@ -112,16 +32,11 @@
   #about-page .about-agencies .agency-portrait img {width:100%;height:100%;object-fit:cover;object-position:center;display:block}
   #about-page .about-agencies .agency-portrait .documentary-credit {text-align:left}
 }
-@media screen and (max-width:799px) {
-  #blog-post-page #blog-lg-img:is([data-presentation="documentary-pair"],[data-presentation="permit-demonstration"],[data-presentation="finder-demonstration"])>.pixel-btn {width:128px}
-}
-
 @media screen and (min-width:600px) and (max-width:850px) and (min-resolution:2.5dppx) {
   .rv-source.projects-page .project-image[data-project="industrial-parks"] {background-image:url("/assets/cgs-atlas/overview-4320.webp")}
 }
 @media screen and (min-width:2000px) {
   #freeform-page #blog-lg-img[data-presentation="atlas-plate"] {max-width:2160px;margin-inline:auto}
-  #blog-post-page #blog-lg-img:is([data-presentation="finder-demonstration"],[data-plate="reading-by-touch"]) {max-width:2520px;margin-inline:auto}
   .rv-source.project-page #blog-lg-img[data-presentation="evidence-plate open-source"] {max-width:2150px;margin-inline:auto}
   .rv-source.project-page #project-end-image {max-width:2000px;margin-inline:auto}
 }

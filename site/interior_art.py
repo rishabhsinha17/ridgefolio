@@ -30,29 +30,4 @@ def photo(stem, *, sizes="100vw", css="full-img", lazy=False):
 
 def credit(stem):
     title, author, url = PHOTOS[stem]
-    return f'<a class="documentary-credit" href="{escape(url, quote=True)}">{escape(title)} <span>· {escape(author)}</span></a>'
-
-
-def record(name):
-    # These measurements and work products can be reproduced in the public tools.
-    if name == "ledger":
-        return (
-            '<figure class="field-record ledger-record"><figcaption>North district · Fictional service records</figcaption>'
-            '<p class="record-total">12 <span>service hours</span></p><dl>'
-            '<div><dt>RF-202 · Road repair</dt><dd>9 h</dd></div>'
-            '<div><dt>RF-206 · Permit review</dt><dd>3 h</dd></div></dl></figure>'
-        )
-    if name == "checklist":
-        return (
-            '<figure class="field-record checklist-record"><figcaption>Website launch · Example review</figcaption>'
-            '<p class="record-total">3 <span>of 6 verified</span></p><ul>'
-            '<li>Content and redirects</li><li>Keyboard and assistive technology</li><li>Cutover and recovery</li>'
-            '</ul></figure>'
-        )
-    if name == "brief":
-        return (
-            '<figure class="field-record brief-record"><figcaption>From the completed project brief</figcaption>'
-            '<blockquote>“Check the event, corrected location, review note and approval against the case history.”</blockquote>'
-            '<p>Community event permit · Acceptance walkthrough</p></figure>'
-        )
-    raise ValueError(name)
+    return f'<a class="documentary-credit" href="{escape(url, quote=True)}" aria-label="Photograph and credit in the Library of Congress collection: {escape(title, quote=True)}">{escape(title)} <span>· {escape(author)}</span></a>'

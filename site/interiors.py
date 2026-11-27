@@ -32,8 +32,8 @@ def down(target="scroll-to"):
     arrow = '<polygon points="12,1 15,1 15,20 22,13 24,15 13.5,26 3,15 5,13 12,20"/>'
     return (
         '<div id="down-arrow"><a class="up" aria-label="Return to page heading" href="#main" hidden>'
-        f'<svg aria-hidden="true" viewBox="0 0 28 28"><title>Return to top</title>{arrow}</svg></a>'
-        f'<a class="down" aria-label="Continue to page content" href="#{target}"><svg aria-hidden="true" viewBox="0 0 28 28">{arrow}</svg></a></div>'
+        f'<svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28"><title>Return to top</title>{arrow}</svg></a>'
+        f'<a class="down" aria-label="Continue to page content" href="#{target}"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28">{arrow}</svg></a></div>'
     )
 
 
@@ -46,43 +46,12 @@ def pixel(url, title, label, *, banner_link=False):
     )
 
 
-def title_hero(identifier, title, subtitle="", *, target="scroll-to", project=False, category="", service=False):
-    column = "col-sm-8" if project or identifier == "blog-hero" and subtitle else "col-sm-10 col-sm-offset-1"
-    if identifier == "projects-hero":
-        column = "col-sm-10 col-md-offset-1"
-    if service:
-        # The original title slot remains inert; the visible title owns the skip target.
-        headings = f'<h1 hidden inert aria-hidden="true"></h1><h1>{title}</h1>'
-    elif project:
-        headings = f'<h1 class="h1 no-margin display-text">{title}</h1><span class="h1 text-muted text-light display-text">{subtitle}</span>'
-    elif subtitle:
-        headings = f'<span class="h1 no-margin display-text">{title}</span><h1 class="text-muted text-light display-text">{subtitle}</h1>'
-    else:
-        headings = (f'<div class="small blog-date"><b class="text-muted">{category}</b></div>' if category else "") + f'<h1>{title}</h1>'
-    if project or identifier == "blog-hero" and subtitle:
-        headings = edit_slot("center-btns") + headings
-    elif identifier == "blog-hero" and not service:
-        headings += '<p class="blog-author">Ridgefolio LLC</p>'
-    style = "padding-tb-250" + (" bg-muted" if identifier == "projects-hero" else "")
-    return (
-        f'<section id="{identifier}" class="{style}"><div class="container"><div class="row"><div class="{column} caption-wrap v-align">'
-        f'<div class="caption-inner">{headings}{down(target)}</div></div></div></div></section>'
-    )
-
-
 def image_banner(src, alt, url, title, action, extra="", *, editable=False):
     edit = edit_slot("banner-btn") if editable else ""
     responsive = ""
-    if src.startswith("/assets/article-evidence/") and src.endswith(".webp") and not src.endswith("/capability-sheet.webp"):
-        stem = src.removesuffix(".webp")
-        responsive = f' srcset="{stem}-960.webp 960w, {stem}-1920.webp 1920w, {src} 3840w" sizes="100vw" width="3840" height="2560"'
-    elif src == "/assets/cgs-atlas/overview-3840.webp":
+    if src == "/assets/cgs-atlas/overview-3840.webp":
         candidates = ", ".join(f"/assets/cgs-atlas/overview-{width}.webp {width}w" for width in (960, 1536, 2560, 3840, 4320))
         responsive = f' srcset="{candidates}" sizes="min(2160px, 100vw)" width="3840" height="2560"'
-    elif src == "/assets/article-evidence/capability-sheet.webp":
-        responsive = ' width="2720" height="3520"'
-    elif src == "/assets/editorial/civic-center-3840.webp":
-        responsive = ' srcset="/assets/editorial/civic-center-768.webp 768w, /assets/editorial/civic-center-1440.webp 1440w, /assets/editorial/civic-center-1920.webp 1920w, /assets/editorial/civic-center-3200.webp 3200w, /assets/editorial/civic-center-3840.webp 3840w" sizes="100vw" width="3840" height="2560"'
     return (
         f'<div id="blog-lg-img" class="relative" data-presentation="{extra}">{edit}<div class="cover"></div>'
         f'<img class="full-img" src="{escape(src, quote=True)}"{responsive} alt="{escape(alt, quote=True)}">'
@@ -105,29 +74,32 @@ def catalogue(demos=False):
     title, subtitle = ("Interactive", "demonstrations") if demos else ("Engineering", "services")
     description = (
         "Find a service as a resident, review a permit as a staff member or reconcile a report. All three demos use fictional records and run in your browser."
-        if demos else "Explore the work involved in publishing a public website, reviewing an application or reconciling a report. Each service includes a working example."
+        if demos else "See how we plan a public website, move a form through staff review or reconcile a report with its source data."
     )
-    first_label = "Explore the demos" if demos else "Explore services"
+    directory_items = []
+    for service, (_, demo_name, _, _) in zip(SERVICES, DEMOS, strict=True):
+        url = f'/demos/{service["demo"]}/' if demos else f'/services/{service["slug"]}/'
+        name = demo_name if demos else service["title"]
+        action = {
+            "finder": "Find an application",
+            "permit-desk": "Review a permit",
+            "service-ledger": "Reconcile service hours",
+        }[service["demo"]] if demos else service["label"]
+        directory_items.append(f'<li><a href="{url}"><span><strong>{escape(name)}</strong><small>{escape(action)}</small></span>{RIGHT_ARROW}</a></li>')
+    first_label = "How the tools work" if demos else "Compare service scopes"
     lead = (
-        '<section id="apps" class="apps-hero"><div class="container"><div class="row">'
-        f'<div class="col-md-4 v-align">{edit_slot("center-btns")}<h1 class="h1">{title}<br><span class="text-muted">{subtitle}</span></h1>'
-        f'<p class="lead"><span>{description}</span></p><p>{button("#scroll-to", first_label, True)} {button("/work/", "Selected work")}</p>{down()}</div>'
-        '<div class="col-md-7 col-md-offset-1 rotating-apps equal padding-tb-150" aria-hidden="true">'
-        '<div class="rotaing"><div class="one"></div><div class="two"></div><div class="three"></div></div></div></div></div></section>'
+        '<section id="apps" class="apps-hero catalogue-intro"><div class="container"><div class="row">'
+        f'<div class="col-md-5 v-align"><h1 class="h1">{title}<br><span class="text-muted">{subtitle}</span></h1>'
+        f'<p class="lead">{description}</p><a class="catalogue-compare" href="#scroll-to">{first_label}</a></div>'
+        '<div class="col-md-6 col-md-offset-1"><ul class="catalogue-shortcuts">'
+        + "".join(directory_items) + '</ul></div></div></div></section>'
     )
-    headline = (
-        'Three tasks for delivering public services.<br><span class="text-muted">Try each one in your browser.</span>'
-        if demos else 'Public websites, workflows and data.<br><span class="text-muted">Explore three scopes of work.</span>'
-    )
-    intro = (
-        '<section id="scroll-to" class="padding-tb-150"><div class="container" id="catalogue"><div class="row">'
-        f'<div class="col-md-10 col-md-offset-1">{edit_slot("title-edit-btn")}<h2 class="h1 text-center">{headline}</h2></div></div></div></section>'
-    )
+    intro = '<div id="scroll-to" class="catalogue-anchor"><span id="catalogue"></span></div>'
     demo_info = {slug: (name, desc) for slug, name, desc, _ in DEMOS}
     captions = {
-        "finder": ("Two services match a search for “park”.", "Check what to prepare before applying."),
-        "permit-desk": ("The approval keeps the full review history.", "A reviewer asks which entrance to use."),
-        "service-ledger": ("Six sample records add up to 32 service hours.", "Two records in the South district account for 10 hours."),
+        "finder": "Check what to prepare before applying.",
+        "permit-desk": "The corrected location is back with the reviewer.",
+        "service-ledger": "Two records in the South district account for 10 hours.",
     }
     bands = []
     for index, service in enumerate(SERVICES):
@@ -143,11 +115,9 @@ def catalogue(demos=False):
         tile = pixel(demo_url if demos else service_url, demo_name if demos else service["short"], "Open demo" if demos else "View scope")
         secondary_url, secondary_label = (service_url, "View service scope") if demos else (demo_url, f"Try {demo_name.lower()}")
         secondary = f'<a href="{secondary_url}">{escape(secondary_label)}</a>'
-        state = "demo" if demos else "scope"
-        scope_caption, demo_caption = captions[slug]
-        caption = escape(demo_caption if demos else scope_caption, quote=True)
-        artwork = f"/assets/directory-evidence/{slug}-{state}"
         if demos:
+            caption = escape(captions[slug], quote=True)
+            artwork = f"/assets/directory-evidence/{slug}-demo"
             scene = (
                 f'<div class="app-img-{side}" style="--capture:url({artwork}-wide.webp);--capture-narrow:url({artwork}-narrow.webp)" '
                 f'data-caption="{caption}" role="img" aria-label="{escape(demo_name)} demonstration. {caption}"><div class="cover"></div></div>'
@@ -184,7 +154,7 @@ def work_index():
             f'<p class="h3">{ed.WORK_TITLES[slug]}<small>{ed.WORK_CAPTIONS[slug]}</small></p></a></div></div></div>'
         )
     return shell(
-        title_hero("projects-hero", "Selected work", "Founder projects", target="top-projects")
+        reader_heading("Selected work", "Founder projects", "<p>Public research tools, open-source software and model evaluations by Rishabh Sinha.</p>", identifier="projects-hero")
         + '<section id="top-projects"><div class="container" id="catalogue"><div class="row">' + edit_slot("center-btns col-md-offset-1 col-md-12") + '</div><div class="row project-feed">'
         + "".join(cards) + '</div><div class="pagination" hidden><a class="pagination__next"></a></div>'
         + '<div class="scroller-status" hidden><div class="infinite-scroll-request loader-ellips"></div>'
@@ -221,8 +191,7 @@ def resource_index():
             f'sizes="(max-width: 991px) calc(100vw - 80px), min(1090px, 83vw)" alt="{caption}"></a></div></div></article>'
         )
     return shell(
-        title_hero("blog-hero", "Buyer resources", "Planning guides")
-        + documentary_banner("library-interior", ed.PDF, "Capability statement", "Open PDF", editable=True)
+        reader_heading("Buyer resources", "", "<p>Prepare a project brief, check a website before launch or download our one-page capability statement.</p>")
         + '<section id="scroll-to" class="padding-tb-150"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1">' + edit_slot("center-btns")
         + "".join(items) + "</div></div></div></section>", "blog-page",
     )
@@ -233,7 +202,7 @@ def contact():
     return shell(
         '<section id="contact-hero" class="padding-tb-150"><div class="container"><div class="row">'
         '<div class="col-md-5 caption-wrap"><div class="caption-inner padding-tb-150">' + edit_slot("center-btns") +
-        '<span class="h1 no-margin">Contact Ridgefolio</span><h1 class="text-muted text-light">Start a<br>conversation about<br>your next<br>software project.</h1>'
+        '<h1>Contact Ridgefolio</h1><p class="contact-intro">Tell us about the software, its users and your timeline.</p>'
         '<address><strong>Ridgefolio LLC</strong><br>Independent software engineering<br>Public agencies and delivery partners<br><abbr title="Location">Based in</abbr> California<br><abbr title="Delivery">Delivery</abbr> online</address>'
         f'<address><strong>Contact email</strong><br><a href="mailto:{email}"><span>{email}</span></a><br>'
         f'{button(navigation.BOOK, "Book a 30-minute call", True)}</address>'
@@ -266,7 +235,7 @@ def split_intro(body):
 
 
 def article_subheading(title):
-    return f'<p class="article-subheading" role="heading" aria-level="2"><span><strong>{title}</strong></span></p>'
+    return f'<h2 class="article-subheading">{title}</h2>'
 
 
 def article_sections(content):
@@ -325,17 +294,16 @@ def service_article(service):
     demo_url = f'/demos/{service["demo"]}/'
     demo_name = next(title for slug, title, *_ in DEMOS if slug == service["demo"])
     parts = [
-        f'<p><span><strong>{escape(service["intro"])}</strong></span></p>',
         f'<p>{escape(service["need"])}</p><p>{escape(context)}</p>',
         f'<p>Try the <a href="{demo_url}">{escape(demo_name.lower())} demonstration</a>. {escape(example)}</p>',
         *(f'<p>{escape(paragraph)}</p>' for paragraph in (first, second, third)),
     ]
-    for index, ((name, description), check) in enumerate(zip(service["items"], checks, strict=True), 1):
-        parts.append(f'<h1 role="heading" aria-level="2">{index}. {escape(name)}</h1><p>{escape(description)}</p><p>{escape(check)}</p>')
+    for (name, description), check in zip(service["items"], checks, strict=True):
+        parts.append(f'<h2 class="service-step">{escape(name)}</h2><p>{escape(description)}</p><p>{escape(check)}</p>')
     guide = f'/resources/{service["guide"]}/'
     parts.extend((
-        '<h1 role="heading" aria-level="2">4. Scope and acceptance</h1>',
-        f'<p>{escape(service["test"])}</p><p>{escape(service["scope"])}<br><br></p>',
+        '<h2 class="service-step">Scope and acceptance</h2>',
+        f'<p>{escape(service["test"])}</p><p>{escape(service["scope"])}</p>',
         f'<div class="article-related"><a href="{guide}">Open the planning guide</a> · <a href="/pricing/">Scope and pricing</a></div>',
     ))
     return "".join(parts)
@@ -346,7 +314,7 @@ def article_figure(path):
         return (
             '<figure class="article-document"><img src="/assets/article-evidence/capability-sheet.webp" '
             'width="2720" height="3520" loading="lazy" alt="The one-page Ridgefolio capability statement, including services, delivery process and company contact information.">'
-            f'<figcaption><a href="{ed.PDF}">Read the capability statement as a PDF</a></figcaption></figure>'
+            f'<figcaption><a href="{ed.PDF}">Open the one-page PDF</a></figcaption></figure>'
         )
     if path == "/demos/permit-desk/":
         receipt = Path(__file__).resolve().parents[1] / "public" / ed.RECEIPT.lstrip("/")
@@ -388,80 +356,63 @@ def article_figure(path):
         article_subheading(title) + extract
         + '<figure class="article-illustration"><img src="/assets/article-evidence/permit-approval.webp" '
         'srcset="/assets/article-evidence/permit-approval-720.webp 720w, /assets/article-evidence/permit-approval-1440.webp 1440w, /assets/article-evidence/permit-approval.webp 2560w" '
-        'sizes="(min-width:1400px) 1110px, (min-width:992px) 80vw, calc(100vw - 60px)" width="2560" height="1141" loading="lazy" '
+        'sizes="(min-width:1400px) 1110px, (min-width:992px) 80vw, calc(100vw - 60px)" width="2560" height="1635" loading="lazy" '
         'alt="Approved permit RF-101 for Neighborhood art fair at Harbor Square, east entrance. The case file preserves the request for correction and the resubmission.">'
         f'<figcaption>The permit desk after approval. <a href="{ed.RECEIPT}">Read the exported receipt</a>.</figcaption></figure>'
         f'<p><a href="{ed.EXAMPLE}">Read the complete sample project brief</a></p>'
     )
 
 
-def documentary_banner(stem, url, title, action, *, record="", editable=False):
+def documentary_banner(stem, url, title, action, *, editable=False):
     edit = edit_slot("banner-btn") if editable else ""
-    style = "documentary-pair" if record else "documentary"
-    output = art.record(record) if record else ""
     return (
-        f'<div id="blog-lg-img" class="relative" data-presentation="{style}" data-plate="{stem}">'
-        + edit + art.photo(stem, sizes="(max-width:799px) 132vw, 100vw" if record else "100vw")
-        + output + art.credit(stem) + pixel(url, title, action, banner_link=True) + '</div>'
+        f'<div id="blog-lg-img" class="relative" data-presentation="documentary" data-plate="{stem}">'
+        + edit + art.photo(stem)
+        + art.credit(stem) + pixel(url, title, action, banner_link=True) + '</div>'
     )
 
 
-def utility_page(title, category, lead, content):
-    heading = (
-        '<section id="blog-hero" class="utility-heading"><div class="container"><div class="row">'
+def reader_heading(title, category, lead, *, action="", identifier="blog-hero"):
+    category_line = f'<p class="reader-category">{escape(category)}</p>' if category else ""
+    return (
+        f'<section id="{identifier}" class="reader-heading"><div class="container"><div class="row">'
         '<div class="col-sm-10 col-sm-offset-1 caption-wrap"><div class="caption-inner">'
-        f'<p class="small blog-date">{category}</p><h1>{title}</h1></div></div></div></div></section>'
+        f'{category_line}<h1>{title}</h1>{lead}{action}</div></div></div></div></section>'
     )
-    return shell(heading + article_body(lead + article_sections(content)), "article-page")
 
 
 def article(path, body):
     title, category, lead, content = split_intro(body)
     if path in ("/search/", "/404.html"):
-        return utility_page(title, category, lead, content)
+        return shell(reader_heading(title, category, lead) + article_body(article_sections(content)), "article-page utility-page")
     if path.startswith("/services/"):
         service = next(item for item in SERVICES if path == f'/services/{item["slug"]}/')
         demo_url = f'/demos/{service["demo"]}/'
         if service["slug"] == "data":
-            banner = image_banner("/assets/cgs-atlas/overview-3840.webp", "The 141 records in the industrial parks dataset, clustered across the Indonesian archipelago", demo_url, "Working example", "Open demo", "atlas-plate", editable=True)
+            banner = image_banner("/assets/cgs-atlas/overview-3840.webp", "Industrial park locations from the UMD research dashboard. The inset shows the concentration in West Java.", demo_url, "Working example", "Open demo", "atlas-plate", editable=True)
         else:
             stem = "public-terminals" if service["slug"] == "websites" else "public-market"
             banner = documentary_banner(stem, demo_url, "Working example", "Open demo", editable=True)
-        return shell(title_hero("blog-hero", title, service=True) + banner + article_body(service_article(service)), "article-page")
-    if path == "/pricing/":
-        banner = documentary_banner("railway-plan", "#scroll-to", "Plan the estimate", "Open guide")
-    elif path == "/resources/project-brief/":
-        banner = documentary_banner("library-elevation", "#scroll-to", "Build a project brief", "Open guide", record="brief")
-    elif path == "/resources/launch-checklist/":
-        banner = documentary_banner("reading-by-touch", "#scroll-to", "Open checklist", "Open guide", record="checklist")
-    elif path == "/resources/capabilities/":
-        banner = image_banner("/assets/article-evidence/capability-sheet.webp", "Ridgefolio’s complete one-page capability statement", ed.PDF, "Capability statement", "Open PDF", "portrait-document")
-    elif path == "/demos/service-ledger/":
-        banner = documentary_banner("service-areas", "#scroll-to", "Try the demo", "Open workspace", record="ledger")
-    elif path == "/demos/finder/":
-        banner = (
-            '<div id="blog-lg-img" class="relative" data-presentation="finder-demonstration">'
-            + art.photo("kiosk", sizes="(max-width:480px) 140vw, 100vw") + '<figure class="search-record"><figcaption>Service finder · Sample result</figcaption>'
-            '<p class="record-name">Community event permit requirements</p><p>For a gathering in a park or public square. '
-            'Prepare the event name, location and a short description.</p></figure>' + art.credit("kiosk")
-            + pixel("#scroll-to", "Try the demo", "Open workspace", banner_link=True) + '</div>'
-        )
-    else:
-        banner = (
-            '<div id="blog-lg-img" class="relative" data-presentation="permit-demonstration">'
-            '<figure class="permit-result"><figcaption>Community event permit · Fictional example</figcaption>'
-            '<p class="record-name">RF-101</p><p>Neighborhood art fair<br>Harbor Square, east entrance</p>'
-            f'<a href="{ed.RECEIPT}">Read the approved receipt</a></figure>'
-            '<div class="permit-interface"><img src="/assets/article-evidence/permit-desk.webp" '
-            'srcset="/assets/article-evidence/permit-desk-960.webp 960w, /assets/article-evidence/permit-desk-1920.webp 1920w, /assets/article-evidence/permit-desk.webp 3840w" '
-            'sizes="(min-width:800px) 54vw, 100vw" width="3840" height="2560" alt="Actual permit desk showing staff review and the case history after resubmission."></div>'
-            + pixel("#scroll-to", "Try the demo", "Open workspace", banner_link=True) + '</div>'
-        )
+        heading = reader_heading(title, service["label"], f'<p>{escape(service["intro"])}</p>', action=down())
+        return shell(heading + banner + article_body(service_article(service)), "article-page service-reading")
     figure = article_figure(path)
     if path == "/demos/permit-desk/":
         content = re.sub(r'<p class="wrap receipt-download">.*?</p>', figure, content, count=1)
         figure = ""
-    return shell(title_hero("blog-hero", title, category=category) + banner + article_body(lead + article_sections(content) + figure), "article-page")
+    family = "article-page task-reading"
+    if path == "/pricing/":
+        family += " pricing-reading"
+        # Keep the actual estimate and worked example close to the buyer's action.
+        title = "Scope and pricing"
+    if path == "/resources/capabilities/":
+        title, category = "Capability statement", "Ridgefolio LLC"
+        family += " capability-reading"
+    if path == "/resources/project-brief/":
+        title = title.rstrip(".")
+    if path.startswith("/demos/"):
+        category = "Interactive demonstration"
+    heading = reader_heading(title, category, lead)
+    return shell(heading + article_body(article_sections(content) + figure), family)
 
 
 def about(path, body):
@@ -494,7 +445,7 @@ def about(path, body):
     }
     plate_width = "107vw" if slug == "partners" else "100vw"
     if slug != "practice":
-        label = "Working together"
+        label = ""
     if slug == "practice":
         cover = '<div class="cover-half about-portrait" role="img" aria-label="Portrait of Rishabh Sinha"></div>'
     elif slug == "agencies":
@@ -508,9 +459,10 @@ def about(path, body):
         artifact = artifact.replace("/assets/editorial/capability-page.webp", "/assets/article-evidence/capability-sheet.webp")
         cover = f'<div class="cover-half about-portrait">{artifact}</div>'
     lead = lead.replace("<p>", '<p class="lead">', 1)
+    eyebrow = f'<p class="reader-category">{label}</p>' if label else ""
     hero = (
         f'<section id="about-hero" class="about-{slug}">{cover}<div class="container"><div class="row">'
-        f'<div class="col-sm-5 caption-wrap v-align"><div class="caption-inner">{edit_slot("center-btns")}<span class="h1 no-margin display-text">{label}</span>'
+        f'<div class="col-sm-5 caption-wrap v-align"><div class="caption-inner">{edit_slot("center-btns")}{eyebrow}'
         f'<h1 class="text-muted text-light display-text">{title}</h1>{lead}<p>{primary}</p>{down()}</div></div></div></div></section>'
     )
     first, _, remaining = content.partition("</section>")
@@ -549,23 +501,26 @@ def about(path, body):
         + f'<a class="plate-credit" href="{caption_url}">{caption_text} <span aria-hidden="true">↗</span></a>'
         + '</div>'
     )
-    records = (
-        ("Exposure Is Not Commitment", "Rishabh Sinha", ed.PAPER, "Read the research paper"),
-        ("Mapping Indonesia’s industrial parks", "Center for Global Sustainability", "/work/industrial-parks/", "Read the case study"),
-        ("kvcached v0.1.6", "Open-source release", "/work/open-source/", "Inspect the contributions"),
-    )
-    records_html = "".join(
-        f'<div class="item" id="project-record-{i}"><blockquote class="h3">{name}</blockquote><p><b>{credit}</b> <span class="text-muted">· <a href="{url}">{action}</a></span></p></div>'
-        for i, (name, credit, url, action) in enumerate(records, 1)
-    )
-    record_nav = '<nav class="project-record-nav" aria-label="Jump to a project record">' + "".join(
-        f'<a href="#project-record-{i}" aria-label="Show {name}">{i}</a>' for i, (name, *_) in enumerate(records, 1)
-    ) + '</nav>'
+    related = {
+        "agencies": (
+            ("Build a project brief", "/resources/project-brief/", "Describe the service and its acceptance tests."),
+            ("Try a staff review", "/demos/permit-desk/", "Return an application, approve a correction and inspect the receipt."),
+        ),
+        "partners": (
+            ("Read the capability statement", "/resources/capabilities/", "Review the work Ridgefolio can take on as a subcontractor."),
+            ("Inspect the release work", "/work/open-source/", "Follow two reviewed changes through an open-source release."),
+        ),
+        "practice": (
+            ("Mapping Indonesia’s industrial parks", "/work/industrial-parks/", "Website engineering at the University of Maryland."),
+            ("AI monitor evaluation", "/work/evaluation/", "Read Rishabh’s evaluation methods and published results."),
+        ),
+    }
     proof = (
-        '<section id="inner-quotes" class="bg-muted"><div class="container-fluid"><div class="row">'
-        f'<div class="quotes-carousel owl-carousel owl-theme" tabindex="0" role="region" aria-label="Project records">{records_html}</div>{record_nav}</div></div></section>'
+        '<section class="related-reading"><div class="container"><h2>Related work and resources</h2><ul>'
+        + "".join(f'<li><a href="{url}"><strong>{name}</strong><small>{detail}</small></a></li>' for name, url, detail in related[slug])
+        + '</ul></div></section>'
     )
-    return shell(hero + belief + leaders + plate + proof, "about-page")
+    return shell(hero + belief + leaders + (plate if slug != "agencies" else "") + proof, "about-page")
 
 
 def project(path, body):
@@ -618,8 +573,8 @@ def project(path, body):
 
     responsive = (
         '<section id="responsive" class="padding-tb-150"><div class="container"><div class="row">'
-        f'<div class="col-md-5"><div class="sticky-element">{edit_slot("title-btn")}<h2 class="h1">{full_title}</h2>'
-        + summary.replace("<p>", '<p class="lead">') + '<p>' + button(source_url, source_text, True) + '</p></div></div>'
+        f'<div class="col-md-5"><div class="sticky-element">{edit_slot("title-btn")}<h2 class="h1">{"The reviewed change" if slug == "open-source" else "The published evaluation"}</h2>'
+        + f'<p class="lead">{("The merged pull request documents the removal of temporary worker sockets at shutdown." if slug == "open-source" else "Read the monitor scores alongside the test conditions for each model.")}</p>' + '<p>' + button(source_url, source_text, True) + '</p></div></div>'
         + f'<div class="col-md-6 col-md-offset-1 responsive-shots"><a href="{shot_link}" class="project-shot-link"><img class="shot1" src="{shot_src}" alt="{shot_alt}" width="{shot_width}" height="{shot_height}" loading="lazy"></a>'
         + f'<img class="shot2 sticky-element" src="{inset_src}" alt="{inset_alt}" width="{inset_width}" height="{inset_height}" loading="lazy"></div></div></div></section>'
     )
@@ -634,7 +589,7 @@ def project(path, body):
         f'<div id="project-end-image" class="relative"><div class="cover"></div><img class="full-img" src="{closing_src}"{closing_sources} alt="{closing_alt}" width="{closing_width}" height="{closing_height}" loading="lazy">'
         f'<a class="plate-credit" href="{closing_link}">{closing_label} <span aria-hidden="true">↗</span></a></div>'
     )
-    return shell(title_hero("project-hero", title, collection, target="responsive", project=True) + banner + responsive + features + closing, "project-page")
+    return shell(reader_heading(full_title, title + " · " + collection, summary, action=down("responsive"), identifier="project-hero") + banner + responsive + features + closing, "project-page")
 
 
 def case_study(body):
@@ -674,8 +629,6 @@ def case_study(body):
         proof.append(f'<div class="feedback">{copy}<span class="feedback-person"><a href="{url}">{text}</a></span></div>')
 
     from cgs import region_figure
-    overview += ('<p class="map-photograph-credit">Photograph of Indonesia Morowali Industrial Park in Central Sulawesi, July 2023. '
-                 '<a href="https://commons.wikimedia.org/wiki/File:Morowali_Industrial_Park.jpg">Ministry of Public Works of Indonesia</a>.</p>')
     regional_chart = region_figure()
     approach = paired_dividers((implementation[1], engineering[0] + regional_chart), (engineering[1], engineering[2]), implementation[0])
     maintenance = paired_dividers((engineering[3], engineering[4]), (engineering[5], engineering[6]))
@@ -684,7 +637,7 @@ def case_study(body):
         '<div id="slider"><div id="blur"></div><ul class="bxslider"><li><img class="cgs-hero-photo" src="/assets/cgs-atlas/morowali-1920.webp" '
         'srcset="/assets/cgs-atlas/morowali-960.webp 960w, /assets/cgs-atlas/morowali-1920.webp 1920w, /assets/cgs-atlas/morowali-2560.webp 2560w, /assets/cgs-atlas/morowali-4000.webp 4000w, /assets/cgs-atlas/morowali-4639.webp 4639w" '
         'sizes="(max-width: 700px) max(100vw, 740px), 100vw" alt="The waterfront cranes and blue-roofed buildings at Indonesia Morowali Industrial Park, with forested hills beyond" fetchpriority="high"></li></ul>'
-        '<div class="container left"><div id="caption">Morowali, Central Sulawesi<br><small>Indonesia · July 2023</small></div></div><div class="container right"><div class="row">'
+        '<div class="container left"><a id="caption" href="https://commons.wikimedia.org/wiki/File:Morowali_Industrial_Park.jpg">Morowali, Central Sulawesi<br><small>July 2023 · Ministry of Public Works of Indonesia</small></a></div><div class="container right"><div class="row">'
         '<div class="col-md-7 col-md-offset-5 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">'
         f'<div id="white-block" class="fillRight">{edit_slot(link=True)}<strong>Center for Global Sustainability</strong><h1>{title}</h1></div></div></div></div></div>'
     )

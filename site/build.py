@@ -391,10 +391,95 @@ add(
 
 def demo_body(slug):
     if slug == "finder":
-        return '<label for="service-query">Search services</label><input id="service-query" type="search" placeholder="Try permit, road or park"><p id="match-count" role="status"></p><div id="finder-results"></div>'
+        services = [
+            ("permit", "Community event permit", "Permits", "Community services", "For a gathering in a park or public square.",
+             ["Event name and proposed location", "Entrance or assembly point", "A short description of the event"], "festival gathering event application public square"),
+            ("roads", "Street repair request", "Roads", "Street maintenance", "Report a pothole or damaged street surface.",
+             ["Nearest street or intersection", "Direction of travel", "A description of the damaged surface"], "road street potholes damage maintenance pavement"),
+            ("parks", "Park shelter reservation", "Parks", "Parks and recreation", "Reserve a picnic shelter for a community activity.",
+             ["Preferred park and shelter", "Proposed date and an alternate date", "Estimated group size"], "parks picnic pavilion reserve booking shelter reservation"),
+            ("records", "Public records request", "Records", "Records office", "Identify public records you want to inspect.",
+             ["A description of the records", "Approximate date range", "Preferred delivery format"], "records record documents documents copy archive disclosure"),
+        ]
+        paths = {
+            "permit": "M6 5h12v15H6z M9 3v4m6-4v4M9 11h6m-6 4h4",
+            "roads": "m5 20 4-16m10 16L15 4m-3 0v3m0 3v4m0 3v3",
+            "parks": "M3 11 12 4l9 7H3zm3 0v9m12-9v9M8 16h8m-6 0-1 4m5-4 1 4",
+            "records": "M4 7h6l2 2h8v10H4z M6 5h6l2 2h4",
+        }
+        cards = []
+        for key, name, topic, office, desc, requirements, terms in services:
+            items = "".join(f"<li>{item}</li>" for item in requirements)
+            action = '<a class="demo-action" href="/demos/permit-desk/#workspace">Try the permit application</a>' if key == "permit" else ""
+            cards.append(
+                f'<details class="finder-card" data-service="{key}" data-topic="{topic}" data-keywords="{terms}" name="finder-service">'
+                f'<summary><span class="service-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{paths[key]}"/></svg></span><span class="service-label"><small>{topic}</small>'
+                f'<strong>{name}</strong></span><span class="disclosure-glyph" aria-hidden="true"></span></summary>'
+                f'<div class="service-detail"><p>{desc}</p><div class="service-prep"><h4>What to prepare</h4><ul>{items}</ul></div>'
+                f'<p class="service-owner">Example routing <b>{office}</b></p><div class="record-actions">{action}'
+                f'<button class="demo-secondary checklist-download" type="button" hidden>Download checklist</button></div></div></details>'
+            )
+        topics = ["All topics", "Permits", "Roads", "Parks", "Records"]
+        tabs = "".join(f'<button type="button" data-topic="{name}" aria-pressed="{str(i == 0).lower()}">{name}</button>' for i, name in enumerate(topics))
+        return (
+            '<div class="workspace-head"><div><span class="demo-eyebrow">Resident services</span><h3>Service directory</h3></div><span class="workspace-note">Fictional service guide</span></div>'
+            '<div class="workspace-content"><div class="finder-tools" hidden><label for="service-query">Search services</label>'
+            '<div class="finder-search"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15 15 6 6" stroke="currentColor" stroke-width="1.7"/></svg>'
+            '<input id="service-query" type="search" placeholder="Search by service or keyword" maxlength="100" autocomplete="off"></div>'
+            f'<div class="topic-switch" role="group" aria-label="Filter by topic">{tabs}</div></div>'
+            '<p id="match-count" role="status" aria-live="polite">4 matching services</p><div id="finder-results">' + "".join(cards) + '</div>'
+            '<div class="finder-empty" hidden><strong>No services match those filters.</strong><p>Try another keyword or browse the full directory.</p>'
+            '<button type="button" class="demo-secondary" id="finder-clear">Show all services</button></div></div>'
+        )
     if slug == "permit-desk":
-        return """<div class="desk-grid"><section class="desk-panel"><div class="tag">Resident and staff views</div><h2 id="desk-heading">Application intake</h2><div id="desk-step"></div></section><aside class="receipt"><span class="tag">Case file</span><h3>Community event permit</h3><p id="desk-status" role="status"></p><ol id="desk-history"></ol><button type="button" class="quiet" id="desk-reset">Reset demo</button></aside></div>"""
-    return """<label for="district">District</label><select id="district"><option>All districts</option><option>North</option><option>Central</option><option>South</option></select><p role="status" id="ledger-summary"></p><div class="ledger-chart" id="ledger-chart"></div><div class="scroll-table"><table><caption>Fictional service records</caption><thead><tr><th scope="col">Record</th><th scope="col">District</th><th scope="col">Service</th><th scope="col">Hours</th></tr></thead><tbody id="ledger-rows"></tbody></table></div><button id="export-ledger">Download filtered CSV</button>"""
+        return (
+            '<div class="workspace-head"><div><span class="demo-eyebrow">Community event permit</span><h3>Permit desk</h3></div><span class="workspace-note">Fictional case · This tab only</span></div>'
+            '<noscript><p class="workspace-offline">The interactive review needs JavaScript. <a href="/downloads/sample-permit-receipt.txt">Read a completed sample permit receipt.</a></p></noscript>'
+            '<div class="permit-live" hidden><ol class="permit-progress" aria-label="Permit stage">'
+            '<li data-stage="intake">Intake</li><li data-stage="review">Staff review</li><li data-stage="decision">Decision</li></ol>'
+            '<div class="desk-grid"><section class="desk-panel" aria-labelledby="desk-heading"><span class="demo-eyebrow" id="desk-role">Resident view</span>'
+            '<h2 id="desk-heading" tabindex="-1">Application intake</h2><div id="desk-step"></div></section>'
+            '<aside class="receipt" aria-label="Case file"><div class="file-heading"><span class="demo-eyebrow">Case file</span><b>RF-101</b></div>'
+            '<p id="desk-status" role="status"></p><h3>Case history</h3><ol id="desk-history"></ol>'
+            '<button type="button" class="demo-secondary" id="desk-reset">Reset demo</button></aside></div></div>'
+        )
+    records = [
+        ("RF-201", "Central", "Permit review", 4, "Review a community event permit and record the staff decision.", [1, 2, 1]),
+        ("RF-202", "North", "Road repair", 9, "Inspect a damaged road surface and complete the repair.", [2, 6, 1]),
+        ("RF-203", "South", "Park reservation", 2, "Check shelter availability and issue a reservation confirmation.", [.5, 1, .5]),
+        ("RF-204", "Central", "Records request", 6, "Locate the requested records and prepare a response.", [1, 4, 1]),
+        ("RF-205", "South", "Road repair", 8, "Inspect a reported pothole and record the completed road repair.", [1, 6, 1]),
+        ("RF-206", "North", "Permit review", 3, "Check a permit correction and complete the final review.", [.5, 2, .5]),
+    ]
+    lines = []
+    for key, district, service, hours, note, parts in records:
+        details = "".join(f'<div><dt>{label}</dt><dd>{value:g} h</dd></div>' for label, value in zip(("Intake", "Delivery", "Closeout"), parts))
+        lines.append(
+            f'<tr class="ledger-record" data-key="{key}" data-district="{district}" data-service="{service}" data-hours="{hours}">'
+            f'<th scope="row"><span class="plain-record">{key}</span><button type="button" class="record-toggle" aria-expanded="false" aria-controls="detail-{key}" hidden>{key}</button></th>'
+            f'<td>{district}</td><td>{service}</td><td class="hour-value">{hours}</td></tr>'
+            f'<tr id="detail-{key}" class="ledger-detail" hidden><td colspan="4"><strong>{note}</strong><dl>{details}</dl></td></tr>'
+        )
+    csv = "Record,District,Service,Hours%0D%0A" + "".join(",".join(str(x) for x in row[:4]).replace(" ", "%20") + "%0D%0A" for row in records)
+    service_options = "".join(f"<option>{service}</option>" for service in sorted({r[2] for r in records}))
+    initial_chart = "".join(
+        f'<div class="district-bar"><span>{district}</span><div aria-hidden="true"><i style="width:{hours / 12:.4%}"></i></div><b>{hours} h</b></div>'
+        for district, hours in [("Central", 10), ("North", 12), ("South", 10)]
+    )
+    return (
+        '<div class="workspace-head"><div><span class="demo-eyebrow">Operations reporting</span><h3>Service ledger</h3></div><span class="workspace-note">Fictional reporting period</span></div>'
+        '<div class="workspace-content"><div class="ledger-filters" hidden><div><label for="district">District</label><select id="district"><option>All districts</option><option>North</option><option>Central</option><option>South</option></select></div>'
+        f'<div><label for="ledger-service">Service</label><select id="ledger-service"><option>All services</option>{service_options}</select></div>'
+        '<div><label for="ledger-sort">Sort records</label><select id="ledger-sort"><option value="record">Record number</option><option value="most">Most hours first</option><option value="fewest">Fewest hours first</option></select></div></div>'
+        '<div class="ledger-overview"><div class="ledger-total"><span class="demo-eyebrow">Service hours</span><strong id="hours-total">32</strong>'
+        '<p id="ledger-summary" role="status">6 records · 32 service hours</p></div><figure class="hours-figure"><figcaption>Hours by district</figcaption>'
+        f'<div id="ledger-chart">{initial_chart}</div></figure></div>'
+        '<div class="table-heading"><h4>Record register</h4><button id="export-ledger" class="demo-secondary" type="button" hidden>Download filtered CSV</button>'
+        f'<noscript><a href="data:text/csv;charset=utf-8,{csv}" download="sample-service-ledger.csv">Download all records</a></noscript></div>'
+        '<div class="scroll-table"><table><caption class="workspace-sr">Fictional service records</caption><thead><tr><th scope="col">Record</th><th scope="col">District</th><th scope="col">Service</th><th scope="col">Hours</th></tr></thead>'
+        '<tbody id="ledger-rows">' + "".join(lines) + '</tbody></table></div>'
+        '<div id="ledger-empty" class="ledger-empty" hidden><strong>No records in this view.</strong><p>Change a district or service to find matching work.</p><button type="button" class="demo-secondary" id="ledger-clear">Clear filters</button></div></div>'
+    )
 
 
 for slug, title, desc, tone in DEMOS:
@@ -402,9 +487,7 @@ for slug, title, desc, tone in DEMOS:
         intro("Interactive demo", title, desc)
         + section(
             "Demo workspace",
-            '<div class="workspace '
-            + tone
-            + '"><p class="workspace-note">Fictional service data · Runs in this tab</p><noscript>Enable JavaScript to use the interactive workspace.</noscript>'
+            f'<div id="workspace" class="workspace demo-workspace {tone}" data-demo="{slug}">'
             + demo_body(slug)
             + "</div>",
         )
@@ -444,7 +527,7 @@ add(
     )
     + section(
         "Find a page",
-        '<form action="/search/" id="search-form"><label for="query">Search pages</label><input name="q" id="query" type="search" placeholder="Try workflow, migration or brief"><button>Search</button></form><p id="results-count" role="status"></p><div id="site-results"></div><noscript><p>Browse <a href="/services/">services</a>, <a href="/work/">selected work</a> or <a href="/resources/">buyer resources</a>.</p></noscript>',
+        '<form action="/search/" id="search-form"><label for="query">Search pages</label><input name="q" id="query" type="search" placeholder="Try workflow, migration or brief"><button>Search</button></form><p id="results-count" role="status"></p><div id="site-results"></div><noscript><p>Site search needs JavaScript. Browse <a href="/services/">services</a>, <a href="/work/">selected work</a> or <a href="/resources/">buyer resources</a>.</p></noscript>',
     ),
     "Search",
 )
@@ -516,6 +599,9 @@ for path, (title, desc, body, group) in pages.items():
         interior_css += f'<link rel="stylesheet" href="/assets/{stylesheet}.css">'
         if path != "/work/industrial-parks/":
             interior_css += '<link rel="stylesheet" href="/assets/interior-art.css">'
+    demo_css = '<link rel="stylesheet" href="/assets/demo-workspaces.css">' if path in {
+        "/demos/finder/", "/demos/permit-desk/", "/demos/service-ledger/",
+    } else ""
     robots = "noindex" if path == not_found else "index,follow"
     social_image, social_alt = ed.social_image(path)
     # Keep the source template’s section ordering and link the skip control to
@@ -531,12 +617,12 @@ for path, (title, desc, body, group) in pages.items():
     sheet = "" if path == "/contact/" else navigation.contact_form()
     landmark = "" if re.search(r"<main\b", body) else ' role="main"'
     page_body = (
-        f'<div class="main-wrap{(" " + family) if family else ""}"{landmark}>{navigation.squares()}{navigation.nav(path)}'
+        f'<div id="top" class="main-wrap{(" " + family) if family else ""}"{landmark}>{navigation.squares()}{navigation.nav(path)}'
         f'{body}{navigation.footer(path)}{sheet}</div>'
     )
     page_body = page_body.replace("↗", LINK_ARROW)
     out.write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/ref-shell.css"><link rel="stylesheet" href="/assets/motion-icons.css">{scripts}</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/ref-shell.css"><link rel="stylesheet" href="/assets/motion-icons.css">{demo_css}{scripts}</head>
 <body id="{template_id}" class="rz-page {body_class}"><a class="skip" href="#{target}">Skip to content</a>{page_body}</body></html>''')
 (PUBLIC / "assets/search.json").write_text(json.dumps(index, ensure_ascii=False))
 (PUBLIC / "sitemap.xml").write_text(

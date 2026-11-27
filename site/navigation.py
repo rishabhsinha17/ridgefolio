@@ -117,7 +117,7 @@ def footer(path):
       <p class="small">Browse services, software examples and buyer resources.</p></form>
       <div class="social"><span>Quick links</span>{icons}</div></div></div></div></footer>
       <div class="copyright"><div class="container"><div class="row"><div class="col-sm-6">{credit_slot}© 2026 Ridgefolio LLC · California</div>
-      <div class="col-sm-6 text-right">{menu_slot}{link("/pricing/", "Scoping and pricing")} | {link("/contact/", "Contact")}</div></div></div></div>'''
+      <div class="col-sm-6 text-right">{menu_slot}{link("/pricing/", "Scoping and pricing")} | {link("/contact/", "Contact")} | <a class="footer-return" href="#top">Back to top</a></div></div></div></div>'''
 
 
 def contact_form():

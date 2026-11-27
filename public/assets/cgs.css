@@ -188,3 +188,14 @@
 .atlas-symbol .cluster-place.sulawesi {bottom:auto;top:calc(100% + 3px);left:100%;}
 .atlas:not(.interactive) .group-legend,.atlas-wrap:not(:has(.interactive)) .interactive-note {display:none;}
 .atlas-viewport[data-basemap="vector"] {background:#c4dce0;}
+
+@media screen {
+  .case-page .chart-table .table-scroll:focus-visible {outline:2px solid var(--forest);outline-offset:2px}
+  .case-page .chart-table summary {padding-block:7px}
+  .case-page .chart-table td,.case-page .chart-table th {font-variant-numeric:tabular-nums}
+}
+@media (max-width:767px) {
+  .case-page .chart-table th:first-child {position:sticky;left:0;background:#f7f6eb;box-shadow:1px 0 #becbbd}
+  .case-page .atlas-tools select {min-height:44px}
+  .case-page .data-exhibit {padding:16px 12px}
+}

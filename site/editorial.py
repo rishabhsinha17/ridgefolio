@@ -90,17 +90,22 @@ def social_image(path):
         return "/assets/home-evidence/homepage-share.jpg", "Ridgefolio’s homepage with its public agency project gallery"
     if path == "/work/industrial-parks/":
         return "/assets/cgs-atlas/morowali-share.jpg", "Daylight at Morowali Industrial Park in Central Sulawesi, Indonesia"
+    work_previews = {
+        "/demos/finder/": ("finder", "Ridgefolio’s service finder and the community event permit entry"),
+        "/demos/permit-desk/": ("permit-desk", "An application under review in Ridgefolio’s permit desk"),
+        "/demos/service-ledger/": ("service-ledger", "Filtered district records in Ridgefolio’s service ledger"),
+        "/resources/project-brief/": ("project-brief", "A worked project brief for the permit desk"),
+        "/resources/launch-checklist/": ("launch-checklist", "The website launch checklist"),
+        "/pricing/": ("scope-brief", "A completed project scope and acceptance criteria"),
+    }
+    if path in work_previews:
+        filename, description = work_previews[path]
+        return f"/assets/article-evidence/{filename}-1920.webp", description
     photographic_previews = {
         "/services/": ("public-terminals", "Public computer terminals at the Patterson Park library"),
         "/services/websites/": ("public-terminals", "Public computer terminals at the Patterson Park library"),
-        "/services/workflows/": ("public-market", "Shoppers at Alexandria’s Old Town Farmers’ Market"),
-        "/demos/finder/": ("kiosk", "Information kiosk on Market Street in San Francisco"),
-        "/demos/service-ledger/": ("service-areas", "Map of Washington, D.C., library collections in 1926"),
-        "/resources/": ("library-interior", "Interior of the Allen County Public Library"),
-        "/resources/project-brief/": ("library-elevation", "Historic architectural elevation of Taunton’s Carnegie library"),
-        "/resources/launch-checklist/": ("reading-by-touch", "A woman reading braille in an archival photograph"),
-        "/pricing/": ("railway-plan", "Historic measured plan of San Francisco’s cable railway powerhouse"),
-        "/for/agencies/": ("innovation-center", "Daylight at the Route 9 Library and Innovation Center"),
+        "/services/workflows/": ("public-market", "Old Town Farmers’ Market in Alexandria"),
+        "/for/agencies/": ("innovation-center", "The Route 9 Library and Innovation Center"),
         "/for/partners/": ("review-changes", "Published changes to the kvcached worker cleanup workflow"),
         "/work/open-source/": ("review-changes", "The reviewed changes in kvcached pull request 480"),
     }

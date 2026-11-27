@@ -139,6 +139,10 @@
     const pause = setupRotation(carousel, dots, label + 's', () => move(1));
     carousel.replaceChildren(viewport, nav, dots);
 
+    const recordPanel = records ? document.querySelector('#quotes #about') : null;
+    const illustration = recordPanel?.querySelector('.client-shot');
+    const firstImageSources = illustration?.getAttribute('srcset');
+    const firstImage = illustration?.getAttribute('src');
     let selected = edge;
     let settleTimer;
     let isDragging = false;
@@ -162,6 +166,24 @@
         item.classList.toggle('active', rect.right > bounds.left + 2 && rect.left < bounds.right - 2);
       });
       items.forEach((item, index) => item.classList.toggle('center', !records && index === closest));
+      if (illustration && recordPanel.offsetWidth) {
+        const art = sequence[closest].dataset;
+        if (illustration.dataset.art !== art.art) {
+          // The initial photograph has a responsive source set. Later records
+          // have their own intrinsic sizes and carry their own source credit.
+          if (art.art === slides[0].dataset.art && firstImageSources) {
+            illustration.setAttribute('srcset', firstImageSources);
+            illustration.src = firstImage;
+          } else {
+            illustration.removeAttribute('srcset');
+            illustration.src = art.art;
+          }
+          illustration.dataset.art = art.art;
+          illustration.alt = art.alt;
+          recordPanel.dataset.credit = art.credit;
+          recordPanel.dataset.artKind = art.artKind;
+        }
+      }
       return closest;
     }
     function align(index, smooth) {

@@ -90,8 +90,34 @@ console.log(
 
 // Verify the draft in an isolated JavaScript context without a browser or OS handler.
 const siteScript = readFileSync(resolve(root, "assets/site.js"), "utf8");
-const isolated = { document: { getElementById: () => null } };
+const field = label => ({
+  labels: [{textContent: label}], value: "", message: "", onInput: null,
+  setCustomValidity(message) { this.message = message; },
+  addEventListener(event, listener) { if (event === "input") this.onInput = listener; },
+});
+const requiredContactFields = [
+  ["#contact-body textarea[required]", field("Project details")],
+  ["#contactform textarea[required]", field("Project details")],
+  ["#contactform input[type=text][required]", field("Your name")],
+];
+const isolated = { document: {
+  getElementById: () => null,
+  querySelectorAll(selectors) {
+    const requested = selectors.split(",").map(selector => selector.trim());
+    return requiredContactFields.filter(([selector]) => requested.includes(selector)).map(([, input]) => input);
+  },
+} };
 runInNewContext(siteScript, isolated);
+for (const [selector, input] of requiredContactFields) {
+  assert.equal(typeof input.onInput, "function", selector + " must validate edits");
+  assert.equal(input.message, "", selector + " leaves native required validation available");
+  input.value = "   ";
+  input.onInput();
+  assert.equal(input.message, input.labels[0].textContent + " is required.");
+  input.value = "A substantive answer";
+  input.onInput();
+  assert.equal(input.message, "", selector + " accepts a correction");
+}
 const recipient = "rishabh@ridgefolio.com";
 const subject = "Ridgefolio — Workflow or data project";
 const example = "Workflow for agencies & partners + a pass.\nReview the permit page.";

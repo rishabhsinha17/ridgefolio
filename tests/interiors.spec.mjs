@@ -41,19 +41,22 @@ test('a service banner link follows its own destination', async ({ page }) => {
   await expect(page.locator('#contact-form')).not.toHaveAttribute('aria-modal', 'true');
 });
 
-test('the scrolled contact prompt leaves content usable until expanded', async ({ page }) => {
+test('contact opens deliberately, advances and returns focus to the triggering link', async ({ page }) => {
   await page.goto('/pricing/');
   const sheet = page.locator('#contact-form');
+  await page.evaluate(() => window.scrollTo({top:550, behavior:'instant'}));
   await expect(sheet).toBeHidden();
-  await page.evaluate(() => window.scrollTo({top: 450, behavior: 'instant'}));
-  await expect(sheet).toHaveAttribute('role', 'region');
-  await expect(page.locator('header[data-ref-header]')).not.toHaveAttribute('inert', '');
-  await sheet.getByRole('button', {name: 'Continue', exact: true}).click();
+  const header = page.locator('[data-ref-header]');
+  const contact = header.getByRole('link', {name:'Contact us', exact:true});
+  await contact.click();
   await expect(sheet).toHaveAttribute('aria-modal', 'true');
+  await expect(sheet.locator('#name')).toBeFocused();
+  await sheet.getByRole('button', {name:'Continue', exact:true}).click();
   await expect(sheet.locator('#email')).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(sheet).toBeHidden();
-  await expect(page.locator('header[data-ref-header]')).not.toHaveAttribute('inert', '');
+  await expect(header).not.toHaveAttribute('inert','');
+  await expect(contact).toBeFocused();
 });
 
 test('project evidence keeps its space while images are downloading', async ({ page }) => {

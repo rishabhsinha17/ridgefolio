@@ -9,7 +9,8 @@ test('production assets, fonts and responsive geometry', async ({ page }, info) 
   await page.evaluate(() => Promise.all([...document.fonts].map(face => face.load())));
   expect(await page.evaluate(() => [...document.fonts].every(font => font.status === 'loaded'))).toBeTruthy();
   const planes = page.locator('#home-hero .animatable img.card');
-  await expect(planes).toHaveCount(16);
+  await expect(planes).toHaveCount(4);
+  await expect(page.getByRole('link', {name:'View the Indonesia industrial parks case study'})).toHaveAttribute('href', '/work/industrial-parks/');
   await expect.poll(() => planes.evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0))).toBe(true);
   const widths = info.project.name.includes('desktop') ? [320, 360, 390, 430, 768, 1024, 1440] : [360, 390, 430, 844];
   for (const width of widths) {
@@ -131,7 +132,8 @@ test('surface and wireframe views work with keyboard and touch-sized controls', 
 const sourceSections = {
   "squares": "348699838ad518c749909f8fb89043bd9cfd3d878fcae4eddef85d77e74f6a82",
   "header": "d7925330addfd46c0233fec57a916353f2c2ce3cae59bea89c66324c68132eea",
-  "home-hero": "fceb75f2ba02770834353ec3a6529f62e13769c729354b1ba9a6486720b869a2",
+  // The hero now links four exhibits from the same project.
+  "home-hero": "5062910342847c5d43e1f00ceb5cbae80b4390ae308871e1919e80d42fe1f8dc",
   "welcome-header": "7791812b80256dd64daaa51f5b5ba3825ae63063bf1500d32813416e07fdac96",
   "apps": "3b90ca171231c4522156b377c05057238432cffd25ba3af1acb8ef7d85c2069e",
   "our-work-header": "ea5dc3188f850fb36bcba003f4401ea678ae7fd2672a838f9e4fa398c1dc626b",
@@ -151,7 +153,7 @@ test('homepage templates retain the source hierarchy before enhancement', async 
     const doc = new DOMParser().parseFromString(html, 'text/html');
     function shape(element) {
       const children = [...element.children].filter(child =>
-        !['script', 'style', 'link', 'iframe', 'noscript'].includes(child.localName)
+        !['script', 'style', 'link', 'iframe', 'noscript'].includes(child.localName) && !child.matches('.footer-return')
       );
       return element.localName + '.' + [...element.classList].join('.') + '(' + children.map(shape).join('') + ')';
     }
@@ -166,7 +168,7 @@ test('homepage templates retain the source hierarchy before enhancement', async 
   await page.goto('/');
   await expect(page.locator('#quotes .owl-item')).toHaveCount(23);
   const enhanced = {
-    "home-hero": "2c0c06236f132744d740f7661ff0a0041608208e971f1a8be6ca50d7a7faba73",
+    "home-hero": "8b2602844921d61a929d7509a7d982d42366e06dd05a4aa0bc4f6259bd3c6b08",
     "featured-projects": "496677e2e35ae10d178924b62db062db0b19186a2eec58d37450f62b47d432c0",
     "quotes": "5695ccdb72ec1a272577c2c89573e0f03a35b467403f69a2d22fcd9d24c7bbd8"
 };
@@ -208,4 +210,24 @@ test('the landing caption clears the navigation and the handset uses a detailed 
   }));
   expect(image.url).toMatch(/atlas-iphone-(650|1308)\.webp$/);
   expect(image.ratio).toBeCloseTo(436 / 876, 2);
+});
+
+test('a project record advances its illustration and source credit together', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({width:1280,height:820});
+  await page.goto('/');
+  const panel = page.locator('#quotes #about');
+  await panel.scrollIntoViewIfNeeded();
+  const records = page.locator('.testimonials .owl-item:not(.cloned) > .item');
+  const next = page.getByRole('button', {name:'Next record', exact:true});
+  const expected = await records.evaluateAll(items => items.map(item => ({
+    image:item.dataset.art, alt:item.dataset.alt, credit:item.dataset.credit
+  })));
+  for (const [index, record] of [...expected, expected[0]].entries()) {
+    if (index) await next.click();
+    await expect(panel.locator('img')).toHaveAttribute('data-art', record.image);
+    await expect(panel.locator('img')).toHaveAttribute('alt', record.alt);
+    await expect(panel).toHaveAttribute('data-credit', record.credit);
+    await expect.poll(() => panel.locator('img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+  }
 });
