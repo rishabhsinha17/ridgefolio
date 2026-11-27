@@ -207,3 +207,19 @@ test("the featured project carousel opens the working ledger", async ({ page }) 
   await expect(page).toHaveURL(/\/demos\/service-ledger\/$/);
   await expect(page.getByLabel('District', {exact:true})).toBeVisible();
 });
+
+test('the buyer carousel opens the worked brief and cycles through four distinct resources', async ({page}) => {
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto('/#blog-list');
+  const rail = page.getByRole('region', {name:'Browse four buyer resources'});
+  const selected = rail.locator('.owl-item.center a');
+  const next = rail.getByRole('button', {name:'Next resource'});
+  for (const path of ['/resources/project-brief/', '/resources/launch-checklist/', '/resources/capabilities/', '/pricing/']) {
+    await expect(selected).toHaveAttribute('href',path);
+    await expect(selected.locator('img')).toHaveAttribute('loading','eager');
+    await next.press('Enter');
+  }
+  await expect(selected).toHaveAttribute('href','/resources/project-brief/');
+  await selected.click();
+  await expect(page).toHaveURL(/\/resources\/project-brief\/$/);
+});

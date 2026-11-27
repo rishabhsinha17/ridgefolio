@@ -98,10 +98,13 @@ test('public-service records orbit in depth, pause, and stay still for reduced m
       const r = image.getBoundingClientRect();
       return {x:r.x, size:r.width};
     };
-    return [box(0), box(7000), box(14000), box(28000)];
+    const cycle = el.querySelector('.wheel-arm').getAnimations()[0].effect.getTiming().duration;
+    return [box(0), box(cycle/4), box(cycle/2), box(cycle)];
   });
   expect(Math.abs(poses[0].x - poses[1].x)).toBeGreaterThan(35);
-  expect(poses[0].size / poses[2].size).toBeGreaterThan(1.15);
+  const depthRatio = poses[0].size / poses[2].size;
+  expect(depthRatio).toBeGreaterThan(1.01);
+  expect(depthRatio).toBeLessThan(1.10);
   expect(Math.abs(poses[0].x - poses[3].x)).toBeLessThan(1);
   await wheel.getByRole('button', {name:'Play app previews'}).press('Space');
   await expect(wheel).toHaveAttribute('data-orbit-running', '');

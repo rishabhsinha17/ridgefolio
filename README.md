@@ -34,6 +34,8 @@ The research page shows the original title page and two charts redrawn from the 
 
 The sample permit receipt in `public/downloads/` was exported from the working demonstration using the walkthrough in the example project brief.
 
+Generate the buyer carousel with `node scripts/home-projects.mjs --resources`. Its covers use the worked project brief, the six-item launch worksheet, the published capability statement, and the three engagement types on the pricing page.
+
 The homepage app wheel and project carousel use excerpts from the sample permit receipt, the service directory and ledger records, the research figure, and the kvcached change review. Run `node scripts/home-projects.mjs` to regenerate the photographic and typeset covers from the local sources. The park shelter photograph is Telegraph Picnic Pavilion by Claire Hassler, National Park Service. The industrial parks cover pairs the Indonesian Ministry of Public Works’ Morowali photograph with the case-study map. [Pavilion photograph](https://www.nps.gov/places/telegraph-picnic-pavilion.htm) · [Morowali photograph](https://commons.wikimedia.org/wiki/File:Morowali_Industrial_Park.jpg)
 
 ### Interior documentary art

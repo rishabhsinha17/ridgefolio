@@ -78,3 +78,28 @@ test("home section copy clears the pinned return button on compact desktops", as
     expect(heading.x - (arrow.x + arrow.width), String(width)).toBeGreaterThanOrEqual(8);
   }
 });
+
+test('the handset stays anchored to the lower-right of the map while scrolling', async ({page}) => {
+  await page.goto('/#responsive');
+  const art = page.locator('#responsive .responsive-shots');
+  for (const fraction of [0, .35, .7]) {
+    const box = await art.evaluate((stage, fraction) => {
+      const docTop = stage.getBoundingClientRect().top + scrollY;
+      scrollTo({top:docTop - innerHeight * fraction, behavior:'instant'});
+      const frame = stage.getBoundingClientRect();
+      const map = stage.querySelector('.shot1').getBoundingClientRect();
+      const phone = stage.querySelector('.shot2').getBoundingClientRect();
+      return {
+        outerRight:frame.right - phone.right, outerBottom:frame.bottom - phone.bottom,
+        overlap:(map.right - phone.left) / map.width, relativeTop:(phone.top - map.top) / map.height,
+        inside:map.left >= 0 && phone.right <= document.documentElement.clientWidth + 1,
+      };
+    }, fraction);
+    expect(Math.abs(box.outerRight)).toBeLessThan(1);
+    expect(Math.abs(box.outerBottom)).toBeLessThan(1);
+    expect(box.overlap).toBeGreaterThan(.05);
+    expect(box.overlap).toBeLessThan(.25);
+    expect(box.relativeTop).toBeGreaterThan(.30);
+    expect(box.inside).toBe(true);
+  }
+});

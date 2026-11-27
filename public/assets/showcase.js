@@ -87,7 +87,7 @@
   for (const carousel of document.querySelectorAll('.rv-home .owl-carousel')) {
     const slides = [...carousel.children];
     const records = carousel.classList.contains('testimonials');
-    const label = records ? 'record' : 'project';
+    const label = records ? 'record' : carousel.classList.contains('resource-carousel') ? 'resource' : 'project';
     const edge = records ? 6 : 4;
     const viewport = box('owl-stage-outer');
     const stage = box('owl-stage');

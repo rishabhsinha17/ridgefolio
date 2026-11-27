@@ -170,10 +170,11 @@ const sourceSections = {
   "apps": "598554d2f929b3a482aa55bf5cbe9c115bc5ab494ca249dbc61f653856efa7d1",
   "our-work-header": "ea5dc3188f850fb36bcba003f4401ea678ae7fd2672a838f9e4fa398c1dc626b",
   "featured-projects": "930a0203a623ba6ad27dd6be2b56e9157dc3a28ab06ebb0996e52e5befbf5441",
-  "responsive": "ed7882f181d700ea80c09d621c75f51368bd6ace0b1519e92a81765e1c5f2c57",
+  // The handset is now anchored to the atlas, with a separate rail for buyer resources.
+  "responsive": "991564619c4c32e127f22ff0ab90903d19a89058743288f36bfa953ea70ab360",
   "testimonials-header": "cc3fc5f6b2e7561b0f0c61cf2a70a3410871ab6f845b9e41539d1e2eaebdd576",
   "quotes": "349a5720e0b328ea1d7a6ac27e0682ce87c4a248bdc9ef2ff826d3e2e074558b",
-  "blog-list": "a093718757939cd052f1b20713daff7640fb390d7ff3e04f0b79e8cb40e50bb5",
+  "blog-list": "ce94f300d58a2492bdffd9eb6b6cab03b1b7f0682ee0a88339fd19904b95bf64",
   "footer": "85f955cf367d0b8c8f3b08444af55eae886a1e5cc3c69a503a2af9b874bd8842",
   "copyright": "cb1d645c6ca8242127e3da69d15730bca2aff311f57503f229edbd4b8c201a48",
   "contact-form": "423f080dd3eb31d2af90feb06ff47e4c94bfb9a5ed1e6222c8757482ded27ed3"

@@ -96,9 +96,9 @@
 
 :where(.rv-home) #our-work-header .lead {max-width:55ch;margin-bottom:0}
 :where(.rv-home) #featured-projects {padding-bottom:var(--space);overflow:hidden}
-.rv-home :is(.project-carousel,.testimonials) {display:grid;grid-auto-flow:column;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
-.rv-home :is(.project-carousel,.testimonials)>.item {min-width:0;scroll-snap-align:start}
-.rv-home .project-carousel {grid-auto-columns:clamp(255px,27.1vw,490px);gap:clamp(15px,1.6vw,26px);padding:5px var(--home-margin) 16px;scroll-padding-inline:var(--home-margin)}
+.rv-home :is(.project-carousel,.resource-carousel,.testimonials) {display:grid;grid-auto-flow:column;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
+.rv-home :is(.project-carousel,.resource-carousel,.testimonials)>.item {min-width:0;scroll-snap-align:start}
+.rv-home :is(.project-carousel,.resource-carousel) {grid-auto-columns:clamp(255px,27.1vw,490px);gap:clamp(15px,1.6vw,26px);padding:5px var(--home-margin) 16px;scroll-padding-inline:var(--home-margin)}
 :where(.rv-home) .simple-project a {display:block;text-decoration:none}
 :where(.rv-home) .simple-project .img-wrap {overflow:hidden;background:#dce2d6}
 :where(.rv-home) .simple-project .project-image {aspect-ratio:1/1.2;background-size:cover;background-position:center;transition:transform .55s ease-out}
@@ -110,9 +110,6 @@
 :where(.rv-home) .simple-project [data-release]::after {content:"kvcached / releases";position:absolute;left:9%;top:8%;font:400 clamp(11px,.9vw,15px)/1.6 PlexMono,monospace}
 
 :where(.rv-home) #responsive {overflow:hidden;background:var(--rv-tint)}
-:where(.rv-home) #responsive .responsive-shots {position:relative;align-self:center;padding:0 0 9% 10%}
-:where(.rv-home) #responsive .shot1 {width:112%;max-width:none;height:auto;display:block;border:5px solid #233a2d;border-radius:8px;box-shadow:0 10px 42px #23382b26}
-:where(.rv-home) #responsive .shot2 {width:29%;position:absolute;bottom:0;left:0;height:auto;filter:drop-shadow(0 8px 10px #23382b38)}
 
 :where(.rv-home) #quotes {background:#e2e9df;overflow:hidden}
 :where(.rv-home) #quotes .container>.row {align-items:stretch}
@@ -126,16 +123,6 @@
 
 :where(.rv-home) #blog-list {isolation:isolate;overflow:hidden}
 :where(.rv-home) #blog-list::before {content:"";position:absolute;inset:0 0 55%;z-index:-1;background:var(--rv-tint)}
-:where(.rv-home) #blog-list .row+.row {margin-top:clamp(32px,4vw,62px);gap:clamp(14px,2.3vw,38px);grid-template-columns:repeat(4,minmax(0,1fr));align-items:start}
-:where(.rv-home) #blog-list .col-md-3 {grid-column:auto}
-:where(.rv-home) .blog-list-item a {display:block;text-decoration:none}
-:where(.rv-home) .blog-lest-img {position:relative;overflow:hidden;background:#e1e5d9}
-:where(.rv-home) .blog-list-item .blog-image {aspect-ratio:1/1.5625;background-size:cover;background-position:top center;transition:transform .5s ease-out}
-:where(.rv-home) .blog-list-item :is(a:focus-visible,a:hover) .blog-image {transform:scale(1.035)}
-:where(.rv-home) .blog-list-item .cover {position:absolute;inset:0;border:1px solid #30473626;pointer-events:none}
-:where(.rv-home) .blog-list-item h4 {font-size:clamp(22px,2vw,32px);margin:24px 0 12px}
-:where(.rv-home) .blog-list-item p {font-size:15px;color:var(--rv-muted)}
-.rv-home .blog-list-item .btn-link {display:inline-block;min-height:0;margin-top:15px;padding:0;border:0;background:transparent;color:var(--rv-accent);text-decoration:underline;text-underline-offset:4px}
 @media (min-width:1550px) {
   :where(.rv-home) #home-hero .animatable {transform:scale(1.15)}
 }
@@ -147,8 +134,6 @@
   .rv-home {--space:clamp(52px,7vw,76px)}
   .rv-home :is(.h1,.display-text) {font-size:clamp(35px,5vw,50px)}
   :where(.rv-home) #apps .row {min-height:520px}
-  :where(.rv-home) #blog-list .row+.row {grid-template-columns:repeat(2,minmax(0,1fr));row-gap:36px}
-  :where(.rv-home) .blog-list-item .blog-image {aspect-ratio:1/1.12}
 }
 @media (min-width:768px) and (max-width:991px) {
   :where(.rv-home) #home-hero .row {min-height:clamp(480px,70vw,685px)}
@@ -172,30 +157,21 @@
   .rv-home .header-block h2 {font-size:clamp(28px,5.6vw,42px)}
   :where(.rv-home) #apps .row {min-height:0;padding-top:var(--space)}
   :where(.rv-home) #apps .lead,:where(.rv-home) #responsive .lead {margin:15px 0 21px}
-  .rv-home .project-carousel {grid-auto-columns:clamp(220px,73vw,370px)}
+  .rv-home :is(.project-carousel,.resource-carousel) {grid-auto-columns:clamp(220px,73vw,370px)}
   :where(.rv-home) .simple-project .project-image {aspect-ratio:1/.99}
-  :where(.rv-home) #responsive .responsive-shots {margin-top:35px;padding:0 4% 10% 12%}
-  :where(.rv-home) #responsive .shot1 {width:100%}
-  :where(.rv-home) #responsive .shot2 {width:25%}
   :where(.rv-home) #quotes .container>.row {display:block;padding-top:35px}
   :where(.rv-home) #quotes #about {min-height:0;aspect-ratio:1;width:84px}
   :where(.rv-home) #quotes .client-shot {border-radius:50%}
   :where(.rv-home) #quotes .padding-t-150-b-50 {padding:18px 0}
   :where(.rv-home) #quotes .testimonials .item {padding:3px}
-  :where(.rv-home) #blog-list .row+.row {display:grid;gap:28px 18px}
-  :where(.rv-home) .blog-list-item .blog-image {aspect-ratio:.9}
-  :where(.rv-home) .blog-list-item h4 {margin:14px 0 8px;font-size:22px}
-  :where(.rv-home) .blog-list-item p {font-size:14px;line-height:1.5}
   .rv-home .btn {padding-inline:18px}
 }
 @media (max-width:380px) {
   .rv-home {--home-margin:17px}
   :where(.rv-home) #home-hero .animatable {transform:translate(-56%,-44%) scale(.49)}
-  :where(.rv-home) #blog-list .row+.row {grid-template-columns:1fr}
-  :where(.rv-home) .blog-list-item .blog-image {aspect-ratio:1.4}
 }
 @media (prefers-reduced-motion:reduce) {
-  .rv-home :is(.project-image,.blog-image) {transition:none}
+  .rv-home .project-image {transition:none}
 }
 
 /* Shared gutter and vertical rhythm of the two-column source template. */
@@ -217,13 +193,9 @@
 .rv-home .header-block h2 {font-size:clamp(26px,2.1vw,33px);line-height:1.35;max-width:100%;margin-bottom:30px}
 .rv-home #welcome-header {min-height:474px;display:grid;align-items:center}
 .rv-home #apps .row {min-height:0}
-.rv-home #responsive .responsive-shots {padding:0}
-.rv-home #responsive .shot1 {display:block;width:200%;max-width:1300px;height:auto;border:0;border-radius:0;box-shadow:none}
-.rv-home #responsive .shot2 {width:min(62%,400px);left:-20px;top:0;bottom:auto}
 .rv-home #responsive .col-md-5 {align-self:stretch}
 .rv-home #responsive .col-md-5>.sticky-element {position:sticky;top:140px}
 .rv-home #quotes .client-shot {max-height:none}
-.rv-home #blog-list .blog-image {aspect-ratio:1/1.5625}
 
 /* Keep the static list usable without JavaScript. Once enhanced, the outer
    viewport scrolls and the inert edge copies create a continuous gallery. */
@@ -265,14 +237,9 @@
   .rv-home #apps .row {padding-top:0}
   .rv-home #apps .lead {margin-bottom:24px}
   .rv-home #responsive .col-md-5>.sticky-element {position:static}
-  .rv-home #responsive .responsive-shots {margin-top:32px;padding:0}
-  .rv-home #responsive .shot1 {width:100%;height:auto}
-  .rv-home #responsive .shot2 {width:min(61%,200px);left:-20px;top:0}
   .rv-home #quotes #about {display:none}
   .rv-home #quotes .container>.row {padding:50px 0}
   .rv-home #quotes .padding-t-150-b-50 {padding:0}
-  .rv-home #blog-list .row+.row {grid-template-columns:minmax(0,1fr);gap:50px}
-  .rv-home #blog-list .blog-image {aspect-ratio:1/1.5625}
   .rv-home .simple-project .project-image {aspect-ratio:1/1.2}
 }
 @media (max-width:355px) {
@@ -297,12 +264,9 @@
 
 /* The project rail shows two cards on phones and four from tablet width.
    Half of each neighboring card remains in view around the selected one. */
-.rv-home .project-carousel .owl-item {scroll-snap-align:center}
+.rv-home :is(.project-carousel,.resource-carousel) .owl-item {scroll-snap-align:center}
 .rv-home .project-carousel .h3 {font-size:clamp(16px,1.6vw,24px);line-height:1.18}
-.rv-home #blog-list :is(h3,h4), .rv-home #our-work-header h3, .rv-home #responsive h3 {font-size:clamp(25px,3.34vw,48px);line-height:1.2}
-.rv-home #blog-list .blog-list-item h4 {font-size:clamp(24px,2.5vw,36px);margin:30px 0 14px}
-.rv-home #blog-list .blog-list-item p {font-size:16px;line-height:1.8}
-.rv-home #blog-list .row+.row {margin-top:30px}
+.rv-home #blog-list h3, .rv-home #our-work-header h3, .rv-home #responsive h3 {font-size:clamp(25px,3.34vw,48px);line-height:1.2}
 .rv-home #testimonials-header h2, .rv-home #welcome-header h2 {font-size:clamp(21px,2.78vw,40px);line-height:1.2}
 .rv-home #welcome-header {min-height:0}
 .rv-home #quotes #about {width:auto}
@@ -313,20 +277,16 @@
   .rv-home :is(#welcome-header,#apps,#responsive,#quotes,#our-work-header,#blog-list,#testimonials-header) .row>[class*=col-] {padding-inline:20px}
   .rv-home #responsive .sticky-element {align-self:start}
   .rv-home #responsive .col-md-5>.sticky-element {top:0}
-  .rv-home #responsive .shot2 {left:0}
   .rv-home #quotes .padding-t-150-b-50 {padding-block:150px 50px}
   .rv-home #quotes .testimonials {min-height:433px}
   .rv-home #quotes #about {min-height:0}
   .rv-home #quotes .client-shot {width:min(71vw,1000px);height:calc(100% + 110px);max-width:none;inset:-65px auto auto min(0px,calc((1400px - 100vw) / 2 - 100px));clip-path:inset(0 9% 0 0)}
   .rv-home #quotes #about::after {content:"Morowali Industrial Park · Ministry of Public Works of Indonesia";position:absolute;left:min(20px,calc((1400px - 100vw) / 2 + 20px));bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
-  .rv-home #blog-list .row+.row {gap:0}
 }
 @media(max-width:767px) {
   .rv-home .project-carousel .owl-stage {grid-auto-columns:calc((100% - 30px) / 2)}
   .rv-home #our-work-header {padding-bottom:50px}
-  .rv-home #responsive .responsive-shots {margin-top:0}
   .rv-home #quotes .testimonials {min-height:280px}
-  .rv-home #blog-list .row+.row {gap:50px}
 }
 
 @media (min-width:768px) and (max-width:991px) {
@@ -337,39 +297,19 @@
   .rv-home #our-work-header {padding-bottom:50px}
   .rv-home :is(#our-work-header,#blog-list) .pull-right {text-align:left;margin-top:25px}
   .rv-home #responsive .col-md-5>.sticky-element {position:static}
-  .rv-home #responsive .shot1 {width:100%}
-  .rv-home #responsive .shot2 {width:200px;left:-20px}
   .rv-home #quotes #about {display:none}
   .rv-home #quotes .padding-t-150-b-50 {padding-block:50px}
   .rv-home #quotes .testimonials {min-height:310px}
-  .rv-home #blog-list .row+.row {display:grid;grid-template-columns:minmax(0,1fr);gap:50px}
 }
 
 
 @media (min-width:992px) {
   .rv-home #responsive {overflow:clip}
   .rv-home #responsive .col-md-5>.sticky-element {top:clamp(80px,calc(100svh - 650px),250px)}
-  .rv-home #responsive .responsive-shots {display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
-  .rv-home #responsive .responsive-shots>img {grid-area:1/1}
-  .rv-home #responsive .shot2 {position:sticky;top:min(150px,16.67svh);left:auto;margin-left:-20px}
 }
 
 .rv-home #quotes .client-shot {object-position:52% 52%}
 .rv-home #quotes #about::after {max-width:90%}
-.rv-home #blog-list .cover[data-photo-credit]::after {
-  content:attr(data-photo-credit);position:absolute;inset:auto auto 10px 10px;
-  padding:4px 7px;background:#142b24e8;color:white;font:500 11px/1.4 var(--sans);
-}
-.rv-home #blog-list a[href="/resources/project-brief/"] .blog-image {background-position:43% 46%}
-@media (max-width:991px) {
-  .rv-home #blog-list a[href="/resources/project-brief/"] .blog-image {aspect-ratio:3/2}
-}
-
-.rv-home #blog-list a[href="/pricing/"] .blog-image {background-position:59% 50%}
-@media (max-width:991px) {
-  .rv-home #blog-list a[href="/pricing/"] .blog-image {aspect-ratio:3/2}
-}
-
 /* Above the phone breakpoint the artboard keeps its native perspective scale.
    At tablet widths the caption uses the first row, followed by the artwork. */
 @media (min-width:768px) {
@@ -397,7 +337,7 @@
    as its distance and viewing angle change. The nested arms share one clock. */
 .rv-home #apps .rotating-apps {padding-block:clamp(45px,7vw,105px)}
 .app-wheel {position:relative;width:100%;max-width:850px;container-type:inline-size;margin-inline:auto}
-.wheel-paths,.wheel-scene {--radius:26cqw;--card-width:38.5cqw;perspective:128cqw;pointer-events:none}
+.wheel-paths,.wheel-scene {--radius:26cqw;--card-width:38.5cqw;perspective:670cqw;pointer-events:none}
 .wheel-scene {position:relative;z-index:1;width:100%;aspect-ratio:1.3;transform-style:preserve-3d}
 .wheel-paths {position:absolute;inset:0 0 auto;aspect-ratio:1.3}
 @property --service-turn {syntax:"<angle>";inherits:false;initial-value:0deg}
@@ -413,11 +353,11 @@
   transform:rotateZ(-12deg) rotateX(52deg) rotateZ(var(--phase)) translateX(var(--radius))
     rotateZ(calc(-1 * var(--phase))) rotateX(-52deg) rotateZ(12deg);
 }
-.wheel-permit {--start:203deg;--bank:-5deg;--yaw:9deg}
-.wheel-ledger {--start:323deg;--bank:4deg;--yaw:-9deg}
-.wheel-finder {--bank:-2deg;--yaw:-4deg}
+.wheel-permit {--start:203deg;--bank:-1.4deg;--yaw:2deg}
+.wheel-ledger {--start:323deg;--bank:1deg;--yaw:-2deg}
+.wheel-finder {--bank:-.6deg;--yaw:-1deg}
 .wheel-print {position:absolute;top:0;left:0;display:block;width:var(--card-width);max-width:none;height:auto;border-radius:3px;
-  box-shadow:0 1px 1px #28533b50,0 4px 0 -2px #aeb7a4,0 10px 19px -8px #263e375e;
+  box-shadow:0 1px 1px #28533b50,0 5px 10px -5px #263e3738;
   transform:translate(-50%,-50%) rotateY(var(--yaw)) rotateZ(var(--bank))}
 .wheel-play {z-index:2;position:absolute;bottom:0;right:0;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #97a79a;
   background:transparent;border-radius:50%;cursor:pointer;color:var(--rv-ink)}
@@ -432,8 +372,8 @@
   50% {transform:translate(-50%,-50%) rotateY(calc(-1 * var(--yaw))) rotateZ(calc(-1 * var(--bank)))}
 }
 @media (prefers-reduced-motion:no-preference) {
-  .app-wheel[data-wheel-ready] .wheel-arm {animation:service-orbit 28s linear infinite paused}
-  .app-wheel[data-wheel-ready] .wheel-print {animation:service-bank 28s ease-in-out infinite paused}
+  .app-wheel[data-wheel-ready] .wheel-arm {animation:service-orbit 48s linear infinite paused}
+  .app-wheel[data-wheel-ready] .wheel-print {animation:service-bank 48s ease-in-out infinite paused}
   .app-wheel[data-orbit-running] :is(.wheel-arm,.wheel-print) {animation-play-state:running}
 }
 @media (prefers-reduced-motion:reduce) {.wheel-play {display:none}}
@@ -444,5 +384,36 @@
 @media (max-width:767px) {
   .app-wheel {width:calc(100% + 20px);margin:18px -10px 0;padding-bottom:44px}
 }
-.rv-home #featured-projects .project-image {display:block;width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;background:#faf9f3}
+.rv-home :is(#featured-projects,#blog-list) .project-image {display:block;width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;background:#faf9f3}
 .rv-home #featured-projects a[href="/work/evaluation/"] .project-image {object-fit:contain}
+
+/* The handset and the atlas share a frame and travel together when scrolling. */
+.rv-home #responsive .responsive-shots {
+  position:relative;align-self:center;min-width:0;padding:0;width:100%;max-width:740px;
+  aspect-ratio:1.19;margin:0 auto;
+}
+.rv-home #responsive .shot1 {
+  display:block;width:87%;height:auto;max-width:none;aspect-ratio:1.24;object-fit:cover;object-position:top;
+  border:1px solid #b8c6b8;border-radius:3px;box-shadow:0 4px 14px #243c2910;
+}
+.rv-home #responsive .shot2 {
+  display:block;position:absolute;right:0;bottom:0;width:26%;max-width:186px;height:auto;
+  filter:drop-shadow(0 3px 5px #243c2926);
+}
+@media (max-width:991px) {
+  .rv-home #responsive .responsive-shots {margin:clamp(26px,4vw,38px) auto 0;max-width:740px;aspect-ratio:1.16}
+  .rv-home #responsive .shot2 {width:30%;max-width:200px}
+}
+
+/* The buyer rail uses the project gallery's navigation and leaves enough
+   width for a buyer to read the description on a small screen. */
+.rv-home .resource-carousel {margin-top:clamp(28px,3vw,46px);text-align:left}
+.rv-home .resource-carousel .owl-stage {grid-auto-columns:clamp(225px,29vw,420px);gap:clamp(18px,2vw,32px)}
+.rv-home .resource-carousel .owl-nav {justify-content:center;margin:16px 0 0}
+.rv-home .resource-carousel .rf-rotation {left:calc(50% + 50px)}
+.rv-home #blog-list .resource-card h4 {margin:16px 0 6px;font-size:clamp(22px,2.1vw,32px);line-height:1.15}
+.rv-home #blog-list .resource-card p {margin:0;max-width:44ch;font-size:clamp(14px,1.15vw,16px);line-height:1.55;color:var(--rv-muted)}
+.resource-action {display:inline-block;margin:12px 0 4px;color:var(--rv-accent);font-weight:650;text-decoration:underline;text-underline-offset:4px}
+.rv-home .resource-card a:focus-visible {outline-offset:-3px}
+@media (max-width:991px) {.rv-home .resource-carousel .owl-stage {grid-auto-columns:43vw}}
+@media (max-width:767px) {.rv-home .resource-carousel .owl-stage {grid-auto-columns:min(74vw,380px)}}

@@ -10,13 +10,19 @@ const output = join(root, 'home-projects');
 const catalog = JSON.parse(execFileSync('python3', ['-c', `
 import sys, json
 sys.path.insert(0, 'site')
+from content import CHECKS
 from finder import SERVICES
 from service_ledger import RECORDS
 entry = next(s for s in SERVICES if s.slug == 'park-shelter-reservation')
 rows = [r for r in RECORDS if r.district == 'South']
-print(json.dumps(dict(service=entry.name, office=entry.desk,
+print(json.dumps(dict(checks=[title for title, _ in CHECKS], service=entry.name, office=entry.desk,
     logs=[dict(key=r.key, service=r.service, hours=r.minutes/60) for r in rows])))
 `], {encoding:'utf8'}));
+const brief = await readFile('public/downloads/permit-desk-project-brief.txt', 'utf8');
+const sections = new Map(brief.trim().split(/\n\n/).map(block => {
+  const [heading, ...lines] = block.split('\n');
+  return [heading, lines.join(' ')];
+}));
 const receipt = await readFile('public/downloads/sample-permit-receipt.txt', 'utf8');
 function field(name) {
   const row = receipt.split('\n').find(line => line.startsWith(name + ': '));
@@ -70,6 +76,36 @@ img{display:block;width:100%;object-fit:cover}.photo{position:absolute;inset:0;h
 .cover-atlas{background:#f4f1e6}.cover-atlas .photo{height:56%;object-position:center 60%}
 .atlas-sheet{position:absolute;inset:53% 0 0;padding:15px 17px 0;background:#f4f1e6}.atlas-sheet header{padding-bottom:9px}.atlas-sheet header span:first-child{font-weight:600}
 .atlas-map{width:100%;height:calc(100% - 25px);object-fit:cover;object-position:center}
+/* Buyer covers are excerpts from the planning documents shown on the destination pages. */
+.brief-sheet {margin:26px 22px;padding:20px 23px 22px;background:#fffaf0;border-top:4px solid #a2653e;
+  box-shadow:1px 5px 12px #593f2223}
+.cover-brief {background:#dbc9ac}
+.brief-sheet header,.estimate-sheet header {border-bottom:1px solid #b1a28a;padding-bottom:13px}
+.brief-sheet h1 {font-size:40px;margin:18px 0 16px;color:#483d2d}
+.brief-sheet h2 {font:650 17px Sans,sans-serif;letter-spacing:0;border-top:1px solid #cfc3ac;padding:12px 0 6px}
+.brief-sheet p {font-size:16px;line-height:1.46;color:#544c3b}
+.cover-checklist {padding:25px 24px;background:#eef2e6}
+.cover-checklist header {border-bottom:1px solid #98a98e;padding-bottom:12px}
+.cover-checklist h1 {font-size:37px;margin:15px 0 13px}
+.cover-checklist ul {list-style:none;padding:0;margin:0}
+.cover-checklist li {min-height:41px;display:flex;align-items:center;gap:11px;border-top:1px solid #bdcbb6;font-size:16px;line-height:1.24}
+.cover-checklist li i {width:16px;height:16px;flex:none;border:1.5px solid #849789;background:#fafbf6;position:relative}
+.cover-checklist li.checked i {background:#315744;border-color:#315744}
+.cover-checklist li.checked i::after {content:'';position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid white;border-width:0 2px 2px 0;transform:rotate(40deg)}
+.cover-checklist footer {margin-top:9px}
+.cover-capability {color:#eff4ea;background:#28423b;padding:25px 24px}
+.cover-capability header {border-bottom:1px solid #889a8e;padding-bottom:11px}
+.cover-capability h1 {font-size:42px;margin:17px 0 12px}
+.cap-document {position:relative;width:100%;height:286px;overflow:hidden;background:white;box-shadow:0 4px 8px #12292240}
+.cap-document img {width:119%;max-width:none;margin-left:-6%;margin-top:-5%}
+.cover-scope {background:#253644;color:#edf2f1}
+.estimate-sheet {padding:26px 25px}
+.estimate-sheet header {border-color:#788a92}
+.estimate-sheet h1 {font-size:41px;max-width:245px;margin:17px 0 22px}
+.estimate-row {border-top:1px solid #7c8b91;padding:12px 0}
+.estimate-row b {display:block;font-size:18px;letter-spacing:-.02em}
+.estimate-row span {display:block;color:#d1dce0;margin-top:3px;font-size:14px}
+
 `;
 function art(id, wheel) {
   switch (id) {
@@ -110,6 +146,30 @@ function art(id, wheel) {
       return `${img('cgs-atlas/morowali-2560.webp', 'photo')}
         <div class="atlas-sheet">${top('MOROWALI', 'CENTRAL SULAWESI')}
           ${img('editorial/industrial-parks.webp', 'atlas-map')}</div>`;
+    case 'brief': {
+      const subject = sections.get('RIDGEFOLIO | EXAMPLE PROJECT BRIEF');
+      const result = sections.get('Desired result');
+      if (!subject || !result) throw new Error('Missing worked brief excerpt');
+      return `<article class="brief-sheet">${top('PROJECT BRIEF', 'EXAMPLE')}
+        <h1>${esc(subject)}</h1><h2>Desired result</h2><p>${esc(result)}</p></article>`;
+    }
+    case 'checklist': {
+      // Same three completed rows as the example worksheet on the Resources page.
+      const checked = new Set(['Content and redirects', 'Keyboard and assistive technology', 'Cutover and recovery']);
+      const rows = catalog.checks.map(title =>
+        `<li class="${checked.has(title) ? 'checked' : ''}"><i></i>${esc(title)}</li>`).join('');
+      return `${top('LAUNCH WORKSHEET', 'EXAMPLE')}<h1>Launch readiness</h1>
+        <ul>${rows}</ul><footer class="mono">${checked.size} of ${catalog.checks.length} checked</footer>`;
+    }
+    case 'capability':
+      return `${top('RIDGEFOLIO LLC', 'ONE-PAGE PDF')}<h1>Capability statement</h1>
+        <div class="cap-document">${img('article-evidence/capability-sheet.webp', '')}</div>`;
+    case 'scope':
+      return `<div class="estimate-sheet">${top('SCOPE &amp; PRICING', 'RIDGEFOLIO')}
+        <h1>Ways to buy the work</h1>
+        <div class="estimate-row"><b>Discovery and prototype</b><span>One user journey and a working example</span></div>
+        <div class="estimate-row"><b>Implementation</b><span>Agreed deliverables priced by milestone</span></div>
+        <div class="estimate-row"><b>Ongoing support</b><span>Coverage window and response targets</span></div></div>`;
     default:
       throw new Error('Unknown project ' + id);
   }
@@ -118,7 +178,8 @@ await mkdir(output,{recursive:true});
 const browser = await chromium.launch();
 try {
   const base = 'http://artwork.test/';
-  for (const wheel of [false,true]) {
+  const resources = process.argv.includes('--resources');
+  for (const wheel of resources ? [false] : [false,true]) {
     const width = wheel ? 320 : 360;
     const height = wheel ? 174 : 432;
     const page = await browser.newPage({viewport:{width,height},deviceScaleFactor:4});
@@ -130,7 +191,9 @@ try {
       return route.fulfill({path:join(root,url.pathname)});
     });
     await page.goto(base);
-    for (const id of wheel ? ['finder','permit','ledger'] : ['atlas','permit','ledger','release','finder']) {
+    const ids = resources ? ['brief','checklist','capability','scope']
+      : wheel ? ['finder','permit','ledger'] : ['atlas','permit','ledger','release','finder'];
+    for (const id of ids) {
       await page.setContent(`<!doctype html><html><head><base href="${base}"><style>${styles}</style></head><body><main class="${wheel?'wheel':'cover'}-${id}">${art(id,wheel)}</main></body></html>`);
       await page.evaluate(async () => {
         await document.fonts.ready;

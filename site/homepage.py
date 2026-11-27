@@ -33,10 +33,10 @@ PROJECTS = (
 )
 
 RESOURCES = (
-    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "home-evidence/planning-workshop.webp"),
-    ("/resources/launch-checklist/", "Launch checklist", "Check accessibility, redirects, handover and the tasks residents need to complete.", "home-evidence/launch-checklist.webp"),
-    ("/resources/capabilities/", "Capability statement", "A one-page overview of Ridgefolio’s services, delivery arrangements and founder experience.", "article-evidence/capability-sheet.webp"),
-    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "interior-art/railway-plan-2560.webp"),
+    ("/resources/project-brief/", "Project brief builder", "Describe one service, its users and the outcome your team needs. Download the brief for a project discussion.", "brief"),
+    ("/resources/launch-checklist/", "Launch checklist", "Check accessibility, redirects, handover and the tasks residents need to complete.", "checklist"),
+    ("/resources/capabilities/", "Capability statement", "A one-page overview of Ridgefolio’s services, delivery arrangements and founder experience.", "capability"),
+    ("/pricing/", "Scope and pricing", "See how discovery, a milestone-based build and ongoing support fit into a budget.", "scope"),
 )
 
 ENGINEERING = (
@@ -117,16 +117,20 @@ def apps():
         </button></div></div></div></div></section>'''
 
 
+def cover_image(asset, sizes):
+    if asset == "evaluation":
+        source = 'src="/assets/project-evidence/monitor-strata-compact.svg"'
+    else:
+        path = f"/assets/home-projects/cover-{asset}-"
+        source = (f'src="{path}640.webp" srcset="{path}640.webp 640w, {path}960.webp 960w, {path}1440.webp 1440w" '
+                  f'sizes="{sizes}"')
+    return f'<img class="project-image" {source} alt="" width="360" height="432" loading="eager">'
+
+
 def projects():
     cards = []
     for url, title, credit, asset in PROJECTS:
-        if asset == "evaluation":
-            source = 'src="/assets/project-evidence/monitor-strata-compact.svg"'
-        else:
-            path = f"/assets/home-projects/cover-{asset}-"
-            source = (f'src="{path}640.webp" srcset="{path}640.webp 640w, {path}960.webp 960w, {path}1440.webp 1440w" '
-                      'sizes="(max-width:767px) calc((100vw - 30px) / 2), calc((100vw - 90px) / 4)"')
-        art = f'<img class="project-image" {source} alt="" width="360" height="432" loading="eager">'
+        art = cover_image(asset, "(max-width:767px) calc((100vw - 30px) / 2), calc((100vw - 90px) / 4)")
         cards.append(f'''<div class="item"><div class="simple-project"><a href="{url}">
           <div class="img-wrap">{art}</div><p class="h3">{escape(title)}<small>{escape(credit)}</small></p></a></div></div>''')
     return f'''<section id="our-work-header" class="padding-t-150-b-50"><div class="container" id="work"><div class="row">
@@ -146,8 +150,8 @@ def responsive():
         {action("/contact/", "Contact us", "btn-inverse open-contact-form")}{action("/work/industrial-parks/", "Case study")}<p></p>
       </div></div>
       <div class="col-md-6 col-md-offset-1 responsive-shots">
-        <img class="shot1" src="/assets/home-evidence/atlas-desktop-1300.webp" srcset="/assets/home-evidence/atlas-desktop-740.webp 740w, /assets/home-evidence/atlas-desktop-1300.webp 1300w, /assets/home-evidence/atlas-desktop-2600.webp 2600w, /assets/home-evidence/atlas-desktop-3300.webp 3300w" sizes="(max-width: 991px) calc(100vw - 60px), min(1300px, 100vw)" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="eager">
-        <img class="shot2 sticky-element" src="/assets/home-evidence/atlas-iphone-650.webp" srcset="/assets/home-evidence/atlas-iphone-650.webp 650w, /assets/home-evidence/atlas-iphone-1308.webp 1308w" sizes="(max-width: 991px) 200px, 400px" alt="The industrial parks atlas on an iPhone, filtered to the 13 parks in Sulawesi" width="436" height="876" loading="eager">
+        <img class="shot1" src="/assets/home-evidence/atlas-desktop-1300.webp" srcset="/assets/home-evidence/atlas-desktop-740.webp 740w, /assets/home-evidence/atlas-desktop-1300.webp 1300w, /assets/home-evidence/atlas-desktop-2600.webp 2600w, /assets/home-evidence/atlas-desktop-3300.webp 3300w" sizes="(max-width:991px) min(85vw, 640px), min(45vw, 655px)" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="eager">
+        <img class="shot2" src="/assets/home-evidence/atlas-iphone-650.webp" srcset="/assets/home-evidence/atlas-iphone-650.webp 650w, /assets/home-evidence/atlas-iphone-1308.webp 1308w" sizes="(max-width: 991px) min(30vw, 200px), min(14vw, 186px)" alt="The industrial parks atlas on an iPhone, filtered to the 13 parks in Sulawesi" width="436" height="876" loading="eager">
       </div></div></div></section>'''
 
 
@@ -169,17 +173,15 @@ def evidence():
 def library():
     cards = []
     for href, title, desc, asset in RESOURCES:
-        credit = ' data-photo-credit="Service design workshop · 18F"' if href == "/resources/project-brief/" else ""
-        if href == "/pricing/":
-            credit = ' data-photo-credit="San Francisco Cable Car Powerhouse · HAER"'
-        image = f"url(/assets/{asset})"
-        cards.append(f'''<div class="col-md-3"><div class="blog-list-item"><a href="{href}">
-          <div class="blog-lest-img relative"><div class="blog-image" style="background-image:{image}"></div><div class="cover"{credit}></div></div>
-          <h4>{escape(title)}</h4><p>{escape(desc)}</p><span class="btn btn-link">Open resource</span></a></div></div>''')
+        art = cover_image(asset, "(max-width:767px) 74vw, (max-width:991px) 43vw, min(29vw, 420px)")
+        cards.append(f'''<div class="item"><article class="simple-project resource-card"><a href="{href}">
+          <div class="img-wrap">{art}</div><h4>{escape(title)}</h4><p>{escape(desc)}</p>
+          <span class="resource-action">Open resource</span></a></article></div>''')
     return f'''<section id="blog-list" class="padding-tb-150"><div class="container">
       <div class="row"><div class="col-md-8">{placeholder()}<h3 class="h1">For buyers<br><span class="text-muted">Plan your next project.</span></h3></div>
       <div class="col-md-4"><p class="pull-right">{action("/contact/", "Contact us", "btn-inverse open-contact-form")}{action("/resources/", "All resources")}</p></div></div>
-      <div class="row">{''.join(cards)}</div></div></section>'''
+      </div><div class="resource-carousel owl-carousel owl-theme" tabindex="0" role="region" aria-label="Browse four buyer resources">
+      {''.join(cards)}</div></section>'''
 
 
 def render():
