@@ -103,7 +103,11 @@
     sheet.querySelector('#message').replaceChildren();
     for (const element of inertElements) element.inert = false;
     inertElements = [];
-    if (wasModal || sheet.contains(document.activeElement)) (contactOpener || header.querySelector('.logo')).focus({preventScroll: true});
+    if (wasModal || sheet.contains(document.activeElement)) {
+      const returnTo = contactOpener?.getClientRects().length ? contactOpener
+        : header.querySelector(mobile.matches ? '.link-btn a' : '.open-contact-form');
+      returnTo.focus({preventScroll: true});
+    }
     contactOpener = null;
   }
 

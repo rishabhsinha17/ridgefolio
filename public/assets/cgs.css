@@ -188,3 +188,9 @@
 .atlas-symbol .cluster-place.sulawesi {bottom:auto;top:calc(100% + 3px);left:100%;}
 .atlas:not(.interactive) .group-legend,.atlas-wrap:not(:has(.interactive)) .interactive-note {display:none;}
 .atlas-viewport[data-basemap="vector"] {background:#c4dce0;}
+
+/* The navigation scrolls away on a short landscape phone. Keep the map in view after its contents link. */
+@media screen and (max-width:991px) and (max-height:500px) and (orientation:landscape) {
+  html:has(.rv-source.case-page) {scroll-padding-block-start:16px}
+  .rv-source.case-page .atlas-wrap {scroll-margin-block-start:0}
+}

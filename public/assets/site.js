@@ -66,7 +66,7 @@ function renderSearch() {
           .sort((a, b) => b.score - a.score);
         results.replaceChildren();
         status.textContent = matches.length
-          ? matches.length + " pages found"
+          ? matches.length + (matches.length === 1 ? " page found" : " pages found")
           : "No matching pages. Try a shorter term or browse Services.";
         for (const { page } of matches) {
           const row = element("div", undefined, "result"),
@@ -126,12 +126,13 @@ function renderFinder() {
   const input = byId("service-query"),
     results = byId("finder-results");
   function update() {
-    const query = input.value.toLowerCase().trim();
-    const matches = services.filter((row) =>
-      row.slice(0, 4).join(" ").toLowerCase().includes(query),
-    );
+    const terms = input.value.toLowerCase().trim().split(/\s+/);
+    const matches = services.filter(row => {
+      const text = row.slice(0, 4).join(" ").toLowerCase();
+      return terms.every(term => text.includes(term));
+    });
     byId("match-count").textContent = matches.length
-      ? matches.length + " matching services"
+      ? matches.length + (matches.length === 1 ? " matching service" : " matching services")
       : "No matching services. Try park, road or permit.";
     results.replaceChildren();
     for (const [name, category, description, requirements, path] of matches) {
@@ -199,9 +200,24 @@ function permitDesk() {
         "button",
         stage === "Draft" ? "Submit application" : "Resubmit correction",
       );
+      const correctionError = element("p", "Update the event name or location to address the reviewer’s note.");
+      correctionError.id = "desk-correction-error";
+      correctionError.setAttribute("role", "alert");
+      correctionError.hidden = true;
+      if (stage === "Correction requested") {
+        form.append(correctionError);
+        name.setAttribute("aria-describedby", correctionError.id);
+        location.setAttribute("aria-describedby", correctionError.id);
+        form.addEventListener("input", () => { correctionError.hidden = true; });
+      }
       form.append(send);
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        if (stage === "Correction requested" && name.value.trim() === eventName && location.value.trim() === venue) {
+          correctionError.hidden = false;
+          name.focus();
+          return;
+        }
         eventName = name.value.trim();
         venue = location.value.trim();
         move(
@@ -262,15 +278,15 @@ function permitDesk() {
       heading.focus();
     }
   }
-  function reset() {
+  function reset(focus = false) {
     stage = "Draft";
     eventName = "Harbor market";
     venue = "Harbor Square";
     reason = "";
     events = ["Sample case opened."];
-    draw();
+    draw(focus);
   }
-  byId("desk-reset").addEventListener("click", reset);
+  byId("desk-reset").addEventListener("click", () => reset(true));
   reset();
 }
 function ledger() {
@@ -331,41 +347,19 @@ if (byId("query")) renderSearch();
 if (byId("service-query")) renderFinder();
 if (byId("desk-step")) permitDesk();
 if (byId("district")) ledger();
-// These planning tools keep drafts in the current tab, including across refreshes.
-function tabDraft(key) {
-  return {
-    load() {
-      try {
-        return JSON.parse(sessionStorage.getItem(key));
-      } catch {
-        return null;
-      }
-    },
-    save(value) {
-      try {
-        if (value === null) sessionStorage.removeItem(key);
-        else sessionStorage.setItem(key, JSON.stringify(value));
-      } catch {
-        // A browser can disable storage. The form and its download still work.
-      }
-    },
-  };
-}
 if (byId("brief")) {
   const form = byId("brief");
-  const draft = tabDraft("ridgefolio.project-brief.v1");
-  const restored = draft.load();
-  for (const field of form.querySelectorAll("textarea")) {
-    if (typeof restored?.[field.name] === "string") {
-      field.value = restored[field.name].slice(0, field.maxLength);
-    }
+  const projectName = form.querySelector("textarea[required]");
+  function validateName() {
+    projectName.setCustomValidity(projectName.value && !projectName.value.trim() ? "Enter a project name." : "");
   }
+  validateName();
   form.addEventListener("input", () => {
-    draft.save(Object.fromEntries(new FormData(form)));
+    validateName();
     byId("brief-state").textContent = "";
   });
   form.addEventListener("reset", () => {
-    draft.save(null);
+    projectName.setCustomValidity("");
     byId("brief-state").textContent = "Brief cleared.";
   });
   form.addEventListener("submit", (event) => {
@@ -379,31 +373,10 @@ if (byId("brief")) {
     );
     byId("brief-state").textContent = "Your brief is ready to download.";
   });
+  for (const button of form.querySelectorAll("button")) button.disabled = false;
 }
 if (byId("checklist")) {
   const boxes = [...byId("checklist").querySelectorAll("input")];
-  const draft = tabDraft("ridgefolio.launch-checklist.v1");
-  const restored = draft.load();
-  if (Array.isArray(restored)) {
-    boxes.forEach((box, i) => { box.checked = restored[i] === true; });
-  }
-  function updateCount() {
-    byId("check-count").textContent =
-      boxes.filter((b) => b.checked).length +
-      " of " +
-      boxes.length +
-      " checked";
-  }
-  updateCount();
-  byId("checklist").addEventListener("change", () => {
-    draft.save(boxes.map((box) => box.checked));
-    updateCount();
-  });
-  document.querySelector("[data-clear-checks]").addEventListener("click", () => {
-    boxes.forEach((box) => { box.checked = false; });
-    draft.save(null);
-    updateCount();
-  });
   document
     .querySelector("[data-download-checks]")
     .addEventListener("click", () =>
@@ -420,4 +393,5 @@ if (byId("checklist")) {
           .join("\n\n"),
       ),
     );
+  for (const button of byId("checklist").querySelectorAll("button")) button.disabled = false;
 }

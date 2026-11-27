@@ -125,3 +125,9 @@
   .rv-source.project-page #blog-lg-img[data-presentation="evidence-plate open-source"] {max-width:2150px;margin-inline:auto}
   .rv-source.project-page #project-end-image {max-width:2000px;margin-inline:auto}
 }
+
+@media screen and (min-width:800px) and (max-width:991px) {
+  #blog-post-page #blog-lg-img:is([data-presentation="finder-demonstration"],[data-presentation="permit-demonstration"],[data-plate="service-areas"]) .pixel-btn svg {
+    left:auto;right:6px;width:17px;
+  }
+}

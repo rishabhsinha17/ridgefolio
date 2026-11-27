@@ -86,6 +86,7 @@ summary {
 }
 .skip:focus {
   top: 8px;
+  z-index: 101;
 }
 .top {
   position: sticky;

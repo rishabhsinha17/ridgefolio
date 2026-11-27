@@ -45,6 +45,7 @@
 /* The project sheets sit on a shared ground plane. Pairs use the same floor
    coordinates while their elevation and shadows separate the layers. */
 :where(.rv-home) #home-hero {position:relative;isolation:isolate;overflow:hidden}
+:where(.rv-home) #home-hero:has(#hero-heading:target) {overflow:clip}
 :where(.rv-home) #home-hero .row {min-height:clamp(560px,calc(100svh - 85px),930px)}
 :where(.rv-home) #home-hero .caption-wrap {position:relative;z-index:2;align-self:center;padding-block:60px}
 :where(.rv-home) #home-hero .caption-inner {max-width:560px}
@@ -361,7 +362,7 @@
   .rv-home #quotes .testimonials {min-height:433px}
   .rv-home #quotes #about {min-height:0}
   .rv-home #quotes .client-shot {width:min(71vw,1000px);height:calc(100% + 110px);max-width:none;inset:-65px auto auto min(0px,calc((1400px - 100vw) / 2 - 100px));clip-path:inset(0 9% 0 0)}
-  .rv-home #quotes #about::after {content:"Morowali Industrial Park · Ministry of Public Works of Indonesia";position:absolute;left:20px;bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
+  .rv-home #quotes #about::after {content:"Morowali Industrial Park · Ministry of Public Works of Indonesia";position:absolute;left:min(20px,calc((1400px - 100vw) / 2 + 20px));bottom:16px;color:white;background:#11211bcc;padding:5px 9px;font:500 12px/1.4 var(--sans)}
   .rv-home #blog-list .row+.row {gap:0}
 }
 @media(max-width:767px) {

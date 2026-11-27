@@ -81,7 +81,7 @@ def hero():
       <div class="container"><div class="row">
         <div class="col-sm-5 caption-wrap v-align">{placeholder()}<div class="caption-inner">
           <span class="no-margin h1 display-text">We build</span>
-          <h1 class="text-muted text-light display-text" id="hero-heading">Software for public agencies.<br><img class="aos-init aos-animate" src="/assets/showcase/home-services.svg" width="300" height="83" alt="Websites, workflows and data tools."></h1>
+          <h1 class="text-muted text-light display-text" id="hero-heading" tabindex="-1">Software for public agencies.<br><img class="aos-init aos-animate" src="/assets/showcase/home-services.svg" width="300" height="83" alt="Websites, workflows and data tools."></h1>
           <p>{action("/contact/", "Contact us", "btn-inverse open-contact-form")}{action("/work/", "Our work", "btn-default")}</p>
           <div id="down-arrow">{arrow("Back to the top", "#home-hero", "up")}{arrow("Explore the practice", "#welcome-header", "down")}</div>
         </div></div>

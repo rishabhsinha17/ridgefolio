@@ -38,6 +38,26 @@ test('production assets, fonts and responsive geometry', async ({ page }, info) 
   expect(failures).toEqual([]);
 });
 
+test('the keyboard skip link and its destination clear the fixed header', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1280, height: 800 });
+  for (const path of ['/', '/resources/capabilities/']) {
+    await page.goto(path);
+    const skip = page.getByRole('link', { name: 'Skip to content' });
+    await skip.focus();
+    expect(await skip.evaluate(link => {
+      const box = link.getBoundingClientRect();
+      return link.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
+    })).toBe(true);
+    const heading = page.locator(await skip.getAttribute('href'));
+    await skip.press('Enter');
+    await expect(heading).toBeFocused();
+    await expect.poll(() => heading.evaluate(node =>
+      node.getBoundingClientRect().top >= document.querySelector('[data-ref-header]').getBoundingClientRect().bottom
+    )).toBe(true);
+  }
+});
+
 test('mobile navigation, keyboard dismissal and contact destinations', async ({ page }) => {
   await page.goto('/');
   await page.setViewportSize({ width: 390, height: 844 });
@@ -66,6 +86,10 @@ test('mobile navigation, keyboard dismissal and contact destinations', async ({ 
   await page.keyboard.press('Escape');
   await expect(sheet).toBeHidden();
   await expect(contact).toBeFocused();
+  await contact.click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.keyboard.press('Escape');
+  await expect(page.locator('header[data-ref-header] .link-btn a')).toBeFocused();
   await page.goto('/contact/');
   await expect(page.locator('a[href="mailto:rishabh@ridgefolio.com"]').first()).toHaveAttribute('href','mailto:rishabh@ridgefolio.com');
   await expect(page.locator('#contact-hero address').getByRole('link', {name:'Book a 30-minute call'})).toHaveAttribute('href','https://cal.com/ridgefolio/intro');

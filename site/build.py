@@ -362,7 +362,7 @@ add(
     )
     + section(
         "Launch review",
-        f'<div id="checklist">{checks}<p role="status" id="check-count">0 of {len(CHECKS)} checked</p><button data-download-checks>Download checklist</button> <button type="button" class="quiet" data-clear-checks>Clear checklist</button></div>',
+        f'<div id="checklist">{checks}<p role="status" id="check-count">0 of {len(CHECKS)} checked</p><button data-download-checks disabled>Download checklist</button> <button type="button" class="quiet" data-clear-checks disabled>Clear checklist</button></div>',
     ),
     "Resources",
 )
@@ -392,7 +392,7 @@ add(
     )
     + section(
         "Project worksheet",
-        f'<p class="worksheet-example"><a href="{ed.EXAMPLE}" download>Download a completed example</a></p><form id="brief">{fields}<button>Download my brief</button> <button type="reset" class="quiet">Clear brief</button><p id="brief-state" role="status"></p></form>',
+        f'<p class="worksheet-example"><a href="{ed.EXAMPLE}" download>Download a completed example</a></p><form id="brief">{fields}<button disabled>Download my brief</button> <button type="reset" class="quiet" disabled>Clear brief</button><p id="brief-state" role="status"></p></form>',
     ),
     "Resources",
 )
@@ -467,6 +467,7 @@ add(
     "",
 )
 index = []
+tab_draft_script = Path(__file__).with_name("tab-drafts.js").read_text()
 for path, (title, desc, body, group) in pages.items():
     body = interiors.adapt(path, body)
     family = ""
@@ -490,6 +491,8 @@ for path, (title, desc, body, group) in pages.items():
         '<link rel="stylesheet" href="/assets/cgs-atlas/leaflet.css">'
         '<link rel="stylesheet" href="/assets/cgs.css">'
     ) if is_cgs else ""
+    worksheet = {"/resources/project-brief/": "project-brief", "/resources/launch-checklist/": "launch-checklist"}.get(path)
+    early_drafts = f'<script data-worksheet="{worksheet}">{tab_draft_script}</script>' if worksheet else ""
     scripts = (
         '<script src="/assets/ref-shell.js" defer></script><script src="/assets/motion-icons.js" defer></script><script src="/assets/site.js" defer></script>'
         + ('<script src="/assets/cgs-atlas/leaflet.js" defer></script><script src="/assets/atlas.js" defer></script>' if is_cgs else "")
@@ -545,7 +548,7 @@ for path, (title, desc, body, group) in pages.items():
     )
     page_body = page_body.replace("↗", LINK_ARROW)
     out.write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/ref-shell.css"><link rel="stylesheet" href="/assets/motion-icons.css">{scripts}</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="{robots}"><title>{escape(title)} | Ridgefolio</title><meta name="description" content="{escape(desc, quote=True)}"><link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{escape(title, quote=True)} | Ridgefolio"><meta property="og:description" content="{escape(desc, quote=True)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}{social_image}"><meta property="og:image:alt" content="{escape(social_alt, quote=True)}"><meta name="theme-color" content="#19392d"><link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">{early_drafts}<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin><link rel="preload" as="font" type="font/ttf" href="/assets/fonts/manrope-variable.ttf" crossorigin><link rel="stylesheet" href="/assets/ridge.css"><link rel="stylesheet" href="/assets/site.css">{case_css}<link rel="stylesheet" href="/assets/showcase.css">{interior_css}<link rel="stylesheet" href="/assets/ref-shell.css"><link rel="stylesheet" href="/assets/motion-icons.css">{scripts}</head>
 <body id="{template_id}" class="rz-page {body_class}"><a class="skip" href="#{target}">Skip to content</a>{page_body}</body></html>''')
 (PUBLIC / "assets/search.json").write_text(json.dumps(index, ensure_ascii=False))
 (PUBLIC / "sitemap.xml").write_text(

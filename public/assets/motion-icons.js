@@ -111,7 +111,7 @@
           x.target.dataset.artReveal = 'visible';
           artworkObserver.unobserve(x.target);
         }
-      });
+      }, {rootMargin: '0px 0px 280px'});
       for (const item of revealTargets) {
         if (item.getBoundingClientRect().top < innerHeight || item.dataset.artReveal === 'visible') {
           item.removeAttribute('data-art-reveal');
