@@ -29,7 +29,7 @@ function renderSearch() {
   const query = () => new URLSearchParams(location.search).get("q") || "";
   let pages;
   let loading = false;
-  input.value = query();
+  if (!input.value) input.value = query();
 
   function commit() {
     const term = input.value.trim();
@@ -670,6 +670,8 @@ if (byId("brief")) {
     );
     byId("brief-state").textContent = "Your brief is ready to download.";
   });
+  for (const button of form.querySelectorAll("button")) button.disabled = false;
+  document.dispatchEvent(new Event("ridgefolio:worksheet-ready"));
 }
 if (byId("checklist")) {
   const boxes = [...byId("checklist").querySelectorAll("input")];
@@ -705,6 +707,8 @@ if (byId("checklist")) {
     updateCount();
     byId("check-count").append(". Download started.");
   });
+  for (const button of byId("checklist").querySelectorAll("button")) button.disabled = false;
+  document.dispatchEvent(new Event("ridgefolio:worksheet-ready"));
 }
 
 for (const field of document.querySelectorAll('#contact-body textarea[required], #contactform textarea[required], #contactform input[type=text][required]')) {

@@ -1,5 +1,30 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // WebKit can defer a CSS background until the first frame in view. Decode
+  // the visible thumbnails as the reader approaches, including the carousel
+  // previews that enter from either side of the viewport.
+  if ('IntersectionObserver' in window && !navigator.connection?.saveData) {
+    const warmed = new Set();
+    const approaching = new IntersectionObserver(entries => {
+      for (const {target, isIntersecting} of entries) {
+        if (!isIntersecting) continue;
+        approaching.unobserve(target);
+        for (const tile of target.querySelectorAll('.project-image, .blog-image')) {
+          const rect = tile.getBoundingClientRect();
+          if (!rect.width || rect.right < -rect.width || rect.left > innerWidth + rect.width) continue;
+          const match = getComputedStyle(tile).backgroundImage.match(/^url\(["']?([^"')]+)["']?\)$/);
+          if (!match || warmed.has(match[1])) continue;
+          warmed.add(match[1]);
+          const image = new Image();
+          image.decoding = 'async';
+          image.src = match[1];
+          image.decode().catch(() => {});
+        }
+      }
+    }, {rootMargin:'140% 0px'});
+    for (const section of document.querySelectorAll('#featured-projects, #blog-list')) approaching.observe(section);
+  }
+
   function box(className) {
     const element = document.createElement('div');
     element.className = className;

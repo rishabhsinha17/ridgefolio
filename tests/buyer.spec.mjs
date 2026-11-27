@@ -84,6 +84,53 @@ test("search, prepare a brief and download a marked checklist", async ({
   await expect(page.getByRole("status")).toHaveText("0 of 6 checked");
 });
 
+test("worksheet edits survive a refresh before the shared script arrives", async ({ page }) => {
+  async function editBeforeReady(path, edit) {
+    // Keep the original document parsed and editable while the shared bundle is in flight.
+    const script = "**/assets/site.js";
+    let intercepted;
+    const waiting = new Promise(resolve => { intercepted = resolve; });
+    await page.route(script, route => { intercepted(route); }, { times: 1 });
+    await page.goto(path, { waitUntil: "commit" });
+    const pending = await waiting;
+    await edit();
+    await pending.abort();
+    await page.reload();
+  }
+
+  const brief = "/resources/project-brief/";
+  const project = page.getByLabel("Project name");
+  const acceptance = page.getByLabel("Acceptance", { exact: true });
+  await editBeforeReady(brief, async () => {
+    await project.fill("Library directory");
+    await acceptance.fill("Visitors can find branch hours");
+    await expect(page.getByRole("button", {name:"Download my brief"})).toBeDisabled();
+  });
+  await expect(project).toHaveValue("Library directory");
+  await editBeforeReady(brief, async () => {
+    await expect(project).toHaveValue("Library directory");
+    await expect(acceptance).toHaveValue("Visitors can find branch hours");
+    await project.fill("Branch directory");
+  });
+  const downloaded = await downloadedText(page, "Download my brief");
+  expect(downloaded).toContain("Branch directory");
+  expect(downloaded).toContain("Visitors can find branch hours");
+
+  const checklist = "/resources/launch-checklist/";
+  const boxes = page.getByRole("checkbox");
+  await editBeforeReady(checklist, async () => { await boxes.nth(0).check(); });
+  await expect(boxes.nth(0)).toBeChecked();
+  await editBeforeReady(checklist, async () => {
+    await expect(boxes.nth(0)).toBeChecked();
+    await boxes.nth(1).check();
+    await expect(page.locator("#check-count")).toHaveText("2 of 6 checked");
+  });
+  await expect(page.locator("#check-count")).toHaveText("2 of 6 checked");
+  const checks = await downloadedText(page, "Download checklist");
+  expect(checks).toContain("[x] Content and redirects");
+  expect(checks).toContain("[x] Resident tasks");
+});
+
 test("the case study filters the historical map and identifies individual parks", async ({ page }) => {
   await page.goto("/work/industrial-parks/");
   const status = page.getByLabel("Filter by status");
