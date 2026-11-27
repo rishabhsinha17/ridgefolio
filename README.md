@@ -6,11 +6,11 @@ Source for [ridgefolio.com](https://ridgefolio.com). The public website covers e
 
 Run `npm ci` and `npm run dev`. Edit the descriptions in `site/content.py`, the page layouts in `site/build.py`, and the styles and interactions in `public/assets/`. Run `python3 site/build.py` to render the pages, search index and sitemap. The generated pages are committed, so deployment only serves static files.
 
-The demos use fictional records and hold input in the current tab. The project brief and checklist download as local text files. Contact links open the visitor's mail application or the practice’s Cal.com booking page.
+The demos use fictional records. Service Finder saves checked preparation items in the current tab. Permit Desk keeps the draft, staff decisions and case history there and exports a receipt. Service Ledger restores a report from its URL and exports the filtered register or an individual work log. The project brief and checklist download as local text files. Contact links open the visitor's mail application or the practice’s Cal.com booking page.
 
 ## Update downloadable and visual assets
 
-Run `npx playwright install chromium` and `node scripts/capability-pdf.mjs` after changing the printable capability statement. Its links point to the production domain. To refresh the service-page screenshots, start the development server and run `node scripts/demo-previews.mjs`. Set `RIDGEFOLIO_PREVIEW_ORIGIN` when using another local port.
+Run `npx playwright install chromium` and `node scripts/capability-pdf.mjs` after changing the printable capability statement. Its links point to the production domain. To capture the demo previews, directory art and permit exhibits from the working interfaces, start the development server and run `node scripts/demo-previews.mjs`. Set `RIDGEFOLIO_PREVIEW_ORIGIN` when using another local port.
 
 ## Verify and deploy
 

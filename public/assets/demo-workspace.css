@@ -1,0 +1,30 @@
+/* Chrome shared by the three working examples. Each application owns its controls. */
+#workspace {
+  padding:0; border:1px solid #bccac0; border-radius:4px;
+  background:#fffefa; color:#20372c; font:500 16px/1.55 var(--sans);
+}
+#workspace > .workspace-note {
+  margin:0; padding:9px clamp(14px,2.3vw,30px); border-bottom:1px solid #d6ded5;
+  background:#f2f5ef; color:#405649; font:600 12px/1.5 var(--sans);
+}
+#workspace > noscript {display:block;padding:12px 20px}
+#workspace > noscript:empty {display:none}
+#workspace :where(input, select, textarea, button) {font-family:inherit}
+#workspace :where(button, input, select, textarea, summary, a):focus-visible {
+  outline:2px solid #205640;outline-offset:3px;
+}
+#workspace:focus-visible {outline:2px solid #205640;outline-offset:3px}
+.demo-launch {margin:0}
+.demo-launch a {
+  display:inline-flex;align-items:center;min-height:44px;padding:0 19px;
+  background:#214638;color:#fff;font:650 15px/1.4 var(--sans);text-decoration:none;
+}
+.demo-launch a:hover {background:#163629;text-decoration:underline;text-underline-offset:.2em}
+@media screen and (max-width:991px) {
+  html:has(#workspace) {scroll-padding-top:12px}
+}
+#down-arrow-sticky-wrapper #down-arrow[data-workspace-near][data-scroll-control] a {transition:none}
+#down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control][data-workspace-paused] a:is(.up,.down) {
+  visibility:hidden;opacity:0;pointer-events:none;transition:none;
+}
+@media print {.demo-launch {display:none}}

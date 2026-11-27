@@ -1,0 +1,133 @@
+#service-ledger {
+  --ledger-ink: #183d32;
+  --ledger-secondary: #485e51;
+  --ledger-line: #ced9cd;
+  --ledger-wash: #edf3e9;
+  --ledger-paper: #f8faf5;
+  --ledger-green: #315f47;
+  color: var(--ledger-ink);
+  padding: clamp(18px, 3.2vw, 44px);
+  font: 500 15px/1.55 var(--sans, Manrope, sans-serif);
+  scroll-margin-top: 95px;
+}
+#service-ledger [hidden] {display:none!important}
+#service-ledger .ledger-sr {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;padding:0;margin:-1px}
+#service-ledger :is(h2,h3,p,ol,ul) {margin:0}
+#service-ledger h2 {margin:4px 0 6px;font:400 clamp(30px,3.4vw,45px)/1.12 var(--serif);letter-spacing:-.04em}
+#service-ledger h3 {font:700 17px/1.4 var(--sans);letter-spacing:-.015em}
+#service-ledger .ledger-kicker {display:block;color:var(--ledger-green);font:700 11px/1.5 var(--sans);letter-spacing:.11em;text-transform:uppercase}
+#service-ledger .ledger-heading p,#service-ledger .ledger-register-head p,#service-ledger .ledger-export>span {font-size:13px;line-height:1.5;color:var(--ledger-secondary)}
+#service-ledger .ledger-instruction {margin:18px 0 22px;max-width:68ch;color:var(--ledger-secondary)}
+#service-ledger .ledger-instruction strong {color:var(--ledger-ink)}
+#service-ledger .ledger-controls {display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px 16px;margin-bottom:22px}
+#service-ledger .ledger-controls>div {flex:0 1 210px;min-width:0}
+#service-ledger label {display:block;font:700 13px/1.4 var(--sans);margin:0 0 5px;color:var(--ledger-ink)}
+#service-ledger select {
+  display:block;width:100%;max-width:none;min-width:0;margin:0;min-height:44px;padding:9px 32px 9px 11px;
+  color:var(--ledger-ink);border:1px solid #91a496;border-radius:4px;appearance:none;-webkit-appearance:none;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23375847' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 11px center / 12px 8px;
+  font:500 16px/1.4 var(--sans);
+}
+#service-ledger :where(button,.ledger-primary) {
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0;padding:8px 12px;
+  background:transparent;color:var(--ledger-green);border:1px solid transparent;border-radius:4px;
+  box-shadow:none;font:650 14px/1.35 var(--sans);text-transform:none;letter-spacing:0;text-align:center;cursor:pointer;
+}
+#service-ledger :is(a,button,select,summary):focus-visible {outline:3px solid #256e50;outline-offset:3px}
+#service-ledger :is(a,button,select,summary) {scroll-margin-block:90px 30px}
+#service-ledger .ledger-text-action {text-decoration:underline;text-underline-offset:3px;padding-inline:3px}
+#service-ledger .ledger-text-action:hover,#service-ledger .ledger-toggle:hover,#service-ledger .ledger-group-key:hover {color:#152e23}
+#service-ledger .ledger-overview {display:grid;grid-template-columns:minmax(155px,.68fr) minmax(0,1.5fr);border:1px solid var(--ledger-line);border-radius:6px;background:var(--ledger-paper)}
+#service-ledger .ledger-amount {align-self:stretch;display:flex;flex-direction:column;justify-content:center;gap:4px;border-right:1px solid var(--ledger-line);padding:clamp(17px,2.3vw,31px);background:var(--ledger-wash);border-radius:5px 0 0 5px}
+#service-ledger #ledger-hours {font:400 clamp(55px,6vw,77px)/.96 var(--serif);letter-spacing:-.06em;font-variant-numeric:lining-nums tabular-nums;margin:3px 0 5px}
+#service-ledger #ledger-summary {color:var(--ledger-secondary);font-size:13px;line-height:1.45}
+#service-ledger .ledger-breakdown {padding:clamp(16px,2vw,26px);min-width:0}
+#service-ledger .ledger-breakdown-head {display:flex;align-items:center;justify-content:space-between;gap:8px 18px;flex-wrap:wrap}
+#service-ledger .ledger-groups {display:inline-flex;border:1px solid #9cae9f;border-radius:4px;background:white;padding:2px}
+#service-ledger .ledger-groups button {padding:5px 11px;font-size:13px;border-radius:2px}
+#service-ledger .ledger-groups button[aria-pressed=true] {background:var(--ledger-green);color:white}
+#service-ledger #ledger-chart {list-style:none;display:grid;gap:0;margin:10px 0 0;padding:0}
+#service-ledger .ledger-bar {list-style:none;display:grid;grid-template-columns:minmax(75px,1fr) minmax(35px,2fr) 38px;align-items:center;gap:10px;min-height:30px;margin:0;font-size:14px}
+#service-ledger .ledger-bar>strong,#service-ledger .record-hours,#service-ledger #ledger-register-total,#service-ledger .log-hours {text-align:right;font-variant-numeric:tabular-nums}
+#service-ledger .ledger-group-key {justify-self:start;justify-content:start;text-align:left;font-size:14px;color:var(--ledger-green);padding:6px 1px;text-decoration:underline;text-underline-offset:3px}
+#service-ledger .ledger-track {display:block;height:8px;border-radius:1px;background:#dfe8dc;overflow:hidden}
+#service-ledger .ledger-track i {height:100%;display:block;background:#558469}
+#service-ledger .ledger-measure {margin:7px 0 0;font-size:12px;line-height:1.45;color:var(--ledger-secondary)}
+#service-ledger .ledger-chart-empty {padding:13px 0;color:var(--ledger-secondary)}
+#service-ledger .ledger-register {margin-top:clamp(23px,3vw,38px)}
+#service-ledger .ledger-register-head {display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}
+#service-ledger .ledger-register-head p {margin-top:4px}
+#service-ledger .ledger-sort {display:flex;align-items:center;gap:8px;flex:none}
+#service-ledger .ledger-sort label {margin:0;white-space:nowrap}
+#service-ledger .ledger-sort select {width:auto}
+#service-ledger table {width:100%;border-collapse:collapse;background:transparent;margin:0;font-size:14px}
+#service-ledger :is(th,td) {border:0;border-bottom:1px solid var(--ledger-line);text-align:left;padding:10px 9px;color:var(--ledger-ink);font:500 14px/1.45 var(--sans)}
+#service-ledger thead th {background:var(--ledger-wash);font-weight:700}
+#service-ledger thead th:last-child {text-align:right}
+#service-ledger .ledger-entry th {padding-block:0}
+#service-ledger .ledger-key,#service-ledger .ledger-toggle {font:550 13px/1.35 PlexMono,monospace}
+#service-ledger .ledger-toggle {gap:8px;justify-content:flex-start;border:0;white-space:nowrap;padding:4px 1px;text-decoration:underline;text-underline-offset:3px}
+#service-ledger .ledger-toggle::after {content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-3px}
+#service-ledger .ledger-toggle[aria-expanded=true]::after {transform:rotate(225deg);margin-top:3px}
+#service-ledger .ledger-entry:has([aria-expanded=true]),#service-ledger .ledger-log {background:var(--ledger-paper)}
+#service-ledger .ledger-log>td {padding:0}
+#service-ledger .ledger-log details {margin:0;border:0;background:transparent;padding:0}
+#service-ledger .ledger-log summary {padding:8px 10px;cursor:pointer;color:var(--ledger-green);font-size:14px}
+#service-ledger[data-enhanced] .ledger-log summary {display:none}
+#service-ledger .ledger-log-body {padding:clamp(13px,2vw,23px);border-left:3px solid #799980}
+#service-ledger .ledger-log-heading {display:flex;align-items:baseline;justify-content:space-between;gap:4px 10px;flex-wrap:wrap}
+#service-ledger .ledger-log-heading strong {font:700 16px/1.4 var(--sans)}
+#service-ledger .ledger-log-heading span {font:550 12px/1.5 PlexMono,monospace;color:var(--ledger-secondary)}
+#service-ledger .ledger-log ol {list-style:none;padding:0;margin-top:12px}
+#service-ledger .ledger-log li {list-style:none;display:grid;grid-template-columns:55px minmax(0,1fr) 38px;align-items:start;gap:9px;padding:9px 0;margin:0;border-top:1px solid var(--ledger-line)}
+#service-ledger .ledger-log li time {font-size:13px;color:var(--ledger-secondary)}
+#service-ledger .log-team,#service-ledger .log-work {display:block}
+#service-ledger .log-team {font-size:13px}
+#service-ledger .log-work {color:var(--ledger-secondary);font-size:14px;margin-top:2px}
+#service-ledger .ledger-log-total {display:flex;justify-content:space-between;border-top:1px solid var(--ledger-line);padding:8px 0;font-weight:650}
+#service-ledger .ledger-log-download {font-size:13px}
+#service-ledger tfoot :is(th,td) {background:var(--ledger-paper);font-weight:700;border-bottom:1px solid #9bab9e}
+#service-ledger .ledger-export {display:flex;align-items:center;gap:9px 15px;flex-wrap:wrap;margin-top:15px}
+#service-ledger .ledger-primary {color:white;background:var(--ledger-green);text-decoration:none;padding-inline:17px}
+#service-ledger .ledger-primary:hover {background:#1f4633}
+#service-ledger #ledger-empty {padding:16px 0 3px}
+#service-ledger #ledger-empty p {font-size:14px;color:var(--ledger-secondary);margin-top:3px}
+@media (max-width:720px) {
+  #service-ledger .ledger-overview {grid-template-columns:minmax(120px,.68fr) minmax(0,1.4fr)}
+  #service-ledger .ledger-breakdown-head {align-items:start}
+}
+@media (max-width:580px) {
+  #service-ledger {padding:16px}
+  #service-ledger .ledger-controls {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  #service-ledger .ledger-controls>button {grid-column:1/-1;justify-self:start}
+  #service-ledger .ledger-overview {grid-template-columns:minmax(0,1fr)}
+  #service-ledger .ledger-amount {border:0;border-bottom:1px solid var(--ledger-line);border-radius:5px 5px 0 0;padding:17px}
+  #service-ledger .ledger-breakdown {padding:15px}
+  #service-ledger .ledger-breakdown-head {display:grid;gap:9px}
+  #service-ledger .ledger-groups {justify-self:start}
+  #service-ledger .ledger-register-head {align-items:start;flex-direction:column}
+  #service-ledger :is(th,td) {padding:8px 4px;font-size:13px}
+  #service-ledger .ledger-toggle {font-size:12px;gap:5px}
+  #service-ledger .ledger-log-heading {display:grid}
+  #service-ledger .ledger-log li {grid-template-columns:41px minmax(0,1fr) 30px;gap:5px}
+}
+@media (max-width:370px) {
+  #service-ledger {padding:12px}
+  #service-ledger .ledger-controls {grid-template-columns:1fr}
+  #service-ledger table {table-layout:fixed}
+  #service-ledger thead th:nth-child(1) {width:28%}
+  #service-ledger thead th:nth-child(2) {width:23%}
+  #service-ledger thead th:nth-child(3) {width:33%}
+  #service-ledger thead th:nth-child(4) {width:16%}
+  #service-ledger :is(th,td) {padding-inline:2px;overflow-wrap:anywhere}
+}
+@media print {
+  #service-ledger {color:#111;box-shadow:none;padding:0}
+  #service-ledger .ledger-controls,#service-ledger .ledger-groups,#service-ledger .ledger-sort,#service-ledger .ledger-export,#service-ledger .ledger-log-download {display:none}
+  #service-ledger .ledger-overview,#service-ledger .ledger-log {break-inside:avoid}
+}
+@media (forced-colors:active) {
+  #service-ledger .ledger-groups button[aria-pressed=true] {outline:2px solid Highlight;outline-offset:-3px}
+  #service-ledger .ledger-track {border:1px solid CanvasText}
+  #service-ledger .ledger-track i {background:Highlight;forced-color-adjust:none}
+}

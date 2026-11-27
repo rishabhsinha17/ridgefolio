@@ -2,6 +2,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const control = document.getElementById('down-arrow');
   if (control) {
+    const workspace = document.getElementById('workspace');
     const wrapper = document.createElement('div');
     wrapper.id = 'down-arrow-sticky-wrapper';
     wrapper.className = 'sticky-wrapper';
@@ -12,6 +13,7 @@
     const downLink = control.querySelector('.down');
     const upLink = control.querySelector('.up');
     let pinned;
+    let workspacePaused;
     let frame;
     control.dataset.scrollControl = '';
     const supportsPopover = typeof control.showPopover === 'function';
@@ -27,28 +29,45 @@
       const x = Math.min(width - 50 - inset, Math.max(inset, toX));
       control.style.setProperty('--origin-x', rect.left + 'px');
       control.style.setProperty('--travel-x', (x - rect.left) + 'px');
-      if (pinned === active) return;
       const hadFocus = control.contains(document.activeElement);
-      pinned = active;
-      wrapper.classList.toggle('stickyarrow', active);
-      if (supportsPopover) {
-        if (active) {
-          // The ring stays on top of clipped hero artwork without moving its
-          // link out of the document's logical reading and tab order.
-          control.setAttribute('popover', 'manual');
-          control.showPopover();
-        } else if (control.hasAttribute('popover')) {
-          control.hidePopover();
-          control.removeAttribute('popover');
+      const changed = pinned !== active;
+      if (changed) {
+        pinned = active;
+        wrapper.classList.toggle('stickyarrow', active);
+        if (supportsPopover) {
+          if (active) {
+            control.setAttribute('popover', 'manual');
+            control.showPopover();
+          } else if (control.hasAttribute('popover')) {
+            control.hidePopover();
+            control.removeAttribute('popover');
+          }
         }
+        downLink.hidden = false;
+        upLink.hidden = false;
       }
-      for (const [link, live] of [[downLink, !active], [upLink, active]]) {
-        link.hidden = false;
+
+      // A partly visible application can sit well below the shortcut. Yield
+      // only when the actual hit area reaches the application on either axis.
+      let blocked = false;
+      if (workspace && active) {
+        const w = workspace.getBoundingClientRect();
+        const near = w.top < innerHeight && w.bottom > 0;
+        control.toggleAttribute('data-workspace-near', near);
+        if (near) {
+          const a = upLink.getBoundingClientRect();
+          blocked = a.left < w.right && a.right > w.left && a.top < w.bottom && a.bottom > w.top;
+        }
+      } else if (workspace) control.removeAttribute('data-workspace-near');
+      if (!changed && workspacePaused === blocked) return;
+      workspacePaused = blocked;
+      control.toggleAttribute('data-workspace-paused', blocked);
+      for (const [link, live] of [[downLink, !active], [upLink, active && !blocked]]) {
         link.inert = !live;
         link.setAttribute('aria-hidden', String(!live));
         link.tabIndex = live ? 0 : -1;
       }
-      if (hadFocus) (active ? upLink : downLink).focus({preventScroll:true});
+      if (hadFocus) (blocked ? workspace : active ? upLink : downLink).focus({preventScroll:true});
     }
     function queue() {
       if (!frame) frame = requestAnimationFrame(measure);
@@ -56,7 +75,9 @@
     window.addEventListener('scroll', queue, {passive:true});
     window.addEventListener('resize', queue, {passive:true});
     window.addEventListener('pageshow', queue);
-    new ResizeObserver(queue).observe(control.closest('section') || document.body);
+    const observer = new ResizeObserver(queue);
+    observer.observe(control.closest('section') || document.body);
+    if (workspace) observer.observe(workspace);
     document.fonts?.ready.then(queue);
     measure();
   }

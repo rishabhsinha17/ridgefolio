@@ -7,6 +7,9 @@ import re
 import homepage
 import interiors
 import navigation
+import finder
+import permit_desk
+import service_ledger
 import editorial as ed
 import cgs
 from content import SERVICES, DEMOS, RESOURCES, CASES, CHECKS
@@ -398,12 +401,11 @@ add(
 )
 
 
-def demo_body(slug):
-    if slug == "finder":
-        return '<label for="service-query">Search services</label><input id="service-query" type="search" placeholder="Try permit, road or park"><p id="match-count" role="status"></p><div id="finder-results"></div>'
-    if slug == "permit-desk":
-        return """<div class="desk-grid"><section class="desk-panel"><div class="tag">Resident and staff views</div><h2 id="desk-heading">Application intake</h2><div id="desk-step"></div></section><aside class="receipt"><span class="tag">Case file</span><h3>Community event permit</h3><p id="desk-status" role="status"></p><ol id="desk-history"></ol><button type="button" class="quiet" id="desk-reset">Reset demo</button></aside></div>"""
-    return """<label for="district">District</label><select id="district"><option>All districts</option><option>North</option><option>Central</option><option>South</option></select><p role="status" id="ledger-summary"></p><div class="ledger-chart" id="ledger-chart"></div><div class="scroll-table"><table><caption>Fictional service records</caption><thead><tr><th scope="col">Record</th><th scope="col">District</th><th scope="col">Service</th><th scope="col">Hours</th></tr></thead><tbody id="ledger-rows"></tbody></table></div><button id="export-ledger">Download filtered CSV</button>"""
+demo_workspaces = {
+    "finder": finder.workspace,
+    "permit-desk": permit_desk.workspace,
+    "service-ledger": service_ledger.workspace,
+}
 
 
 for slug, title, desc, tone in DEMOS:
@@ -411,10 +413,10 @@ for slug, title, desc, tone in DEMOS:
         intro("Interactive demo", title, desc)
         + section(
             "Demo workspace",
-            '<div class="workspace '
+            f'<div id="workspace" role="region" aria-label="{escape(title)} workspace" tabindex="-1" class="workspace '
             + tone
-            + '"><p class="workspace-note">Fictional service data · Runs in this tab</p><noscript>Enable JavaScript to use the interactive workspace.</noscript>'
-            + demo_body(slug)
+            + '"><p class="workspace-note">Fictional service data · Runs in this tab</p>'
+            + demo_workspaces[slug]()
             + "</div>",
         )
         + (
@@ -486,6 +488,7 @@ for path, (title, desc, body, group) in pages.items():
         )
     out = PUBLIC / "404.html" if path == not_found else PUBLIC / path.strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
+    demo_slug = path.split("/")[2] if path.startswith("/demos/") and path != "/demos/" else None
     is_cgs = path == "/work/industrial-parks/"
     case_css = (
         '<link rel="stylesheet" href="/assets/cgs-atlas/leaflet.css">'
@@ -495,6 +498,7 @@ for path, (title, desc, body, group) in pages.items():
     early_drafts = f'<script data-worksheet="{worksheet}">{tab_draft_script}</script>' if worksheet else ""
     scripts = (
         '<script src="/assets/ref-shell.js" defer></script><script src="/assets/motion-icons.js" defer></script><script src="/assets/site.js" defer></script>'
+        + (f'<script src="/assets/{demo_slug}.js" defer></script>' if demo_slug else "")
         + ('<script src="/assets/cgs-atlas/leaflet.js" defer></script><script src="/assets/atlas.js" defer></script>' if is_cgs else "")
         + ('<script src="/assets/showcase.js" defer></script>' if path == "/" or path == "/practice/" or path.startswith("/for/") else "")
         + ('<script src="/assets/ridge.js" defer></script>' if path == "/practice/" else "")
@@ -528,6 +532,8 @@ for path, (title, desc, body, group) in pages.items():
         interior_css += f'<link rel="stylesheet" href="/assets/{stylesheet}.css">'
         if path != "/work/industrial-parks/":
             interior_css += '<link rel="stylesheet" href="/assets/interior-art.css">'
+    if demo_slug:
+        interior_css += f'<link rel="stylesheet" href="/assets/demo-workspace.css"><link rel="stylesheet" href="/assets/{demo_slug}.css">'
     robots = "noindex" if path == not_found else "index,follow"
     social_image, social_alt = ed.social_image(path)
     # Keep the source template’s section ordering and link the skip control to

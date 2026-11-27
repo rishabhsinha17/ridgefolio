@@ -61,6 +61,8 @@ def title_hero(identifier, title, subtitle="", *, target="scroll-to", project=Fa
         headings = (f'<div class="small blog-date"><b class="text-muted">{category}</b></div>' if category else "") + f'<h1>{title}</h1>'
     if project or identifier == "blog-hero" and subtitle:
         headings = edit_slot("center-btns") + headings
+    elif target == "workspace":
+        headings += '<p class="demo-launch"><a href="#workspace">Open workspace</a></p>'
     elif identifier == "blog-hero" and not service:
         headings += '<p class="blog-author">Ridgefolio LLC</p>'
     style = "padding-tb-250" + (" bg-muted" if identifier == "projects-hero" else "")
@@ -125,7 +127,7 @@ def catalogue(demos=False):
     )
     demo_info = {slug: (name, desc) for slug, name, desc, _ in DEMOS}
     captions = {
-        "finder": ("Two services match a search for “park”.", "Check what to prepare before applying."),
+        "finder": ("Find a service by keyword and topic.", "Check what to prepare before applying."),
         "permit-desk": ("The approval keeps the full review history.", "A reviewer asks which entrance to use."),
         "service-ledger": ("Six sample records add up to 32 service hours.", "Two records in the South district account for 10 hours."),
     }
@@ -134,7 +136,7 @@ def catalogue(demos=False):
         slug = service["demo"]
         demo_name, demo_desc = demo_info[slug]
         service_url = f'/services/{service["slug"]}/'
-        demo_url = f'/demos/{slug}/'
+        demo_url = f'/demos/{slug}/#workspace'
         name = demo_name if demos else service["title"]
         detail = service["label"]
         desc = (demo_desc + " " + service["test"]) if demos else (service["intro"] + " " + service["need"])
@@ -360,7 +362,7 @@ def article_figure(path):
         notes = {
             "/demos/finder/": (
                 "Follow the permit application",
-                'Search for “permit” and expand the Community event permit entry. The entry lists what to prepare and links directly to the application. Use the <a href="/demos/permit-desk/">permit desk</a> to follow the same task through staff review.',
+                'Search for “permit” and expand the Community event permit entry. The entry lists what to prepare and links directly to the application. Use the <a href="/demos/permit-desk/#workspace">permit desk</a> to follow the same task through staff review.',
             ),
             "/demos/service-ledger/": (
                 "Reconcile a filtered export",
@@ -437,14 +439,14 @@ def article(path, body):
     elif path == "/resources/capabilities/":
         banner = image_banner("/assets/article-evidence/capability-sheet.webp", "Ridgefolio’s complete one-page capability statement", ed.PDF, "Capability statement", "Open PDF", "portrait-document")
     elif path == "/demos/service-ledger/":
-        banner = documentary_banner("service-areas", "#scroll-to", "Try the demo", "Open workspace", record="ledger")
+        banner = documentary_banner("service-areas", "#workspace", "Try the demo", "Open workspace", record="ledger")
     elif path == "/demos/finder/":
         banner = (
             '<div id="blog-lg-img" class="relative" data-presentation="finder-demonstration">'
             + art.photo("kiosk", sizes="(max-width:480px) 140vw, 100vw") + '<figure class="search-record"><figcaption>Service finder · Sample result</figcaption>'
             '<p class="record-name">Community event permit requirements</p><p>For a gathering in a park or public square. '
-            'Prepare the event name, location and a short description.</p></figure>' + art.credit("kiosk")
-            + pixel("#scroll-to", "Try the demo", "Open workspace", banner_link=True) + '</div>'
+            'Prepare the event name, location, date and expected attendance.</p></figure>' + art.credit("kiosk")
+            + pixel("#workspace", "Try the demo", "Open workspace", banner_link=True) + '</div>'
         )
     else:
         banner = (
@@ -455,13 +457,14 @@ def article(path, body):
             '<div class="permit-interface"><img src="/assets/article-evidence/permit-desk.webp" '
             'srcset="/assets/article-evidence/permit-desk-960.webp 960w, /assets/article-evidence/permit-desk-1920.webp 1920w, /assets/article-evidence/permit-desk.webp 3840w" '
             'sizes="(min-width:800px) 54vw, 100vw" width="3840" height="2560" alt="Actual permit desk showing staff review and the case history after resubmission."></div>'
-            + pixel("#scroll-to", "Try the demo", "Open workspace", banner_link=True) + '</div>'
+            + pixel("#workspace", "Try the demo", "Open workspace", banner_link=True) + '</div>'
         )
     figure = article_figure(path)
     if path == "/demos/permit-desk/":
         content = re.sub(r'<p class="wrap receipt-download">.*?</p>', figure, content, count=1)
         figure = ""
-    return shell(title_hero("blog-hero", title, category=category) + banner + article_body(lead + article_sections(content) + figure), "article-page")
+    target = "workspace" if path.startswith("/demos/") else "scroll-to"
+    return shell(title_hero("blog-hero", title, category=category, target=target) + banner + article_body(lead + article_sections(content) + figure), "article-page")
 
 
 def about(path, body):

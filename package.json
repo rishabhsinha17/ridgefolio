@@ -2,15 +2,16 @@
   "name": "ridgefolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Ridgefolio \u2014 independent software engineering for public agencies and delivery partners.",
+  "description": "Ridgefolio — independent software engineering for public agencies and delivery partners.",
   "scripts": {
     "dev": "wrangler dev",
-    "check": "node --check public/assets/civic.js && node --check public/assets/ridge.js && node --check public/assets/site.js && node --check public/assets/atlas.js && node --check public/assets/ref-shell.js && node --check public/assets/showcase.js && node --check public/assets/interiors.js && node scripts/check.mjs",
+    "check": "node --check public/assets/civic.js && node --check public/assets/ridge.js && node --check public/assets/site.js && node --check public/assets/atlas.js && node --check public/assets/ref-shell.js && node --check public/assets/showcase.js && node --check public/assets/interiors.js && node --check public/assets/finder.js && node --check public/assets/permit-desk.js && node --check public/assets/service-ledger.js && node scripts/check.mjs",
     "deploy": "wrangler deploy",
     "test": "playwright test"
   },
   "devDependencies": {
-    "wrangler": "4.162.0",
-    "@playwright/test": "1.65.1"
+    "@playwright/test": "1.65.1",
+    "sharp": "0.35.5",
+    "wrangler": "4.162.0"
   }
 }

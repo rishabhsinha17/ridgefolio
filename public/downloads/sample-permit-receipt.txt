@@ -1,11 +1,21 @@
 RIDGEFOLIO DEMONSTRATION · FICTIONAL PERMIT
-RF-101
-Neighborhood art fair
-Harbor Square, east entrance
-Approved
+Community event permit | RF-101
+Decision: Approved
+Approved revision: 2
+Decision time (UTC): 2027-04-06T16:15:00.000Z
 
-Sample case opened.
-Resident submitted the application.
-Staff requested a correction: Name the entrance
-Resident resubmitted the corrected application.
-Staff approved the application.
+APPROVED APPLICATION
+Event name: Neighborhood art fair
+Event location: Harbor Square, east entrance
+Event date: 2027-05-15
+Expected attendance: 120
+Event plan: Outdoor art tables and a marked pedestrian entrance.
+
+CASE HISTORY (UTC)
+2027-04-05T16:00:00.000Z — Sample case opened
+2027-04-05T16:24:00.000Z — Applicant submitted revision 1
+2027-04-05T17:40:00.000Z — Staff returned revision 1
+Name the entrance
+2027-04-06T15:20:00.000Z — Applicant submitted revision 2
+Event location: Harbor Square → Harbor Square, east entrance
+2027-04-06T16:15:00.000Z — Staff approved revision 2

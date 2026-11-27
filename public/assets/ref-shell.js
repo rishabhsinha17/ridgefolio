@@ -15,7 +15,7 @@
   let menuOpener;
   let contactOpener;
   let dockDismissed = false;
-  const scrollContact = Boolean(sheet);
+  const scrollContact = sheet && !document.getElementById('workspace');
 
   function syncContactDock() {
     if (!scrollContact || root.classList.contains('ref-contact-open')) return;

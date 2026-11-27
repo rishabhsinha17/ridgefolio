@@ -5,7 +5,7 @@ Illustrative scope based on the working permit desk demonstration
 https://ridgefolio.com/demos/permit-desk/
 
 Current task
-A resident submits an event name and location. A staff reviewer may need a more precise location before they can approve the request.
+A resident enters the event name and date along with the venue and expected attendance. Staff review the location. For a market at Harbor Square, the reviewer needs to know which entrance the vendors will use.
 
 Desired result
 The reviewer can request a correction. The resident sees the reason, updates the request and resubmits it. Both parties can follow the decision history.
@@ -14,7 +14,7 @@ Systems and constraints
 The demonstration uses fictional records in a browser tab. A production project would require the agency to identify the system of record, define access and retention rules, and agree on notification delivery. Fees, payments and identity verification would require separate scoping.
 
 Acceptance walkthrough
-1. Submit "Neighborhood art fair" at "Harbor Square".
+1. Submit "Neighborhood art fair" at "Harbor Square" for May 15, 2027, with 120 attendees. Use "Outdoor art tables and a marked pedestrian entrance." for the optional plan.
 2. Request the specific entrance as the reviewer.
 3. Change the location to "Harbor Square, east entrance" and resubmit.
 4. Approve the application and download its receipt.

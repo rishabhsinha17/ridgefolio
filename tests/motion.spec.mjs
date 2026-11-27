@@ -46,7 +46,9 @@ test('article templates keep just one pinned arrow above the scrolled page', asy
   for (const route of ['/demos/finder/', '/services/websites/']) {
     await page.goto(route);
     await page.locator('#blog-lg-img').evaluate(image => {
-      window.scrollTo({ top: image.getBoundingClientRect().top + scrollY - 76, behavior: 'instant' });
+      // Exercise the editorial banner before the workspace can reach the sticky shortcut.
+      const bannerTop = document.getElementById('workspace') ? 180 : 76;
+      window.scrollTo({ top: image.getBoundingClientRect().top + scrollY - bannerTop, behavior: 'instant' });
     });
     const rail = page.locator('#down-arrow');
     await expect(rail).toHaveCSS('position', 'fixed');
