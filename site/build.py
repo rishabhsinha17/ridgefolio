@@ -24,6 +24,13 @@ def a(url, label, cls=""):
     return f'<a href="{escape(url, quote=True)}" class="{cls}">{label}</a>'
 
 
+CA_CERTIFICATION = (
+    "California-certified Small Business (Microbusiness) · Certification #2057043 · "
+    "Valid through November 30, 2028. "
+    '<a href="https://caleprocure.ca.gov/pages/PublicSearch/supplier-search.aspx">Verify on Cal eProcure</a>.'
+)
+
+
 def arrow(label):
     return f'{label} <span aria-hidden="true">↗</span>'
 
@@ -181,6 +188,7 @@ for slug, who, desc, items in [
                 "Before a proposal",
                 "Share the permissible statement of work, role boundaries, required experience and procurement schedule.",
             ),
+            ("California certification", CA_CERTIFICATION),
             (
                 "During delivery",
                 "Agree on repository access, test fixtures, review cadence and who can accept the milestone.",
@@ -327,6 +335,7 @@ capbody = (
     + section(
         "Delivery and evidence",
         "<p>Founder Rishabh Sinha leads each engagement from scope through handover. Engagements can cover a complete project or a defined subcontract work package.</p>"
+        + f"<p>{CA_CERTIFICATION}</p>"
         + a(
             "/work/industrial-parks/",
             "Founder work · Indonesian industrial parks dashboard",

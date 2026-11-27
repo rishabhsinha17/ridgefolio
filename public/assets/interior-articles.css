@@ -98,6 +98,15 @@
   #blog-post-page .blog-post :is(.article-document,.article-illustration) {display:none}
   #blog-post-page .blog-post .article-subheading {font-weight:700;break-after:avoid}
   #blog-post-page .blog-post .article-transcript {white-space:pre-wrap}
+  .document-page #blog-hero .blog-date {margin:12pt 0 0;font-size:9pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .document-page #scroll-to .blog-post > p:first-of-type {margin:6pt 0 10pt;padding-bottom:12pt;border-bottom:1pt solid currentColor;font-size:13pt}
+  .document-page #scroll-to .article-subheading {margin:14pt 0 6pt;font:normal 22pt/1.2 var(--serif)}
+  .document-page .article-subheading strong {font-weight:inherit}
+  .document-page .blog-post p:not(.article-subheading) > span:has(> strong) {
+    display:grid;grid-template-columns:31% 1fr;column-gap:8pt;padding:7pt 0;border-top:.5pt solid #bbc6bd;break-inside:avoid
+  }
+  .document-page .blog-post p:has(+.article-subheading) > span:has(> strong) {border-bottom:.5pt solid #bbc6bd}
+  .document-page .blog-post p:has(> a[href^="https://caleprocure.ca.gov/"]) {margin:7pt 0}
 }
 @media screen {
   #blog-post-page #blog-hero h1 {min-block-size:3lh}
