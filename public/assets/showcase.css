@@ -333,24 +333,26 @@
   }
 }
 
-/* Each pair follows its own concentric track. Counter-rotation keeps the artwork upright. */
+/* All three tracks share the back layer. The six upright prints share the front. */
 .rv-home #apps .rotating-apps {padding-block:clamp(32px,4vw,70px)}
 .app-wheel {position:relative;width:100%;max-width:720px;container-type:inline-size;margin-inline:auto}
-.wheel-scene {position:relative;width:100%;aspect-ratio:1;pointer-events:none}
-.wheel-ring {
-  position:absolute;inset:var(--inset);border:1px solid #9baa99;border-radius:50%;
-  transform:rotate(var(--ring-turn));
+.wheel-scene {position:relative;isolation:isolate;width:100%;aspect-ratio:1;pointer-events:none}
+.wheel-ring {position:absolute;inset:var(--inset)}
+.wheel-ring::before {
+  content:"";position:absolute;inset:0;z-index:0;border:1px var(--line-style,solid) #9baa99;
+  border-radius:50%;transform:rotate(var(--ring-turn));
 }
 .wheel-ring:nth-child(1) {--inset:29%;--angle:-162deg;--turn:18deg;--period:67s;--size:20cqw}
-.wheel-ring:nth-child(2) {--inset:17.5%;--angle:101deg;--turn:-18deg;--period:50s;--size:22cqw;border-style:dashed}
+.wheel-ring:nth-child(2) {--inset:17.5%;--angle:101deg;--turn:-18deg;--period:50s;--size:22cqw;--line-style:dashed}
 .wheel-ring:nth-child(3) {--inset:10%;--angle:146deg;--turn:15deg;--period:70s;--size:18cqw}
 .wheel-print {
-  --bearing:var(--angle);position:absolute;display:block;width:var(--size);max-width:none;height:auto;
+  --bearing:calc(var(--angle) + var(--ring-turn) + var(--opposite,0deg));
+  position:absolute;z-index:1;display:block;width:var(--size);max-width:none;height:auto;
   left:calc(50% + 50% * cos(var(--bearing)));top:calc(50% + 50% * sin(var(--bearing)));
-  border-radius:50%;border:1px solid #384c4128;box-shadow:0 0 0 3px var(--rv-paper,#faf9f3);
-  transform:translate(-50%,-50%) rotate(calc(-1 * var(--ring-turn)));
+  border-radius:50%;border:1px solid #384c4128;background:var(--rv-paper,#faf9f3);box-shadow:0 0 0 3px var(--rv-paper,#faf9f3);
+  transform:translate(-50%,-50%);
 }
-.wheel-print:nth-child(2) {--bearing:calc(var(--angle) + 180deg)}
+.wheel-print:nth-child(2) {--opposite:180deg}
 @property --ring-turn {syntax:"<angle>";inherits:true;initial-value:0deg}
 @keyframes wheel-sweep {0%,100% {--ring-turn:0deg} 50% {--ring-turn:var(--turn)}}
 .wheel-play {z-index:2;position:absolute;bottom:0;right:0;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #97a79a;
@@ -385,19 +387,18 @@
   border:1px solid #b8c6b8;border-radius:3px;box-shadow:0 4px 14px #243c2910;
 }
 .rv-home #responsive .handset-track {
-  --phone:min(26cqw,186px);--travel:clamp(24px,10cqw,78px);position:absolute;right:0;bottom:0;
-  width:var(--phone);height:calc(var(--phone) * 876 / 436 + var(--travel));
+  position:absolute;inset:clamp(14px,4.5cqw,32px) 0 0 auto;width:min(26cqw,186px);
 }
 .rv-home #responsive .shot2 {
   position:absolute;bottom:0;right:0;display:block;width:100%;height:auto;max-width:none;margin:0;
   filter:drop-shadow(0 3px 5px #243c2926);
 }
 @media (prefers-reduced-motion:no-preference) {
-  .rv-home #responsive .shot2 {position:sticky;top:clamp(75px,38svh,350px);bottom:auto}
+  .rv-home #responsive .shot2 {position:sticky;top:clamp(80px,22svh,190px);bottom:auto}
 }
 @media (max-width:991px) {
   .rv-home #responsive .responsive-shots {margin:clamp(26px,4vw,38px) auto 0;max-width:740px;aspect-ratio:1.16}
-  .rv-home #responsive .handset-track {--phone:min(30cqw,200px)}
+  .rv-home #responsive .handset-track {width:min(30cqw,200px)}
 }
 
 /* The buyer rail uses the project gallery's navigation and leaves enough

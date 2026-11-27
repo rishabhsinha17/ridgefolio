@@ -1,3 +1,5 @@
+import sharp from "sharp";
+
 import { test, expect } from './browser.mjs';
 
 test('the hero arrow changes direction at its rail, stays clickable and returns keyboard focus', async ({ page }) => {
@@ -111,4 +113,47 @@ test('public-service records follow flat circular tracks, pause, and stay still 
   expect(await wheel.evaluate(el=>el.getAnimations({subtree:true}).length)).toBe(0);
   await expect(wheel.locator('.wheel-ring')).toHaveCount(3);
   await expect(wheel.locator('img')).toHaveCount(6);
+});
+
+test('every wheel disc covers the lines behind it throughout its orbit', async ({page}) => {
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.goto('/#apps');
+  const wheel = page.locator('.app-wheel');
+  const scene = wheel.locator('.wheel-scene');
+  await wheel.scrollIntoViewIfNeeded();
+  await wheel.getByRole('button', {name:'Pause app previews'}).click();
+  await scene.evaluate(el => Promise.all([...el.querySelectorAll('img')].map(img => img.decode())));
+
+  for (const time of [0, 25000, 55000]) {
+    const discs = await scene.evaluate((el, time) => {
+      el.getAnimations({subtree:true}).forEach(a => { a.currentTime = time; });
+      const frame = el.getBoundingClientRect();
+      return [...el.querySelectorAll('img')].map(img => {
+        const r = img.getBoundingClientRect();
+        return {cx:r.x-frame.x+r.width/2, cy:r.y-frame.y+r.height/2, radius:r.width/2};
+      });
+    }, time);
+    const capture = async (style = '') => sharp(await scene.screenshot({scale:'css', style}))
+      .removeAlpha().raw().toBuffer({resolveWithObject:true});
+    const drawn = await capture();
+    const hidden = await capture('.wheel-ring, .wheel-ring::before {border-color:transparent!important}');
+    const {width,height,channels} = drawn.info;
+    let changedOutside = 0;
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const i = (y * width + x) * channels;
+        const diff = Math.max(
+          Math.abs(drawn.data[i] - hidden.data[i]),
+          Math.abs(drawn.data[i+1] - hidden.data[i+1]),
+          Math.abs(drawn.data[i+2] - hidden.data[i+2])
+        );
+        if (diff <= 5) continue;
+        // Exclude the antialiased perimeter when comparing a disc's opaque face.
+        const inside = discs.some(d => Math.hypot(x + .5 - d.cx, y + .5 - d.cy) < d.radius - 2);
+        if (inside) throw new Error(`Track shows through a disc at (${x}, ${y}), ${time}ms into the orbit`);
+        changedOutside++;
+      }
+    }
+    expect(changedOutside).toBeGreaterThan(80);
+  }
 });

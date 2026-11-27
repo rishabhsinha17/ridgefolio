@@ -93,7 +93,7 @@ test('the handset moves with scroll within the right side of the map', async ({p
       const phone = stage.querySelector('.shot2').getBoundingClientRect();
       return {
         outerRight:frame.right - phone.right, outerBottom:frame.bottom - phone.bottom,
-        overlap:(map.right - phone.left) / map.width, relativeTop:(phone.top - map.top) / map.height,
+        overlap:(map.right - phone.left) / map.width, topGap:phone.top - map.top,
         inside:map.left >= 0 && phone.right <= document.documentElement.clientWidth + 1,
       };
     }, fraction);
@@ -102,10 +102,11 @@ test('the handset moves with scroll within the right side of the map', async ({p
     expect(box.outerBottom).toBeGreaterThanOrEqual(-1);
     expect(box.overlap).toBeGreaterThan(.05);
     expect(box.overlap).toBeLessThan(.25);
-    expect(box.relativeTop).toBeGreaterThan(.15);
+    expect(box.topGap).toBeGreaterThanOrEqual(13);
     expect(box.inside).toBe(true);
   }
-  expect(Math.max(...offsets) - Math.min(...offsets)).toBeGreaterThan(18);
+  const frameWidth = await art.evaluate(stage => stage.clientWidth);
+  expect(Math.max(...offsets) - Math.min(...offsets)).toBeGreaterThan(.20 * frameWidth);
   await page.emulateMedia({reducedMotion:"reduce"});
   const gap = await art.evaluate(stage => stage.getBoundingClientRect().bottom - stage.querySelector('.shot2').getBoundingClientRect().bottom);
   expect(Math.abs(gap)).toBeLessThan(1);
