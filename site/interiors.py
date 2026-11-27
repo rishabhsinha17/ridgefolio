@@ -115,8 +115,7 @@ def catalogue(demos=False):
         '<section id="apps" class="apps-hero"><div class="container"><div class="row">'
         f'<div class="col-md-4 v-align">{edit_slot("center-btns")}<h1 class="h1">{title}<br><span class="text-muted">{subtitle}</span></h1>'
         f'<p class="lead"><span>{description}</span></p><p>{button("#scroll-to", first_label, True)} {button("/work/", "Selected work")}</p>{down()}</div>'
-        '<div class="col-md-7 col-md-offset-1 rotating-apps equal padding-tb-150" aria-hidden="true">'
-        '<div class="rotaing"><div class="one"></div><div class="two"></div><div class="three"></div></div></div></div></div></section>'
+        f'<div class="col-md-7 col-md-offset-1 rotating-apps">{art.app_wheel()}</div></div></div></section>'
     )
     headline = (
         'Three tasks for delivering public services.<br><span class="text-muted">Try each one in your browser.</span>'
@@ -150,20 +149,14 @@ def catalogue(demos=False):
         scope_caption, demo_caption = captions[slug]
         caption = escape(demo_caption if demos else scope_caption, quote=True)
         artwork = f"/assets/directory-evidence/{slug}-{state}"
-        if demos:
+        if demos or slug != "service-ledger":
             scene = (
                 f'<div class="app-img-{side}" style="--capture:url({artwork}-wide.webp);--capture-narrow:url({artwork}-narrow.webp)" '
                 f'data-caption="{caption}" role="img" aria-label="{escape(demo_name)} demonstration. {caption}"><div class="cover"></div></div>'
             )
-        elif slug == "service-ledger":
+        else:
             map_sizes = ", ".join(f"/assets/cgs-atlas/overview-{width}.webp {width}w" for width in (960, 1536, 2560, 3840))
             scene = f'<div class="app-img-{side} directory-landscape"><img src="/assets/cgs-atlas/overview-3840.webp" srcset="{map_sizes}" sizes="(min-width:992px) max(1400px, 75vw), max(580px, 135vw)" alt="Industrial park locations across Indonesia from the CGS case study" width="3840" height="2560" loading="eager"></div>'
-        else:
-            source = "public-terminals" if slug == "finder" else "public-market"
-            scene = (
-                f'<div class="app-img-{side} directory-landscape">' + art.photo(source, sizes="(min-width:992px) max(1400px, 75vw), max(580px, 135vw)")
-                + art.credit(source) + '</div>'
-            )
         bands.append(
             f'<section id="{slug}-app" class="app-row relative">{tile}<div class="container"><div class="row">'
             f'<div class="{column} padding-tb-150"><h3 class="h2">{escape(name)}<br><span class="text-muted">{escape(detail)}</span></h3>'
@@ -174,16 +167,13 @@ def catalogue(demos=False):
 
 
 def work_index():
-    project_images = {
-        "industrial-parks": "/assets/cgs-atlas/overview-3840.webp",
-        "open-source": "/assets/interior-art/review-changes-3840.webp",
-        "evaluation": "/assets/project-evidence/monitor-strata.svg",
-    }
+    covers = {"industrial-parks": "atlas", "open-source": "release", "evaluation": "evaluation"}
     cards = []
     for slug, *_ in CASES:
+        cover = art.cover_image(covers[slug], "(min-width:992px) min(42vw, 575px), 90vw")
         cards.append(
             '<div class="col-md-5 col-md-offset-1 project"><div class="item text-center"><div class="simple-project">'
-            f'<a href="/work/{slug}/"><div class="img-wrap"><div class="project-image" data-project="{slug}" style="--project-cover:url({project_images[slug]})"></div></div>'
+            f'<a href="/work/{slug}/"><div class="img-wrap">{cover}</div>'
             f'<p class="h3">{ed.WORK_TITLES[slug]}<small>{ed.WORK_CAPTIONS[slug]}</small></p></a></div></div></div>'
         )
     return shell(
@@ -225,7 +215,7 @@ def resource_index():
         )
     return shell(
         title_hero("blog-hero", "Buyer resources", "Planning guides")
-        + documentary_banner("library-interior", ed.PDF, "Capability statement", "Open PDF", editable=True)
+        + specimen_banner((("brief", "Completed permit project brief"), ("checklist", "Six launch checks"), ("capability", "One-page capability statement")), ed.PDF, "Capability statement", "Open PDF", editable=True)
         + '<section id="scroll-to" class="padding-tb-150"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1">' + edit_slot("center-btns")
         + "".join(items) + "</div></div></div></section>", "blog-page",
     )
@@ -409,6 +399,23 @@ def documentary_banner(stem, url, title, action, *, record="", editable=False):
     )
 
 
+def specimen_banner(samples, url, title, action, *, theme="paper", editable=False):
+    sheets = []
+    for slug, label in samples:
+        if slug.startswith("screen/"):
+            name = slug.split("/")[1]
+            image = (f'<picture><source media="(max-width:550px)" srcset="/assets/directory-evidence/{name}-narrow.webp">'
+                     f'<img src="/assets/directory-evidence/{name}-wide.webp" alt="{escape(label, quote=True)}" loading="eager"></picture>')
+        elif slug == "excerpt":
+            image = f'<img src="/assets/directory-evidence/capability-excerpt.svg" alt="{escape(label, quote=True)}" loading="eager">'
+        else:
+            image = art.cover_image(slug, "(min-width:1000px) 36vw, 49vw", label)
+        sheets.append(f'<div class="specimen">{image}</div>')
+    return (f'<div id="blog-lg-img" class="relative" data-presentation="specimens" data-stock="{theme}">'
+            + (edit_slot("banner-btn") if editable else "") + '<div class="specimen-pair">' + "".join(sheets) + '</div>'
+            + pixel(url, title, action, banner_link=True) + '</div>')
+
+
 def utility_page(title, category, lead, content):
     heading = (
         '<section id="blog-hero" class="utility-heading"><div class="container"><div class="row">'
@@ -426,27 +433,32 @@ def article(path, body):
         service = next(item for item in SERVICES if path == f'/services/{item["slug"]}/')
         demo_url = f'/demos/{service["demo"]}/'
         if service["slug"] == "data":
-            banner = image_banner("/assets/cgs-atlas/overview-3840.webp", "The 141 records in the industrial parks dataset, clustered across the Indonesian archipelago", demo_url, "Working example", "Open demo", "atlas-plate", editable=True)
+            banner = specimen_banner((("screen/atlas", "The CGS industrial parks atlas with region and status filters"),), "/work/industrial-parks/#the-map", "Industrial parks atlas", "Explore the map", editable=True)
         else:
-            stem = "public-terminals" if service["slug"] == "websites" else "public-market"
-            banner = documentary_banner(stem, demo_url, "Working example", "Open demo", editable=True)
+            if service["slug"] == "websites":
+                samples = (("finder", "A picnic shelter in the service finder"), ("screen/shelter", "A search for picnic opens the park shelter reservation checklist"))
+            else:
+                samples = (("permit", "Approved sample permit RF-101"), ("screen/permit-desk-demo", "A reviewer requests a corrected entrance"))
+            banner = specimen_banner(samples, demo_url, "Working example", "Open demo", editable=True)
         return shell(title_hero("blog-hero", title, service=True) + banner + article_body(service_article(service)), "article-page")
     if path == "/pricing/":
-        banner = documentary_banner("railway-plan", "#scroll-to", "Plan the estimate", "Open guide")
+        banner = specimen_banner((("scope", "Discovery, milestone implementation and support"), ("brief", "Worked brief for the permit workflow")), "#scroll-to", "Plan the estimate", "Open guide", theme="linen")
     elif path == "/resources/project-brief/":
-        banner = documentary_banner("library-elevation", "#scroll-to", "Build a project brief", "Open guide", record="brief")
+        banner = specimen_banner((("brief", "Desired result in the completed example brief"), ("permit", "RF-101, the approved sample the brief describes")), "#scroll-to", "Build a project brief", "Open guide", theme="linen")
     elif path == "/resources/launch-checklist/":
         banner = documentary_banner("reading-by-touch", "#scroll-to", "Open checklist", "Open guide", record="checklist")
     elif path == "/resources/capabilities/":
-        banner = image_banner("/assets/article-evidence/capability-sheet.webp", "Ridgefolio’s complete one-page capability statement", ed.PDF, "Capability statement", "Open PDF", "portrait-document")
+        banner = specimen_banner((("excerpt", "Services and delivery excerpt from the one-page capability statement"),), ed.PDF, "Capability statement", "Open PDF")
     elif path == "/demos/service-ledger/":
-        banner = documentary_banner("service-areas", "#workspace", "Try the demo", "Open workspace", record="ledger")
+        banner = specimen_banner((("ledger", "South district service ledger with ten logged hours"), ("screen/service-ledger-demo", "Two filtered South district service records")), "#workspace", "Try the demo", "Open workspace")
     elif path == "/demos/finder/":
         banner = (
             '<div id="blog-lg-img" class="relative" data-presentation="finder-demonstration">'
-            + art.photo("kiosk", sizes="(max-width:480px) 140vw, 100vw") + '<figure class="search-record"><figcaption>Service finder · Sample result</figcaption>'
-            '<p class="record-name">Community event permit requirements</p><p>For a gathering in a park or public square. '
-            'Prepare the event name, location, date and expected attendance.</p></figure>' + art.credit("kiosk")
+            '<img class="full-img" src="/assets/home-projects/telegraph-pavilion.webp" srcset="/assets/home-projects/telegraph-pavilion.webp 1600w, /assets/home-projects/pavilion-3200.webp 3200w, /assets/home-projects/pavilion-4800.webp 4800w" sizes="(max-width:480px) 150vw, min(2520px, 115vw)" width="1600" height="900" '
+            'alt="Covered picnic tables at Telegraph Picnic Pavilion" loading="eager">'
+            '<figure class="search-record"><figcaption>Service finder · Fictional sample</figcaption>'
+            '<p class="record-name">Park shelter reservation</p><p>Search “picnic” to find the shelter record and the dates, group size and hours to prepare.</p></figure>'
+            '<a class="documentary-credit" href="https://www.nps.gov/places/telegraph-picnic-pavilion.htm">Telegraph Picnic Pavilion <span>· Claire Hassler, National Park Service</span></a>'
             + pixel("#workspace", "Try the demo", "Open workspace", banner_link=True) + '</div>'
         )
     else:
@@ -483,17 +495,17 @@ def about(path, body):
         "practice": ("/assets/cgs-atlas/overview-3840.webp", "/assets/project-evidence/regional-status.svg",
                      "Regional distribution and operating status in the 141-record industrial parks handover", "Indonesia’s industrial parks by region and status · May 2025 handover",
                      "/work/industrial-parks/"),
-        "agencies": ("/assets/article-evidence/permit-desk.webp", "/assets/editorial/civic-center-3200.webp",
-                     "The Civic Center in San Francisco", "San Francisco Civic Center · Carol M. Highsmith, Library of Congress",
-                     "https://www.loc.gov/item/2013630463/"),
-        "partners": ("/assets/article-evidence/project-brief.webp", "/assets/interior-art/review-changes-3840.webp",
+        "agencies": ("/assets/home-projects/cover-permit-1440.webp", "/assets/article-evidence/permit-approval.webp",
+                     "Approved fictional permit RF-101 with its corrected entrance and review decision", "Community event permit · View the sample receipt",
+                     ed.RECEIPT),
+        "partners": ("/assets/home-projects/cover-brief-1440.webp", "/assets/interior-art/review-changes-3840.webp",
                      "Reviewed changes to the kvcached command-line tool on GitHub", "Worker socket cleanup · kvcached pull request 480",
                      ed.KV + "/pull/480/files"),
     }
     belief_image, illustration, alt, caption_text, caption_url = plates[slug]
     sizes = {
         "practice": "/assets/project-evidence/regional-status.svg",
-        "agencies": "/assets/editorial/civic-center-768.webp 768w, /assets/editorial/civic-center-1440.webp 1440w, /assets/editorial/civic-center-1920.webp 1920w, /assets/editorial/civic-center-3200.webp 3200w, /assets/editorial/civic-center-3840.webp 3840w, /assets/interior-art/civic-center-5184.webp 5184w",
+        "agencies": "/assets/article-evidence/permit-approval-720.webp 720w, /assets/article-evidence/permit-approval-1440.webp 1440w, /assets/article-evidence/permit-approval.webp 2560w",
         "partners": ", ".join(f"/assets/interior-art/review-changes-{width}.webp {width}w" for width in (960, 1536, 2560, 3840, 4096, 5280)),
     }
     plate_width = "107vw" if slug == "partners" else "100vw"

@@ -131,3 +131,31 @@
     left:auto;right:6px;width:17px;
   }
 }
+
+/* Work samples use the same prints as the project gallery, at their native ratio. */
+.rv-source.projects-page .img-wrap img.project-image {display:block;width:100%;height:auto;aspect-ratio:5/6;object-fit:contain;background:#faf9f3}
+#apps-page #apps .rotating-apps {align-self:center;min-height:0;padding-block:clamp(20px,4vw,70px)}
+#about-page .rv-source.about-page:has(.about-agencies) [data-about-plate] img {object-fit:contain;background:#eef0e8;padding:clamp(20px,5vw,80px)}
+#about-page .rv-source.about-page:has(.about-partners,.about-agencies) .we-believe-img {background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#eee8da}
+.rv-source #blog-lg-img[data-presentation="specimens"] {height:auto;min-height:0;aspect-ratio:auto;display:block;background:#e4eadd}
+.rv-source #blog-lg-img[data-stock="linen"] {background:#eee7da}
+.specimen-pair {
+  max-width:1440px;margin:auto;display:flex;gap:clamp(14px,3.5vw,56px);align-items:center;justify-content:center;
+  padding:clamp(104px,10vw,160px) clamp(14px,4vw,72px) clamp(28px,5vw,75px);
+}
+.specimen {min-width:0;flex:0 1 33%}
+.specimen:has(picture) {flex-basis:57%}
+.specimen:only-child {flex-basis:87%}
+.specimen-pair .specimen img {display:block;width:100%;height:auto;box-shadow:0 3px 14px #293c3020}
+@media (max-width:550px) {
+  .specimen {flex:1}
+  .specimen:has(picture) {flex:1.1}
+  .specimen:only-child {flex:.95}
+  .specimen-pair:has(>.specimen:nth-child(3)) {gap:8px;padding-inline:10px}
+}
+/* A short sticky track echoes the handset when a printed example sits beside its live screen. */
+@media (prefers-reduced-motion:no-preference) {
+  .specimen-pair:has(picture) > .specimen:first-child:has(+.specimen) {align-self:center}
+  .specimen-pair:has(picture) > .specimen:first-child:has(+.specimen)::after {content:"";display:block;height:clamp(14px,2vw,28px)}
+  .specimen-pair:has(picture) > .specimen:first-child:has(+.specimen) img {position:sticky;top:clamp(72px,28svh,225px)}
+}

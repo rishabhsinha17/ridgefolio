@@ -82,7 +82,7 @@ test('article templates keep just one pinned arrow above the scrolled page', asy
   }
 });
 
-test('public-service records orbit in depth, pause, and stay still for reduced motion', async ({page}) => {
+test('public-service records follow flat circular tracks, pause, and stay still for reduced motion', async ({page}) => {
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto('/#apps');
   const wheel = page.locator('.app-wheel');
@@ -92,24 +92,23 @@ test('public-service records orbit in depth, pause, and stay still for reduced m
   await toggle.press('Enter');
   await expect(wheel).not.toHaveAttribute('data-orbit-running', '');
   const poses = await wheel.evaluate(el => {
-    const image = el.querySelector('.wheel-finder img');
+    const image = el.querySelector('.wheel-ring img');
     const box = time => {
       el.getAnimations({subtree:true}).forEach(animation => { animation.currentTime = time; });
       const r = image.getBoundingClientRect();
-      return {x:r.x, size:r.width};
+      return {x:r.x, y:r.y, size:r.width};
     };
-    const cycle = el.querySelector('.wheel-arm').getAnimations()[0].effect.getTiming().duration;
+    const cycle = el.querySelector('.wheel-ring').getAnimations()[0].effect.getTiming().duration;
     return [box(0), box(cycle/4), box(cycle/2), box(cycle)];
   });
-  expect(Math.abs(poses[0].x - poses[1].x)).toBeGreaterThan(35);
-  const depthRatio = poses[0].size / poses[2].size;
-  expect(depthRatio).toBeGreaterThan(1.01);
-  expect(depthRatio).toBeLessThan(1.10);
-  expect(Math.abs(poses[0].x - poses[3].x)).toBeLessThan(1);
+  expect(Math.hypot(poses[0].x - poses[2].x, poses[0].y - poses[2].y)).toBeGreaterThan(12);
+  expect(Math.abs(poses[0].size - poses[2].size)).toBeLessThan(1);
+  expect(Math.hypot(poses[0].x - poses[3].x, poses[0].y - poses[3].y)).toBeLessThan(1);
   await wheel.getByRole('button', {name:'Play app previews'}).press('Space');
   await expect(wheel).toHaveAttribute('data-orbit-running', '');
   await page.emulateMedia({reducedMotion:'reduce'});
   await expect(wheel.getByRole('button')).toHaveCount(0);
   expect(await wheel.evaluate(el=>el.getAnimations({subtree:true}).length)).toBe(0);
-  await expect(wheel.locator('img')).toHaveCount(3);
+  await expect(wheel.locator('.wheel-ring')).toHaveCount(3);
+  await expect(wheel.locator('img')).toHaveCount(6);
 });

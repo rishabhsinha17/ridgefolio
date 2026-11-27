@@ -166,12 +166,12 @@ const sourceSections = {
   "header": "43a4aa1d13f7a819e4b7d9c16984ea0699ea5452fdddb8a2646af09e60ebba97",
   "home-hero": "dbdc849d8b9db268a15b663792f99cf615cf5bcbe6a9b3fb74f49ba97041fef8",
   "welcome-header": "7791812b80256dd64daaa51f5b5ba3825ae63063bf1500d32813416e07fdac96",
-  // The public-service orbit contains three eager record images and a pause button.
-  "apps": "598554d2f929b3a482aa55bf5cbe9c115bc5ab494ca249dbc61f653856efa7d1",
+  // The public-service orbit contains three concentric tracks, six images and a pause button.
+  "apps": "ce507f8f0c895afe625661f7dc212fd15c4ad9cef84009948fb9d698235f0603",
   "our-work-header": "ea5dc3188f850fb36bcba003f4401ea678ae7fd2672a838f9e4fa398c1dc626b",
   "featured-projects": "930a0203a623ba6ad27dd6be2b56e9157dc3a28ab06ebb0996e52e5befbf5441",
-  // The handset is now anchored to the atlas, with a separate rail for buyer resources.
-  "responsive": "991564619c4c32e127f22ff0ab90903d19a89058743288f36bfa953ea70ab360",
+  // The handset has a bounded sticky track within the atlas frame.
+  "responsive": "a87b5da14132a169e344e0ae0db8da7137ada50e2b9a80cfc822b74e2609e9d3",
   "testimonials-header": "cc3fc5f6b2e7561b0f0c61cf2a70a3410871ab6f845b9e41539d1e2eaebdd576",
   "quotes": "349a5720e0b328ea1d7a6ac27e0682ce87c4a248bdc9ef2ff826d3e2e074558b",
   "blog-list": "ce94f300d58a2492bdffd9eb6b6cab03b1b7f0682ee0a88339fd19904b95bf64",

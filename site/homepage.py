@@ -2,6 +2,8 @@
 
 from html import escape
 
+from interior_art import app_wheel, cover_image
+
 
 # The skipped card numbers are part of the published stage layout. Two pictures
 # may share the same ground position while the foreground picture floats above it.
@@ -99,32 +101,11 @@ def statement(section_id, text, anchor):
 
 
 def apps():
-    records = "".join(
-        f'<span class="wheel-arm wheel-{slug}"><img class="wheel-print" src="/assets/home-projects/wheel-{slug}-960.webp" '
-        f'srcset="/assets/home-projects/wheel-{slug}-480.webp 480w, /assets/home-projects/wheel-{slug}-960.webp 960w, '
-        f'/assets/home-projects/wheel-{slug}-1280.webp 1280w" sizes="(max-width:991px) min(50vw, 320px), min(28vw, 410px)" '
-        f'width="960" height="522" alt="" loading="eager"></span>'
-        for slug in ("finder", "permit", "ledger")
-    )
     return f'''<section id="apps"><div class="container"><div class="row">
       <div class="col-md-4 v-align">{placeholder()}<h3 class="h1">Web applications<br><span class="text-muted">for public services.</span></h3>
         <p class="lead"><span>Find a service, review a permit or filter a workload report. Try each task with sample records.</span></p>
         <p>{action("/demos/", "Try the apps")}{action("/work/", "Our work")}</p></div>
-      <div class="col-md-7 col-md-offset-1 rotating-apps"><div class="app-wheel">
-        <div class="wheel-paths" aria-hidden="true"></div><div class="wheel-scene" aria-hidden="true">{records}</div>
-        <button type="button" class="wheel-play" aria-label="Pause app previews" hidden>
-          <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path class="pause" d="M8 5v14m8-14v14"/><path class="play" d="m8 5 10 7-10 7z"/></svg>
-        </button></div></div></div></div></section>'''
-
-
-def cover_image(asset, sizes):
-    if asset == "evaluation":
-        source = 'src="/assets/project-evidence/monitor-strata-compact.svg"'
-    else:
-        path = f"/assets/home-projects/cover-{asset}-"
-        source = (f'src="{path}640.webp" srcset="{path}640.webp 640w, {path}960.webp 960w, {path}1440.webp 1440w" '
-                  f'sizes="{sizes}"')
-    return f'<img class="project-image" {source} alt="" width="360" height="432" loading="eager">'
+      <div class="col-md-7 col-md-offset-1 rotating-apps">{app_wheel()}</div></div></div></section>'''
 
 
 def projects():
@@ -151,7 +132,7 @@ def responsive():
       </div></div>
       <div class="col-md-6 col-md-offset-1 responsive-shots">
         <img class="shot1" src="/assets/home-evidence/atlas-desktop-1300.webp" srcset="/assets/home-evidence/atlas-desktop-740.webp 740w, /assets/home-evidence/atlas-desktop-1300.webp 1300w, /assets/home-evidence/atlas-desktop-2600.webp 2600w, /assets/home-evidence/atlas-desktop-3300.webp 3300w" sizes="(max-width:991px) min(85vw, 640px), min(45vw, 655px)" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="eager">
-        <img class="shot2" src="/assets/home-evidence/atlas-iphone-650.webp" srcset="/assets/home-evidence/atlas-iphone-650.webp 650w, /assets/home-evidence/atlas-iphone-1308.webp 1308w" sizes="(max-width: 991px) min(30vw, 200px), min(14vw, 186px)" alt="The industrial parks atlas on an iPhone, filtered to the 13 parks in Sulawesi" width="436" height="876" loading="eager">
+        <div class="handset-track"><img class="shot2" src="/assets/home-evidence/atlas-iphone-650.webp" srcset="/assets/home-evidence/atlas-iphone-650.webp 650w, /assets/home-evidence/atlas-iphone-1308.webp 1308w" sizes="(max-width: 991px) min(30vw, 200px), min(14vw, 186px)" alt="The industrial parks atlas on an iPhone, filtered to the 13 parks in Sulawesi" width="436" height="876" loading="eager"></div>
       </div></div></div></section>'''
 
 

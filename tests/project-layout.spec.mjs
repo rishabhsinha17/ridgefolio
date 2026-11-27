@@ -79,10 +79,12 @@ test("home section copy clears the pinned return button on compact desktops", as
   }
 });
 
-test('the handset stays anchored to the lower-right of the map while scrolling', async ({page}) => {
+test('the handset moves with scroll within the right side of the map', async ({page}) => {
   await page.goto('/#responsive');
   const art = page.locator('#responsive .responsive-shots');
-  for (const fraction of [0, .35, .7]) {
+  await page.emulateMedia({reducedMotion:"no-preference"});
+  const offsets = [];
+  for (const fraction of [-.6, 0, .35, .7, 1]) {
     const box = await art.evaluate((stage, fraction) => {
       const docTop = stage.getBoundingClientRect().top + scrollY;
       scrollTo({top:docTop - innerHeight * fraction, behavior:'instant'});
@@ -96,10 +98,15 @@ test('the handset stays anchored to the lower-right of the map while scrolling',
       };
     }, fraction);
     expect(Math.abs(box.outerRight)).toBeLessThan(1);
-    expect(Math.abs(box.outerBottom)).toBeLessThan(1);
+    offsets.push(box.outerBottom);
+    expect(box.outerBottom).toBeGreaterThanOrEqual(-1);
     expect(box.overlap).toBeGreaterThan(.05);
     expect(box.overlap).toBeLessThan(.25);
-    expect(box.relativeTop).toBeGreaterThan(.30);
+    expect(box.relativeTop).toBeGreaterThan(.15);
     expect(box.inside).toBe(true);
   }
+  expect(Math.max(...offsets) - Math.min(...offsets)).toBeGreaterThan(18);
+  await page.emulateMedia({reducedMotion:"reduce"});
+  const gap = await art.evaluate(stage => stage.getBoundingClientRect().bottom - stage.querySelector('.shot2').getBoundingClientRect().bottom);
+  expect(Math.abs(gap)).toBeLessThan(1);
 });

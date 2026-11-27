@@ -55,3 +55,28 @@ def record(name):
             '<p>Community event permit · Acceptance walkthrough</p></figure>'
         )
     raise ValueError(name)
+
+
+def cover_image(asset, sizes, alt=""):
+    if asset == "evaluation":
+        source = 'src="/assets/project-evidence/monitor-strata-compact.svg"'
+    else:
+        path = f"/assets/home-projects/cover-{asset}-"
+        source = (f'src="{path}640.webp" srcset="{path}640.webp 640w, {path}960.webp 960w, {path}1440.webp 1440w" '
+                  f'sizes="{sizes}"')
+    return f'<img class="project-image" {source} alt="{escape(alt, quote=True)}" width="360" height="432" loading="eager">'
+
+
+def app_wheel():
+    pairs = (("permit", "hours"), ("pavilion", "search"), ("report", "market"))
+    rings = []
+    for near, far in pairs:
+        images = "".join(
+            f'<img class="wheel-print" src="/assets/home-projects/round-{name}.webp" width="720" height="720" alt="" loading="eager">'
+            for name in (near, far)
+        )
+        rings.append(f'<div class="wheel-ring">{images}</div>')
+    return ('<div class="app-wheel"><div class="wheel-scene" aria-hidden="true">' + "".join(rings) + '</div>'
+            '<button type="button" class="wheel-play" aria-label="Pause app previews" hidden>'
+            '<svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path class="pause" d="M8 5v14m8-14v14"/>'
+            '<path class="play" d="m8 5 10 7-10 7z"/></svg></button></div>')
