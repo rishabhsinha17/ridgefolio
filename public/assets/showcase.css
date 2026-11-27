@@ -51,7 +51,6 @@
 :where(.rv-home) #home-hero .caption-inner {max-width:560px}
 :where(.rv-home) #home-hero .display-text {display:block;margin:0}
 :where(.rv-home) #home-hero h1 {font-size:clamp(49px,4.6vw,75px);max-width:7.5em}
-:where(.rv-home) #home-hero h1 img {display:block;width:clamp(215px,19vw,300px);height:auto;margin:24px 0 30px}
 :where(.rv-home) #home-hero .btn {min-width:clamp(145px,12.7vw,200px)}
 .rv-home .rz-edit-wrap {display:none}
 :where(.rv-home) #down-arrow {position:relative;height:44px;margin-top:15px}
@@ -71,10 +70,8 @@
 :where(.rv-home) #home-hero .card1 {--floor:105px;--across:-325px}
 :where(.rv-home) #home-hero .card2 {--floor:425px;--across:230px}
 :where(.rv-home) #home-hero .card3 {--floor:242px;--across:-40px}
-:where(.rv-home) #home-hero .card4 {--floor:140px;--across:145px}
 :where(.rv-home) #home-hero .card5 {--floor:360px;--across:-240px}
 :where(.rv-home) #home-hero .card6 {--floor:242px;--across:-40px}
-:where(.rv-home) #home-hero .card7 {--floor:55px;--across:285px}
 :where(.rv-home) #home-hero .card8 {--floor:255px;--across:515px}
 :where(.rv-home) #home-hero .card9,:where(.rv-home) #home-hero .card10 {--floor:338px;--across:372px}
 :where(.rv-home) #home-hero .card11 {--floor:2px;--across:-150px}
@@ -83,7 +80,6 @@
 :where(.rv-home) #home-hero .card19 {--floor:30px;--across:193px;--sheet-width:120px;aspect-ratio:.69}
 :where(.rv-home) #home-hero .card20 {--floor:85px;--across:310px;--sheet-width:120px;aspect-ratio:.85}
 :where(.rv-home) #home-hero .card22 {--floor:-270px;--across:530px;--sheet-width:250px}
-:where(.rv-home) #home-hero :is(.card4,.card7) {display:none}
 :where(.rv-home) #home-hero :is(.card3,.card5,.card10,.card12,.card14) {--lift:-80px;z-index:1;box-shadow:-37px 49px 18px -12px #283a3152}
 :where(.rv-home) #home-hero .card12 {z-index:2}
 :where(.rv-home) #home-hero [class^=card-border] {--lift:-200px;width:290px;height:185px;border:1px solid #354a3436;pointer-events:none}
@@ -92,13 +88,6 @@
 :where(.rv-home) #home-hero .card-border2 {--floor:15px;--across:-65px}
 :where(.rv-home) #home-hero .card-border3 {--floor:-450px;--across:335px;height:650px}
 :where(.rv-home) #home-hero .card-border4 {--floor:130px;--across:-240px;width:275px;height:156px}
-@media (prefers-reduced-motion:no-preference) {
-  :where(.rv-home) #home-hero .card {animation:home-plane-arrival 1.2s cubic-bezier(.2,.65,.3,1) both}
-  :where(.rv-home) #home-hero :is(.card3,.card10,.card12,.card14) {animation-delay:180ms}
-  @keyframes home-plane-arrival {
-    from {opacity:.25;transform:translateY(calc(var(--lift,0px) - 32px)) rotate(-25deg) skewX(35deg) scaleY(.86)}
-  }
-}
 .rv-home .header-block h2 {font-size:clamp(33px,3.38vw,55px);line-height:1.16;max-width:38ch;margin-inline:auto}
 :where(.rv-home) #welcome-header {border-top:1px solid var(--rv-line)}
 
@@ -118,7 +107,7 @@
 :where(.rv-home) #apps .one::after {right:-10%;bottom:22%;background-image:url("/assets/project-evidence/parks-editorial.svg")!important;transform:rotate(8deg)}
 :where(.rv-home) #apps .two::before {top:-5%;left:35%;background-image:url("/assets/article-evidence/finder-960.webp")!important;transform:rotate(5deg)}
 :where(.rv-home) #apps .two::after {bottom:-4%;left:33%;background-image:url("/assets/article-evidence/service-ledger-960.webp")!important;transform:rotate(-4deg)}
-:where(.rv-home) #apps .three::before {left:-6%;bottom:17%;background-image:url("/assets/project-evidence/monitor-confidence.svg")!important;transform:rotate(8deg)}
+:where(.rv-home) #apps .three::before {left:-6%;bottom:17%;background-image:url("/assets/project-evidence/monitor-confidence-preview.svg")!important;transform:rotate(8deg)}
 :where(.rv-home) #apps .three::after {right:0;top:7%;background-image:url("/assets/project-evidence/parks-atlas.svg")!important;transform:rotate(-6deg)}
 @media (prefers-reduced-motion:no-preference) {
   :where(.rv-home) #apps .one,:where(.rv-home) #apps .three {animation:home-orbit-in 4.6s ease-out both}
@@ -196,7 +185,6 @@
   :where(.rv-home) #home-hero .row {min-height:0}
   :where(.rv-home) #home-hero .caption-wrap {padding:clamp(30px,8vw,58px) 0 0}
   :where(.rv-home) #home-hero .display-text,:where(.rv-home) #home-hero h1 {font-size:clamp(43px,9.3vw,62px)}
-  :where(.rv-home) #home-hero h1 img {width:200px;margin:15px 0 18px}
   :where(.rv-home) #home-hero .btn {min-width:clamp(103px,31vw,150px)}
   :where(.rv-home) #down-arrow {position:absolute;right:0;bottom:0;margin:0}
   :where(.rv-home) #down-arrow a {justify-items:center}
@@ -241,7 +229,6 @@
 .rv-home #home-hero .caption-inner {padding-right:20px}
 .rv-home #home-hero .caption-inner>span {font-size:62px;line-height:1.2}
 .rv-home #home-hero h1 {font-size:60px;line-height:1.2;max-width:100%;margin:0 0 30px}
-.rv-home #home-hero h1 img {display:block;width:100%;height:auto;aspect-ratio:535/205;object-fit:contain;object-position:left center;margin:20px 0}
 .rv-home #home-hero .caption-inner>p {margin:0 0 30px}
 .rv-home #home-hero .btn {height:50px;min-height:50px;min-width:0;font-size:16px;padding:0 16px}
 .rv-home #home-hero .btn-inverse {width:146px}
@@ -326,9 +313,8 @@
 .rv-home .project-carousel.owl-loaded {position:relative}
 .rv-home .project-carousel .owl-nav {position:absolute;left:0;right:0;bottom:-54px}
 @media (min-width:992px) {
-  /* Center the lead at tall desktop sizes; keep a real gap below the
-     90px fixed navigation even on a short laptop display. */
-  .rv-home #home-hero .caption-wrap {margin-top:max(118px,calc((100svh - 574px)/2))}
+  /* Center the headline, actions and arrow in the space below the fixed header. */
+  .rv-home #home-hero .caption-wrap {align-self:center;margin-block:122px 32px;padding-bottom:42px}
 }
 @media (max-width:767px) {
   .rv-home #welcome-header h2 {font-size:clamp(18px,5.5vw,24px);line-height:1.36}
@@ -464,5 +450,12 @@
 @media (min-width:1921px) and (min-resolution:1.5dppx) {
   .rv-home #featured-projects a[href="/work/open-source/"] .project-image {
     background-image:url("/assets/interior-art/review-changes-3840.webp");
+  }
+}
+
+@media screen and (min-width:992px) {
+  /* Leave space for the fixed return shortcut on the left; keep the content grid centered. */
+  .rv-home :is(#apps,#our-work-header,#responsive,#quotes,#blog-list) .container {
+    width:calc(100% - 76px);
   }
 }

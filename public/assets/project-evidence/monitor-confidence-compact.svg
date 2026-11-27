@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="365" height="738" viewBox="0 0 365 738" role="img" aria-labelledby="title description">
+<title id="title">Predicting commitment</title><desc id="description">Mixed training: Activation probe 0.672 [0.605, 0.743]. NLA text (NB) 0.556 [0.483, 0.629]. Commitment training: Logistic activation probe 0.853 [0.799, 0.897]; grouped 0.795. Centroid activation probe 0.763 [0.691, 0.819]; grouped 0.747. Visible text (TF-IDF) 0.855 [0.803, 0.901]; grouped 0.780. Visible text (NB) 0.793 [0.737, 0.850]; grouped 0.673. Zero-shot self-judge 0.615 [0.563, 0.668]. NLA text (NB) 0.570 [0.500, 0.644]; grouped 0.565. NLA text (TF-IDF) 0.518 [0.444, 0.594]. Steps before action: Logistic probe, two steps 0.878 [0.833, 0.921]. Logistic probe, one step 0.871 [0.821, 0.917]. Other model families: Mistral-7B 0.896 [0.866, 0.923]; grouped 0.856. OLMo-2-7B 0.912 [0.887, 0.935]; grouped 0.905</desc><metadata>https://arxiv.org/abs/2610.37679v1 · Figure 2 · https://github.com/rishabhsinha17/latent-state-auditing/tree/eb44e3105f3f5cd56f20df05de19247addf55fe5/analysis</metadata>
+<style>text{font-family:Arial,Helvetica,sans-serif;font-variant-numeric:tabular-nums}.display{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025em}.label{font-weight:bold;letter-spacing:.06em}</style>
+<rect x="0" y="0" width="365" height="738" fill="#faf9f3"/><g fill="#183c33"><text x="12" y="29" font-size="11" class="label">AGENTDOJO  /  PRE-ACTION MONITORS</text>
+<text x="12" y="67" font-size="32" class="display">Predicting commitment</text>
+<text x="12" y="92" font-size="14" fill="#486157">Out-of-fold AUROC with 95% bootstrap intervals</text>
+<circle cx="17" cy="116" r="4" fill="#1e5746"/>
+<text x="29" y="120" font-size="13" >Stratified folds</text>
+<path d="M147 111.4l4.6 4.6 -4.6 4.6 -4.6 -4.6Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="161" y="120" font-size="13" >Grouped-fold mean</text>
+<path d="M188.55 156L188.55 667" fill="none" stroke="#879b8b" stroke-dasharray="4 5"/>
+<text x="188.55" y="151" font-size="10" text-anchor="middle">0.5</text>
+<path d="M214.24 156L214.24 667" fill="none" stroke="#dae1d7" />
+<text x="214.24" y="151" font-size="10" text-anchor="middle">0.6</text>
+<path d="M239.93 156L239.93 667" fill="none" stroke="#dae1d7" />
+<text x="239.93" y="151" font-size="10" text-anchor="middle">0.7</text>
+<path d="M265.62 156L265.62 667" fill="none" stroke="#dae1d7" />
+<text x="265.62" y="151" font-size="10" text-anchor="middle">0.8</text>
+<path d="M291.31 156L291.31 667" fill="none" stroke="#dae1d7" />
+<text x="291.31" y="151" font-size="10" text-anchor="middle">0.9</text>
+<path d="M317 156L317 667" fill="none" stroke="#dae1d7" />
+<text x="317" y="151" font-size="10" text-anchor="middle">1.0</text>
+<text x="353" y="151" font-size="10" text-anchor="end">AUROC</text>
+<text x="12" y="177" font-size="16" font-weight="bold">Mixed training</text>
+<g><title>Activation probe: 0.672, 95% interval 0.605–0.743</title>
+<text x="12" y="207" font-size="13.7" >Activation probe</text>
+<path d="M215.53 203L250.98 203" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M215.53 199L215.53 207" fill="none" stroke="#326e58" />
+<path d="M250.98 199L250.98 207" fill="none" stroke="#326e58" />
+<circle cx="232.74" cy="203" r="4" fill="#1e5746"/>
+<text x="353" y="207" font-size="13.7" text-anchor="end">0.672</text>
+</g>
+<g><title>NLA text (NB): 0.556, 95% interval 0.483–0.629</title>
+<text x="12" y="234" font-size="13.7" >NLA text (NB)</text>
+<path d="M184.18 230L221.69 230" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M184.18 226L184.18 234" fill="none" stroke="#326e58" />
+<path d="M221.69 226L221.69 234" fill="none" stroke="#326e58" />
+<circle cx="202.94" cy="230" r="4" fill="#1e5746"/>
+<text x="353" y="234" font-size="13.7" text-anchor="end">0.556</text>
+</g>
+<path d="M12 248L353 248" fill="none" stroke="#dae1d7" />
+<text x="12" y="275" font-size="16" font-weight="bold">Commitment training</text>
+<g><title>Logistic activation probe: 0.853, 95% interval 0.799–0.897, grouped mean 0.795</title>
+<text x="12" y="305" font-size="13.7" >Logistic activation probe</text>
+<path d="M265.36 301L290.54 301" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M265.36 297L265.36 305" fill="none" stroke="#326e58" />
+<path d="M290.54 297L290.54 305" fill="none" stroke="#326e58" />
+<circle cx="279.24" cy="301" r="4" fill="#1e5746"/>
+<path d="M264.34 301l4 4 -4 4 -4 -4Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="353" y="305" font-size="13.7" text-anchor="end">0.853</text>
+</g>
+<g><title>Centroid activation probe: 0.763, 95% interval 0.691–0.819, grouped mean 0.747</title>
+<text x="12" y="332" font-size="13.7" >Centroid activation probe</text>
+<path d="M237.62 328L270.5 328" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M237.62 324L237.62 332" fill="none" stroke="#326e58" />
+<path d="M270.5 324L270.5 332" fill="none" stroke="#326e58" />
+<circle cx="256.12" cy="328" r="4" fill="#1e5746"/>
+<path d="M252.01 328l4 4 -4 4 -4 -4Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="353" y="332" font-size="13.7" text-anchor="end">0.763</text>
+</g>
+<g><title>Visible text (TF-IDF): 0.855, 95% interval 0.803–0.901, grouped mean 0.780</title>
+<text x="12" y="359" font-size="13.7" >Visible text (TF-IDF)</text>
+<path d="M266.39 355L291.57 355" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M266.39 351L266.39 359" fill="none" stroke="#326e58" />
+<path d="M291.57 351L291.57 359" fill="none" stroke="#326e58" />
+<circle cx="279.75" cy="355" r="4" fill="#1e5746"/>
+<path d="M260.48 355l4 4 -4 4 -4 -4Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="353" y="359" font-size="13.7" text-anchor="end">0.855</text>
+</g>
+<g><title>Visible text (NB): 0.793, 95% interval 0.737–0.850, grouped mean 0.673</title>
+<text x="12" y="386" font-size="13.7" >Visible text (NB)</text>
+<path d="M249.44 382L278.47 382" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M249.44 378L249.44 386" fill="none" stroke="#326e58" />
+<path d="M278.47 378L278.47 386" fill="none" stroke="#326e58" />
+<circle cx="263.82" cy="382" r="4" fill="#1e5746"/>
+<path d="M232.99 382l4 4 -4 4 -4 -4Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="353" y="386" font-size="13.7" text-anchor="end">0.793</text>
+</g>
+<g><title>Zero-shot self-judge: 0.615, 95% interval 0.563–0.668</title>
+<text x="12" y="413" font-size="13.7" >Zero-shot self-judge</text>
+<path d="M204.74 409L231.71 409" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M204.74 405L204.74 413" fill="none" stroke="#326e58" />
+<path d="M231.71 405L231.71 413" fill="none" stroke="#326e58" />
+<circle cx="218.09" cy="409" r="4" fill="#1e5746"/>
+<text x="353" y="413" font-size="13.7" text-anchor="end">0.615</text>
+</g>
+<g><title>NLA text (NB): 0.570, 95% interval 0.500–0.644, grouped mean 0.565</title>
+<text x="12" y="440" font-size="13.7" >NLA text (NB)</text>
+<path d="M188.55 436L225.54 436" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M188.55 432L188.55 440" fill="none" stroke="#326e58" />
+<path d="M225.54 432L225.54 440" fill="none" stroke="#326e58" />
+<circle cx="206.53" cy="436" r="4" fill="#1e5746"/>
+<path d="M205.25 436l4 4 -4 4 -4 -4Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="353" y="440" font-size="13.7" text-anchor="end">0.570</text>
+</g>
+<g><title>NLA text (TF-IDF): 0.518, 95% interval 0.444–0.594</title>
+<text x="12" y="467" font-size="13.7" >NLA text (TF-IDF)</text>
+<path d="M174.17 463L212.7 463" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M174.17 459L174.17 467" fill="none" stroke="#326e58" />
+<path d="M212.7 459L212.7 467" fill="none" stroke="#326e58" />
+<circle cx="193.18" cy="463" r="4" fill="#1e5746"/>
+<text x="353" y="467" font-size="13.7" text-anchor="end">0.518</text>
+</g>
+<path d="M12 481L353 481" fill="none" stroke="#dae1d7" />
+<text x="12" y="508" font-size="16" font-weight="bold">Steps before action</text>
+<g><title>Logistic probe, two steps: 0.878, 95% interval 0.833–0.921</title>
+<text x="12" y="538" font-size="13.7" >Logistic probe, two steps</text>
+<path d="M274.1 534L296.71 534" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M274.1 530L274.1 538" fill="none" stroke="#326e58" />
+<path d="M296.71 530L296.71 538" fill="none" stroke="#326e58" />
+<circle cx="285.66" cy="534" r="4" fill="#1e5746"/>
+<text x="353" y="538" font-size="13.7" text-anchor="end">0.878</text>
+</g>
+<g><title>Logistic probe, one step: 0.871, 95% interval 0.821–0.917</title>
+<text x="12" y="565" font-size="13.7" >Logistic probe, one step</text>
+<path d="M271.02 561L295.68 561" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M271.02 557L271.02 565" fill="none" stroke="#326e58" />
+<path d="M295.68 557L295.68 565" fill="none" stroke="#326e58" />
+<circle cx="283.86" cy="561" r="4" fill="#1e5746"/>
+<text x="353" y="565" font-size="13.7" text-anchor="end">0.871</text>
+</g>
+<path d="M12 579L353 579" fill="none" stroke="#dae1d7" />
+<text x="12" y="606" font-size="16" font-weight="bold">Other model families</text>
+<g><title>Mistral-7B: 0.896, 95% interval 0.866–0.923, grouped mean 0.856</title>
+<text x="12" y="636" font-size="13.7" >Mistral-7B</text>
+<path d="M282.58 632L297.22 632" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M282.58 628L282.58 636" fill="none" stroke="#326e58" />
+<path d="M297.22 628L297.22 636" fill="none" stroke="#326e58" />
+<circle cx="290.28" cy="632" r="4" fill="#1e5746"/>
+<path d="M280.01 632l4 4 -4 4 -4 -4Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="353" y="636" font-size="13.7" text-anchor="end">0.896</text>
+</g>
+<g><title>OLMo-2-7B: 0.912, 95% interval 0.887–0.935, grouped mean 0.905</title>
+<text x="12" y="663" font-size="13.7" >OLMo-2-7B</text>
+<path d="M287.97 659L300.3 659" fill="none" stroke="#326e58" stroke-width="3"/>
+<path d="M287.97 655L287.97 663" fill="none" stroke="#326e58" />
+<path d="M300.3 655L300.3 663" fill="none" stroke="#326e58" />
+<circle cx="294.39" cy="659" r="4" fill="#1e5746"/>
+<path d="M292.59 659l4 4 -4 4 -4 -4Z" fill="#faf9f3" stroke="#183c33" stroke-width="1.5"/>
+<text x="353" y="663" font-size="13.7" text-anchor="end">0.912</text>
+</g>
+<path d="M12 677L353 677" fill="none" stroke="#dae1d7" />
+<text x="12" y="699" font-size="12" fill="#486157">Qwen2.5-7B unless another model is named.</text>
+<text x="12" y="719" font-size="12" fill="#486157">NB = naive Bayes. Chance = 0.500.</text></g></svg>

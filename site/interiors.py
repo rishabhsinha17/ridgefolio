@@ -85,9 +85,10 @@ def image_banner(src, alt, url, title, action, extra="", *, editable=False):
         responsive = ' width="2720" height="3520"'
     elif src == "/assets/editorial/civic-center-3840.webp":
         responsive = ' srcset="/assets/editorial/civic-center-768.webp 768w, /assets/editorial/civic-center-1440.webp 1440w, /assets/editorial/civic-center-1920.webp 1920w, /assets/editorial/civic-center-3200.webp 3200w, /assets/editorial/civic-center-3840.webp 3840w" sizes="100vw" width="3840" height="2560"'
+    visual = (ed.chart_plate("monitor-strata", alt) if extra == "evidence-plate evaluation" else
+              f'<img class="full-img" src="{escape(src, quote=True)}"{responsive} alt="{escape(alt, quote=True)}">')
     return (
-        f'<div id="blog-lg-img" class="relative" data-presentation="{extra}">{edit}<div class="cover"></div>'
-        f'<img class="full-img" src="{escape(src, quote=True)}"{responsive} alt="{escape(alt, quote=True)}">'
+        f'<div id="blog-lg-img" class="relative" data-presentation="{extra}">{edit}<div class="cover"></div>{visual}'
         f'{pixel(url, title, action, banner_link=True)}</div>'
     )
 
@@ -156,11 +157,11 @@ def catalogue(demos=False):
             )
         elif slug == "service-ledger":
             map_sizes = ", ".join(f"/assets/cgs-atlas/overview-{width}.webp {width}w" for width in (960, 1536, 2560, 3840))
-            scene = f'<div class="app-img-{side} directory-landscape"><img src="/assets/cgs-atlas/overview-3840.webp" srcset="{map_sizes}" sizes="(min-width:992px) max(1400px, 75vw), max(580px, 135vw)" alt="Industrial park locations across Indonesia from the CGS case study" width="3840" height="2560" loading="lazy"></div>'
+            scene = f'<div class="app-img-{side} directory-landscape"><img src="/assets/cgs-atlas/overview-3840.webp" srcset="{map_sizes}" sizes="(min-width:992px) max(1400px, 75vw), max(580px, 135vw)" alt="Industrial park locations across Indonesia from the CGS case study" width="3840" height="2560" loading="eager"></div>'
         else:
             source = "public-terminals" if slug == "finder" else "public-market"
             scene = (
-                f'<div class="app-img-{side} directory-landscape">' + art.photo(source, sizes="(min-width:992px) max(1400px, 75vw), max(580px, 135vw)", lazy=True)
+                f'<div class="app-img-{side} directory-landscape">' + art.photo(source, sizes="(min-width:992px) max(1400px, 75vw), max(580px, 135vw)")
                 + art.credit(source) + '</div>'
             )
         bands.append(
@@ -218,7 +219,7 @@ def resource_index():
             '<article class="blog-list-article">' + edit_slot("blog-btns", True) + '<div class="row"><div class="col-xs-12">'
             f'<a href="{url}"><h2>{label}</h2></a><p class="lead"><span>{description}</span></p></div></div>'
             f'<div class="row"><div class="col-md-6">{button(url, guide_action)}</div><div class="col-xs-6 text-right"><p class="small">{extra}</p></div>'
-            f'<div class="col-md-12"><a href="{url}"><img class="full-img" loading="lazy" width="3840" height="2560" src="/assets/article-evidence/{image}.webp" '
+            f'<div class="col-md-12"><a href="{url}"><img class="full-img" loading="eager" width="3840" height="2560" src="/assets/article-evidence/{image}.webp" '
             f'srcset="/assets/article-evidence/{image}-960.webp 960w, /assets/article-evidence/{image}-1920.webp 1920w, /assets/article-evidence/{image}.webp 3840w" '
             f'sizes="(max-width: 991px) calc(100vw - 80px), min(1090px, 83vw)" alt="{caption}"></a></div></div></article>'
         )
@@ -347,7 +348,7 @@ def article_figure(path):
     if path == "/resources/capabilities/":
         return (
             '<figure class="article-document"><img src="/assets/article-evidence/capability-sheet.webp" '
-            'width="2720" height="3520" loading="lazy" alt="The one-page Ridgefolio capability statement, including services, delivery process and company contact information.">'
+            'width="2720" height="3520" loading="eager" alt="The one-page Ridgefolio capability statement, including services, delivery process and company contact information.">'
             f'<figcaption><a href="{ed.PDF}">Read the capability statement as a PDF</a></figcaption></figure>'
         )
     if path == "/demos/permit-desk/":
@@ -390,7 +391,7 @@ def article_figure(path):
         article_subheading(title) + extract
         + '<figure class="article-illustration"><img src="/assets/article-evidence/permit-approval.webp" '
         'srcset="/assets/article-evidence/permit-approval-720.webp 720w, /assets/article-evidence/permit-approval-1440.webp 1440w, /assets/article-evidence/permit-approval.webp 2560w" '
-        'sizes="(min-width:1400px) 1110px, (min-width:992px) 80vw, calc(100vw - 60px)" width="2560" height="1141" loading="lazy" '
+        'sizes="(min-width:1400px) 1110px, (min-width:992px) 80vw, calc(100vw - 60px)" width="2560" height="1141" loading="eager" '
         'alt="Approved permit RF-101 for Neighborhood art fair at Harbor Square, east entrance. The case file preserves the request for correction and the resubmission.">'
         f'<figcaption>The permit desk after approval. <a href="{ed.RECEIPT}">Read the exported receipt</a>.</figcaption></figure>'
         f'<p><a href="{ed.EXAMPLE}">Read the complete sample project brief</a></p>'
@@ -546,9 +547,11 @@ def about(path, body):
         + edit_slot("leader-btns", True) + f'<h3 class="h2">{heading}</h3>{description}<p class="no-margin">{actions}</p></div>'
         + f'<div class="col-md-5 col-md-offset-2"><p class="h3">{fact}</p><p class="text-muted no-margin">{caption}</p></div></div></div></div></div>'
     )
+    visual = (ed.chart_plate("regional-status", alt) if slug == "practice" else
+              f'<img class="full-img" src="{illustration}" srcset="{sizes[slug]}" sizes="{plate_width}" alt="{alt}" loading="eager">')
     plate = (
         '<div class="relative" data-about-plate>' + edit_slot("banner-btn") + '<div class="cover"></div>'
-        + f'<img class="full-img" src="{illustration}" srcset="{sizes[slug]}" sizes="{plate_width}" alt="{alt}" loading="lazy">'
+        + visual
         + f'<a class="plate-credit" href="{caption_url}">{caption_text} <span aria-hidden="true">↗</span></a>'
         + '</div>'
     )
@@ -596,19 +599,16 @@ def project(path, body):
         closing_width, closing_height = 4000, 2287
     else:
         title, collection = "AI monitor evaluation", "Research paper"
-        hero_src, hero_alt = "/assets/project-evidence/monitor-strata.svg", "Figure 1 comparing monitor scores across models"
+        hero_src, hero_alt = "/assets/project-evidence/monitor-strata.svg", "Activation-probe scores by model and training contrast, adapted from Figure 1"
         hero_link, action = ed.PAPER, "Read paper"
         shot_src, shot_alt = "/assets/project-evidence/paper-page.webp", "First page of Exposure Is Not Commitment, including the full abstract"
         shot_width, shot_height = 2295, 2970
-        inset_width, inset_height = 407, 169
+        inset_width, inset_height = 900, 530
         shot_link = ed.PAPER
         inset_src, inset_alt = hero_src, hero_alt
-        closing_src, closing_alt = "/assets/project-evidence/monitor-confidence.svg", "Figure 2 compares pre-action commitment with 95 percent bootstrap intervals"
+        closing_src, closing_alt = "/assets/project-evidence/monitor-confidence.svg", "Pre-action commitment by monitor with 95% bootstrap intervals, adapted from Figure 2"
         closing_link, closing_label = "https://arxiv.org/pdf/2610.37679#page=8", "Read Figure 2 on page eight"
-        closing_width, closing_height = 353, 196
-        exhibit = exhibit.replace("/assets/editorial/monitor-results.webp", hero_src).replace(
-            "</figcaption>", ' Figures by Rishabh Sinha, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</figcaption>'
-        )
+        closing_width, closing_height = 900, 860
     banner = image_banner(hero_src, hero_alt, hero_link, title, action, "evidence-plate " + slug)
     closing_sources = ""
     if slug == "open-source":
@@ -623,8 +623,8 @@ def project(path, body):
         '<section id="responsive" class="padding-tb-150"><div class="container"><div class="row">'
         f'<div class="col-md-5"><div class="sticky-element">{edit_slot("title-btn")}<h2 class="h1">{full_title}</h2>'
         + summary.replace("<p>", '<p class="lead">') + '<p>' + button(source_url, source_text, True) + '</p></div></div>'
-        + f'<div class="col-md-6 col-md-offset-1 responsive-shots"><a href="{shot_link}" class="project-shot-link"><img class="shot1" src="{shot_src}" alt="{shot_alt}" width="{shot_width}" height="{shot_height}" loading="lazy"></a>'
-        + f'<img class="shot2 sticky-element" src="{inset_src}" alt="{inset_alt}" width="{inset_width}" height="{inset_height}" loading="lazy"></div></div></div></section>'
+        + f'<div class="col-md-6 col-md-offset-1 responsive-shots"><a href="{shot_link}" class="project-shot-link"><img class="shot1" src="{shot_src}" alt="{shot_alt}" width="{shot_width}" height="{shot_height}" loading="eager"></a>'
+        + f'<img class="shot2 sticky-element" src="{inset_src}" alt="{inset_alt}" width="{inset_width}" height="{inset_height}" loading="eager"></div></div></div></section>'
     )
     reasoning = "".join(f"<p>{part}</p>" for part in detail)
     features = (
@@ -633,8 +633,11 @@ def project(path, body):
         + f'<div class="feature-block"><h3>{topic}</h3>{relevance}</div></div>'
         + f'<div class="col-md-5 col-md-offset-1"><div class="feature-block">{exhibit}</div></div></div></div></section>'
     )
+    chart = ed.chart_plate("monitor-confidence", closing_alt) if slug == "evaluation" else (
+        f'<img class="full-img" src="{closing_src}"{closing_sources} alt="{closing_alt}" width="{closing_width}" height="{closing_height}" loading="eager">'
+    )
     closing = (
-        f'<div id="project-end-image" class="relative"><div class="cover"></div><img class="full-img" src="{closing_src}"{closing_sources} alt="{closing_alt}" width="{closing_width}" height="{closing_height}" loading="lazy">'
+        f'<div id="project-end-image" class="relative"><div class="cover"></div>{chart}'
         f'<a class="plate-credit" href="{closing_link}">{closing_label} <span aria-hidden="true">↗</span></a></div>'
     )
     return shell(title_hero("project-hero", title, collection, target="responsive", project=True) + banner + responsive + features + closing, "project-page")

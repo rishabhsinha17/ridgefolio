@@ -10,7 +10,7 @@ The demos use fictional records. Service Finder saves checked preparation items 
 
 ## Update downloadable and visual assets
 
-Run `npx playwright install chromium` and `node scripts/capability-pdf.mjs` after changing the printable capability statement. Its links point to the production domain. To capture the demo previews, directory art and permit exhibits from the working interfaces, start the development server and run `node scripts/demo-previews.mjs`. Set `RIDGEFOLIO_PREVIEW_ORIGIN` when using another local port.
+Run `npx playwright install chromium` and `node scripts/capability-pdf.mjs` after changing the printable capability statement. Its links point to the production domain. To capture the demo previews, directory art and permit exhibits from the working interfaces, start the development server and run `node scripts/demo-previews.mjs`. Set `RIDGEFOLIO_PREVIEW_ORIGIN` when using another local port. Run `node scripts/hero-cards.mjs` after changing a source image in the homepage collage to update its high-density crops. With the rebuilt site running locally, add `--share` to capture the homepage sharing image.
 
 ## Verify and deploy
 
@@ -30,7 +30,7 @@ The homepage handset surrounds a capture of Ridgefolio’s working atlas. Its fr
 
 The service-design images come from the 18F archive. They document a federal team’s meeting, Open Forest field research, prioritization exercise and design method cards. [Workshop](https://github.com/18F/18f.gsa.gov/blob/main/content/posts/2016-12-14-how-to-run-an-efficient-meeting.md) · [Field research](https://github.com/18F/18f.gsa.gov/blob/main/content/posts/2020-02-06-even-with-a-design-system-you-still-need-a-designer.md) · [Prioritization](https://github.com/18F/18f.gsa.gov/blob/main/content/posts/2018-02-06-getting-partners-on-board-with-research-findings.md) · [Method cards](https://github.com/18F/18f.gsa.gov/blob/main/content/posts/2015-08-10-18f-design-methods.md)
 
-The research images reproduce details of pages 1 and 3 of Rishabh Sinha’s preprint. The release exhibit links directly to the two merged changes and their published release. [Paper](https://arxiv.org/abs/2610.37679) · [Release notes](https://github.com/ovg-project/kvcached/releases/tag/v0.1.6)
+The research page shows the original title page and two charts redrawn from the preprint’s released aggregate results. Run `node scripts/chart-plates.mjs` to regenerate the research and industrial park chart assets. The release exhibit links directly to the two merged changes and their published release. [Paper](https://arxiv.org/abs/2610.37679) · [Release notes](https://github.com/ovg-project/kvcached/releases/tag/v0.1.6)
 
 The sample permit receipt in `public/downloads/` was exported from the working demonstration using the walkthrough in the example project brief.
 

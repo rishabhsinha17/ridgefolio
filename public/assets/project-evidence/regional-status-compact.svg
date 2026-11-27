@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="530" viewBox="0 0 400 530" role="img" aria-labelledby="title description">
+<title id="title">Industrial parks by region</title><desc id="description">Java: 66, Sumatra: 45, Sulawesi: 13, Kalimantan: 10, Maluku Islands: 4, Papua: 2, Nusa Tenggara: 1. Each park is counted once by its reported status.</desc><metadata>https://github.com/rishabhsinha17/cgs-industrial-parks-dashboard/blob/673480b96b7dbfce3990cc9f72208c87c65b54a9/data/master/CGS_Industrial_Parks_Sept_2024.csv</metadata>
+<style>text{font-family:Arial,Helvetica,sans-serif;font-variant-numeric:tabular-nums}.display{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025em}.label{font-weight:bold;letter-spacing:.06em}</style>
+<rect x="0" y="0" width="400" height="530" fill="#faf9f3"/><g fill="#183c33"><text x="18" y="30" font-size="11" class="label">INDONESIA  /  MAY 2025 HANDOVER</text>
+<text x="18" y="70" font-size="30" class="display">Industrial parks by region</text>
+<text x="18" y="97" font-size="14" fill="#486157">141 parks  ·  7 regions  ·  Reported site status</text>
+<text x="122" y="133" font-size="11" text-anchor="middle">0</text>
+<path d="M122 142L122 374" fill="none" stroke="#dae1d7" />
+<text x="186.57142857142856" y="133" font-size="11" text-anchor="middle">20</text>
+<path d="M186.57142857142856 142L186.57142857142856 374" fill="none" stroke="#dae1d7" />
+<text x="251.14285714285714" y="133" font-size="11" text-anchor="middle">40</text>
+<path d="M251.14285714285714 142L251.14285714285714 374" fill="none" stroke="#dae1d7" />
+<text x="315.7142857142857" y="133" font-size="11" text-anchor="middle">60</text>
+<path d="M315.7142857142857 142L315.7142857142857 374" fill="none" stroke="#dae1d7" />
+<text x="18" y="160" font-size="13" >Java</text>
+<text x="382" y="160" font-size="15" text-anchor="end" font-weight="bold">66</text>
+<g><title>Java · Operational: 46</title>
+<rect x="122" y="146" width="148.51" height="16" fill="#2b6561"/>
+</g>
+<g><title>Java · Operational with Continued Construction: 8</title>
+<rect x="270.51" y="146" width="25.83" height="16" fill="#81b5a7"/>
+</g>
+<g><title>Java · Under Construction: 8</title>
+<rect x="296.34" y="146" width="25.83" height="16" fill="#bd653c"/>
+</g>
+<g><title>Java · Before Construction: 2</title>
+<rect x="322.17" y="146" width="6.46" height="16" fill="#dfae66"/>
+</g>
+<g><title>Java · Stalled: 1</title>
+<rect x="328.63" y="146" width="3.23" height="16" fill="#766079"/>
+</g>
+<g><title>Java · Unclear: 1</title>
+<rect x="331.86" y="146" width="3.23" height="16" fill="#a6a89b"/>
+</g>
+<text x="18" y="194" font-size="13" >Sumatra</text>
+<text x="382" y="194" font-size="15" text-anchor="end" font-weight="bold">45</text>
+<g><title>Sumatra · Operational: 35</title>
+<rect x="122" y="180" width="113" height="16" fill="#2b6561"/>
+</g>
+<g><title>Sumatra · Operational with Continued Construction: 2</title>
+<rect x="235" y="180" width="6.46" height="16" fill="#81b5a7"/>
+</g>
+<g><title>Sumatra · Under Construction: 2</title>
+<rect x="241.46" y="180" width="6.46" height="16" fill="#bd653c"/>
+</g>
+<g><title>Sumatra · Before Construction: 1</title>
+<rect x="247.91" y="180" width="3.23" height="16" fill="#dfae66"/>
+</g>
+<g><title>Sumatra · Stalled: 3</title>
+<rect x="251.14" y="180" width="9.69" height="16" fill="#766079"/>
+</g>
+<g><title>Sumatra · Unclear: 2</title>
+<rect x="260.83" y="180" width="6.46" height="16" fill="#a6a89b"/>
+</g>
+<text x="18" y="228" font-size="13" >Sulawesi</text>
+<text x="382" y="228" font-size="15" text-anchor="end" font-weight="bold">13</text>
+<g><title>Sulawesi · Operational: 1</title>
+<rect x="122" y="214" width="3.23" height="16" fill="#2b6561"/>
+</g>
+<g><title>Sulawesi · Operational with Continued Construction: 5</title>
+<rect x="125.23" y="214" width="16.14" height="16" fill="#81b5a7"/>
+</g>
+<g><title>Sulawesi · Under Construction: 3</title>
+<rect x="141.37" y="214" width="9.69" height="16" fill="#bd653c"/>
+</g>
+<g><title>Sulawesi · Before Construction: 4</title>
+<rect x="151.06" y="214" width="12.91" height="16" fill="#dfae66"/>
+</g>
+<text x="18" y="262" font-size="13" >Kalimantan</text>
+<text x="382" y="262" font-size="15" text-anchor="end" font-weight="bold">10</text>
+<g><title>Kalimantan · Operational: 1</title>
+<rect x="122" y="248" width="3.23" height="16" fill="#2b6561"/>
+</g>
+<g><title>Kalimantan · Operational with Continued Construction: 4</title>
+<rect x="125.23" y="248" width="12.91" height="16" fill="#81b5a7"/>
+</g>
+<g><title>Kalimantan · Under Construction: 3</title>
+<rect x="138.14" y="248" width="9.69" height="16" fill="#bd653c"/>
+</g>
+<g><title>Kalimantan · Stalled: 1</title>
+<rect x="147.83" y="248" width="3.23" height="16" fill="#766079"/>
+</g>
+<g><title>Kalimantan · Unclear: 1</title>
+<rect x="151.06" y="248" width="3.23" height="16" fill="#a6a89b"/>
+</g>
+<text x="18" y="296" font-size="13" >Maluku Islands</text>
+<text x="382" y="296" font-size="15" text-anchor="end" font-weight="bold">4</text>
+<g><title>Maluku Islands · Operational: 1</title>
+<rect x="122" y="282" width="3.23" height="16" fill="#2b6561"/>
+</g>
+<g><title>Maluku Islands · Operational with Continued Construction: 2</title>
+<rect x="125.23" y="282" width="6.46" height="16" fill="#81b5a7"/>
+</g>
+<g><title>Maluku Islands · Under Construction: 1</title>
+<rect x="131.69" y="282" width="3.23" height="16" fill="#bd653c"/>
+</g>
+<text x="18" y="330" font-size="13" >Papua</text>
+<text x="382" y="330" font-size="15" text-anchor="end" font-weight="bold">2</text>
+<g><title>Papua · Under Construction: 1</title>
+<rect x="122" y="316" width="3.23" height="16" fill="#bd653c"/>
+</g>
+<g><title>Papua · Stalled: 1</title>
+<rect x="125.23" y="316" width="3.23" height="16" fill="#766079"/>
+</g>
+<text x="18" y="364" font-size="13" >Nusa Tenggara</text>
+<text x="382" y="364" font-size="15" text-anchor="end" font-weight="bold">1</text>
+<g><title>Nusa Tenggara · Under Construction: 1</title>
+<rect x="122" y="350" width="3.23" height="16" fill="#bd653c"/>
+</g>
+<path d="M18 395L382 395" fill="none" stroke="#dae1d7" />
+<rect x="18" y="410" width="10" height="10" fill="#2b6561"/>
+<text x="34" y="420" font-size="12.2" >Operational</text>
+<rect x="200" y="410" width="10" height="10" fill="#81b5a7"/>
+<text x="216" y="420" font-size="12.2" >Operating and expanding</text>
+<rect x="18" y="431" width="10" height="10" fill="#bd653c"/>
+<text x="34" y="441" font-size="12.2" >Under construction</text>
+<rect x="200" y="431" width="10" height="10" fill="#dfae66"/>
+<text x="216" y="441" font-size="12.2" >Before construction</text>
+<rect x="18" y="452" width="10" height="10" fill="#766079"/>
+<text x="34" y="462" font-size="12.2" >Stalled</text>
+<rect x="200" y="452" width="10" height="10" fill="#a6a89b"/>
+<text x="216" y="462" font-size="12.2" >Unclear</text>
+<text x="18" y="513" font-size="11.1" fill="#486157">University of Maryland Center for Global Sustainability</text></g></svg>

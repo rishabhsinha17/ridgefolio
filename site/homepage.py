@@ -8,11 +8,10 @@ from html import escape
 HERO_SCREENS = (
     (1, "article-evidence/permit-desk-1920.webp"),
     (2, "article-evidence/capability-1920.webp"),
-    (3, "project-evidence/monitor-confidence.svg"),
-    (4, "project-evidence/paper-page.webp"),
+    (3, "project-evidence/monitor-confidence-preview.svg"),
+    (4, None),  # The outline occupies this slot on its own.
     (5, "home-evidence/field-map-test.webp"),
     (6, "cgs-atlas/overview.webp"),
-    (7, "home-evidence/design-method-cards.webp"),
     (8, "cgs-atlas/morowali-1920.webp"),
     (9, "home-evidence/planning-workshop.webp"),
     (10, "project-evidence/monitor-strata.svg"),
@@ -27,7 +26,7 @@ HERO_SCREENS = (
 PROJECTS = (
     ("/work/industrial-parks/", "Indonesia’s industrial parks", "University of Maryland · Founder project", "home-evidence/sulawesi.webp"),
     ("/demos/permit-desk/", "Permit desk", "Working demonstration", "interior-art/public-market-2560.webp"),
-    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "project-evidence/monitor-confidence.svg"),
+    ("/work/evaluation/", "Testing tool-using agents", "Founder research", "project-evidence/monitor-confidence-preview.svg"),
     ("/demos/service-ledger/", "Service ledger", "Working demonstration", "home-evidence/service-ledger.webp"),
     ("/work/open-source/", "Inside the kvcached release", "Open-source contribution", "interior-art/review-changes-2560.webp"),
     ("/demos/finder/", "Service finder", "Working demonstration", "interior-art/kiosk-2560.webp"),
@@ -73,7 +72,9 @@ def hero():
     outlines = {1: ("card-border-dashed", 1), 4: ("card-border", 2),
                 8: ("card-border-dashed", 3), 12: ("card-border-dashed", 4)}
     for number, asset in HERO_SCREENS:
-        planes.append(f'<img src="/assets/{asset}" alt="" class="card card{number}" decoding="async">')
+        if asset:
+            src = f"hero-cards/card-{number}.webp" if asset.endswith(".webp") else asset
+            planes.append(f'<img src="/assets/{src}" alt="" class="card card{number}" loading="eager">')
         if number in outlines:
             style, index = outlines[number]
             planes.append(f'<div class="{style} card-border{index}"></div>')
@@ -81,12 +82,12 @@ def hero():
       <div class="container"><div class="row">
         <div class="col-sm-5 caption-wrap v-align">{placeholder()}<div class="caption-inner">
           <span class="no-margin h1 display-text">We build</span>
-          <h1 class="text-muted text-light display-text" id="hero-heading" tabindex="-1">Software for public agencies.<br><img class="aos-init aos-animate" src="/assets/showcase/home-services.svg" width="300" height="83" alt="Websites, workflows and data tools."></h1>
+          <h1 class="text-muted text-light display-text" id="hero-heading" tabindex="-1">Software for public agencies.</h1>
           <p>{action("/contact/", "Contact us", "btn-inverse open-contact-form")}{action("/work/", "Our work", "btn-default")}</p>
           <div id="down-arrow">{arrow("Back to the top", "#home-hero", "up")}{arrow("Explore the practice", "#welcome-header", "down")}</div>
         </div></div>
         <div class="col-sm-7 v-align"><div class="perspective-section" role="img" aria-label="Ridgefolio demonstrations, maps, research charts and project records">
-          <div class="animatable" aria-hidden="true">{''.join(planes)}</div>
+          <div class="animatable animated" aria-hidden="true">{''.join(planes)}</div>
         </div></div>
       </div></div></section>'''
 
@@ -110,7 +111,12 @@ def apps():
 def projects():
     cards = []
     for url, title, credit, asset in PROJECTS:
-        art = f'<div class="project-image" style="--project-image:url(/assets/{asset})"></div>'
+        if asset.startswith("interior-art/") and asset.endswith("-2560.webp"):
+            base = "/assets/" + asset.removesuffix("-2560.webp")
+            image = f"image-set(url({base}-960.webp) 1x, url({base}-1536.webp) 2x, url({base}-2560.webp) 3x)"
+        else:
+            image = f"url(/assets/{asset})"
+        art = f'<div class="project-image" style="--project-image:{image}"></div>'
         cards.append(f'''<div class="item"><div class="simple-project"><a href="{url}">
           <div class="img-wrap">{art}</div><p class="h3">{escape(title)}<small>{escape(credit)}</small></p></a></div></div>''')
     return f'''<section id="our-work-header" class="padding-t-150-b-50"><div class="container" id="work"><div class="row">
@@ -130,8 +136,8 @@ def responsive():
         {action("/contact/", "Contact us", "btn-inverse open-contact-form")}{action("/work/industrial-parks/", "Case study")}<p></p>
       </div></div>
       <div class="col-md-6 col-md-offset-1 responsive-shots">
-        <img class="shot1" src="/assets/home-evidence/atlas-desktop-1300.webp" srcset="/assets/home-evidence/atlas-desktop-740.webp 740w, /assets/home-evidence/atlas-desktop-1300.webp 1300w, /assets/home-evidence/atlas-desktop-2600.webp 2600w, /assets/home-evidence/atlas-desktop-3300.webp 3300w" sizes="(max-width: 991px) calc(100vw - 60px), min(1300px, 100vw)" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="lazy">
-        <img class="shot2 sticky-element" src="/assets/home-evidence/atlas-iphone-650.webp" srcset="/assets/home-evidence/atlas-iphone-650.webp 650w, /assets/home-evidence/atlas-iphone-1308.webp 1308w" sizes="(max-width: 991px) 200px, 400px" alt="The industrial parks atlas on an iPhone, filtered to the 13 parks in Sulawesi" width="436" height="876" loading="lazy">
+        <img class="shot1" src="/assets/home-evidence/atlas-desktop-1300.webp" srcset="/assets/home-evidence/atlas-desktop-740.webp 740w, /assets/home-evidence/atlas-desktop-1300.webp 1300w, /assets/home-evidence/atlas-desktop-2600.webp 2600w, /assets/home-evidence/atlas-desktop-3300.webp 3300w" sizes="(max-width: 991px) calc(100vw - 60px), min(1300px, 100vw)" alt="Ridgefolio’s CGS case study and industrial parks map on a desktop screen" width="1100" height="1449" loading="eager">
+        <img class="shot2 sticky-element" src="/assets/home-evidence/atlas-iphone-650.webp" srcset="/assets/home-evidence/atlas-iphone-650.webp 650w, /assets/home-evidence/atlas-iphone-1308.webp 1308w" sizes="(max-width: 991px) 200px, 400px" alt="The industrial parks atlas on an iPhone, filtered to the 13 parks in Sulawesi" width="436" height="876" loading="eager">
       </div></div></div></section>'''
 
 
@@ -144,7 +150,7 @@ def evidence():
         notes.append(f'<div class="item" data-source="{escape(url, quote=True)}"><div class="h3">{record}</div><p class="text-muted">{escape(label)}</p></div>')
     return f'''<section id="quotes" aria-label="Founder and studio project records"><div class="container" id="practice"><div class="row">
       <div class="col-md-5 hidden-sm hidden-xs" id="about">
-        <img class="client-shot" src="/assets/cgs-atlas/morowali-1920.webp" srcset="/assets/cgs-atlas/morowali-960.webp 960w, /assets/cgs-atlas/morowali-1920.webp 1920w, /assets/cgs-atlas/morowali-4000.webp 4000w" sizes="(max-width: 991px) 1px, min(1200px, 100vw)" alt="Daylight view of Indonesia Morowali Industrial Park on the Central Sulawesi coast" width="4639" height="2980" loading="lazy"></div>
+        <img class="client-shot" src="/assets/cgs-atlas/morowali-1920.webp" srcset="/assets/cgs-atlas/morowali-960.webp 960w, /assets/cgs-atlas/morowali-1920.webp 1920w, /assets/cgs-atlas/morowali-4000.webp 4000w" sizes="(max-width: 991px) 1px, min(1200px, 100vw)" alt="Daylight view of Indonesia Morowali Industrial Park on the Central Sulawesi coast" width="4639" height="2980" loading="eager"></div>
       <div class="col-md-5 col-md-offset-2 padding-t-150-b-50">{placeholder("testimonial-btn")}<div class="testimonials owl-carousel owl-theme" tabindex="0" aria-label="Eleven project records">
         {''.join(notes)}</div>
       </div></div></div></section>'''

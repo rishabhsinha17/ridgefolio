@@ -194,3 +194,16 @@
   html:has(.rv-source.case-page) {scroll-padding-block-start:16px}
   .rv-source.case-page .atlas-wrap {scroll-margin-block-start:0}
 }
+
+/* Align both the axis ticks and stacked lengths with the same count scale. */
+.regional-exhibit .region-axis,.regional-exhibit .region-bars a {
+  display:grid;align-items:center;grid-template-columns:minmax(100px,7.7em) minmax(0,1fr) 2.3em;gap:8px
+}
+.regional-exhibit .region-axis {margin:0 0 5px;font:600 13px/1.4 var(--sans);color:#486157}
+.regional-exhibit .region-axis>span:nth-child(2) {height:1em;position:relative}
+.regional-exhibit .region-axis i {position:absolute;font:500 12px/1 var(--sans);transform:translateX(-50%)}
+.regional-exhibit .region-axis>span:last-child {text-align:right}
+.regional-exhibit .region-bars a {min-height:44px}
+.regional-exhibit .region-track {background:linear-gradient(90deg,#ced8cd 1px,transparent 1px);height:14px}
+.data-exhibit .status-legend {column-gap:15px;row-gap:7px;font-size:12px}
+.data-exhibit .chart-table summary {display:list-item;padding:10px 0;min-height:44px}

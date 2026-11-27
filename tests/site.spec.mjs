@@ -9,7 +9,9 @@ test('production assets, fonts and responsive geometry', async ({ page }, info) 
   await page.evaluate(() => Promise.all([...document.fonts].map(face => face.load())));
   expect(await page.evaluate(() => [...document.fonts].every(font => font.status === 'loaded'))).toBeTruthy();
   const planes = page.locator('#home-hero .animatable img.card');
-  await expect(planes).toHaveCount(16);
+  await expect(planes).toHaveCount(14);
+  await expect(page.locator('#hero-heading')).toHaveAccessibleName('Software for public agencies.');
+  await expect(page.locator('#hero-heading img')).toHaveCount(0);
   await expect.poll(() => planes.evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0))).toBe(true);
   const widths = info.project.name.includes('desktop') ? [320, 360, 390, 430, 768, 1024, 1440] : [360, 390, 430, 844];
   for (const width of widths) {
@@ -162,7 +164,7 @@ const sourceSections = {
   "squares": "348699838ad518c749909f8fb89043bd9cfd3d878fcae4eddef85d77e74f6a82",
   // The responsive header uses one persistent Contact link for keyboard focus.
   "header": "43a4aa1d13f7a819e4b7d9c16984ea0699ea5452fdddb8a2646af09e60ebba97",
-  "home-hero": "fceb75f2ba02770834353ec3a6529f62e13769c729354b1ba9a6486720b869a2",
+  "home-hero": "dbdc849d8b9db268a15b663792f99cf615cf5bcbe6a9b3fb74f49ba97041fef8",
   "welcome-header": "7791812b80256dd64daaa51f5b5ba3825ae63063bf1500d32813416e07fdac96",
   "apps": "3b90ca171231c4522156b377c05057238432cffd25ba3af1acb8ef7d85c2069e",
   "our-work-header": "ea5dc3188f850fb36bcba003f4401ea678ae7fd2672a838f9e4fa398c1dc626b",
@@ -197,7 +199,7 @@ test('homepage templates retain the source hierarchy before enhancement', async 
   await page.goto('/');
   await expect(page.locator('#quotes .owl-item')).toHaveCount(23);
   const enhanced = {
-    "home-hero": "2c0c06236f132744d740f7661ff0a0041608208e971f1a8be6ca50d7a7faba73",
+    "home-hero": "fe14dba3cbd8945e285fa22832dacf872765e4d783d4fd8bb1a275c83bbd50df",
     "featured-projects": "496677e2e35ae10d178924b62db062db0b19186a2eec58d37450f62b47d432c0",
     "quotes": "5695ccdb72ec1a272577c2c89573e0f03a35b467403f69a2d22fcd9d24c7bbd8"
 };
@@ -209,9 +211,6 @@ test('homepage templates retain the source hierarchy before enhancement', async 
       // still participate in the same source fingerprint.
       if (el.matches('.owl-dots.rf-rotation[role="button"]')) return 'div.owl-dots.disabled()';
       const classes = [...el.classList].filter(token => !transient.has(token));
-      // The hero artwork now enters when visible, which can happen below the
-      // first phone viewport. Compare the structure in its settled state.
-      if (el.matches('.animatable') && !classes.includes('animated')) classes.push('animated');
       const structural = [...el.children].filter(child => !child.matches(
         'svg[aria-hidden="true"].rf-control-icon, svg[aria-hidden="true"].rf-diagonal-arrow'
       ));

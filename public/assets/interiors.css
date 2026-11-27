@@ -275,12 +275,3 @@
   :scope .caption-inner h1 {font-size:28pt;}
 }
 }
-
-@media screen and (prefers-reduced-motion: no-preference) {
-  .rv-interior [data-art-reveal="waiting"] {clip-path: inset(0 100% 0 0)}
-  .rv-interior [data-art-reveal="visible"] {animation: interior-art-reveal .8s cubic-bezier(.76,0,.24,1)}
-  @keyframes interior-art-reveal {
-    from {clip-path: inset(0 100% 0 0)}
-    to {clip-path: inset(0)}
-  }
-}

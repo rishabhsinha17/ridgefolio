@@ -91,3 +91,28 @@ test('project evidence keeps its space while images are downloading', async ({ p
     release();
   }
 });
+
+test('narrow headers leave the full row available to the next section', async ({ page }) => {
+  await page.setViewportSize({width:320, height:568});
+  for (const route of ['/services/', '/for/partners/']) {
+    await page.goto(route);
+    await page.evaluate(() => document.fonts.ready);
+    const bounds = await page.evaluate(() => {
+      const header = document.querySelector('[data-ref-header]');
+      const logo = header.querySelector('.logo').getBoundingClientRect();
+      const contact = header.querySelector('.link-btn a').getBoundingClientRect();
+      const menu = header.querySelector('#mega-drop-toggle').getBoundingClientRect();
+      return {
+        sameRow: Math.abs(contact.y - menu.y) < 4 && logo.right <= contact.left && contact.right <= menu.left,
+        clear: contact.bottom <= header.getBoundingClientRect().bottom,
+        hero: document.querySelector('.main-wrap > section').getBoundingClientRect().width
+      };
+    });
+    expect(bounds, route).toEqual({sameRow:true,clear:true,hero:320});
+  }
+  const documentLink = page.locator('.about-portrait .partner-document');
+  const preview = await documentLink.locator('img').boundingBox();
+  const caption = await documentLink.locator('span').boundingBox();
+  expect(preview.width).toBeGreaterThan(110);
+  expect(caption.y).toBeGreaterThanOrEqual(preview.y + preview.height);
+});

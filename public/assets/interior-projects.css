@@ -195,7 +195,7 @@
 }
 @media screen and (max-width:700px) {
   .rv-source.case-page #slider {height:clamp(370px,76svh,515px);}
-  .rv-source.case-page #slider .left {top:13px;bottom:auto;}
+
   .rv-source.case-page #slider #white-block {margin-left:20px;padding:18px 19px 23px;}
   .rv-source.case-page #slider #white-block h1 {font-size:clamp(34px,9vw,49px);}
   .rv-source.case-page #slider .cgs-hero-photo {object-position:65% center;}
@@ -206,4 +206,77 @@
 }
 @media screen and (min-width:1546px) and (min-resolution:2.6dppx) {
   .rv-source.case-page #slider {max-width:1546px;margin-inline:auto;}
+}
+
+@media screen and (max-width:991px) {
+  .rv-source.case-page #slider .left {top:13px;bottom:auto;}
+}
+@media screen {
+  .rv-source.about-page .about-portrait .partner-document {
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(9ch,15ch);
+    width:min(85%,650px);height:auto;gap:clamp(12px,2vw,30px);
+  }
+  .rv-source.about-page .about-portrait .partner-document img {
+    display:block;width:100%;height:auto;max-height:clamp(150px,40svh,420px);
+  }
+}
+
+@media screen and (max-width:767px) {
+  .rv-source.about-page #about-hero .about-portrait {margin-top:clamp(42px,11vw,70px)}
+}
+
+
+@media screen and (max-width:479px) {
+  .rv-source.about-page .about-portrait .partner-document {
+    grid-template-columns:minmax(0,1fr);justify-items:center;
+    width:min(82%,300px);padding:14px;gap:12px;text-align:center;
+  }
+  .rv-source.about-page .about-portrait .partner-document img {
+    width:auto;height:clamp(155px,32svh,235px);max-width:100%;object-fit:contain;
+  }
+  .rv-source.about-page .about-portrait .partner-document span {max-width:100%}
+}
+
+/* The research and CGS plates switch composition on small screens. Each plate
+   keeps its intrinsic ratio so labels, interval endpoints and captions survive. */
+.rv-source .chart-plate {display:block;width:100%;min-width:0}
+.rv-source .chart-plate img {display:block;width:100%;height:auto;object-fit:contain}
+#project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] {
+  height:auto;aspect-ratio:auto;padding:clamp(128px,12vw,180px) clamp(16px,7vw,98px) clamp(16px,3vw,44px)
+}
+#project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] .chart-plate {
+  max-width:1100px;margin-inline:auto
+}
+.rv-source #about-section .research-figure>a {padding:0}
+.rv-source #about-section .research-figure img {padding:0;background:transparent}
+.rv-source .research-figure figcaption {margin-block-start:10px}
+.rv-source.project-page #project-end-image:has(.chart-plate),
+.rv-source.about-page [data-about-plate]:has(.chart-plate) {
+  display:grid;place-items:center;height:auto;min-height:0;aspect-ratio:auto;
+  gap:0;background:#faf9f3;overflow:visible;padding:clamp(16px,3vw,40px) clamp(6px,2vw,28px) 12px
+}
+.rv-source :is(#project-end-image,[data-about-plate])>.chart-plate {max-width:1000px}
+.rv-source.project-page #project-end-image .chart-plate img.full-img,
+.rv-source.about-page [data-about-plate] .chart-plate img.full-img {width:100%;height:auto;aspect-ratio:auto;max-height:none;object-fit:contain}
+.rv-source :is(#project-end-image,[data-about-plate]):has(.chart-plate)>.plate-credit {
+  position:static;max-width:100%;justify-self:center;text-align:center;background:transparent;margin:0
+}
+#about-page .rv-source.about-page [data-about-plate] .chart-plate img.full-img {padding:0;height:auto}
+@media (max-width:640px) {
+  #project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] {
+    padding:0;grid-template-columns:1fr;gap:0;background:#faf9f3
+  }
+  #project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] .pixel-btn {
+    position:relative;inset:auto;order:-1;justify-self:end;height:auto;width:auto;margin:8px 12px
+  }
+  #project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] .pixel-btn a {
+    display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 14px
+  }
+  #project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] .pixel-btn .lead {display:none}
+  #project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] .pixel-btn .small,
+  #project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] .pixel-btn svg {
+    position:static;margin:0;width:auto;font-size:15px
+  }
+  #project-page .rv-source #blog-lg-img[data-presentation="evidence-plate evaluation"] .pixel-btn svg {width:17px}
+  .rv-source.project-page #project-end-image:has(.chart-plate), .rv-source.about-page [data-about-plate]:has(.chart-plate) {padding-inline:0}
 }

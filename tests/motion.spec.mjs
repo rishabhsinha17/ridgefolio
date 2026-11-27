@@ -38,7 +38,18 @@ test('reduced motion leaves manual carousel navigation and a single vector per l
   const record = page.locator('.testimonials .owl-item:not(.cloned) [role=link]').first();
   await expect(record.locator('svg.rf-diagonal-arrow')).toHaveCount(1);
   expect(await record.evaluate(link => getComputedStyle(link, '::after').content)).toBe('none');
-  await expect(page.locator('[data-art-reveal="waiting"]')).toHaveCount(0);
+});
+
+test('editorial images load and are visible before the first scroll', async ({page}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  for (const path of ['/', '/resources/', '/work/evaluation/']) {
+    await page.goto(path);
+    await expect.poll(() => page.evaluate(() => [...document.images]
+      .filter(img => img.currentSrc || img.src)
+      .every(img => img.complete && img.naturalWidth > 0))).toBe(true);
+    await expect(page.locator('[data-art-reveal]')).toHaveCount(0);
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  }
 });
 
 test('article templates keep just one pinned arrow above the scrolled page', async ({ page }) => {
@@ -56,6 +67,17 @@ test('article templates keep just one pinned arrow above the scrolled page', asy
     await expect(rail.locator('.up')).toHaveCSS('opacity', '1');
     await expect(rail.locator('.up')).toHaveAttribute('aria-hidden', 'false');
     const position = await rail.locator('.up').boundingBox();
-    expect(position.y).toBeCloseTo(page.viewportSize().width < 768 ? page.viewportSize().height - 170 : 180, 0);
+    const size = page.viewportSize();
+    const strip = page.locator('html.ref-contact-docked #contact-form');
+    if (size.width < 992 && await strip.count()) {
+      const box = await strip.boundingBox();
+      const input = await strip.locator('#name').boundingBox();
+      expect(position.y).toBeGreaterThanOrEqual(box.y);
+      expect(position.y + position.height).toBeLessThanOrEqual(box.y + box.height);
+      expect(position.width).toBeGreaterThanOrEqual(44);
+      expect(position.x + position.width).toBeLessThanOrEqual(input.x);
+    } else {
+      expect(position.y).toBeCloseTo(size.width < 768 ? size.height - 170 : 180, 0);
+    }
   }
 });

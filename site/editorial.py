@@ -16,9 +16,9 @@ def release_cover():
 
 def cover(slug):
     if slug == "industrial-parks":
-        return '<img src="/assets/editorial/industrial-parks.webp" width="1460" height="790" loading="lazy" alt="Map of Indonesian industrial parks, with a concentration of markers on Java">'
+        return '<img src="/assets/editorial/industrial-parks.webp" width="1460" height="790" loading="eager" alt="Map of Indonesian industrial parks, with a concentration of markers on Java">'
     if slug == "evaluation":
-        return '<div class="paper-cover"><img src="/assets/editorial/paper-detail.webp" width="772" height="567" loading="lazy" alt="First page of Exposure Is Not Commitment by Rishabh Sinha"></div>'
+        return '<div class="paper-cover"><img src="/assets/editorial/paper-detail.webp" width="772" height="567" loading="eager" alt="First page of Exposure Is Not Commitment by Rishabh Sinha"></div>'
     return release_cover()
 
 
@@ -45,9 +45,26 @@ def work_gallery(cases):
     )
 
 
+def chart_plate(stem, alt, *, compact=False):
+    sizes = {"monitor-strata": (900, 530, 390, 508), "monitor-confidence": (900, 860, 365, 738),
+             "regional-status": (900, 600, 400, 530)}
+    wide, tall, narrow, compact_height = sizes[stem]
+    src = "/assets/project-evidence/" + stem
+    media = "all" if compact else "(max-width: 640px)"
+    return (f'<picture class="chart-plate"><source media="{media}" srcset="{src}-compact.svg" '
+            f'width="{narrow}" height="{compact_height}"><img class="full-img" src="{src}.svg" '
+            f'width="{wide}" height="{tall}" alt="{escape(alt, quote=True)}"></picture>')
+
+
 def project_exhibit(slug):
     if slug == "evaluation":
-        return f"""<figure class="project-plate research-figure"><a href="/assets/editorial/monitor-results.webp"><img src="/assets/editorial/monitor-results.webp" width="848" height="355" alt="Figure 1 shows how monitor scores change with training population across Qwen, Mistral and OLMo. The comparable-cases scores are 0.853, 0.896 and 0.912."></a><figcaption>Figure 1 from <cite>Exposure Is Not Commitment</cite>, page 3. Select the figure to open it at full size. <a href="https://arxiv.org/pdf/2610.37679">Read the full paper (PDF)</a>.</figcaption></figure>"""
+        stem = "monitor-strata"
+        alt = "Commitment-trained probes score 0.853 on Qwen, 0.896 on Mistral and 0.912 on OLMo."
+        return ('<figure class="project-plate research-figure">'
+                f'<a href="/assets/project-evidence/{stem}.svg">{chart_plate(stem, alt, compact=True)}</a>'
+                '<figcaption>Adapted from Figure 1 of Rishabh Sinha’s <cite>Exposure Is Not Commitment</cite>. '
+                '<a href="https://arxiv.org/pdf/2610.37679#page=3">Read the original figure</a> · '
+                '<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></figcaption></figure>')
     return f'''<div class="release-plate">{release_cover()}<div class="release-records"><h2>In this release</h2>
     <p><a href="{KV}/pull/480">#480 · Clean up worker socket directories</a><small>Merged 23 September 2026</small></p>
     <p><a href="{KV}/pull/482">#482 · Release shared memory at shutdown</a><small>Merged 24 September 2026</small></p>
@@ -78,7 +95,7 @@ def directory(items):
 
 
 def library():
-    return f'''<div class="library"><a class="document-thumb" href="{PDF}"><img src="/assets/editorial/capability-page.webp" width="618" height="800" alt="Preview of the one-page Ridgefolio capability statement" loading="lazy"></a><div><h2>Capability statement</h2><p>A one-page overview of services, delivery arrangements and founder experience to share with a project team.</p><a class="text-action" href="{PDF}">Open the one-page PDF ↗</a><a class="subtle-link" href="/resources/capabilities/">Read the HTML version</a></div></div>'''
+    return f'''<div class="library"><a class="document-thumb" href="{PDF}"><img src="/assets/editorial/capability-page.webp" width="618" height="800" alt="Preview of the one-page Ridgefolio capability statement" loading="eager"></a><div><h2>Capability statement</h2><p>A one-page overview of services, delivery arrangements and founder experience to share with a project team.</p><a class="text-action" href="{PDF}">Open the one-page PDF ↗</a><a class="subtle-link" href="/resources/capabilities/">Read the HTML version</a></div></div>'''
 
 
 def estimate_link(email):
@@ -112,7 +129,7 @@ def social_image(path):
     if path == "/work/evaluation/":
         return (
             "/assets/editorial/monitor-results.webp",
-            "Figure from the published research paper",
+            "Activation-probe AUROC by model and training contrast, adapted from Figure 1",
         )
     if path in ("/resources/", "/resources/capabilities/"):
         return (

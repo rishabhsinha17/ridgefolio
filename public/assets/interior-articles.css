@@ -112,7 +112,7 @@
   #blog-post-page #blog-hero h1 {min-block-size:3lh}
 }
 @media screen and (max-width:767px) {
-  #blog-post-page #blog-hero h1 {min-block-size:4lh}
+  #blog-post-page #blog-hero h1 {min-block-size:0}
 }
 @media screen and (max-width:991px) {
   #freeform-page #blog-hero h1:not([hidden]) {min-block-size:2lh}

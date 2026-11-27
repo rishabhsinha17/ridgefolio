@@ -6,8 +6,6 @@
     const wrapper = document.createElement('div');
     wrapper.id = 'down-arrow-sticky-wrapper';
     wrapper.className = 'sticky-wrapper';
-    const initialHeight = control.getBoundingClientRect().height;
-    wrapper.style.minHeight = initialHeight + 'px';
     control.replaceWith(wrapper);
     wrapper.append(control);
     const downLink = control.querySelector('.down');
@@ -82,67 +80,26 @@
     measure();
   }
 
-  // Run ornamental motion only while the artwork is in view. A returning
-  // visitor sees the settled hero instead of replaying the entrance.
+  // Artwork is visible immediately. Pause continuous decoration off screen.
   const orbit = document.querySelector('.rotaing');
   const planes = document.querySelector('#home-hero .animatable');
-  const revealTargets = [];
-  if (window.IntersectionObserver) {
-    let orbitVisible = false;
-    let planesVisible = false;
-    let artworkObserver;
-    function syncOrbit() {
-      if (planes) planes.toggleAttribute('data-fly-running', planesVisible && !document.hidden && !reduced.matches);
-      if (orbit) orbit.toggleAttribute('data-orbit-running', orbitVisible && !document.hidden && !reduced.matches);
+  if (window.IntersectionObserver && (orbit || planes)) {
+    const visible = new Set();
+    function updateMotion() {
+      const running = !document.hidden && !reduced.matches;
+      orbit?.toggleAttribute('data-orbit-running', running && visible.has(orbit));
+      planes?.toggleAttribute('data-fly-running', running && visible.has(planes));
     }
-    if (orbit) new IntersectionObserver(([entry]) => {
-      orbitVisible = entry.isIntersecting;
-      syncOrbit();
-    }).observe(orbit);
-    document.addEventListener('visibilitychange', syncOrbit);
-    if (planes) {
-      new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) planes.classList.add('animated');
-      }, {rootMargin:'0px 0px -25% 0px'}).observe(planes);
-      new IntersectionObserver(([entry]) => {
-        planesVisible = entry.isIntersecting;
-        syncOrbit();
-      }).observe(planes);
-    }
-    for (const cover of document.querySelectorAll('.rv-source :is(.cover,.cover-half,.cover-2,.cover-3), .rv-home #blog-list .cover')) {
-      const frame = cover.parentElement;
-      if (cover.closest('header,footer,#contact,#contact-form,.pixel-btn,.workspace')) continue;
-      let image = frame.querySelector(':scope > img.full-img, :scope > .blog-image');
-      if (cover.matches('.about-portrait')) image = cover;
-      else if (frame.matches('.app-img-left,.app-img-right,.we-believe-img')) image = frame;
-      if (image?.querySelector('a[href],button,input,textarea,select')) image = image.querySelector('img');
-      if (image) revealTargets.push(image);
-    }
-    revealTargets.push(...document.querySelectorAll('.rv-home .responsive-shots > img,.rv-home .client-shot'));
-    function syncReveal() {
-      syncOrbit();
-      artworkObserver?.disconnect();
-      if (reduced.matches) {
-        for (const item of revealTargets) item.removeAttribute('data-art-reveal');
-        return;
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
       }
-      artworkObserver = new IntersectionObserver(entries => {
-        for (const x of entries) {
-          if (!x.isIntersecting) continue;
-          x.target.dataset.artReveal = 'visible';
-          artworkObserver.unobserve(x.target);
-        }
-      }, {rootMargin: '0px 0px 280px'});
-      for (const item of revealTargets) {
-        if (item.getBoundingClientRect().top < innerHeight || item.dataset.artReveal === 'visible') {
-          item.removeAttribute('data-art-reveal');
-          continue;
-        }
-        item.dataset.artReveal = 'waiting';
-        artworkObserver.observe(item);
-      }
-    }
-    reduced.addEventListener('change', syncReveal);
-    syncReveal();
+      updateMotion();
+    });
+    if (orbit) observer.observe(orbit);
+    if (planes) observer.observe(planes);
+    document.addEventListener('visibilitychange', updateMotion);
+    reduced.addEventListener('change', updateMotion);
   }
 })();

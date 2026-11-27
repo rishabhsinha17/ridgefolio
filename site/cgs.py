@@ -73,7 +73,7 @@ def region_figure():
     records = chart_records()
     regions = Counter(row["region"] for row in records)
     by_status = Counter((row["region"], row["status"]) for row in records)
-    largest = max(regions.values())
+    scale = ((max(regions.values()) + 9) // 10) * 10
     rows, table = [], []
     for name, total in regions.most_common():
         segments, values = [], []
@@ -83,13 +83,15 @@ def region_figure():
             if count:
                 segments.append(f'<i class="stratum-{key}" style="width:{count / total:.4%}" title="{escape(status)} · {count}"></i>')
         rows.append(f'<li><a href="?region={quote(name)}#the-map" data-region="{escape(name)}" title="Explore {escape(name)} on the map"><span>{name}</span>'
-                    f'<span class="region-track"><span class="region-stack" style="width:{total / largest:.4%}">{"".join(segments)}</span></span><b>{total}</b></a></li>')
+                    f'<span class="region-track"><span class="region-stack" style="width:{total / scale:.4%}">{"".join(segments)}</span></span><b>{total}</b></a></li>')
         table.append(f'<tr><th scope="row">{name}</th>{"".join(values)}<td>{total}</td></tr>')
     key = "".join(f'<span><i class="stratum-{css}"></i>{name}</span>' for _, css, name in STATUS_COLORS)
+    ticks = "".join(f'<i style="left:{count / scale:.4%}">{count}</i>' for count in range(0, scale + 1, 20))
     columns = "".join(f'<th scope="col">{short}</th>' for _, _, short in STATUS_COLORS)
     return (
         '<figure class="data-exhibit regional-exhibit"><figcaption><span class="exhibit-kicker">Industrial parks by region</span>'
         f'<strong>{regions["Java"] + regions["Sumatra"]} of {len(records)} parks are in the Java and Sumatra regions.</strong></figcaption>'
+        f'<div class="region-axis" aria-hidden="true"><span>Region</span><span>{ticks}</span><span>Total</span></div>'
         f'<ol class="region-bars">{"".join(rows)}</ol><div class="status-legend">{key}</div>'
         '<details class="chart-table"><summary>Read the counts by status</summary><div class="table-scroll" tabindex="0" aria-label="Park counts by region and status">'
         f'<table><caption>Industrial parks by region and reported status</caption><thead><tr><th scope="col">Region</th>{columns}<th scope="col">Total</th></tr></thead><tbody>{"".join(table)}</tbody></table></div></details>'

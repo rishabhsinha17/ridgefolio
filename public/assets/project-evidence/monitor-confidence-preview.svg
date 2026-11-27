@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="530" viewBox="0 0 900 530" role="img" aria-labelledby="title description">
+<title id="title">Four pre-action monitors</title><desc id="description">Qwen2.5-7B results under commitment training. Logistic activation probe 0.853, interval 0.799–0.897. Centroid activation probe 0.763, interval 0.691–0.819. Visible text (TF-IDF) 0.855, interval 0.803–0.901. NLA text (NB) 0.570, interval 0.500–0.644</desc><metadata>https://arxiv.org/abs/2610.37679v1</metadata>
+<style>text{font-family:Arial,Helvetica,sans-serif;font-variant-numeric:tabular-nums}.display{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025em}.label{font-weight:bold;letter-spacing:.06em}</style>
+<rect x="0" y="0" width="900" height="530" fill="#faf9f3"/><g fill="#183c33"><text x="38" y="40" font-size="14" class="label">QWEN2.5-7B  /  COMMITMENT TRAINING</text>
+<text x="38" y="106" font-size="50" class="display">Four pre-action monitors</text>
+<text x="38" y="146" font-size="22" fill="#486157">Out-of-fold AUROC with 95% bootstrap intervals</text>
+<text x="377" y="200" font-size="18" text-anchor="middle">0.5</text>
+<path d="M377 214L377 433" fill="none" stroke="#dae1d7" />
+<text x="470" y="200" font-size="18" text-anchor="middle">0.6</text>
+<path d="M470 214L470 433" fill="none" stroke="#dae1d7" />
+<text x="563" y="200" font-size="18" text-anchor="middle">0.7</text>
+<path d="M563 214L563 433" fill="none" stroke="#dae1d7" />
+<text x="656" y="200" font-size="18" text-anchor="middle">0.8</text>
+<path d="M656 214L656 433" fill="none" stroke="#dae1d7" />
+<text x="749" y="200" font-size="18" text-anchor="middle">0.9</text>
+<path d="M749 214L749 433" fill="none" stroke="#dae1d7" />
+<text x="842" y="200" font-size="18" text-anchor="middle">1.0</text>
+<path d="M842 214L842 433" fill="none" stroke="#dae1d7" />
+<text x="38" y="251" font-size="21" >Logistic activation probe</text>
+<path d="M655 245L746 245" fill="none" stroke="#326e58" stroke-width="5"/>
+<path d="M655 238L655 252" fill="none" stroke="#326e58" />
+<path d="M746 238L746 252" fill="none" stroke="#326e58" />
+<circle cx="705" cy="245" r="8" fill="#1e5746"/>
+<text x="869" y="252" font-size="20" text-anchor="end" font-weight="bold">0.853</text>
+<text x="38" y="306" font-size="21" >Centroid activation probe</text>
+<path d="M554 300L673 300" fill="none" stroke="#326e58" stroke-width="5"/>
+<path d="M554 293L554 307" fill="none" stroke="#326e58" />
+<path d="M673 293L673 307" fill="none" stroke="#326e58" />
+<circle cx="621" cy="300" r="8" fill="#1e5746"/>
+<text x="869" y="307" font-size="20" text-anchor="end" font-weight="bold">0.763</text>
+<text x="38" y="361" font-size="21" >Visible text (TF-IDF)</text>
+<path d="M658 355L749 355" fill="none" stroke="#326e58" stroke-width="5"/>
+<path d="M658 348L658 362" fill="none" stroke="#326e58" />
+<path d="M749 348L749 362" fill="none" stroke="#326e58" />
+<circle cx="707" cy="355" r="8" fill="#1e5746"/>
+<text x="869" y="362" font-size="20" text-anchor="end" font-weight="bold">0.855</text>
+<text x="38" y="416" font-size="21" >NLA text (NB)</text>
+<path d="M377 410L510 410" fill="none" stroke="#326e58" stroke-width="5"/>
+<path d="M377 403L377 417" fill="none" stroke="#326e58" />
+<path d="M510 403L510 417" fill="none" stroke="#326e58" />
+<circle cx="442" cy="410" r="8" fill="#1e5746"/>
+<text x="869" y="417" font-size="20" text-anchor="end" font-weight="bold">0.570</text>
+<path d="M38 451L862 451" fill="none" stroke="#dae1d7" />
+<text x="38" y="485" font-size="19" fill="#486157">Selected comparisons from Figure 2 · Exposure Is Not Commitment</text></g></svg>

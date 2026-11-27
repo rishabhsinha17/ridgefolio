@@ -22,10 +22,9 @@ def responsive(stem, sizes="100vw"):
     return f'src="{root}-3840.webp" srcset="{sources}" sizes="{sizes}"'
 
 
-def photo(stem, *, sizes="100vw", css="full-img", lazy=False):
+def photo(stem, *, sizes="100vw", css="full-img"):
     title = PHOTOS[stem][0]
-    loading = ' loading="lazy"' if lazy else ""
-    return f'<img class="{css}" {responsive(stem, sizes)} width="3840" height="2560" alt="{escape(title, quote=True)}"{loading}>'
+    return f'<img class="{css}" {responsive(stem, sizes)} width="3840" height="2560" alt="{escape(title, quote=True)}" loading="eager">'
 
 
 def credit(stem):

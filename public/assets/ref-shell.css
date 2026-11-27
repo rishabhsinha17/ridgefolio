@@ -255,3 +255,35 @@ html.ref-contact-expanded #contact-body .no-btn {display: none}
   [data-ref-header], [data-ref-footer], .main-wrap > .copyright, #contact-form {display: none}
   .main-wrap {padding: 0}
 }
+
+/* Give the return shortcut its own place in the contact strip on narrow screens. */
+@media screen and (max-width: 991px) {
+  html.ref-contact-docked:has(#down-arrow-sticky-wrapper.stickyarrow) {
+    --dock-edge: max(8px, env(safe-area-inset-left));
+    --dock-block: 12px;
+  }
+  .ref-contact-docked:has(#down-arrow-sticky-wrapper.stickyarrow) #contact-form {
+    padding: var(--dock-block) max(58px, calc(env(safe-area-inset-right) + 50px))
+      calc(var(--dock-block) + env(safe-area-inset-bottom)) calc(var(--dock-edge) + 52px);
+  }
+  html.ref-contact-docked #down-arrow-sticky-wrapper.stickyarrow #down-arrow[data-scroll-control] a:is(.up, .down) {
+    position: fixed;
+    inset: auto auto calc(var(--dock-block) + env(safe-area-inset-bottom) + 3px) var(--dock-edge);
+    width: 44px; height: 44px; transition: none;
+  }
+  .ref-contact-docked:has(#down-arrow-sticky-wrapper.stickyarrow) #contact-form #contact-form-close {
+    inset: 3px auto auto calc(100% + 5px); width:44px; height:44px; min-height:44px;
+    overflow:hidden; font-size:0; gap:0;
+  }
+}
+
+@media screen and (max-width:991px) {
+  [data-ref-header] .row > .col-md-12 {display:flow-root}
+}
+@media screen and (max-width:359px) {
+  .rv-interior [data-ref-header] .container-fluid {padding-inline:16px}
+  .ref-contact-docked:has(#down-arrow-sticky-wrapper.stickyarrow) #contact-body .no-btn {
+    min-width:0;width:84px;padding-inline:6px;
+  }
+  .ref-contact-docked:has(#down-arrow-sticky-wrapper.stickyarrow) #contact-body #name {padding-right:90px}
+}

@@ -117,14 +117,8 @@
       }
       places.clearLayers();
       const view = map.getBounds().pad(.04);
-      const occupied = [];
       function label(name, lat, lon, style) {
         if (!view.contains([lat, lon])) return;
-        const point = map.latLngToContainerPoint([lat, lon]);
-        const width = name.length * (style === "town" ? 6 : 7);
-        const box = L.bounds([point.x-width/2-4, point.y-8], [point.x+width/2+4, point.y+9]);
-        if (occupied.some(other => other.intersects(box))) return;
-        occupied.push(box);
         const span = tag("span", name);
         const icon = L.divIcon({className:"atlas-place " + style, iconSize:[0,0], iconAnchor:[0,0], html:span});
         L.marker([lat, lon], {icon, interactive:false, keyboard:false, zIndexOffset:-900}).addTo(places);
@@ -195,6 +189,21 @@
       }
       L.popup({maxWidth:235}).setLatLng(bounds.getCenter()).setContent(choices).openOn(map);
     }
+    // Keep the park counts legible, including after a filter, pan or zoom.
+    function placeLabels() {
+      const frame = node.getBoundingClientRect();
+      const bounds = el => el.getBoundingClientRect();
+      const occupied = Array.from(node.querySelectorAll(".atlas-symbol,.cluster-place,.leaflet-control"), bounds);
+      const entries = Array.from(node.querySelectorAll(".atlas-place > span"), el => [el, bounds(el)]);
+      for (const [label, box] of entries) {
+        const inside = box.left >= frame.left + 2 && box.right <= frame.right - 2 &&
+          box.top >= frame.top + 2 && box.bottom <= frame.bottom - 2;
+        const blocked = occupied.some(r => r.right + 2 > box.left && r.left - 2 < box.right &&
+          r.bottom + 2 > box.top && r.top - 2 < box.bottom);
+        label.style.visibility = inside && !blocked ? "" : "hidden";
+        if (inside && !blocked) occupied.push(box);
+      }
+    }
     function drawMarks() {
       marks.clearLayers();
       for (const group of clusters()) {
@@ -218,6 +227,7 @@
           if (e.key === " ") {e.preventDefault(); chooseGroup(group);}
         });
       }
+      placeLabels();
     }
     function populate(select, key, all) {
       const counts = new Map();
@@ -270,6 +280,7 @@
     staticImage.hidden = true;
     tools.hidden = false;
     atlas.classList.add("interactive");
+    document.fonts.ready.then(placeLabels);
   }
   start().catch(() => {node.hidden=true; staticImage.hidden=false; tools.hidden=true;});
 })();

@@ -62,6 +62,7 @@ assert(routes.length > 0, "Sitemap has no pages");
 const titles = new Set();
 for (const route of routes) {
   const body = readFileSync(resolve(root, "." + route, "index.html"), "utf8");
+  assert(!/<img\b[^>]*\bloading="lazy"/i.test(body), route + " defers a page image until scroll");
   const title = body.match(/<title>([^<]+)<\/title>/)?.[1];
   assert(
     title && !titles.has(title),
